@@ -1,0 +1,11 @@
+{
+  "appName": "",
+  "login": {
+    "welcome": "Welcome to IQ Brandx",
+    "subtitle": "Enter your user Code and password to use the application",
+    "code":"Code",
+    "enterCode":"Enter Code",
+    "password":"Password",
+    "login":"Login"
+  }
+}
