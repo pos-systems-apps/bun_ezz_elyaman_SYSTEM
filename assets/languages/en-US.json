@@ -1,5 +1,10 @@
 {
   "appName": "",
+  "noInternet": "No Internet",
+  "noInternetText": "You are offline. Please check your connection.",
+  "ok": "OK",
+  "error": "Something went wrong, try again later.",
+  "field": "Complete this field",
   "login": {
     "welcome": "Welcome to IQ Brandx",
     "subtitle": "Enter your user Code and password to use the application",

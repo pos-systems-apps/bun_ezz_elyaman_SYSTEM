@@ -18,7 +18,7 @@ class HttpConsumer implements ApiConsumer {
 
   @override
   Future<http.Response> get(String path, Map<String, String>? headers) async {
-    final response = await _client.get(Uri.parse(EndPoints.baseUrl + path),
+    final response = await _client.get(Uri.parse(path),
         headers: headers);
     return response;
   }
@@ -26,7 +26,7 @@ class HttpConsumer implements ApiConsumer {
   @override
   Future<http.Response> put(String path, Map<String, dynamic>? body,
       Map<String, String>? headers) async {
-    final response = await _client.put(Uri.parse(EndPoints.baseUrl + path),
+    final response = await _client.put(Uri.parse(path),
         body: json.encode(body), headers: headers);
     return response;
   }
@@ -34,7 +34,7 @@ class HttpConsumer implements ApiConsumer {
   @override
   Future<http.Response> post(String path, Map<String, dynamic>? body,
       Map<String, String>? headers) async {
-    final response = await _client.post(Uri.parse(EndPoints.baseUrl + path),
+    final response = await _client.post(Uri.parse(path),
         body: json.encode(body), headers: headers);
     return response;
   }
@@ -43,7 +43,7 @@ class HttpConsumer implements ApiConsumer {
   Future<http.Response> multiPost(String path, Map<String, dynamic> body,
       Map<String, String>? headers) async {
     var request =
-        http.MultipartRequest('POST', Uri.parse(EndPoints.baseUrl + path));
+        http.MultipartRequest('POST', Uri.parse(path));
     if (headers != null) {
       request.headers.addAll(headers);
     }

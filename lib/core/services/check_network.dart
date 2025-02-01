@@ -15,14 +15,12 @@ class MyConnectivity {
   static MyConnectivity get instance => _instance;
 
   static Connectivity connectivity = Connectivity();
-  static StreamController<Map<String, bool>> controller =
-  StreamController.broadcast();
+  static StreamController<Map<String, bool>> controller = StreamController.broadcast();
 
-  Stream<Map<String, bool>> get myStream => controller.stream;
+  static Stream<Map<String, bool>>  get myStream => controller.stream;
 
   static Future<void> initialise() async {
-    final List<ConnectivityResult> result =
-    await (connectivity.checkConnectivity());
+    final List<ConnectivityResult> result = await (connectivity.checkConnectivity());
     _checkStatus(result);
     connectivity.onConnectivityChanged.listen((result) async {
       debugPrint("onConnectivity Changed changed");

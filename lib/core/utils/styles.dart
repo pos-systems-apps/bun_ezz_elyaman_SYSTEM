@@ -37,6 +37,12 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     fontFamily: 'Bahij',
   );
+ static TextStyle font14WhiteColorWeight500 = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.whiteColor,
+    fontWeight: FontWeight.w500,
+    fontFamily: 'Bahij',
+  );
 
 
 

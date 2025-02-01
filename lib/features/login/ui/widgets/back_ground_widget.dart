@@ -54,7 +54,46 @@ class BackGroundWidget extends StatelessWidget {
           child: Container(
             width: double.infinity,
             color: AppColors.whiteColor,
-            child: const SizedBox.shrink(),
+            child: Column(
+              children: [
+                Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    if (context.locale.languageCode == 'en') {
+                      context.setLocale(Locale('ar', 'EG'));
+                    } else {
+                      context.setLocale(Locale('en', 'US'));
+                    }
+                  },
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.mainColor,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.language,
+                          color: AppColors.whiteColor,
+                        ),
+                        horizontalSpace(10),
+                        Text(
+                          context.locale.languageCode == 'en'
+                              ? 'Change to Arabic'
+                              : 'تغيير إلى الإنجليزية',
+                          maxLines: 1,
+                          style: TextStyles.font14WhiteColorWeight500,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                verticalSpace(20),
+              ],
+            ),
           ),
         ),
       ],

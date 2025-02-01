@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pos_system/core/utils/app_strings.dart';
 import 'package:pos_system/core/utils/extentions.dart';
+import 'package:pos_system/features/login/data/repo/login_repo.dart';
 import 'package:pos_system/my_app.dart';
 
 import 'config/routes/routes.dart';
@@ -22,29 +24,37 @@ void main() async {
   await CacheHelper.init();
   await MyConnectivity.initialise();
 
-  String navigationScreenRoute;
+  String navigationScreenRoute = Routes.loginScreen;
   await checkIfLoggedInUser();
 
-  navigationScreenRoute = Routes.loginScreen;
-  // String? token = await CacheHelper.getSecuredString(AppStrings.saveTokenToShared);
-  // bool onBoardingWatch =
-      // await CacheHelper.getBool(AppStrings.saveIsOnBoardingToShared);
-  // if (onBoardingWatch == true) {
-  //   navigationScreenRoute = Routes.boardingScreen;
-  // } else {
-    // if (isLoggedInUser == true) {
-    //   navigationScreenRoute = Routes.boardingScreen;
-    // } else {
-    // navigationScreenRoute = Routes.onBoardingScreen1;
-    // }
-  // }
+  try {
+    if (MyConnectivity.isOnline()) {
+      LoginRepo(getIt()).appSetting().then((value) {
+        value.fold((l) {
+        }, (r) {
+          AppConstant.setSettingFromApi(r);
+        });
+      });
+    } else {
+      navigationScreenRoute = Routes.loginScreen;
+    }
+  } catch (error) {
+    print("error${error}");
+  }
+
+
+  if (isLoggedInUser == true) {
+    navigationScreenRoute = Routes.buttonNavigationScreen;
+  } else {
+    navigationScreenRoute = Routes.loginScreen;
+  }
 
   Bloc.observer = Observer();
 
   runApp(EasyLocalization(
     supportedLocales: const [
-      Locale('ar', 'EG'),  // Arabic first
-      Locale('en', 'US'),  // English second
+      Locale('ar', 'EG'), // Arabic first
+      Locale('en', 'US'), // English second
     ],
     saveLocale: true,
     startLocale: const Locale('ar', 'EG'),
@@ -54,9 +64,9 @@ void main() async {
   ));
 }
 
-
 checkIfLoggedInUser() async {
-  String? userToken =await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared);
+  String? userToken =
+      await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared);
   if (!userToken.isNullOrEmpty()) {
     isLoggedInUser = true;
   } else {

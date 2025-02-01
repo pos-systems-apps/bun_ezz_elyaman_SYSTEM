@@ -1,16 +1,11 @@
 class EndPoints {
-  static const baseUrl = "https://syarahplus.sa";
-
-
+  static String baseUrl = "";
 
   ///
   /// api image
-  static const imageBaseUrl = "/storage/app/";
+  static const imageBaseUrl = "storage/app/public/shop/";
 
   /// image
-  static String? getImageFromApi(String imageUrl) =>
+  static String getImageFromApi(String imageUrl) =>
       baseUrl + imageBaseUrl + imageUrl;
-
-  static String? getImageFromShared(String? imageUrl) =>
-      imageUrl?.replaceRange(0, baseUrl.length, "");
 }

@@ -1,14 +1,31 @@
-
 class ConstantKeys {
   /// shared
   static const saveTokenToShared = "TOKEN";
- 
+
+  static const saveMandoubeNameToShared = "MANDOUBE_NAME";
+  static const saveMandoubeCodeToShared = "MANDOUBE_CODE";
+  static const saveVehicleCodeToShared = "VECICLE_CODE";
+  static const saveEmailToShared = "EMAIL";
+  static const savePhoneToShared = "PHONE";
 
 
 
-
-
-
+  static const saveLogoToShared = "SHOP_LOGO";
+  static const savePaginationNumberToShared = "PAGINATION_NUMBER";
+  static const saveCurrencyToShared = "CURRENCY";
+  static const saveShopNameToShared = "SHOP_NAME";
+  static const saveShopAddressToShared = "SHOP_ADDRESS";
+  static const saveShopPhoneToShared = "SHOP_PHONE";
+  static const saveShopEmailToShared = "SHOP_EMAIL";
+  static const saveFooterTextToShared = "FOOTER_TEXT";
+  static const saveCountryToShared = "COUNTRY";
+  static const saveStockLimitToShared = "STOCK_LIMIT";
+  static const saveTimeZoneToShared = "TIME_ZONE";
+  static const saveCommercialRegistryToShared = "COMMERCIAL_REGISTRY";
+  static const saveNumberTaxToShared = "NUMBER_TAX";
+  static const saveMainColorToShared = "MAIN_COLOR";
+  static const saveSecondColorToShared = "SECOND_COLOR";
+  static const saveBaseURLToShared = "BASE_URL";
 
 
   ///
@@ -30,8 +47,4 @@ class ConstantKeys {
   static const acceptLanguage = "Accept-Language";
   static const appAuthorization = "Authorization";
   static const appBearer = "Bearer";
-
-
-
-
 }

@@ -1,14 +1,14 @@
 class LoginRequestModel {
-  String? login;
-  String? password;
+  String code;
+  String password;
 
   LoginRequestModel({
-    required this.login,
+    required this.code,
     required this.password,
   });
 
   Map<String, dynamic> toJson() => {
-        "login": login,
+        "code": code,
         "password": password,
       };
 }
