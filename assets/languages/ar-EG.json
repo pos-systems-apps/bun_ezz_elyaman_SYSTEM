@@ -5,6 +5,12 @@
   "ok": "حسنا",
   "error": "حدث خطآ ما حاول لاحقا",
   "field": "اكمل هذا الحقل",
+  "buttonNavigation1": "الاحصائيات",
+  "buttonNavigation2": "التحصيلات",
+  "buttonNavigation3": "المبيعات",
+  "buttonNavigation4": "الطلبات",
+
+
   "login": {
     "welcome": "اهلا بيك في اي كيو براندكس",
     "subtitle": "قم بادخال كود المستخدم و كلمة المرور للاستخدام التطبيق",

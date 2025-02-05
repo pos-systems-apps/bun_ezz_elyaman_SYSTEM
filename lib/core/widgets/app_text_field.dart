@@ -11,6 +11,7 @@ class AppTextFormField extends StatelessWidget {
   final InputBorder? focusedErrorBorder;
   final TextStyle? inputTextStyle;
   final TextStyle? hintStyle;
+  final TextStyle? textStyle;
   final int maxLines;
   final String hintText;
   final bool? isObscureText;
@@ -35,6 +36,7 @@ class AppTextFormField extends StatelessWidget {
     this.focusedErrorBorder,
     this.inputTextStyle,
     this.hintStyle,
+    this.textStyle,
     required this.hintText,
     this.maxLines = 1,
     this.isObscureText,
@@ -109,7 +111,7 @@ class AppTextFormField extends StatelessWidget {
         filled: true,
       ),
       obscureText: isObscureText ?? false,
-      style: TextStyles.font16BlackColorWeight400,
+      style: textStyle??TextStyles.font16BlackColorWeight400,
       validator: (value) {
         return validator(value);
       },

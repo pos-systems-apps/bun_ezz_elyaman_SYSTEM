@@ -11,6 +11,7 @@ class SearchWidget extends StatelessWidget {
   final InputBorder? enabledBorder;
   final TextStyle? inputTextStyle;
   final TextStyle? hintStyle;
+  final TextStyle? textStyle;
   final String hintText;
   final bool? isObscureText;
   final Widget? suffixIcon;
@@ -33,6 +34,7 @@ class SearchWidget extends StatelessWidget {
     this.enabledBorder,
     this.inputTextStyle,
     this.hintStyle,
+    this.textStyle,
     required this.hintText,
     this.isObscureText,
     this.prefixIcon,
@@ -59,21 +61,21 @@ class SearchWidget extends StatelessWidget {
         onchange(value);
       },
       decoration: InputDecoration(
-        isDense: true,
 
+        isDense: true,
         contentPadding: contentPadding ??
             EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
         focusedBorder: focusedBorder ??
             OutlineInputBorder(
               borderSide: BorderSide(
-                color: AppColors.greyColor.withOpacity(.11),
+                color: AppColors.greyColorBD.withOpacity(.11),
               ),
               borderRadius: BorderRadius.circular(9.r),
             ),
         enabledBorder: enabledBorder ??
             OutlineInputBorder(
               borderSide: BorderSide(
-                color: AppColors.greyColor.withOpacity(.11),
+                color: AppColors.greyColorBD.withOpacity(.11),
               ),
               borderRadius: BorderRadius.circular(9.r),
             ),
@@ -85,7 +87,7 @@ class SearchWidget extends StatelessWidget {
         filled: true,
       ),
       obscureText: isObscureText ?? false,
-      style: TextStyles.font13DarkBlueColor33Weight400,
+      style: textStyle??TextStyles.font13DarkBlueColor33Weight400,
       validator: (value) {
         return validator(value);
       },

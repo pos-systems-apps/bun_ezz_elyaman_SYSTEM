@@ -5,6 +5,10 @@
   "ok": "OK",
   "error": "Something went wrong, try again later.",
   "field": "Complete this field",
+  "buttonNavigation1": "Statistics",
+  "buttonNavigation2": "Collections",
+  "buttonNavigation3": "Sales",
+  "buttonNavigation4": "Orders",
   "login": {
     "welcome": "Welcome to IQ Brandx",
     "subtitle": "Enter your user Code and password to use the application",
