@@ -5,24 +5,24 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/app_text_field.dart';
+import 'package:pos_system/features/collections/logic/collections_cubit.dart';
 
-class BillWidget extends StatelessWidget {
-  final TextEditingController billNumberController;
+class MoneyTextFieldWidget extends StatelessWidget {
 
-  const BillWidget({required this.billNumberController, super.key});
+  const MoneyTextFieldWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppTextFormField(
-      hintText: "ادخل رقم الفاتوره",
+      hintText: "ادخل المبلغ",
       hintStyle: TextStyles.font14GreyColor87Weight400,
       textStyle: TextStyles.font14BlackColorWeight400,
-      controller: billNumberController,
+      controller: CollectionsCubit.get(context).moneyController,
       backgroundColor: AppColors.whiteColor,
       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       prefixIcon: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-        child: SvgPicture.asset(ImageAsset.reseatICon),
+        child: SvgPicture.asset(ImageAsset.moneyICon),
       ),
       focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.greyColorDB, width: 1.3),

@@ -2,18 +2,8 @@ abstract class CollectionsState {}
 
 class InitialState extends CollectionsState {}
 
-class OnLoginLoadingState extends CollectionsState {}
+class OnChangeBankSelectState extends CollectionsState {}
+class OnChangePaySelectState extends CollectionsState {}
+class OnChangeSelectedImageState extends CollectionsState {}
 
-class OnLoginSuccessState extends CollectionsState {}
 
-class OnLoginErrorState extends CollectionsState {
-  final String error;
-
-  OnLoginErrorState({required this.error});
-}
-
-class OnLoginCatchErrorState extends CollectionsState {
-  final String error;
-
-  OnLoginCatchErrorState({required this.error});
-}

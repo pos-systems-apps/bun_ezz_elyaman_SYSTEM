@@ -2,12 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/button_navigation/entities/button_navigation_items.dart';
 
 import 'package:pos_system/features/button_navigation/logic/button_navigation_state.dart';
+import 'package:pos_system/features/collections/logic/collections_cubit.dart';
 import 'package:pos_system/features/collections/ui/collections_screen.dart';
 import 'package:pos_system/features/statistics/ui/statistics_screen.dart';
 
@@ -26,7 +28,10 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
       case 0:
         return StatisticsScreen();
       case 1:
-        return CollectionsScreen();
+        return BlocProvider(
+          create: (context) => CollectionsCubit(getIt()),
+          child: CollectionsScreen(),
+        );
       case 2:
         return StatisticsScreen();
       case 3:
