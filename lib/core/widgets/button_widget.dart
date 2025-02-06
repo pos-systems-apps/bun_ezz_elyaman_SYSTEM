@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/core/utils/spacing.dart';
 
 import '../utils/app_colors_white_theme.dart';
 
@@ -9,9 +10,11 @@ class ButtonWidget extends StatelessWidget {
   final double? horizontalPadding;
   final double? verticalPadding;
   final Color? backGroundColor;
+  final Color? iconColor;
   final double? buttonWidth;
   final double? buttonHeight;
   final String buttonText;
+  final IconData? icon;
   final TextStyle textStyle;
   final VoidCallback onPressed;
 
@@ -19,11 +22,13 @@ class ButtonWidget extends StatelessWidget {
     super.key,
     this.borderRadius,
     this.borderColor,
+    this.iconColor,
     this.horizontalPadding,
     this.verticalPadding,
     this.backGroundColor,
     this.buttonHeight,
     this.buttonWidth,
+    this.icon,
     required this.buttonText,
     required this.textStyle,
     required this.onPressed,
@@ -45,10 +50,26 @@ class ButtonWidget extends StatelessWidget {
             color: backGroundColor,
             borderRadius: BorderRadius.circular(borderRadius ?? 20.0),
             border: Border.all(color: borderColor ?? AppColors.whiteColor)),
-        child: Text(
-          buttonText,
-          style: textStyle,
-        ),
+        child: icon == null
+            ? Text(
+                buttonText,
+                style: textStyle,
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    buttonText,
+                    style: textStyle,
+                  ),
+                  horizontalSpace(5),
+                  Icon(
+                    icon,
+                    color: iconColor,
+                    size: 18.r,
+                  )
+                ],
+              ),
       ),
     );
   }

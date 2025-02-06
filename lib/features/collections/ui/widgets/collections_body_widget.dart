@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/collections/ui/widgets/collections_buttons_widget.dart';
-import 'package:pos_system/features/collections/ui/widgets/select_items/bank_account_widget.dart';
-import 'package:pos_system/features/collections/ui/widgets/select_items/pay_account_widget.dart';
+import 'package:pos_system/features/collections/ui/widgets/select_items/collections_bank_account_widget.dart';
+import 'package:pos_system/features/collections/ui/widgets/select_items/collections_pay_account_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/text_fields/bill_text_field_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/text_fields/money_text_field_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/text_fields/notes_text_field_widget.dart';
@@ -35,7 +35,7 @@ class CollectionsBodyWidget extends StatelessWidget {
             ]),
           ),
           verticalSpace(8),
-          BankAccountWidget(),
+          CollectionsBankAccountWidget(),
           verticalSpace(16),
           Text.rich(TextSpan(children: [
             TextSpan(
@@ -44,7 +44,7 @@ class CollectionsBodyWidget extends StatelessWidget {
             TextSpan(text: "*", style: TextStyles.font12RedColorWeight400),
           ])),
           verticalSpace(8),
-          PayAccountWidget(),
+          CollectionsPayAccountWidget(),
           verticalSpace(16),
           MoneyTextFieldWidget(),
           verticalSpace(16),

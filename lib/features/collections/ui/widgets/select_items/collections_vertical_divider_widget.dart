@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 
-class VerticalDividerWidget extends StatelessWidget {
-  const VerticalDividerWidget({super.key});
+class CollectionsVerticalDividerWidget extends StatelessWidget {
+  const CollectionsVerticalDividerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

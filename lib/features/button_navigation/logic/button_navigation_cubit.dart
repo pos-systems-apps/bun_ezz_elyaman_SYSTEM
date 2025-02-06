@@ -11,6 +11,8 @@ import 'package:pos_system/features/button_navigation/entities/button_navigation
 import 'package:pos_system/features/button_navigation/logic/button_navigation_state.dart';
 import 'package:pos_system/features/collections/logic/collections_cubit.dart';
 import 'package:pos_system/features/collections/ui/collections_screen.dart';
+import 'package:pos_system/features/sales/logic/sales_cubit.dart';
+import 'package:pos_system/features/sales/ui/sales_screen.dart';
 import 'package:pos_system/features/statistics/ui/statistics_screen.dart';
 
 class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
@@ -33,7 +35,10 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
           child: CollectionsScreen(),
         );
       case 2:
-        return StatisticsScreen();
+        return BlocProvider(
+          create: (context) => SalesCubit(getIt()),
+          child: SalesScreen(),
+        );
       case 3:
         return StatisticsScreen();
 

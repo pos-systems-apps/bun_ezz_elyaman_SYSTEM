@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:pos_system/features/collections/data/repo/collections_repo.dart';
 import 'package:pos_system/features/collections/data/services/collections_service.dart';
+import 'package:pos_system/features/sales/data/repo/sales_repo.dart';
+import 'package:pos_system/features/sales/data/services/sales_service.dart';
 
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/login/data/services/login_service.dart';
@@ -19,6 +21,13 @@ class ServicesLocator {
     getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(getIt()));
     getIt.registerFactory<LoginService>(
         () => LoginService(apiConsumer: getIt()));
+
+
+    ///sales
+    getIt
+        .registerLazySingleton<SalesRepo>(() => SalesRepo(getIt()));
+    getIt.registerFactory<SalesService>(
+        () => SalesService(apiConsumer: getIt()));
 
 
     ///collections

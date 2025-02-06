@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/features/collections/logic/collections_cubit.dart';
 import 'package:pos_system/features/collections/logic/collections_state.dart';
-import 'package:pos_system/features/collections/ui/widgets/select_items/select_item_widget.dart';
-import 'package:pos_system/features/collections/ui/widgets/select_items/vertical_divider_widget.dart';
+import 'package:pos_system/features/collections/ui/widgets/select_items/collections_select_item_widget.dart';
+import 'package:pos_system/features/collections/ui/widgets/select_items/collections_vertical_divider_widget.dart';
 
-class BankAccountWidget extends StatelessWidget {
-  const BankAccountWidget({super.key});
+class CollectionsBankAccountWidget extends StatelessWidget {
+  const CollectionsBankAccountWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +39,12 @@ class BankAccountWidget extends StatelessWidget {
                           CollectionsCubit.get(context)
                               .changeSelectedBank(value);
                         },
-                        child: SelectItemWidget(
+                        child: CollectionsSelectItemWidget(
                             name: value.name,
                             isSelected: value.id ==
                                 CollectionsCubit.get(context).selectedBank?.id)),
                     if (index < CollectionsCubit.get(context).banks.length - 1)
-                      VerticalDividerWidget(),
+                      CollectionsVerticalDividerWidget(),
                   ],
                 );
               }).toList(),

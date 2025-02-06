@@ -3,18 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/styles.dart';
 
-class SelectItemWidget extends StatelessWidget {
+class SalesSelectItemWidget extends StatelessWidget {
   final String name;
   final bool isSelected;
 
-  const SelectItemWidget(
+  const SalesSelectItemWidget(
       {required this.name, required this.isSelected, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      width: 175.w,
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: .5.h),
       decoration: BoxDecoration(
