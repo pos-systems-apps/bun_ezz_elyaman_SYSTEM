@@ -79,7 +79,6 @@ Future<dynamic> _collectionDoneWidget(BuildContext context) {
                     "تاكيد التحصيل ",
                     style: TextStyles.font18greyColor27Weight600,
                   ),
-                  const Row(),
                   SizedBox(height: 20.h),
                   Lottie.asset(
                     ImageAsset.collectionDoneAnimation,

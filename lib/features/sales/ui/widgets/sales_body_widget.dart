@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
@@ -45,7 +47,9 @@ class SalesBodyWidget extends StatelessWidget {
                 iconColor: AppColors.whiteColor,
                 backGroundColor: AppColors.mainColor,
                 borderColor: AppColors.mainColor,
-                onPressed: () {}),
+                onPressed: () {
+                  context.pushNamed(Routes.reseatScreen);
+                }),
             verticalSpace(40),
           ],
         ),

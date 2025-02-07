@@ -14,6 +14,11 @@ class AppColors {
 
 
 
+  static Color blueColor72 = const Color(0xff1B1472);
+  static Color blackColor17 = const Color(0xff121217);
+  static Color greyColorDA = const Color(0xffD5D7DA);
+  static Color greyColor62 = const Color(0xff535862);
+  static Color greyColorA3 = const Color(0xff8A8AA3);
   static Color greyColor67 = const Color(0xff676767);
   static Color greyColor27 = const Color(0xff181D27);
   static Color greyColor66 = const Color(0xff666666);

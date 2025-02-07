@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:pos_system/features/collections/data/repo/collections_repo.dart';
 import 'package:pos_system/features/collections/data/services/collections_service.dart';
+import 'package:pos_system/features/reseat/data/repo/reseat_repo.dart';
+import 'package:pos_system/features/reseat/data/services/reseat_service.dart';
 import 'package:pos_system/features/sales/data/repo/sales_repo.dart';
 import 'package:pos_system/features/sales/data/services/sales_service.dart';
 
@@ -23,18 +25,30 @@ class ServicesLocator {
         () => LoginService(apiConsumer: getIt()));
 
 
-    ///sales
-    getIt
-        .registerLazySingleton<SalesRepo>(() => SalesRepo(getIt()));
-    getIt.registerFactory<SalesService>(
-        () => SalesService(apiConsumer: getIt()));
-
 
     ///collections
     getIt
         .registerLazySingleton<CollectionsRepo>(() => CollectionsRepo(getIt()));
     getIt.registerFactory<CollectionsService>(
         () => CollectionsService(apiConsumer: getIt()));
+
+
+    ///sales
+    getIt
+        .registerLazySingleton<SalesRepo>(() => SalesRepo(getIt()));
+    getIt.registerFactory<SalesService>(
+            () => SalesService(apiConsumer: getIt()));
+
+
+    ///reseats
+    getIt
+        .registerLazySingleton<ReseatRepo>(() => ReseatRepo(getIt()));
+    getIt.registerFactory<ReseatService>(
+            () => ReseatService(apiConsumer: getIt()));
+
+
+
+
 
     ///core
     getIt.registerLazySingleton<AppInterceptor>(() => AppInterceptor());

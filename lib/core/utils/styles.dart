@@ -42,6 +42,14 @@ class TextStyles {
     fontWeight: FontWeight.w500,
     fontFamily: 'Bahij',
   );
+
+  static TextStyle font14BlackColor17Weight500 = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.blackColor17,
+    fontWeight: FontWeight.w500,
+    fontFamily: 'Bahij',
+  );
+
   static TextStyle font10GreyColorBDWeight500 = TextStyle(
     fontSize: 10.sp,
     color: AppColors.greyColorBD,
@@ -184,6 +192,22 @@ class TextStyles {
     fontSize: 12.sp,
     color: AppColors.greyColor67,
     fontWeight: FontWeight.w500,
+    fontFamily: 'Bahij',
+  );
+
+  static TextStyle font14greyColor62Weight400 = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.greyColor62,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Bahij',
+  );
+
+
+
+  static TextStyle font48greyColor27Weight700 = TextStyle(
+    fontSize: 48.sp,
+    color: AppColors.greyColor27,
+    fontWeight: FontWeight.w700,
     fontFamily: 'Bahij',
   );
 

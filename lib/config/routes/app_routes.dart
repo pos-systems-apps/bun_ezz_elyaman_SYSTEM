@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/features/button_navigation/logic/button_navigation_cubit.dart';
 import 'package:pos_system/features/button_navigation/ui/button_navigation_screen.dart';
+import 'package:pos_system/features/reseat/logic/reseat_cubit.dart';
+import 'package:pos_system/features/reseat/ui/reseat_screen.dart';
 
 import '../../core/services/services_locator.dart';
 import '../../features/login/logic/login_cubit.dart';
@@ -26,6 +28,12 @@ class RouteGenerator {
             builder: (_) => BlocProvider(
                   create: (context) => ButtonNavigationCubit(),
                   child: ButtonNavigationScreen(),
+                ));
+      case Routes.reseatScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => ReseatCubit(getIt()),
+                  child: ReseatScreen(),
                 ));
 
       default:
