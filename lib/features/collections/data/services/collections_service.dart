@@ -27,7 +27,7 @@ class CollectionsService {
 
   Future<LoginResponseModel> login(LoginRequestModel parameter) async {
     final response = await apiConsumer.post(
-        CollectionsApiEndPoints.loginUrl,
+        CollectionsApiEndPoints.appSettingUrl,
         LoginRequestModel(code: parameter.code, password: parameter.password)
             .toJson(),
         null);

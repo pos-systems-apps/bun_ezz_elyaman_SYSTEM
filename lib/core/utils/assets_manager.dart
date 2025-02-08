@@ -3,6 +3,7 @@ class ImageAsset {
 
 ///animation
   static const String collectionDoneAnimation = 'assets/animation/confirm_collection_animation.json';
+  static const String loadingAnimation = 'assets/animation/loading_animation.json';
 
 ///images
   static const String backGroundImage = 'assets/images/back_ground_image.png';

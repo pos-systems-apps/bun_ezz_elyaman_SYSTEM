@@ -13,6 +13,7 @@ import 'package:pos_system/features/collections/logic/collections_cubit.dart';
 import 'package:pos_system/features/collections/ui/collections_screen.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/ui/sales_screen.dart';
+import 'package:pos_system/features/statistics/logic/statistics_cubit.dart';
 import 'package:pos_system/features/statistics/ui/statistics_screen.dart';
 
 class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
@@ -28,7 +29,11 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
   Widget buttonBarBody() {
     switch (selectedIndex) {
       case 0:
-        return StatisticsScreen();
+
+        return BlocProvider(
+          create: (context) => StatisticsCubit(getIt())..getStatistics(),
+          child: StatisticsScreen(),
+        );
       case 1:
         return BlocProvider(
           create: (context) => CollectionsCubit(getIt()),

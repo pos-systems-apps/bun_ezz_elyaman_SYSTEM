@@ -52,7 +52,8 @@ class SettingResponseInfo {
 
   factory SettingResponseInfo.fromJson(Map<String, dynamic> json) =>
       SettingResponseInfo(
-        logo: EndPoints.getImageFromApi(json['shop_logo']),
+        logo: json['shop_logo'],
+        // logo: EndPoints.getImageFromApi(json['shop_logo']),
         paginationNumber: json['pagination_limit'],
         currency: json['currency'],
         shopName: json['shop_name'],

@@ -2,12 +2,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:get_it/get_it.dart';
+import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/features/collections/data/repo/collections_repo.dart';
 import 'package:pos_system/features/collections/data/services/collections_service.dart';
 import 'package:pos_system/features/reseat/data/repo/reseat_repo.dart';
 import 'package:pos_system/features/reseat/data/services/reseat_service.dart';
 import 'package:pos_system/features/sales/data/repo/sales_repo.dart';
 import 'package:pos_system/features/sales/data/services/sales_service.dart';
+import 'package:pos_system/features/statistics/data/repo/statistics_repo.dart';
+import 'package:pos_system/features/statistics/data/services/statistics_service.dart';
 
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/login/data/services/login_service.dart';
@@ -23,6 +26,12 @@ class ServicesLocator {
     getIt.registerLazySingleton<LoginRepo>(() => LoginRepo(getIt()));
     getIt.registerFactory<LoginService>(
         () => LoginService(apiConsumer: getIt()));
+
+    ///statics
+    getIt
+        .registerLazySingleton<StatisticsRepo>(() => StatisticsRepo(getIt()));
+    getIt.registerFactory<StatisticsService>(
+            () => StatisticsService(apiConsumer: getIt()));
 
 
 
@@ -49,8 +58,11 @@ class ServicesLocator {
 
 
 
+    ///endPoint
+    getIt.registerLazySingleton<EndPoints>(() => EndPoints());
 
     ///core
+
     getIt.registerLazySingleton<AppInterceptor>(() => AppInterceptor());
 
     getIt.registerLazySingleton<ApiConsumer>(() => HttpConsumer(getIt()));

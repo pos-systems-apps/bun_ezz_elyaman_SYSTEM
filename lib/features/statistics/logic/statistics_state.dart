@@ -1,19 +1,19 @@
-abstract class LoginState {}
+abstract class StatisticsState {}
 
-class InitialState extends LoginState {}
+class InitialState extends StatisticsState {}
 
-class OnLoginLoadingState extends LoginState {}
+class OnGetStaticsLoadingState extends StatisticsState {}
 
-class OnLoginSuccessState extends LoginState {}
+class OnGetStaticsSuccessState extends StatisticsState {}
 
-class OnLoginErrorState extends LoginState {
-  final String error;
+class OnGetStaticsErrorState extends StatisticsState {
+  String error;
 
-  OnLoginErrorState({required this.error});
+  OnGetStaticsErrorState({required this.error});
 }
 
-class OnLoginCatchErrorState extends LoginState {
-  final String error;
+class OnGetStaticsCatchErrorState extends StatisticsState {
+  String error;
 
-  OnLoginCatchErrorState({required this.error});
+  OnGetStaticsCatchErrorState({required this.error});
 }

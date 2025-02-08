@@ -5,10 +5,5 @@ import 'package:pos_system/core/utils/constant_keys.dart';
 class CollectionsApiEndPoints {
   static const appSettingUrl = 'https://testnewpos.iqbrandx.com/api/v1/config';
 
-  static String getBaseUrl() {
-    return EndPoints.baseUrl.isEmpty
-        ? CacheHelper.getSecuredString(ConstantKeys.saveBaseURLToShared)
-        : EndPoints.baseUrl;
-  }
-  static final loginUrl = '${getBaseUrl()}api/v1/login';
+  // static final loginUrl = '${EndPoints().getBaseUrl()}api/v1/login';
 }

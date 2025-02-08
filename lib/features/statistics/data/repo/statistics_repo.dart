@@ -1,32 +1,23 @@
 
 import 'package:dartz/dartz.dart';
-import 'package:pos_system/features/login/data/models/setting_response.dart';
 
 import '../../../../core/exceptions/exceptions.dart';
 import '../../../../core/exceptions/failure.dart';
-import '../models/login_request_model.dart';
-import '../models/login_response_model.dart';
+import '../models/statistics_response_model.dart';
 import '../services/statistics_service.dart';
 
-class LoginRepo {
-  final LoginService _loginService;
+class StatisticsRepo {
+  final StatisticsService _statisticsService;
 
-  LoginRepo(this._loginService);
+  StatisticsRepo(this._statisticsService);
 
-  Future<Either<Failure, SettingResponse>> appSetting() async {
+  Future<Either<Failure, StatisticsResponseModel>> getStatistics() async {
     try {
-      return Right(await _loginService.appSetting());
-    } on ServerException catch (failure) {
-      return Left(ServerFailure(message: failure.serverFailure.message));
-    }
-  }
-
-  Future<Either<Failure, LoginResponseModel>> login(
-      LoginRequestModel parameter) async {
-    try {
-      return Right(await _loginService.login(parameter));
+      return Right(await _statisticsService.getStatistics());
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }
   }
 }
+
+

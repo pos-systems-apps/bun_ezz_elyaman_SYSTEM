@@ -3,13 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
-import 'package:pos_system/core/services/check_network.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/features/login/data/models/setting_response.dart';
 
 import 'app_colors_white_theme.dart';
 
-bool isLoggedInUser = false;
+
 String language = "";
 
 class AppConstant {
@@ -25,46 +24,6 @@ class AppConstant {
     );
   }
 
-  static setSettingFromApi(SettingResponse value) async {
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveLogoToShared, value.settingResponseInfo.logo);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.savePaginationNumberToShared,
-        value.settingResponseInfo.paginationNumber);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveCurrencyToShared, value.settingResponseInfo.currency);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveShopNameToShared, value.settingResponseInfo.shopName);
-    await CacheHelper.setSecuredString(ConstantKeys.saveShopAddressToShared,
-        value.settingResponseInfo.shopAddress);
-    await CacheHelper.setSecuredString(ConstantKeys.saveShopPhoneToShared,
-        value.settingResponseInfo.shopPhone);
-    await CacheHelper.setSecuredString(ConstantKeys.saveShopEmailToShared,
-        value.settingResponseInfo.shopEmail);
-    await CacheHelper.setSecuredString(ConstantKeys.saveFooterTextToShared,
-        value.settingResponseInfo.footerText);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveCountryToShared, value.settingResponseInfo.country);
-    await CacheHelper.setSecuredString(ConstantKeys.saveStockLimitToShared,
-        value.settingResponseInfo.stockLimit);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveTimeZoneToShared, value.settingResponseInfo.timeZone);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveCommercialRegistryToShared,
-        value.settingResponseInfo.commercialRegistry);
-    await CacheHelper.setSecuredString(ConstantKeys.saveNumberTaxToShared,
-        value.settingResponseInfo.numberTax);
-    await CacheHelper.setSecuredString(ConstantKeys.saveMainColorToShared,
-        value.settingResponseInfo.mainColor);
-    await CacheHelper.setSecuredString(ConstantKeys.saveSecondColorToShared,
-        value.settingResponseInfo.secondColor);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveBaseURLToShared, value.settingResponseInfo.baseURl);
-
-    EndPoints.baseUrl =
-        await CacheHelper.getSecuredString(ConstantKeys.saveBaseURLToShared) ??
-            "";
-  }
 
   static showBoxToBeOnline(BuildContext context) {
     showDialog(

@@ -27,7 +27,7 @@ class ReseatService {
 
   Future<LoginResponseModel> login(LoginRequestModel parameter) async {
     final response = await apiConsumer.post(
-        ReseatApiEndPoints.loginUrl,
+        ReseatApiEndPoints.appSettingUrl,
         LoginRequestModel(code: parameter.code, password: parameter.password)
             .toJson(),
         null);

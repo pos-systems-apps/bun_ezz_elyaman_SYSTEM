@@ -27,7 +27,7 @@ class SalesService {
 
   Future<LoginResponseModel> login(LoginRequestModel parameter) async {
     final response = await apiConsumer.post(
-        SalesApiEndPoints.loginUrl,
+        SalesApiEndPoints.appSettingUrl,
         LoginRequestModel(code: parameter.code, password: parameter.password)
             .toJson(),
         null);
