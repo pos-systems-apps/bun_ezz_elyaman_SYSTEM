@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class ImageAsset {
 
 
@@ -23,6 +25,15 @@ class ImageAsset {
   static const String statics4ICon = 'assets/icons/statics_4_icon.svg';
   static const String reseatICon = 'assets/icons/reseat_icon.svg';
 
+  static random1(){
+    List<String> images = [
+      statics1ICon,
+      statics3ICon,
+      statics4ICon,
+    ];
+    int randomNumber = Random().nextInt(images.length);
+    return images[randomNumber];
+  }
 
   static const String searchICon = 'assets/icons/search_icon.svg';
   static const String moneyICon = 'assets/icons/money_icon.svg';

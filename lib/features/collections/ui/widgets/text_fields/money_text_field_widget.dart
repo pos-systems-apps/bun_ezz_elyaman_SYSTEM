@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,13 +32,18 @@ class MoneyTextFieldWidget extends StatelessWidget {
           borderSide: BorderSide(color: AppColors.greyColorDB, width: 1.3),
           borderRadius: BorderRadius.circular(8.r)),
       errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.greyColorDB, width: 1.3),
+          borderSide: BorderSide(color: AppColors.redColor, width: 1.3),
           borderRadius: BorderRadius.circular(8.r)),
       focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.greyColorDB, width: 1.3),
+          borderSide: BorderSide(color: AppColors.redColor, width: 1.3),
           borderRadius: BorderRadius.circular(8.r)),
       keyboardType: TextInputType.text,
-      validator: (String? value) {},
+      validator: (String? value) {
+        if (value == null || value.isEmpty) {
+          return "field".tr();
+        }
+        return null;
+      },
       onchange: (String? value) {},
     );
   }

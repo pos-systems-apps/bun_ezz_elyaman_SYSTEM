@@ -1,18 +1,23 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/features/statistics/data/models/statistics_response_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartWidget extends StatelessWidget {
-  const ChartWidget({super.key});
+  final StatisticsResponseModel statisticsResponseModel;
+
+  const ChartWidget({required this.statisticsResponseModel, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-          top: 20.h, left: 10.w, right: 10.w, bottom: 10.h),
+      padding:
+          EdgeInsets.only(top: 20.h, left: 10.w, right: 10.w, bottom: 10.h),
+      margin: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
           image: DecorationImage(
@@ -25,9 +30,13 @@ class ChartWidget extends StatelessWidget {
         tooltipBehavior: TooltipBehavior(enable: true),
         //max value and minum value and interval
         primaryYAxis: NumericAxis(
-          minimum: 0,
-          maximum: 600,
-          interval: 100,
+          minimum: double.tryParse(
+                  statisticsResponseModel.minValue.value.toStringAsFixed(2)) ??
+              0,
+          maximum: 2000 +
+              (double.tryParse(statisticsResponseModel.maxValue.value
+                      .toStringAsFixed(2)) ??
+                  0),
           axisLine: AxisLine(
             color: AppColors.whiteColor,
             width: 0,
@@ -44,8 +53,7 @@ class ChartWidget extends StatelessWidget {
             width: 1,
           ),
           labelStyle: TextStyles.font10GreyColor82Weight400,
-          // maximumLabelWidth:40,
-          maximumLabelWidth: 100,
+          maximumLabelWidth: 80,
           labelIntersectAction: AxisLabelIntersectAction.multipleRows,
           majorGridLines: MajorGridLines(width: 0),
         ),
@@ -56,20 +64,15 @@ class ChartWidget extends StatelessWidget {
           alignment: ChartAlignment.far,
         ),
 
-        series: <ColumnSeries<_ChartData, String>>[
-          ColumnSeries<_ChartData, String>(
-            dataSource: <_ChartData>[
-              _ChartData('المبيعات', 120),
-              _ChartData('صافي مبيعات', 150),
-              _ChartData('مرتجعات اجله', 300),
-              _ChartData('تحصيلات نقديه', 500),
-              _ChartData('مبيعات اجله', 120),
-              _ChartData('مبيعات نقديه', 150),
-            ],
+        series: <ColumnSeries<StatisticsData, String>>[
+          ColumnSeries<StatisticsData, String>(
+            dataSource: statisticsResponseModel.statisticsData,
             width: .6,
             dataLabelSettings: DataLabelSettings(isVisible: true),
-            xValueMapper: (_ChartData data, _) => data.x,
-            yValueMapper: (_ChartData data, _) => data.y,
+            xValueMapper: (StatisticsData data, _) =>
+                context.locale.languageCode == "ar" ? data.nameAr : data.nameEn,
+            yValueMapper: (StatisticsData data, _) =>
+                double.tryParse(data.money.toStringAsFixed(2)) ?? 0,
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -80,11 +83,4 @@ class ChartWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-class _ChartData {
-  _ChartData(this.x, this.y);
-
-  final String x;
-  final double y;
 }

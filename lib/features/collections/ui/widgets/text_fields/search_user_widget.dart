@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,8 +9,7 @@ import 'package:pos_system/core/widgets/search_widget.dart';
 import 'package:pos_system/features/collections/logic/collections_cubit.dart';
 
 class SearchUserWidget extends StatelessWidget {
-
-  const SearchUserWidget({ super.key});
+  const SearchUserWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +30,22 @@ class SearchUserWidget extends StatelessWidget {
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.greyColorDB, width: 1.3),
           borderRadius: BorderRadius.circular(8.r)),
+      errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor, width: 1.3),
+          borderRadius: BorderRadius.circular(8.r)),
+      focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.redColor, width: 1.3),
+          borderRadius: BorderRadius.circular(8.r)),
       keyboardType: TextInputType.text,
-      validator: (String? value) {},
-      onchange: (String? value) {},
+      validator: (String? value) {
+        if (value == null || value.isEmpty) {
+          return "field".tr();
+        }
+        return null;
+      },
+      onchange: (String? value) {
+        CollectionsCubit.get(context).getUsers();
+      },
     );
   }
 }

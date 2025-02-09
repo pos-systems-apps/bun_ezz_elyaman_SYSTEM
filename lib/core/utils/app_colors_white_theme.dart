@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -6,13 +8,7 @@ class AppColors {
 
   static Color greenColor = Colors.green;
 
-   
   static const Color mainColor = Color(0xFF37479D);
-
-
-
-
-
 
   static Color blueColor72 = const Color(0xff1B1472);
   static Color blackColor17 = const Color(0xff121217);
@@ -34,6 +30,7 @@ class AppColors {
   static Color blueColor6F3 = const Color(0xffC9B6F3);
   static Color blueColorDE = const Color(0xffC3FFDE);
   static Color blueColorE5 = const Color(0xff4845E5);
+
   static Color blueColorE3 = const Color(0xffE2FAE3);
   static Color blueColorEE = const Color(0xffFAE2EE);
   static Color blueColorF7 = const Color(0xffD1ECF7);
@@ -46,12 +43,20 @@ class AppColors {
   static Color redColor = const Color(0xffFF0000);
   static Color greenColor00 = const Color(0xff41B800);
 
-
-
+  static Color random1() {
+    List<Color> colors = [
+      blueColorF3,
+      blueColorF7,
+      blueColorEE,
+      blueColorE3,
+      blueColor6F3,
+      blueColorDE
+    ];
+    int randomNumber = Random().nextInt(colors.length);
+    return colors[randomNumber];
+  }
 
   ///
-
-
 
   static Color darkBlueColor33 = const Color(0xff091133);
   static Color darkBlueColor7C = const Color(0xff192C7C);

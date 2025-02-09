@@ -10,38 +10,39 @@ class StatisticsHalfRowWidget extends StatelessWidget {
   final String title;
   final Color color;
   final String money;
+  final String icon;
 
   const StatisticsHalfRowWidget(
       {required this.title,
       required this.color,
       required this.money,
+      required this.icon,
       super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
         child: Container(
+      height: 100.h,
       padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 10.h),
+      margin: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(8.r),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 0),
-            blurRadius: 10,
-            spreadRadius: 0,
-            color: AppColors.blueColorE5.withValues(alpha: .1)
-          ),
-        ]
-
-      ),
+          color: color,
+          borderRadius: BorderRadius.circular(8.r),
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0, 0),
+                blurRadius: 10,
+                spreadRadius: 0,
+                color: AppColors.blueColorE5.withValues(alpha: .1)),
+          ]),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset(
-                ImageAsset.statics1ICon,
+                icon,
                 height: 16.h,
                 width: 16.w,
               ),
@@ -54,7 +55,7 @@ class StatisticsHalfRowWidget extends StatelessWidget {
               ))
             ],
           ),
-          verticalSpace(15),
+          Spacer(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -74,6 +75,7 @@ class StatisticsHalfRowWidget extends StatelessWidget {
               horizontalSpace(3),
             ],
           ),
+          Spacer(),
         ],
       ),
     ));

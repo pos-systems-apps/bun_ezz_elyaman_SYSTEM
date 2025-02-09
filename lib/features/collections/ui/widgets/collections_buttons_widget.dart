@@ -42,12 +42,20 @@ class CollectionsButtonsWidget extends StatelessWidget {
               borderRadius: 4.r,
               textStyle: TextStyles.font16WhiteColorWeight500,
               onPressed: () {
-                ///totoot
-                _collectionDoneWidget(context);
+
+                validateCollection(context);
+
               }),
         ),
       ],
     );
+  }
+
+  void validateCollection(BuildContext context) {
+    if (CollectionsCubit.get(context).formKey.currentState!.validate()) {
+      print("object");
+      _collectionDoneWidget(context);
+    }
   }
 }
 

@@ -9,6 +9,8 @@ class SearchWidget extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final InputBorder? focusedBorder;
   final InputBorder? enabledBorder;
+  final InputBorder? errorBorder;
+  final InputBorder? focusedErrorBorder;
   final TextStyle? inputTextStyle;
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
@@ -33,6 +35,8 @@ class SearchWidget extends StatelessWidget {
     this.focusedBorder,
     this.enabledBorder,
     this.inputTextStyle,
+    this.errorBorder,
+    this.focusedErrorBorder,
     this.hintStyle,
     this.textStyle,
     required this.hintText,
@@ -78,6 +82,22 @@ class SearchWidget extends StatelessWidget {
                 color: AppColors.greyColorBD.withOpacity(.11),
               ),
               borderRadius: BorderRadius.circular(9.r),
+            ),
+        errorBorder: errorBorder ??
+            OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.redColor,
+                width: 1.3,
+              ),
+              borderRadius: BorderRadius.circular(20.r),
+            ),
+        focusedErrorBorder: focusedErrorBorder ??
+            OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.redColor,
+                width: 1.3,
+              ),
+              borderRadius: BorderRadius.circular(20.r),
             ),
         hintStyle: hintStyle ?? TextStyles.font13DarkBlueColor33Weight400,
         hintText: hintText,

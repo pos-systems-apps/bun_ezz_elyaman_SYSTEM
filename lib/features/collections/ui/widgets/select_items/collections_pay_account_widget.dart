@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:pos_system/features/collections/logic/collections_cubit.dart';
 import 'package:pos_system/features/collections/logic/collections_state.dart';
 import 'package:pos_system/features/collections/ui/widgets/select_items/collections_select_item_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/select_items/collections_vertical_divider_widget.dart';
+import 'package:pos_system/features/splash/data/models/pay_class.dart';
 
 class CollectionsPayAccountWidget extends StatelessWidget {
   const CollectionsPayAccountWidget({super.key});
@@ -31,7 +33,7 @@ class CollectionsPayAccountWidget extends StatelessWidget {
                   .entries
                   .map((item) {
                 int index = item.key;
-                BB value = item.value;
+                PayClass value = item.value;
                 return Row(
                   children: [
                     GestureDetector(
@@ -40,7 +42,9 @@ class CollectionsPayAccountWidget extends StatelessWidget {
                               .changeSelectedPay(value);
                         },
                         child: CollectionsSelectItemWidget(
-                            name: value.name,
+                            name: context.locale.languageCode == "ar"
+                                ? value.nameAr
+                                : value.nameEn,
                             isSelected: value.id ==
                                 CollectionsCubit.get(context).selectedPay?.id)),
                     if (index < CollectionsCubit.get(context).pays.length - 1)

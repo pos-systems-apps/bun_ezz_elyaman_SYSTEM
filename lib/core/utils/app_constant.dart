@@ -5,6 +5,7 @@ import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/features/login/data/models/setting_response.dart';
+import 'package:pos_system/features/splash/data/models/pay_class.dart';
 
 import 'app_colors_white_theme.dart';
 
@@ -12,6 +13,13 @@ import 'app_colors_white_theme.dart';
 String language = "";
 
 class AppConstant {
+
+
+  static List<PayClass> pays=[
+    PayClass(id: 1, nameAr: "كاش", nameEn: "cash"),
+    PayClass(id: 2, nameAr: "شبكة", nameEn: "shabaka"),
+    PayClass(id: 3, nameAr: "اجل", nameEn: "agel"),
+  ];
   static toast(String message, Color colors) {
     return Fluttertoast.showToast(
       msg: message,

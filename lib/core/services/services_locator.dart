@@ -9,6 +9,8 @@ import 'package:pos_system/features/reseat/data/repo/reseat_repo.dart';
 import 'package:pos_system/features/reseat/data/services/reseat_service.dart';
 import 'package:pos_system/features/sales/data/repo/sales_repo.dart';
 import 'package:pos_system/features/sales/data/services/sales_service.dart';
+import 'package:pos_system/features/splash/data/repo/splash_repo.dart';
+import 'package:pos_system/features/splash/data/services/splash_service.dart';
 import 'package:pos_system/features/statistics/data/repo/statistics_repo.dart';
 import 'package:pos_system/features/statistics/data/services/statistics_service.dart';
 
@@ -27,13 +29,15 @@ class ServicesLocator {
     getIt.registerFactory<LoginService>(
         () => LoginService(apiConsumer: getIt()));
 
+    ///splash
+    getIt.registerLazySingleton<SplashRepo>(() => SplashRepo(getIt()));
+    getIt.registerFactory<SplashService>(
+        () => SplashService(apiConsumer: getIt()));
+
     ///statics
-    getIt
-        .registerLazySingleton<StatisticsRepo>(() => StatisticsRepo(getIt()));
+    getIt.registerLazySingleton<StatisticsRepo>(() => StatisticsRepo(getIt()));
     getIt.registerFactory<StatisticsService>(
-            () => StatisticsService(apiConsumer: getIt()));
-
-
+        () => StatisticsService(apiConsumer: getIt()));
 
     ///collections
     getIt
@@ -41,22 +45,15 @@ class ServicesLocator {
     getIt.registerFactory<CollectionsService>(
         () => CollectionsService(apiConsumer: getIt()));
 
-
     ///sales
-    getIt
-        .registerLazySingleton<SalesRepo>(() => SalesRepo(getIt()));
+    getIt.registerLazySingleton<SalesRepo>(() => SalesRepo(getIt()));
     getIt.registerFactory<SalesService>(
-            () => SalesService(apiConsumer: getIt()));
-
+        () => SalesService(apiConsumer: getIt()));
 
     ///reseats
-    getIt
-        .registerLazySingleton<ReseatRepo>(() => ReseatRepo(getIt()));
+    getIt.registerLazySingleton<ReseatRepo>(() => ReseatRepo(getIt()));
     getIt.registerFactory<ReseatService>(
-            () => ReseatService(apiConsumer: getIt()));
-
-
-
+        () => ReseatService(apiConsumer: getIt()));
 
     ///endPoint
     getIt.registerLazySingleton<EndPoints>(() => EndPoints());

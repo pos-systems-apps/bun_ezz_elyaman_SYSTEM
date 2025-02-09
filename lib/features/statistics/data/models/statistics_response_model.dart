@@ -21,17 +21,20 @@ class StatisticsResponseModel {
 class StatisticsData {
   String nameAr;
   String nameEn;
+  bool currency;
   double money;
 
   StatisticsData({
     required this.nameAr,
     required this.nameEn,
+    required this.currency,
     required this.money,
   });
 
   factory StatisticsData.fromJson(Map<String, dynamic> json) => StatisticsData(
         nameAr: json['ar'] ?? "",
         nameEn: json['en'] ?? "",
+        currency: json['currency'] == null ? true : false,
         money: double.tryParse(json['value'].toString()) ?? 0,
       );
 }

@@ -29,14 +29,14 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
   Widget buttonBarBody() {
     switch (selectedIndex) {
       case 0:
-
         return BlocProvider(
           create: (context) => StatisticsCubit(getIt())..getStatistics(),
           child: StatisticsScreen(),
         );
       case 1:
         return BlocProvider(
-          create: (context) => CollectionsCubit(getIt()),
+          create: (context) => CollectionsCubit(getIt(), getIt())
+            ..getBankAccounts(),
           child: CollectionsScreen(),
         );
       case 2:
