@@ -23,7 +23,7 @@ class StatisticsHalfRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Container(
-      height: 100.h,
+      height: 90.h,
       padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 10.h),
       margin: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(

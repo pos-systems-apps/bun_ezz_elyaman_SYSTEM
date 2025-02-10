@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -7,6 +8,7 @@ import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
+import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/collections/logic/collections_cubit.dart';
 
 class CollectionsButtonsWidget extends StatelessWidget {
@@ -42,9 +44,7 @@ class CollectionsButtonsWidget extends StatelessWidget {
               borderRadius: 4.r,
               textStyle: TextStyles.font16WhiteColorWeight500,
               onPressed: () {
-
                 validateCollection(context);
-
               }),
         ),
       ],
@@ -53,8 +53,19 @@ class CollectionsButtonsWidget extends StatelessWidget {
 
   void validateCollection(BuildContext context) {
     if (CollectionsCubit.get(context).formKey.currentState!.validate()) {
-      print("object");
-      _collectionDoneWidget(context);
+      if (CollectionsCubit.get(context).selectedBankAccount == null) {
+        ErrorAlertDialog.getDialog(context, "selectBankAccount".tr());
+      } else {
+        if (CollectionsCubit.get(context).selectedPay == null) {
+          ErrorAlertDialog.getDialog(context, "selectPayWay".tr());
+        } else {
+          if (CollectionsCubit.get(context).selectedImagePath == null) {
+            ErrorAlertDialog.getDialog(context, "selectImage".tr());
+          } else {
+            _collectionDoneWidget(context);
+          }
+        }
+      }
     }
   }
 }
@@ -104,6 +115,8 @@ Future<dynamic> _collectionDoneWidget(BuildContext context) {
                       backGroundColor: AppColors.mainColor,
                       borderColor: AppColors.mainColor,
                       onPressed: () {
+                        ///
+                        ///
                         ///
                       }),
                   SizedBox(height: 12.h),

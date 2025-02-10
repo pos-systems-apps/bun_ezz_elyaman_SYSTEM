@@ -1,11 +1,8 @@
-
 import 'package:dartz/dartz.dart';
-import 'package:pos_system/features/login/data/models/setting_response.dart';
-
 import '../../../../core/exceptions/exceptions.dart';
 import '../../../../core/exceptions/failure.dart';
-import '../models/login_request_model.dart';
-import '../models/login_response_model.dart';
+import '../models/confirm_collection_request_model.dart';
+import '../models/confirm_collection_response_model.dart';
 import '../services/collections_service.dart';
 
 class CollectionsRepo {
@@ -13,18 +10,10 @@ class CollectionsRepo {
 
   CollectionsRepo(this._collectionsService);
 
-  Future<Either<Failure, SettingResponse>> appSetting() async {
+  Future<Either<Failure, ConfirmCollectionResponseModel>> confirmCollection(
+      ConfirmCollectionRequestModel parameter) async {
     try {
-      return Right(await _collectionsService.appSetting());
-    } on ServerException catch (failure) {
-      return Left(ServerFailure(message: failure.serverFailure.message));
-    }
-  }
-
-  Future<Either<Failure, LoginResponseModel>> login(
-      LoginRequestModel parameter) async {
-    try {
-      return Right(await _collectionsService.login(parameter));
+      return Right(await _collectionsService.confirmCollection(parameter));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

@@ -17,10 +17,10 @@ class SplashService {
 
   SplashService({required this.apiConsumer});
 
-  Future<UsersResponseModel> getUsers() async {
+  Future<UsersResponseModel> getUsers(String parameter) async {
     String baseUrl = await EndPoints.getBaseUrl();
     final response =
-        await apiConsumer.get(SplashApiEndPoints.getUsersUrl(baseUrl), {
+        await apiConsumer.get(SplashApiEndPoints.getUsersUrl(baseUrl, parameter), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });

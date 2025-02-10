@@ -10,7 +10,7 @@ class UsersResponseModel {
   factory UsersResponseModel.fromJson(Map<String, dynamic> json) =>
       UsersResponseModel(
           totalUsers: json['total'],
-          userResponseData: List<UserResponseData>.from(json['all_customers']
+          userResponseData: List<UserResponseData>.from(json['customers']
               .map((item) => UserResponseData.fromJson(item))));
 }
 

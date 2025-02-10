@@ -1,18 +1,18 @@
-class LoginResponseModel {
+class ConfirmCollectionResponseModel {
   int kilometer;
   String message;
   String token;
   LoginResponseDataModel data;
 
-  LoginResponseModel({
+  ConfirmCollectionResponseModel({
     required this.kilometer,
     required this.message,
     required this.token,
     required this.data,
   });
 
-  factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
-      LoginResponseModel(
+  factory ConfirmCollectionResponseModel.fromJson(Map<String, dynamic> json) =>
+      ConfirmCollectionResponseModel(
           kilometer: json['kilometer'],
           message: json['message'],
           token: json['token'],

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -65,7 +64,6 @@ class SearchWidget extends StatelessWidget {
         onchange(value);
       },
       decoration: InputDecoration(
-
         isDense: true,
         contentPadding: contentPadding ??
             EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
@@ -107,10 +105,11 @@ class SearchWidget extends StatelessWidget {
         filled: true,
       ),
       obscureText: isObscureText ?? false,
-      style: textStyle??TextStyles.font13DarkBlueColor33Weight400,
+      style: textStyle ?? TextStyles.font13DarkBlueColor33Weight400,
       validator: (value) {
         return validator(value);
       },
     );
   }
 }
+

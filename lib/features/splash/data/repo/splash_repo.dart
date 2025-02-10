@@ -11,9 +11,9 @@ class SplashRepo {
 
   SplashRepo(this._splashService);
 
-  Future<Either<Failure, UsersResponseModel>> getUsers() async {
+  Future<Either<Failure, UsersResponseModel>> getUsers(String parameter) async {
     try {
-      return Right(await _splashService.getUsers());
+      return Right(await _splashService.getUsers(parameter));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

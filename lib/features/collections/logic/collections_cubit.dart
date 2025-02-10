@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/features/collections/data/models/confirm_collection_request_model.dart';
 import 'package:pos_system/features/splash/data/models/bank_accounts_response_model.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
 import 'package:pos_system/features/splash/data/models/users_response_model.dart';
@@ -16,21 +17,18 @@ class CollectionsCubit extends Cubit<CollectionsState> {
 
   CollectionsCubit(this._splashRepo, this._collectionsRepo)
       : super(InitialState());
-   TextEditingController billNumberController = TextEditingController();
-   TextEditingController moneyController = TextEditingController();
-   TextEditingController notesController = TextEditingController();
-   TextEditingController searchUserController = TextEditingController();
+  TextEditingController billNumberController = TextEditingController();
+  TextEditingController moneyController = TextEditingController();
+  TextEditingController notesController = TextEditingController();
+  TextEditingController searchUserController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-
 
   ///users
   List<UserResponseData> users = [];
 
-  //searchUserController
   getUsers() {
     emit(OnGetUsersLoadingState());
-    _splashRepo.getUsers().then((value) {
+    _splashRepo.getUsers(searchUserController.text).then((value) {
       value.fold((l) {
         emit(OnGetUsersErrorState());
       }, (r) {
@@ -40,6 +38,21 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     }).catchError((error) {
       emit(OnGetUsersCatchErrorState());
     });
+  }
+
+  UserResponseData? selectedUser;
+
+  onSelectUser(UserResponseData vale) {
+    searchUserController.text = vale.nameAr;
+    selectedUser = vale;
+    users.clear();
+    emit(OnSelectUserState());
+  }
+
+  clearSelectedUSer() {
+    selectedUser = null;
+    users.clear();
+    emit(OnSelectUserState());
   }
 
   ///bank account
@@ -85,7 +98,6 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     emit(OnChangePaySelectState());
   }
 
-
   ///upload image
 
   String? selectedImagePath;
@@ -104,15 +116,37 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     emit(OnChangeSelectedImageState());
   }
 
-
   cancelCollection() {
     billNumberController.clear();
     moneyController.clear();
     notesController.clear();
     searchUserController.clear();
     clearSelectedBankAccount();
+    clearSelectedUSer();
     clearSelectedPay();
     clearImage();
+  }
+
+  confirmCollection() {
+    emit(OnConfirmCollectionLoadingState());
+    _collectionsRepo
+        .confirmCollection(ConfirmCollectionRequestModel(
+            billID: billNumberController.text,
+            bankAccountID: selectedBankAccount!.id,
+            paymentWayID: selectedPay?.id,
+            customerID: selectedUser?.id,
+            price: moneyController.text,
+            noteText: notesController.text,
+            image: selectedImagePath))
+        .then((value) {
+      value.fold((l) {
+        emit(OnConfirmCollectionErrorState());
+      }, (r) {
+        emit(OnConfirmCollectionSuccessState());
+      });
+    }).catchError((error) {
+      emit(OnConfirmCollectionCatchErrorState());
+    });
   }
 
   static CollectionsCubit get(context) => BlocProvider.of(context);

@@ -28,7 +28,6 @@ class ChartWidget extends StatelessWidget {
         enableAxisAnimation: true,
         legend: Legend(isVisible: false),
         tooltipBehavior: TooltipBehavior(enable: true),
-        //max value and minum value and interval
         primaryYAxis: NumericAxis(
           minimum: double.tryParse(
                   statisticsResponseModel.minValue.value.toStringAsFixed(2)) ??
@@ -57,16 +56,16 @@ class ChartWidget extends StatelessWidget {
           labelIntersectAction: AxisLabelIntersectAction.multipleRows,
           majorGridLines: MajorGridLines(width: 0),
         ),
-
         title: ChartTitle(
           text: 'الاحصائيات',
           textStyle: TextStyles.font16GreyColor33Weight400,
           alignment: ChartAlignment.far,
         ),
-
         series: <ColumnSeries<StatisticsData, String>>[
           ColumnSeries<StatisticsData, String>(
-            dataSource: statisticsResponseModel.statisticsData,
+            dataSource: statisticsResponseModel.statisticsData
+                .where((item) => item.money > 0)
+                .toList(),
             width: .6,
             dataLabelSettings: DataLabelSettings(isVisible: true),
             xValueMapper: (StatisticsData data, _) =>

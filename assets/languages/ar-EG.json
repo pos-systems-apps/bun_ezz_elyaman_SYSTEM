@@ -5,6 +5,10 @@
   "ok": "حسنا",
   "error": "حدث خطآ ما حاول لاحقا",
   "field": "اكمل هذا الحقل",
+  "selectBankAccount": "اختر حساب الدفع ",
+  "selectPayWay": "اختر طريقة الدفع ",
+  "selectImage": "قم برفع صورة ",
+
   "buttonNavigation1": "الاحصائيات",
   "buttonNavigation2": "التحصيلات",
   "buttonNavigation3": "المبيعات",
