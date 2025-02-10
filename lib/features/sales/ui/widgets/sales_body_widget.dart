@@ -38,6 +38,7 @@ class SalesBodyWidget extends StatelessWidget {
               ),
             ),
             ButtonWidget(
+                isLoading:false,
                 buttonHeight: 48.h,
                 buttonWidth: double.infinity,
                 borderRadius: 6.r,

@@ -216,6 +216,7 @@ class ProductsWidget extends StatelessWidget {
                         ),
                         SizedBox(height: 30.h),
                         ButtonWidget(
+                            isLoading:false,
                             buttonHeight: 44.h,
                             buttonWidth: double.infinity,
                             borderRadius: 8.r,
@@ -228,6 +229,7 @@ class ProductsWidget extends StatelessWidget {
                             }),
                         SizedBox(height: 12.h),
                         ButtonWidget(
+                            isLoading:false,
                             buttonHeight: 44.h,
                             buttonWidth: double.infinity,
                             borderRadius: 8.r,

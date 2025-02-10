@@ -131,16 +131,17 @@ class LoginFormWidget extends StatelessWidget {
                   context.pushNamed(Routes.buttonNavigationScreen);
                 }
                 if (state is OnLoginErrorState) {
-                  ErrorAlertDialog.getDialog(context,state.error);
+                  ErrorAlertDialog.getDialog(context, state.error);
                 }
                 if (state is OnLoginCatchErrorState) {
-                  ErrorAlertDialog.getDialog(context,state.error);
+                  ErrorAlertDialog.getDialog(context, state.error);
                 }
               },
               builder: (context, state) {
                 return state is OnLoginLoadingState
                     ? LoadingWidget(color: AppColors.mainColor)
                     : ButtonWidget(
+                        isLoading: false,
                         buttonText: "login.login".tr(),
                         backGroundColor: AppColors.mainColor,
                         borderRadius: 10,

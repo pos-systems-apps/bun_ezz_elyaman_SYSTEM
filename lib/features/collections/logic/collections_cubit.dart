@@ -1,7 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/collections/data/models/confirm_collection_request_model.dart';
 import 'package:pos_system/features/splash/data/models/bank_accounts_response_model.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
@@ -85,7 +88,8 @@ class CollectionsCubit extends Cubit<CollectionsState> {
   }
 
   ///pays
-  List<PayClass> pays = AppConstant.pays;
+  List<PayClass> pays =
+      getIt<AppConstant>().pays.where((item) => item.isShown).toList();
   PayClass? selectedPay;
 
   changeSelectedPay(PayClass value) {
@@ -140,12 +144,12 @@ class CollectionsCubit extends Cubit<CollectionsState> {
             image: selectedImagePath))
         .then((value) {
       value.fold((l) {
-        emit(OnConfirmCollectionErrorState());
+        emit(OnConfirmCollectionErrorState(error: l.message));
       }, (r) {
-        emit(OnConfirmCollectionSuccessState());
+        emit(OnConfirmCollectionSuccessState(message: r.message ?? ""));
       });
     }).catchError((error) {
-      emit(OnConfirmCollectionCatchErrorState());
+      emit(OnConfirmCollectionCatchErrorState(error: "error".tr()));
     });
   }
 

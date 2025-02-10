@@ -5,6 +5,7 @@ import 'package:pos_system/features/button_navigation/logic/button_navigation_cu
 import 'package:pos_system/features/button_navigation/ui/button_navigation_screen.dart';
 import 'package:pos_system/features/reseat/logic/reseat_cubit.dart';
 import 'package:pos_system/features/reseat/ui/reseat_screen.dart';
+import 'package:pos_system/features/setting/ui/setting_screen.dart';
 import 'package:pos_system/features/splash/ui/splash_screen.dart';
 
 import '../../core/services/services_locator.dart';
@@ -16,8 +17,7 @@ class RouteGenerator {
     final dynamic args = settings.arguments;
     switch (settings.name) {
       case Routes.splashScreen:
-        return MaterialPageRoute(
-            builder: (_) => SplashScreen());
+        return MaterialPageRoute(builder: (_) => SplashScreen());
 
       case Routes.loginScreen:
         return MaterialPageRoute(
@@ -38,6 +38,8 @@ class RouteGenerator {
                   create: (context) => ReseatCubit(getIt()),
                   child: ReseatScreen(),
                 ));
+      case Routes.settingScreen:
+        return MaterialPageRoute(builder: (_) => SettingScreen());
 
       default:
         return null;

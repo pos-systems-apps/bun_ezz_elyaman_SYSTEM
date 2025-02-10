@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/services/check_network.dart';
+import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/widgets/offline_alert_dialog.dart';
 
 import 'config/routes/app_routes.dart';
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, snapshot) {
-          language = context.locale.languageCode;
+          getIt<AppConstant>().setLanguage(context.locale.languageCode);
           return Container(
             color: AppColors.whiteColor,
             child: MaterialApp(

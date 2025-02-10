@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pos_system/config/routes/routes.dart';
+import 'package:pos_system/core/api/end_points.dart';
+import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/cached_network_image.dart';
@@ -58,7 +62,13 @@ class StatisticAppBarWidget extends StatelessWidget {
             horizontalSpace(12),
             GestureDetector(
                 onTap: () {
-                  ///
+                  print(AppColors.mainColor.hashCode);
+                  print(AppColors.secondColor.hashCode);
+               // var ii=   getIt<AppColors>().getMainColor();
+               // print(ii);
+               // var ee3=    getIt<AppColors>()..getSecondColor();
+               // print(ee3);
+               //    context.pushNamed(Routes.settingScreen);
                 },
                 child: Container(
                   height: 40.h,

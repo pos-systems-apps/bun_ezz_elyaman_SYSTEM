@@ -22,8 +22,20 @@ class OnGetBankAccountsSuccessState extends CollectionsState {}
 
 
 class OnConfirmCollectionLoadingState extends CollectionsState {}
-class OnConfirmCollectionSuccessState extends CollectionsState {}
-class OnConfirmCollectionErrorState extends CollectionsState {}
-class OnConfirmCollectionCatchErrorState extends CollectionsState {}
+class OnConfirmCollectionSuccessState extends CollectionsState {
+  String message;
+
+  OnConfirmCollectionSuccessState({required this.message});
+}
+class OnConfirmCollectionErrorState extends CollectionsState {
+  String error;
+
+  OnConfirmCollectionErrorState({required this.error});
+}
+class OnConfirmCollectionCatchErrorState extends CollectionsState {
+  String error;
+
+  OnConfirmCollectionCatchErrorState({required this.error});
+}
 
 

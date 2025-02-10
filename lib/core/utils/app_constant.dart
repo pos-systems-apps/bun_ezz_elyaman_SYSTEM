@@ -1,25 +1,128 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pos_system/core/api/end_points.dart';
-import 'package:pos_system/core/services/cache_helper.dart';
-import 'package:pos_system/core/utils/constant_keys.dart';
-import 'package:pos_system/features/login/data/models/setting_response.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
 
 import 'app_colors_white_theme.dart';
 
-
-String language = "";
-
 class AppConstant {
+  static String language = "";
+  static String currency = "";
+  static String shopLogo = "";
+  static String shopName = "";
+  static String shopAddress = "";
+  static String shopPhone = "";
+  static String shopEmail = "";
+  static String country = "";
+  static String timeZone = "";
+  static String numberTax = "";
+  static String commercialRegistry = "";
+  static String cash = "0";
+  static String shabaka = "0";
+  static String agel = "0";
 
+  Future<void> setAppConstantData({
+    required String currencyNew,
+    required String shopLogoNew,
+    required String shopNameNew,
+    required String shopAddressNew,
+    required String shopPhoneNew,
+    required String shopEmailNew,
+    required String countryNew,
+    required String timeZoneNew,
+    required String numberTaxNew,
+    required String commercialRegistryNew,
+    required String cashNew,
+    required String shabakaNew,
+    required String agelNew,
+  }) async {
+    currency = currencyNew;
+    shopLogo = shopLogoNew;
+    shopName = shopNameNew;
+    shopAddress = shopAddressNew;
+    shopPhone = shopPhoneNew;
+    shopEmail = shopEmailNew;
+    country = countryNew;
+    timeZone = timeZoneNew;
+    numberTax = numberTaxNew;
+    commercialRegistry = commercialRegistryNew;
+    cash = cashNew;
+    shabaka = shabakaNew;
+    agel = agelNew;
 
-  static List<PayClass> pays=[
-    PayClass(id: 1, nameAr: "كاش", nameEn: "cash"),
-    PayClass(id: 2, nameAr: "شبكة", nameEn: "shabaka"),
-    PayClass(id: 3, nameAr: "اجل", nameEn: "agel"),
-  ];
+    pays = [
+      PayClass(id: 1, nameAr: "كاش", nameEn: "cash", isShown: getCash() == "1"),
+      PayClass(
+          id: 2,
+          nameAr: "شبكة",
+          nameEn: "shabaka",
+          isShown: getShabake() == "1"),
+      PayClass(id: 3, nameAr: "اجل", nameEn: "agel", isShown: getAgel() == "1"),
+    ];
+  }
+
+  void setLanguage(String value) {
+    language = value;
+  }
+
+  String getLanguage() {
+    return language;
+  }
+
+  String getLCurrency() {
+    return currency;
+  }
+
+  String getShopLogo() {
+    return shopLogo;
+  }
+
+  String getShopName() {
+    return shopName;
+  }
+
+  String getShopAddress() {
+    return shopAddress;
+  }
+
+  String getShopPhone() {
+    return shopPhone;
+  }
+
+  String getShopEmail() {
+    return shopEmail;
+  }
+
+  String getCountry() {
+    return country;
+  }
+
+  String getTimeZone() {
+    return timeZone;
+  }
+
+  String getNumberTax() {
+    return numberTax;
+  }
+
+  String getCommercialRegistry() {
+    return commercialRegistry;
+  }
+
+  static String getCash() {
+    return cash;
+  }
+
+  static String getShabake() {
+    return shabaka;
+  }
+
+  static String getAgel() {
+    return agel;
+  }
+
+  List<PayClass> pays = [];
+
   static toast(String message, Color colors) {
     return Fluttertoast.showToast(
       msg: message,
@@ -31,7 +134,6 @@ class AppConstant {
       fontSize: 16.0.sp,
     );
   }
-
 
   static showBoxToBeOnline(BuildContext context) {
     showDialog(

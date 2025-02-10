@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:http_interceptor/http_interceptor.dart';
+import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 
@@ -9,7 +9,8 @@ class AppInterceptor extends InterceptorContract {
   Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
     request.headers[ConstantKeys.contentType] = ConstantKeys.applicationJson;
     request.headers[ConstantKeys.acceptText] = ConstantKeys.applicationJson;
-    request.headers[ConstantKeys.acceptLanguage] = language;
+    request.headers[ConstantKeys.acceptLanguage] =
+        getIt<AppConstant>().getLanguage();
     debugPrint(request.toString());
     return request;
   }

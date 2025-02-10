@@ -4,6 +4,7 @@ import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/features/statistics/data/models/statistics_response_model.dart';
 import 'package:pos_system/features/statistics/ui/widgets/statistics_half_row_widget.dart';
@@ -39,32 +40,46 @@ class _StatisticsOneRowWidgetState extends State<StatisticsOneRowWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: widget.statisticsData
-              .take(2)
-              .map((item) => StatisticsHalfRowWidget(
-                    title: context.locale.languageCode == "ar"
-                        ? item.nameAr
-                        : item.nameEn,
-                    money:
-                    (item.currency? (currency ?? ""):"") + " ${item.money.toStringAsFixed(2)}",
-                    color: AppColors.random1(),
-                    icon: ImageAsset.random1(),
-                  ))
-              .toList(),
-        ),
+        if (widget.statisticsData.length == 1)
+          StatisticsHalfRowWidget(
+            width: (MediaQueryValues(context).width / 2) - 16,
+            title: context.locale.languageCode == "ar"
+                ? widget.statisticsData[0].nameAr
+                : widget.statisticsData[0].nameEn,
+            money: (widget.statisticsData[0].currency ? (currency ?? "") : "") +
+                " ${widget.statisticsData[0].money.toStringAsFixed(2)}",
+            color: AppColors.random1(),
+            icon: ImageAsset.random1(),
+          ),
+        if (widget.statisticsData.length >= 2)
+          Row(
+            children: widget.statisticsData
+                .take(2)
+                .map((item) => Expanded(
+                      child: StatisticsHalfRowWidget(
+                        width: double.infinity,
+                        title: context.locale.languageCode == "ar"
+                            ? item.nameAr
+                            : item.nameEn,
+                        money: (item.currency ? (currency ?? "") : "") +
+                            " ${item.money.toStringAsFixed(2)}",
+                        color: AppColors.random1(),
+                        icon: ImageAsset.random1(),
+                      ),
+                    ))
+                .toList(),
+          ),
         verticalSpace(16),
         if (widget.statisticsData.length == 3)
           StatisticsRowWidget(
             title: context.locale.languageCode == "ar"
                 ? widget.statisticsData[2].nameAr
                 : widget.statisticsData[2].nameEn,
-            money: (widget.statisticsData[2].currency? (currency ?? ""):"") +
+            money: (widget.statisticsData[2].currency ? (currency ?? "") : "") +
                 "  ${widget.statisticsData[2].money.toStringAsFixed(2)}",
             color: AppColors.random1(),
             icon: ImageAsset.random1(),
           ),
-
         verticalSpace(24),
       ],
     );

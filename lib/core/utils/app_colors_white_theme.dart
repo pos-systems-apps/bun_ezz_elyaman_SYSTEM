@@ -3,12 +3,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class AppColors {
+  Future<void> setColors(String main, String second) async {
+    mainColor = Color(int.parse("0xFF$main"));
+    secondColor = Color(int.parse("0xFF$second"));
+  }
+
   static Color whiteColor = Colors.white;
   static Color blackColor = Colors.black;
-
   static Color greenColor = Colors.green;
 
-  static const Color mainColor = Color(0xFF37479D);
+  static Color mainColor = Color(0xFF37479d);
+  static Color secondColor = Color(0xFF37479D);
 
   static Color blueColor72 = const Color(0xff1B1472);
   static Color blackColor17 = const Color(0xff121217);

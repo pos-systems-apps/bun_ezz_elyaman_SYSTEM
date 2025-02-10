@@ -26,6 +26,9 @@ class ConstantKeys {
   static const saveMainColorToShared = "MAIN_COLOR";
   static const saveSecondColorToShared = "SECOND_COLOR";
   static const saveBaseURLToShared = "BASE_URL";
+  static const saveCashToShared = "CASH";
+  static const saveShabakaToShared = "SHABAKA";
+  static const saveAgelToShared = "AGEL";
 
 
   ///

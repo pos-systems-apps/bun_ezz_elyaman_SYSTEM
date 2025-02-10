@@ -23,7 +23,7 @@ class SearchUserWidget extends StatelessWidget {
         return current is OnGetUsersLoadingState ||
             current is OnGetUsersSuccessState ||
             current is OnGetUsersErrorState ||
-            current is OnGetUsersCatchErrorState||
+            current is OnGetUsersCatchErrorState ||
             current is OnSelectUserState;
       },
       builder: (context, state) {
@@ -66,7 +66,7 @@ class SearchUserWidget extends StatelessWidget {
                 if (_delay?.isActive ?? false) {
                   _delay!.cancel();
                 }
-                _delay = Timer(Duration(seconds: 2), () {
+                _delay = Timer(Duration(seconds: 1), () {
                   CollectionsCubit.get(context).getUsers();
                 });
               },
@@ -103,7 +103,8 @@ class SearchUserWidget extends StatelessWidget {
                         style: TextStyles.font16BlackWeight500,
                       ),
                       onTap: () {
-                        CollectionsCubit.get(context).onSelectUser(CollectionsCubit.get(context).users[index]);
+                        CollectionsCubit.get(context).onSelectUser(
+                            CollectionsCubit.get(context).users[index]);
                       },
                     );
                   },

@@ -210,6 +210,12 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     fontFamily: 'Bahij',
   );
+  static TextStyle font20WhiteColorWeight700 = TextStyle(
+    fontSize: 20.sp,
+    color: AppColors.whiteColor,
+    fontWeight: FontWeight.w700,
+    fontFamily: 'Bahij',
+  );
 
 
 
@@ -268,11 +274,7 @@ class TextStyles {
     color: AppColors.redColor,
     fontWeight: FontWeight.w700,
   );
-  static TextStyle font20WhiteColorWeight700 = TextStyle(
-    fontSize: 20.sp,
-    color: AppColors.whiteColor,
-    fontWeight: FontWeight.w700,
-  );
+
   static TextStyle font20RedColorWeight700 = TextStyle(
     fontSize: 20.sp,
     color: AppColors.redColor,

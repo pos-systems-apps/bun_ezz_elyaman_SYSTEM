@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:get_it/get_it.dart';
 import 'package:pos_system/core/api/end_points.dart';
+import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/features/collections/data/repo/collections_repo.dart';
 import 'package:pos_system/features/collections/data/services/collections_service.dart';
 import 'package:pos_system/features/reseat/data/repo/reseat_repo.dart';
@@ -55,8 +57,11 @@ class ServicesLocator {
     getIt.registerFactory<ReseatService>(
         () => ReseatService(apiConsumer: getIt()));
 
-    ///endPoint
+
+    ///constant
     getIt.registerLazySingleton<EndPoints>(() => EndPoints());
+    getIt.registerLazySingleton<AppConstant>(() => AppConstant());
+    getIt.registerLazySingleton<AppColors>(() => AppColors());
 
     ///core
 
