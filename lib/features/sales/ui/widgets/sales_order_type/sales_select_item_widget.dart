@@ -25,7 +25,7 @@ class SalesSelectItemWidget extends StatelessWidget {
       child: Text(
         name,
         textAlign: TextAlign.center,
-        maxLines: 2,
+        maxLines: 1,
         style: TextStyles.font14blueColor89rWeight400
             .copyWith(color: isSelected ? AppColors.mainColor : null),
       ),

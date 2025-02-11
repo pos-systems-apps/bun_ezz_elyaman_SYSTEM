@@ -1,13 +1,17 @@
 import 'dart:convert';
 
-import 'package:pos_system/features/login/data/models/setting_response.dart';
+import 'package:pos_system/core/api/end_points.dart';
+import 'package:pos_system/core/services/cache_helper.dart';
+import 'package:pos_system/core/services/services_locator.dart';
+import 'package:pos_system/core/utils/constant_keys.dart';
+import 'package:pos_system/features/sales/data/models/category_products_response.dart';
+import 'package:pos_system/features/sales/data/models/category_response.dart';
+import 'package:pos_system/features/sales/data/models/search_products_response.dart';
 
 import '../../../../core/api/api_consumer.dart';
 import '../../../../core/api/status_code.dart';
 import '../../../../core/exceptions/exceptions.dart';
 import '../../../../core/exceptions/failure.dart';
-import '../models/login_request_model.dart';
-import '../models/login_response_model.dart';
 import 'sales_api_end_points.dart';
 
 class SalesService {
@@ -15,81 +19,53 @@ class SalesService {
 
   SalesService({required this.apiConsumer});
 
-  Future<SettingResponse> appSetting() async {
-    final response = await apiConsumer.get(SalesApiEndPoints.appSettingUrl, null);
+  Future<CategoryResponse> getCategories(int page) async {
+    String baseUrl = await getIt<EndPoints>().getBaseUrl();
+
+    final response = await apiConsumer
+        .get(SalesApiEndPoints.getCategoriesUrl(baseUrl, page), {
+      ConstantKeys.appAuthorization:
+          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+    });
     if (response.statusCode == StatusCode.ok) {
-      return SettingResponse.fromJson(jsonDecode(response.body));
+      return CategoryResponse.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
     }
   }
 
-  Future<LoginResponseModel> login(LoginRequestModel parameter) async {
-    final response = await apiConsumer.post(
-        SalesApiEndPoints.appSettingUrl,
-        LoginRequestModel(code: parameter.code, password: parameter.password)
-            .toJson(),
-        null);
+  Future<CategoryProductsResponse> getCategoryProducts(
+      int categoryId,int type , int page) async {
+    String baseUrl = await getIt<EndPoints>().getBaseUrl();
+
+    final response = await apiConsumer.get(
+        SalesApiEndPoints.getCategoryProductsUrl(baseUrl, categoryId,type, page), {
+      ConstantKeys.appAuthorization:
+          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+    });
     if (response.statusCode == StatusCode.ok) {
-      return LoginResponseModel.fromJson(jsonDecode(response.body));
+      return CategoryProductsResponse.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
     }
   }
 
-// Future<LoginResponseModel> loginWithGoogle(
-//     LoginWithSocialRequestModel parameter) async {
-//   final response = await apiConsumer.post(
-//       LoginApiEndPoints.loginWithSocialUrl,
-//       LoginWithSocialRequestModel(
-//               provider: parameter.provider,
-//               accessToken: parameter.accessToken)
-//           .toJson(),
-//       null);
-//   if (jsonDecode(response.body)['status'] == true) {
-//     return LoginResponseModel.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw ServerException(
-//         serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
-//   }
-// }
+  Future<SearchProductsResponse> getSearchProducts(
+      String name, int type, int page) async {
+    String baseUrl = await getIt<EndPoints>().getBaseUrl();
 
-// Future<LoginResponseModel> loginWithApple(
-//     LoginWithAppleRequestModel parameter) async {
-//   final response = await apiConsumer.post(
-//       LoginApiEndPoints.loginWithAppleUrl,
-//       LoginWithAppleRequestModel(
-//         provider: parameter.provider,
-//         tokenId: parameter.tokenId,
-//         name: parameter.name,
-//         email: parameter.email,
-//       ).toJson(),
-//       null);
-//   if (jsonDecode(response.body)['status'] == true) {
-//     return LoginResponseModel.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw ServerException(
-//         serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
-//   }
-// }
-
-// Future<SuccessResponseModel> sendFCM(FcmRequestModel parameter) async {
-//   final response = await apiConsumer.post(
-//       LoginApiEndPoints.sendFCMUrl,
-//       FcmRequestModel(
-//         token: parameter.token,
-//       ).toJson(),
-//       {
-//         ConstantKeys.appAuthorization:
-//         "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-//       });
-//   if (response.statusCode == 200) {
-//     return SuccessResponseModel.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw ServerException(
-//         serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
-//   }
-// }
+    final response = await apiConsumer.get(
+        SalesApiEndPoints.getSearchProductsUrl(baseUrl, name, type, page), {
+      ConstantKeys.appAuthorization:
+          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+    });
+    if (response.statusCode == StatusCode.ok) {
+      return SearchProductsResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw ServerException(
+          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
+    }
+  }
 }

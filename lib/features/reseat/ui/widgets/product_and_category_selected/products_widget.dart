@@ -6,9 +6,9 @@ import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
+import 'package:pos_system/features/reseat/ui/widgets/product_and_category_selected/product_widget.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/logic/sales_state.dart';
-import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/product_widget.dart';
 
 class ProductsWidget extends StatelessWidget {
   const ProductsWidget({super.key});
@@ -34,22 +34,24 @@ class ProductsWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  if (SalesCubit.get(context).selectedProductsIsContainProduct(
-                      SalesCubit.get(context).products[index])) {
-                    SalesCubit.get(context).removeProductFromSelectedProducts(
-                        SalesCubit.get(context).products[index]);
-                  } else {
-                    ///
-                    _productSelectedDetailsWidget(context,10);
-                    SalesCubit.get(context).addProductToSelectedProducts(
-                        SalesCubit.get(context).products[index]);
-                  }
+                  // if (SalesCubit.get(context).selectedProductsIsContainProduct(
+                  //     SalesCubit.get(context).products[index])) {
+                  //   SalesCubit.get(context).removeProductFromSelectedProducts(
+                  //       SalesCubit.get(context).products[index]);
+                  // } else {
+                  //   ///
+                  //   _productSelectedDetailsWidget(context,10);
+                  //   SalesCubit.get(context).addProductToSelectedProducts(
+                  //       SalesCubit.get(context).products[index]);
+                  // }
                 },
                 child: ProductWidget(
-                    name: SalesCubit.get(context).products[index].name,
-                    isSelected: SalesCubit.get(context)
-                        .selectedProductsIsContainProduct(
-                            SalesCubit.get(context).products[index])),
+                    name: SalesCubit.get(context).products[index].nameAr,
+                    isSelected: true
+                    // SalesCubit.get(context)
+                    //     .selectedProductsIsContainProduct(
+                    //         SalesCubit.get(context).products[index])
+                ),
               );
             });
       },

@@ -1,11 +1,10 @@
-
 import 'package:dartz/dartz.dart';
-import 'package:pos_system/features/login/data/models/setting_response.dart';
+import 'package:pos_system/features/sales/data/models/category_products_response.dart';
+import 'package:pos_system/features/sales/data/models/category_response.dart';
+import 'package:pos_system/features/sales/data/models/search_products_response.dart';
 
 import '../../../../core/exceptions/exceptions.dart';
 import '../../../../core/exceptions/failure.dart';
-import '../models/login_request_model.dart';
-import '../models/login_response_model.dart';
 import '../services/sales_service.dart';
 
 class SalesRepo {
@@ -13,18 +12,27 @@ class SalesRepo {
 
   SalesRepo(this._salesService);
 
-  Future<Either<Failure, SettingResponse>> appSetting() async {
+  Future<Either<Failure, CategoryResponse>> getCategories(int page) async {
     try {
-      return Right(await _salesService.appSetting());
+      return Right(await _salesService.getCategories(page));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }
   }
 
-  Future<Either<Failure, LoginResponseModel>> login(
-      LoginRequestModel parameter) async {
+  Future<Either<Failure, CategoryProductsResponse>> getCategoryProducts(
+      int categoryId,int type ,int page) async {
     try {
-      return Right(await _salesService.login(parameter));
+      return Right(await _salesService.getCategoryProducts(categoryId, type,page));
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(message: failure.serverFailure.message));
+    }
+  }
+
+  Future<Either<Failure, SearchProductsResponse>> getSearchProducts(
+      String name, int type, int page) async {
+    try {
+      return Right(await _salesService.getSearchProducts(name, type, page));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

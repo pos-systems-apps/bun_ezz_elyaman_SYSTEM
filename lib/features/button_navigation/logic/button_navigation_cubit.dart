@@ -35,13 +35,13 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
         );
       case 1:
         return BlocProvider(
-          create: (context) => CollectionsCubit(getIt(), getIt())
-            ..getBankAccounts(),
+          create: (context) =>
+              CollectionsCubit(getIt(), getIt())..getBankAccounts(),
           child: CollectionsScreen(),
         );
       case 2:
         return BlocProvider(
-          create: (context) => SalesCubit(getIt()),
+          create: (context) => SalesCubit(getIt())..getCategoriesFromHere(),
           child: SalesScreen(),
         );
       case 3:

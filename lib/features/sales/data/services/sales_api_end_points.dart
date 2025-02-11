@@ -1,9 +1,12 @@
-import 'package:pos_system/core/api/end_points.dart';
-import 'package:pos_system/core/services/cache_helper.dart';
-import 'package:pos_system/core/utils/constant_keys.dart';
-
 class SalesApiEndPoints {
-  static const appSettingUrl = 'https://testnewpos.iqbrandx.com/api/v1/config';
+  static getCategoriesUrl(String baseUrl, int page) =>
+      '${baseUrl}api/v1/category/list?offset=$page';
 
-  // static final loginUrl = '${EndPoints().getBaseUrl()}api/v1/login';
+  static getCategoryProductsUrl(
+          String baseUrl, int categoryID, int type, int page) =>
+      '${baseUrl}api/v1/stocks/list?category_id=$categoryID&type=$type&offset=$page';
+
+  static getSearchProductsUrl(
+          String baseUrl, String name, int type, int page) =>
+      '${baseUrl}api/v1/product/search?name=$name&type=$type&offset=$page';
 }

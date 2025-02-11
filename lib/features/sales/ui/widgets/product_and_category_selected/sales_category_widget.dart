@@ -4,13 +4,15 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/cached_network_image.dart';
+import 'package:pos_system/features/sales/data/models/category_response.dart';
 
-class CategoryWidget extends StatelessWidget {
-  final String name;
+///images
+class SalesCategoryWidget extends StatelessWidget {
+  final Category category;
   final bool isSelected;
 
-  const CategoryWidget({
-    required this.name,
+  const SalesCategoryWidget({
+    required this.category,
     required this.isSelected,
     super.key,
   });
@@ -39,7 +41,7 @@ class CategoryWidget extends StatelessWidget {
           Expanded(child: CachedNetworkImageWidget(imgUrl: "", radius: 0)),
           verticalSpace(4),
           Text(
-            name,
+            category.name,
             maxLines: 1,
             style: TextStyles.font12BlackColorWeight400.copyWith(
               color: isSelected ? AppColors.whiteColor : null,

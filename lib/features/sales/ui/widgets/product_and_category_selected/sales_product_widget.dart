@@ -1,16 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/cached_network_image.dart';
+import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 
-class ProductWidget extends StatelessWidget {
-  final String name;
+class SalesProductWidget extends StatelessWidget {
+  final Product product;
   final bool isSelected;
 
-  const ProductWidget(
-      {required this.name, required this.isSelected, super.key});
+  const SalesProductWidget(
+      {required this.product, required this.isSelected, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,10 @@ class ProductWidget extends StatelessWidget {
           verticalSpace(10),
           Expanded(child: CachedNetworkImageWidget(imgUrl: "", radius: 0)),
           verticalSpace(10),
-          Text(name,
+          Text(
+              context.locale.languageCode == "ar"
+                  ? product.nameAr
+                  : product.nameEn,
               maxLines: 2,
               textAlign: TextAlign.center,
               style: TextStyles.font12BlackColorWeight400),
@@ -66,12 +71,12 @@ class ProductWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyles.font12GreenColor00WeightBold),
           verticalSpace(10),
-          Text("كود المنتج : 43212",
+          Text("كود المنتج : ${product.productCode}",
               maxLines: 1,
               textAlign: TextAlign.center,
               style: TextStyles.font12greyColor67Weight500),
           verticalSpace(10),
-          Text("المخزون: 4212",
+          Text("المخزون: ${product.quantity}",
               maxLines: 1,
               textAlign: TextAlign.center,
               style: TextStyles.font12greyColor67Weight500),

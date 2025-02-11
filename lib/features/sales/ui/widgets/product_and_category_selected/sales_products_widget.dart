@@ -1,57 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
+import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/logic/sales_state.dart';
-import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/product_widget.dart';
+import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/category_products_shimmer_widget.dart';
+import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/sales_product_widget.dart';
 
-class ProductsWidget extends StatelessWidget {
-  const ProductsWidget({super.key});
+class SalesProductsWidget extends StatelessWidget {
+  const SalesProductsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SalesCubit, SalesState>(
       buildWhen: (previous, current) {
-        return current is OnChangeSelectedProductState;
+        return current is OnChangeSelectedProductState ||
+            current is OnGetCategoryProductsLoadingState ||
+            current is OnGetCategoryProductsSuccessState ||
+            current is OnGetCategoryProductsErrorState ||
+            current is OnGetCategoryProductsCatchErrorState;
       },
       builder: (context, state) {
-        return GridView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 13.w,
-              mainAxisSpacing: 16.h,
-              childAspectRatio: 1 / 1.8,
-            ),
-            physics: const BouncingScrollPhysics(),
-            itemCount: SalesCubit.get(context).products.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  if (SalesCubit.get(context).selectedProductsIsContainProduct(
-                      SalesCubit.get(context).products[index])) {
-                    SalesCubit.get(context).removeProductFromSelectedProducts(
-                        SalesCubit.get(context).products[index]);
-                  } else {
+        if (SalesCubit.get(context).products.isEmpty &&
+            state is OnGetCategoryProductsLoadingState) {
+          return Lottie.asset(
+            ImageAsset.notFoundAnimation,
+            height: 210.h,
+            repeat: true,
+            fit: BoxFit.fitHeight,
+          );
+        } else if (SalesCubit.get(context).products.isEmpty &&
+            state is! OnGetCategoryProductsLoadingState) {
+          return CategoryProductsShimmerWidget();
+        } else {
+          return GridView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              controller:
+                  SalesCubit.get(context).categoryProductsScrollController,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 13.w,
+                mainAxisSpacing: 16.h,
+                childAspectRatio: 1 / 1.8,
+              ),
+              physics: const BouncingScrollPhysics(),
+              itemCount: SalesCubit.get(context).products.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+
+
+                    ///todo from here
+                    ///todo from here
                     ///
-                    _productSelectedDetailsWidget(context,10);
-                    SalesCubit.get(context).addProductToSelectedProducts(
-                        SalesCubit.get(context).products[index]);
-                  }
-                },
-                child: ProductWidget(
-                    name: SalesCubit.get(context).products[index].name,
-                    isSelected: SalesCubit.get(context)
-                        .selectedProductsIsContainProduct(
-                            SalesCubit.get(context).products[index])),
-              );
-            });
+                    ///
+                    if (SalesCubit.get(context)
+                        .selectedProductsIsContainProduct(SelectedProductClass(
+                            product:
+                                SalesCubit.get(context).products[index]))) {
+                      SalesCubit.get(context).removeProductFromSelectedProducts(
+                          SelectedProductClass(
+                              product:
+                                  SalesCubit.get(context).products[index]));
+                    } else {
+                      ///
+                      _productSelectedDetailsWidget(context, 10);
+                      SalesCubit.get(context).addProductToSelectedProducts(
+                          SelectedProductClass(
+                              product:
+                                  SalesCubit.get(context).products[index]));
+                    }
+                  },
+                  child: SalesProductWidget(
+                      product: SalesCubit.get(context).products[index],
+                      isSelected: SalesCubit.get(context)
+                          .selectedProductsIsContainProduct(
+                              SelectedProductClass(
+                                  product: SalesCubit.get(context)
+                                      .products[index]))),
+                );
+              });
+        }
       },
     );
   }
@@ -164,9 +201,9 @@ class ProductsWidget extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if(counter<maxCounter){
+                                if (counter < maxCounter) {
                                   counter++;
-                                  setState((){});
+                                  setState(() {});
                                 }
                               },
                               child: Container(
@@ -191,9 +228,9 @@ class ProductsWidget extends StatelessWidget {
                             horizontalSpace(24),
                             GestureDetector(
                               onTap: () {
-                                if(counter>1){
+                                if (counter > 1) {
                                   counter--;
-                                  setState((){});
+                                  setState(() {});
                                 }
                               },
                               child: Container(
@@ -216,7 +253,7 @@ class ProductsWidget extends StatelessWidget {
                         ),
                         SizedBox(height: 30.h),
                         ButtonWidget(
-                            isLoading:false,
+                            isLoading: false,
                             buttonHeight: 44.h,
                             buttonWidth: double.infinity,
                             borderRadius: 8.r,
@@ -229,7 +266,7 @@ class ProductsWidget extends StatelessWidget {
                             }),
                         SizedBox(height: 12.h),
                         ButtonWidget(
-                            isLoading:false,
+                            isLoading: false,
                             buttonHeight: 44.h,
                             buttonWidth: double.infinity,
                             borderRadius: 8.r,
