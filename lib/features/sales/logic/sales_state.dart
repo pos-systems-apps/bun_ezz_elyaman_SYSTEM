@@ -18,6 +18,13 @@ class OnGetCategoryProductsErrorState extends SalesState {}
 class OnGetCategoryProductsCatchErrorState extends SalesState {}
 
 
+class OnGetSearchProductsLoadingState extends SalesState {}
+class OnGetSearchProductsSuccessState extends SalesState {}
+class OnGetSearchProductsErrorState extends SalesState {}
+class OnGetSearchProductsCatchErrorState extends SalesState {}
+
+
+
 class OnChangeSelectedProductState extends SalesState {}
 
 

@@ -23,6 +23,7 @@ class Product {
   int id;
   String nameAr;
   String nameEn;
+  int unitValue;
   String productCode;
   double purchasePrice;
   double sellingPrice;
@@ -35,6 +36,7 @@ class Product {
     required this.id,
     required this.nameAr,
     required this.nameEn,
+    required this.unitValue,
     required this.productCode,
     required this.purchasePrice,
     required this.sellingPrice,
@@ -48,6 +50,7 @@ class Product {
         id: json['id'],
         nameAr: json['title'] ?? "",
         nameEn: json['title_en'] ?? "",
+        unitValue: json['unit_value'] ?? 0,
         productCode: json['product_code'] ?? "0",
         purchasePrice: (json['purchase_price'].toDouble()) ?? 0,
         sellingPrice: (json['selling_price'].toDouble()) ?? 0,

@@ -38,7 +38,9 @@ class SearchProductWidget extends StatelessWidget {
         }
         return null;
       },
-      onchange: (String? value) {},
+      onchange: (String? value) {
+        SalesCubit.get(context).getSearchProductsFromHere();
+      },
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pos_system/features/sales/data/entities/unit_of_measure_class.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
 
 import 'app_colors_white_theme.dart';
@@ -122,6 +123,10 @@ class AppConstant {
   }
 
   List<PayClass> pays = [];
+  static List<UnitMeasure> measureUnits = [
+    UnitMeasure(id: 1, nameAr: "كبري", nameEn: 'Big'),
+    UnitMeasure(id: 2, nameAr: 'صغري', nameEn: 'Small'),
+  ];
 
   static toast(String message, Color colors) {
     return Fluttertoast.showToast(

@@ -13,7 +13,7 @@ class SearchProductsResponse {
 
   factory SearchProductsResponse.fromJson(Map<String, dynamic> json) =>
       SearchProductsResponse(
-        currentPage: json['current_page'].toInt(),
+        currentPage: int.tryParse(json['current_page'].toString()) ?? 1,
         lastPage: json['last_page'],
         categoryProducts: List<Product>.from(
             json['products'].map((item) => Product.fromJson(item))),

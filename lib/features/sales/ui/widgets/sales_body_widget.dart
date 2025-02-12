@@ -7,7 +7,7 @@ import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
 import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/sales_categories_widget.dart';
-import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/sales_products_widget.dart';
+import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/all_sales_products_widget.dart';
 import 'package:pos_system/features/sales/ui/widgets/sales_order_type/sales_order_types_widget.dart';
 import 'package:pos_system/features/sales/ui/widgets/search_product_widget.dart';
 
@@ -31,7 +31,7 @@ class SalesBodyWidget extends StatelessWidget {
                     SearchProductWidget(),
                     SalesCategoriesWidget(),
                     verticalSpace(10),
-                    SalesProductsWidget(),
+                    AllSalesProductsWidget(),
                     verticalSpace(30),
                   ],
                 ),

@@ -11,7 +11,6 @@ class SalesCubit extends Cubit<SalesState> {
   final SalesRepo _salesRepo;
 
   SalesCubit(this._salesRepo) : super(InitialState());
-  final TextEditingController searchProductController = TextEditingController();
 
   static List<OrderTypeClass> orderTypes = [
     OrderTypeClass(id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales invoice"),
@@ -23,6 +22,7 @@ class SalesCubit extends Cubit<SalesState> {
   changeSelectedBillType(OrderTypeClass value) {
     selectedOrderType = value;
     getCategoriesFromHere();
+    changeSelectedCategory(null);
     emit(OnChangeOrderTypeSelectState());
   }
 
@@ -78,9 +78,12 @@ class SalesCubit extends Cubit<SalesState> {
   Category? selectedCategory;
 
   ///call products
-  changeSelectedCategory(Category value) {
+  changeSelectedCategory(Category? value) {
     selectedCategory = value;
-    getCategoryProductsFromHere(value.id);
+    if (value != null) {
+      getCategoryProductsFromHere(value.id);
+    }
+
     emit(OnChangeSelectedCategoryState());
   }
 
@@ -130,6 +133,56 @@ class SalesCubit extends Cubit<SalesState> {
     });
   }
 
+  ///search product
+  ///
+  TextEditingController searchProductController = TextEditingController();
+
+  List<Product> searchProducts = [];
+
+  int searchProductsCurrentPage = 1;
+  int searchProductsLastPage = 10000;
+  ScrollController searchProductsScrollController = ScrollController();
+
+  getSearchProductsFromHere() {
+    searchProducts = [];
+    searchProductsCurrentPage = 1;
+    searchProductsLastPage = 10000;
+    scrollListenerGetSearchProducts();
+    getSearchProducts();
+  }
+
+  scrollListenerGetSearchProducts() {
+    searchProductsScrollController.addListener(() {
+      if (searchProductsCurrentPage < searchProductsLastPage) {
+        if (searchProductsScrollController.position.pixels ==
+            searchProductsScrollController.position.maxScrollExtent) {
+          searchProductsCurrentPage++;
+          getSearchProducts();
+        }
+      }
+    });
+  }
+
+  getSearchProducts() {
+    emit(OnGetSearchProductsLoadingState());
+    _salesRepo
+        .getSearchProducts(searchProductController.text, selectedOrderType.id,
+            searchProductsCurrentPage)
+        .then((value) {
+      value.fold((l) {
+        emit(OnGetSearchProductsErrorState());
+      }, (r) {
+        searchProductsCurrentPage = r.currentPage;
+        searchProductsLastPage = r.lastPage;
+        searchProducts.addAll(r.categoryProducts);
+        emit(OnGetSearchProductsSuccessState());
+      });
+    }).catchError((error) {
+      emit(OnGetSearchProductsCatchErrorState());
+    });
+  }
+
+  ///select product
   List<SelectedProductClass> selectedProducts = [];
 
   addProductToSelectedProducts(SelectedProductClass value) {
@@ -138,12 +191,14 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   removeProductFromSelectedProducts(SelectedProductClass value) {
-    selectedProducts.removeWhere((item) => item.product.id == value.product.id);
+    selectedProducts.removeWhere(
+        (item) => item.product.productCode == value.product.productCode);
     emit(OnChangeSelectedProductState());
   }
 
   bool selectedProductsIsContainProduct(SelectedProductClass value) {
-    return selectedProducts.contains(value);
+    return selectedProducts
+        .any((item) => item.product.productCode == value.product.productCode);
   }
 
   ///

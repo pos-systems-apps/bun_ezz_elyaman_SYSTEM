@@ -76,7 +76,7 @@ class SalesProductWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyles.font12greyColor67Weight500),
           verticalSpace(10),
-          Text("المخزون: ${product.quantity}",
+          Text("المخزون: ${product.quantity.toStringAsFixed(1)}",
               maxLines: 1,
               textAlign: TextAlign.center,
               style: TextStyles.font12greyColor67Weight500),

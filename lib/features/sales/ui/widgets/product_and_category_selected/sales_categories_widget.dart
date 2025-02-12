@@ -24,15 +24,15 @@ class SalesCategoriesWidget extends StatelessWidget {
       builder: (context, state) {
         if (SalesCubit.get(context).categories.isEmpty &&
             state is OnGetCategoryLoadingState) {
+          return CategoriesShimmerWidget();
+        } else if (SalesCubit.get(context).categories.isEmpty &&
+            state is! OnGetCategoryLoadingState) {
           return Lottie.asset(
             ImageAsset.notFoundAnimation,
             height: 85.h,
             repeat: true,
             fit: BoxFit.fitHeight,
           );
-        }else if (SalesCubit.get(context).categories.isEmpty &&
-            state is! OnGetCategoryLoadingState) {
-          return CategoriesShimmerWidget();
         } else {
           return SingleChildScrollView(
             padding: EdgeInsets.symmetric(vertical: 24.h),
