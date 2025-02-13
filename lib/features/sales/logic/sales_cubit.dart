@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pos_system/config/routes/routes.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/core/utils/extentions.dart';
+import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
@@ -12,10 +16,7 @@ class SalesCubit extends Cubit<SalesState> {
 
   SalesCubit(this._salesRepo) : super(InitialState());
 
-  static List<OrderTypeClass> orderTypes = [
-    OrderTypeClass(id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales invoice"),
-    OrderTypeClass(id: 7, nameAr: "فاتورة مرتجعات ", nameEn: "Return invoice"),
-  ];
+  static List<OrderTypeClass> orderTypes = AppConstant.orderTypes;
 
   OrderTypeClass selectedOrderType = orderTypes[0];
 
@@ -190,6 +191,18 @@ class SalesCubit extends Cubit<SalesState> {
     emit(OnChangeSelectedProductState());
   }
 
+  // editInProductFromSelectedProducts(SelectedProductClass value) {
+  //   int index = selectedProducts.indexOf(value);
+  //   if (index != -1) {
+  //     selectedProducts[index] = value;
+  //     print(selectedProducts[index].product.nameAr);
+  //     print(selectedProducts[index].maxValueCounter);
+  //     print(selectedProducts[index].minValueCounter);
+  //   }
+  //
+  //   emit(OnChangeSelectedProductState());
+  // }
+
   removeProductFromSelectedProducts(SelectedProductClass value) {
     selectedProducts.removeWhere(
         (item) => item.product.productCode == value.product.productCode);
@@ -200,6 +213,8 @@ class SalesCubit extends Cubit<SalesState> {
     return selectedProducts
         .any((item) => item.product.productCode == value.product.productCode);
   }
+
+  TextEditingController searchUserController = TextEditingController();
 
   ///
 

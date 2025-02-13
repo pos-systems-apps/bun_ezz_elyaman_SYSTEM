@@ -5,8 +5,8 @@ import 'package:lottie/lottie.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/logic/sales_state.dart';
-import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/categories_shimmer_widget.dart';
-import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/sales_category_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_widgets/product_and_category_selected/categories_shimmer_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_widgets/product_and_category_selected/sales_category_widget.dart';
 
 class SalesCategoriesWidget extends StatelessWidget {
   const SalesCategoriesWidget({super.key});

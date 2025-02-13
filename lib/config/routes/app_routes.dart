@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/features/button_navigation/logic/button_navigation_cubit.dart';
 import 'package:pos_system/features/button_navigation/ui/button_navigation_screen.dart';
-import 'package:pos_system/features/reseat/logic/reseat_cubit.dart';
-import 'package:pos_system/features/reseat/ui/reseat_screen.dart';
+import 'package:pos_system/features/sales/ui/reseat_screen.dart';
 import 'package:pos_system/features/setting/ui/setting_screen.dart';
 import 'package:pos_system/features/splash/ui/splash_screen.dart';
 
@@ -32,12 +31,8 @@ class RouteGenerator {
                   create: (context) => ButtonNavigationCubit(),
                   child: ButtonNavigationScreen(),
                 ));
-      case Routes.reseatScreen:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) => ReseatCubit(getIt()),
-                  child: ReseatScreen(),
-                ));
+      // case Routes.reseatScreen:
+      //   return MaterialPageRoute(builder: (_) => ReseatScreen());
       case Routes.settingScreen:
         return MaterialPageRoute(builder: (_) => SettingScreen());
 

@@ -8,6 +8,7 @@
   "selectBankAccount": "select Payment Account",
   "selectPayWay": "Select Pay Way ",
   "selectImage": "Upload Image ",
+  "notAvailable": "Not Available",
   "buttonNavigation1": "Statistics",
   "buttonNavigation2": "Collections",
   "buttonNavigation3": "Sales",

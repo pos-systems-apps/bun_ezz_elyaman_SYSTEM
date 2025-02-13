@@ -1,16 +1,15 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
-import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
+import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
-import 'package:pos_system/features/sales/data/entities/unit_of_measure_class.dart';
+import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
-import 'package:pos_system/features/sales/ui/widgets/product_and_category_selected/sales_product_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_widgets/product_and_category_selected/sales_product_widget.dart';
 
 class AllProductsAndSearchProductsWidget extends StatelessWidget {
   final bool isSearch;
@@ -35,37 +34,40 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
             : SalesCubit.get(context).products.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {
-              if (SalesCubit.get(context).selectedProductsIsContainProduct(
-                  SelectedProductClass(
-                      product: isSearch
-                          ? SalesCubit.get(context).searchProducts[index]
-                          : SalesCubit.get(context).products[index]))) {
-                ///item found remove it
-                ///
-                SalesCubit.get(context).removeProductFromSelectedProducts(
+            onTap: () async {
+              if ((isSearch
+                      ? SalesCubit.get(context).searchProducts[index].quantity
+                      : SalesCubit.get(context).products[index].quantity) ==
+                  0.0) {
+                ErrorAlertDialog.getDialog(context, "هذا المنتج غير متوفر");
+              } else {
+                if (SalesCubit.get(context).selectedProductsIsContainProduct(
                     SelectedProductClass(
                         product: isSearch
                             ? SalesCubit.get(context).searchProducts[index]
-                            : SalesCubit.get(context).products[index]));
-              } else {
-                ///item not found add it
-                ///
-                _productSelectedDetailsWidget(
+                            : SalesCubit.get(context).products[index]))) {
+                  ///item found remove it
+                  ///
+                  SalesCubit.get(context).removeProductFromSelectedProducts(
+                      SelectedProductClass(
+                          product: isSearch
+                              ? SalesCubit.get(context).searchProducts[index]
+                              : SalesCubit.get(context).products[index]));
+                } else {
+                  ///item not found add it
+                  ///
+                  await _productSelectedDetailsWidget(
                     context,
                     isSearch
-                        ? SalesCubit.get(context).searchProducts[index].quantity
-                        : SalesCubit.get(context).products[index].quantity,
-                    isSearch
-                        ? SalesCubit.get(context)
-                            .searchProducts[index]
-                            .unitValue
-                        : SalesCubit.get(context).products[index].unitValue);
-                SalesCubit.get(context).addProductToSelectedProducts(
-                    SelectedProductClass(
-                        product: isSearch
-                            ? SalesCubit.get(context).searchProducts[index]
-                            : SalesCubit.get(context).products[index]));
+                        ? SalesCubit.get(context).searchProducts[index]
+                        : SalesCubit.get(context).products[index],
+                  ).then((value) {
+                    if (value != null) {
+                      SalesCubit.get(context)
+                          .addProductToSelectedProducts(value);
+                    }
+                  });
+                }
               }
             },
             child: SalesProductWidget(
@@ -81,9 +83,9 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
         });
   }
 
-  Future<dynamic> _productSelectedDetailsWidget(
-      BuildContext context, double maxQuantity, int unitValue) {
-    return showModalBottomSheet(
+  Future<SelectedProductClass?> _productSelectedDetailsWidget(
+      BuildContext context, Product product) async {
+    return await showModalBottomSheet<SelectedProductClass>(
         context: context,
         enableDrag: true,
         isDismissible: true,
@@ -91,8 +93,9 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          int integerPart = maxQuantity.toInt();
-          int decimalPart = ((maxQuantity - integerPart) * unitValue).toInt();
+          int integerPart = product.quantity.toInt();
+          int decimalPart =
+              ((product.quantity - integerPart) * product.unitValue).toInt();
           int selectedIntOrDecimal = 1;
           return StatefulBuilder(
             builder: (BuildContext context, setState) {
@@ -130,8 +133,8 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                                     color: AppColors.mainColor, width: 1.6),
                               ),
                               child: Text(
-                                maxQuantity.toStringAsFixed(1),
-                                maxLines: 2,
+                                product.quantity.toStringAsFixed(1),
+                                maxLines: 1,
                                 style: TextStyles.font18greyColor27Weight600,
                               ),
                             ),
@@ -149,14 +152,49 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ///
-                                ///
+                                ///increase counter
                                 GestureDetector(
                                   onTap: () {
-                                    // if (counter < maxQuantity) {
-                                    //   counter++;
-                                    //   setState(() {});
-                                    // }
+                                    if (selectedIntOrDecimal == 1) {
+                                      ///integer part
+                                      if (integerPart <
+                                          product.quantity.toInt()) {
+                                        integerPart++;
+                                      }
+                                      if (integerPart ==
+                                          product.quantity.toInt()) {
+                                        if (decimalPart >
+                                            ((product.quantity - integerPart) *
+                                                    product.unitValue)
+                                                .toInt()) {
+                                          decimalPart = ((product.quantity -
+                                                      integerPart) *
+                                                  product.unitValue)
+                                              .toInt();
+                                        }
+                                      }
+                                    } else {
+                                      ///decimal part
+                                      if (integerPart ==
+                                          product.quantity.toInt()) {
+                                        if (decimalPart <
+                                            ((product.quantity - integerPart) *
+                                                    product.unitValue)
+                                                .toInt()) {
+                                          decimalPart++;
+                                        }
+                                      } else {
+                                        if (decimalPart <
+                                            product.unitValue - 1) {
+                                          decimalPart++;
+                                        } else if (decimalPart ==
+                                            product.unitValue - 1) {
+                                          decimalPart = 0;
+                                          integerPart++;
+                                        }
+                                      }
+                                    }
+                                    setState(() {});
                                   },
                                   child: Container(
                                     height: 36.h,
@@ -177,10 +215,7 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                                 ),
                                 horizontalSpace(24),
 
-                                ///
-                                ///
-                                ///
-                                ///
+                                ///decimal part
                                 GestureDetector(
                                   onTap: () {
                                     selectedIntOrDecimal = 2;
@@ -211,6 +246,8 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                                 Text("\t.\t",
                                     style:
                                         TextStyles.font48greyColor27Weight700),
+
+                                ///integer part
                                 GestureDetector(
                                   onTap: () {
                                     selectedIntOrDecimal = 1;
@@ -238,32 +275,43 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-
-                                ///
-
-                                ///
-                                ///
                                 horizontalSpace(24),
+
+                                ///decrease counter
                                 GestureDetector(
                                   onTap: () {
-                                    // if (selectedIntOrDecimal == 1) {
-                                    //   ///
-                                    //   if (integerPart > 0) {
-                                    //     integerPart--;
-                                    //     setState(() {});
-                                    //   }
-                                    // } else {
-                                    //   //int ==0   1
-                                    //   //int !=0 0
-                                    //
-                                    //   if(integerPart==0){
-                                    //
-                                    //   }
-                                    //   if (decimalPart > 0) {
-                                    //     decimalPart--;
-                                    //     setState(() {});
-                                    //   }
-                                    // }
+                                    if (selectedIntOrDecimal == 1) {
+                                      ///integer part
+                                      if (integerPart > 0) {
+                                        integerPart--;
+                                      }
+                                      if (integerPart == 0) {
+                                        if (decimalPart == 0 &&
+                                            ((product.quantity - integerPart) *
+                                                        product.unitValue)
+                                                    .toInt() >
+                                                1) {
+                                          decimalPart = 1;
+                                        }
+                                      }
+                                    } else {
+                                      ///decimal part
+                                      if (integerPart == 0) {
+                                        if (decimalPart > 1) {
+                                          decimalPart--;
+                                        }
+                                      } else {
+                                        if (decimalPart > 0) {
+                                          decimalPart--;
+                                        } else {
+                                          if (decimalPart == 0) {
+                                            decimalPart = product.unitValue - 1;
+                                            integerPart--;
+                                          }
+                                        }
+                                      }
+                                    }
+                                    setState(() {});
                                   },
                                   child: Container(
                                     height: 36.h,
@@ -297,7 +345,13 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                             backGroundColor: AppColors.mainColor,
                             borderColor: AppColors.mainColor,
                             onPressed: () {
-                              ///
+                              Navigator.pop(
+                                  context,
+                                  SelectedProductClass(
+                                    product: product,
+                                    maxValueCounter: integerPart,
+                                    minValueCounter: decimalPart,
+                                  ));
                             }),
                         SizedBox(height: 12.h),
                         ButtonWidget(

@@ -4,10 +4,12 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
-import 'package:pos_system/features/reseat/ui/widgets/reseat_body_widget.dart';
+import 'package:pos_system/features/sales/ui/reseat_widgets/reseat_body_widget.dart';
 
 class ReseatScreen extends StatelessWidget {
-  const ReseatScreen({super.key});
+  const ReseatScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +48,16 @@ class ReseatScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(flex: 1,),
+                Spacer(
+                  flex: 1,
+                ),
                 Text(
                   "الفاتوره",
                   style: TextStyles.font20BlueColorA4Weight600,
                 ),
-                Spacer(flex: 2,),
+                Spacer(
+                  flex: 2,
+                ),
               ],
             ),
             verticalSpace(24),

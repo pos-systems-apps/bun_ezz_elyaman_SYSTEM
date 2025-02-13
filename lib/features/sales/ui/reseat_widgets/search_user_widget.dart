@@ -6,7 +6,7 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/search_widget.dart';
-import 'package:pos_system/features/reseat/logic/reseat_cubit.dart';
+import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 
 class SearchUserWidget extends StatelessWidget {
   const SearchUserWidget({super.key});
@@ -17,7 +17,7 @@ class SearchUserWidget extends StatelessWidget {
       hintText: "ادخل اسم العميل",
       hintStyle: TextStyles.font14GreyColor87Weight400,
       textStyle: TextStyles.font14BlackColorWeight400,
-      controller: ReseatCubit.get(context).searchUserController,
+      controller: SalesCubit.get(context).searchUserController,
 
       backgroundColor: AppColors.whiteColor,
       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),

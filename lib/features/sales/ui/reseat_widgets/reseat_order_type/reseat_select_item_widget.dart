@@ -20,12 +20,12 @@ class ReseatSelectItemWidget extends StatelessWidget {
           border: Border(
               bottom: BorderSide(
                   color:
-                      isSelected ? AppColors.mainColor : AppColors.whiteColor,
+                  isSelected ? AppColors.mainColor : AppColors.whiteColor,
                   width: isSelected ? 2 : 0))),
       child: Text(
         name,
         textAlign: TextAlign.center,
-        maxLines: 2,
+        maxLines: 1,
         style: TextStyles.font14blueColor89rWeight400
             .copyWith(color: isSelected ? AppColors.mainColor : null),
       ),
