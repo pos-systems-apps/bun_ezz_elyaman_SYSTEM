@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/extentions.dart';
@@ -191,17 +192,16 @@ class SalesCubit extends Cubit<SalesState> {
     emit(OnChangeSelectedProductState());
   }
 
-  // editInProductFromSelectedProducts(SelectedProductClass value) {
-  //   int index = selectedProducts.indexOf(value);
-  //   if (index != -1) {
-  //     selectedProducts[index] = value;
-  //     print(selectedProducts[index].product.nameAr);
-  //     print(selectedProducts[index].maxValueCounter);
-  //     print(selectedProducts[index].minValueCounter);
-  //   }
-  //
-  //   emit(OnChangeSelectedProductState());
-  // }
+  editInProductFromSelectedProducts(SelectedProductClass value) {
+    int index = selectedProducts.indexWhere(
+          (element) => element.product.productCode == value.product.productCode, // Compare by product code
+    );
+    if (index != -1) {
+      selectedProducts[index] = value;
+    }
+
+    emit(OnChangeSelectedProductState());
+  }
 
   removeProductFromSelectedProducts(SelectedProductClass value) {
     selectedProducts.removeWhere(
@@ -217,6 +217,22 @@ class SalesCubit extends Cubit<SalesState> {
   TextEditingController searchUserController = TextEditingController();
 
   ///
+  ///upload image
+
+  String? selectedImagePath;
+
+  uploadImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      selectedImagePath = image.path;
+      emit(OnChangeSelectedImageState());
+    }
+  }
+
+
+
+
 
   static SalesCubit get(context) => BlocProvider.of(context);
 }

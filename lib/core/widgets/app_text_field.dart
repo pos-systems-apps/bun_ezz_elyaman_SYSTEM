@@ -24,7 +24,8 @@ class AppTextFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final TextEditingController? controller;
   final Function(String?) validator;
-  final Function(String) onchange;
+  final Function(String)? onchange;
+  final Function()? onTapOutside;
   final TextInputType keyboardType;
 
   const AppTextFormField({
@@ -45,7 +46,8 @@ class AppTextFormField extends StatelessWidget {
     this.controller,
     this.prefixIcon,
     required this.validator,
-    required this.onchange,
+    this.onchange,
+    this.onTapOutside,
     required this.keyboardType,
     this.isPhoneNumber = false,
     this.isRegister = false,
@@ -59,13 +61,22 @@ class AppTextFormField extends StatelessWidget {
       autofocus: autofocus!,
       controller: controller,
       maxLines: maxLines,
+      onTapOutside: (PointerDownEvent value) {
+        FocusScope.of(context).unfocus();
+        if(onTapOutside!=null){
+          onTapOutside!();
+        }
+
+      },
       cursorColor: AppColors.blackColor.withOpacity(.8),
       enableSuggestions: true,
       autocorrect: true,
       autofillHints: const [AutofillHints.email],
       keyboardType: keyboardType,
       onChanged: (String value) {
-        onchange(value);
+        if (onchange != null) {
+          onchange!(value);
+        }
       },
       decoration: InputDecoration(
         isDense: true,
@@ -111,7 +122,7 @@ class AppTextFormField extends StatelessWidget {
         filled: true,
       ),
       obscureText: isObscureText ?? false,
-      style: textStyle??TextStyles.font16BlackColorWeight400,
+      style: textStyle ?? TextStyles.font16BlackColorWeight400,
       validator: (value) {
         return validator(value);
       },

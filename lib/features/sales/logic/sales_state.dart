@@ -26,5 +26,6 @@ class OnGetSearchProductsCatchErrorState extends SalesState {}
 
 
 class OnChangeSelectedProductState extends SalesState {}
+class OnChangeSelectedImageState extends SalesState {}
 
 

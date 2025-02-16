@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
+import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
 import 'package:pos_system/features/sales/data/entities/unit_of_measure_class.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
 
@@ -132,6 +133,10 @@ class AppConstant {
   static List<OrderTypeClass> orderTypes = [
     OrderTypeClass(id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales invoice"),
     OrderTypeClass(id: 7, nameAr: "فاتورة مرتجعات ", nameEn: "Return invoice"),
+  ];
+  static List<PercentTypesClass> percentTypes = [
+    PercentTypesClass(id: 1, nameAr: "كمية", nameEn: "Amount"),
+    PercentTypesClass(id: 2, nameAr: "نسبة مئوية", nameEn: "Percentage"),
   ];
   static toast(String message, Color colors) {
     return Fluttertoast.showToast(

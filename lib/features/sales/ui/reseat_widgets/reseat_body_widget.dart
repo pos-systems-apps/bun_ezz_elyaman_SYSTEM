@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
+import 'package:pos_system/features/sales/ui/reseat_widgets/products_selected/money_and_discounts_widget.dart';
 import 'package:pos_system/features/sales/ui/reseat_widgets/products_selected/products_selected_widget.dart';
+import 'package:pos_system/features/sales/ui/reseat_widgets/products_selected/reseat_upload_image_widget.dart';
 import 'package:pos_system/features/sales/ui/reseat_widgets/reseat_order_type/reseat_order_types_widget.dart';
 import 'package:pos_system/features/sales/ui/reseat_widgets/search_user_widget.dart';
 
@@ -24,10 +26,15 @@ class ReseatBodyWidget extends StatelessWidget {
             SearchUserWidget(),
             verticalSpace(24),
             ProductsSelectedWidget(),
+            verticalSpace(24),
+            ReseatUploadImageWidget(),
+            verticalSpace(24),
+            MoneyAndDiscountsWidget(),
 
 
 
-            verticalSpace(40),
+
+            verticalSpace(400),
           ],
         ),
       ),

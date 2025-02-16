@@ -13,7 +13,7 @@ class AppColors {
   static Color greenColor = Colors.green;
 
   static Color mainColor = Color(0xFF37479d);
-  static Color secondColor = Color(0xFF37479D);
+  static Color secondColor = Color(0xFFF5C31A);
 
   static Color blueColor72 = const Color(0xff1B1472);
   static Color blackColor17 = const Color(0xff121217);
@@ -29,6 +29,7 @@ class AppColors {
   static Color greyColor87 = const Color(0xff7F7B87);
   static Color greyColor33 = const Color(0xff333333);
   static Color greyColor82 = const Color(0xff828282);
+  static Color greyColorA5 = const Color(0xffA5A5A5);
   static Color greyColorDC = const Color(0xffD8DADC);
   static Color greyColorBD = const Color(0xffBDBDBD);
   static Color blueColorF3 = const Color(0xffB6E0F3);

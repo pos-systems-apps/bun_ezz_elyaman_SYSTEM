@@ -139,6 +139,12 @@ class ProductSelectedWidget extends StatelessWidget {
                         return null;
                       },
                       onchange: (String? value) {},
+                      onTapOutside: () {
+                        if (productController.text.isEmpty) {
+                          productController.text =
+                              "${selectedProduct.maxValueCounter}.${selectedProduct.minValueCounter}";
+                        }
+                      },
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                     )),
@@ -186,12 +192,15 @@ class ProductSelectedWidget extends StatelessWidget {
   validateProductQuantity(BuildContext context,
       TextEditingController controller, GlobalKey<FormState> formKey) {
     if (formKey.currentState!.validate()) {
-      // SalesCubit.get(context)
-      //     .editInProductFromSelectedProducts(SelectedProductClass(
-      //   product: selectedProduct.product,
-      //   maxValueCounter: int.tryParse(controller.text.split(".")[0]) ?? 0,
-      //   minValueCounter: int.tryParse(controller.text.split(".")[1]) ?? 0,
-      // ));
+      SalesCubit.get(context)
+          .editInProductFromSelectedProducts(SelectedProductClass(
+        product: selectedProduct.product,
+        maxValueCounter:
+            int.tryParse(controller.text.split(".")[0].toString()) ?? 0,
+        minValueCounter: controller.text.contains(".")
+            ? int.tryParse(controller.text.split(".")[1].toString()) ?? 0
+            : 0,
+      ));
     }
   }
 }

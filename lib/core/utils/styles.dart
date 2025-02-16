@@ -91,11 +91,22 @@ class TextStyles {
     color: AppColors.greyColor33,
     fontWeight: FontWeight.w400,
     fontFamily: 'Bahij',
+  );  static TextStyle font14GreyColor33Weight400 = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.greyColor33,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Bahij',
   );
   static TextStyle font16GreyColor33Weight500 = TextStyle(
     fontSize: 16.sp,
     color: AppColors.greyColor33,
     fontWeight: FontWeight.w500,
+    fontFamily: 'Bahij',
+  );
+  static TextStyle font14GreyColorA5Weight400 = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.greyColorA5,
+    fontWeight: FontWeight.w400,
     fontFamily: 'Bahij',
   );
   static TextStyle font12GreyColor82Weight400 = TextStyle(
@@ -135,6 +146,12 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: 'Bahij',
   );
+  static TextStyle font15GreyColor66Weight400 = TextStyle(
+    fontSize: 15.sp,
+    color: AppColors.greyColor66,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Bahij',
+  );
 
  static TextStyle font12RedColorWeight400 = TextStyle(
     fontSize: 12.sp,
@@ -148,7 +165,12 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: 'Bahij',
   );
-
+  static TextStyle font14MainColorWeight400 = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.mainColor,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Bahij',
+  );
   static TextStyle font16MainColorWeight500 = TextStyle(
     fontSize: 16.sp,
     color: AppColors.mainColor,
@@ -235,7 +257,12 @@ class TextStyles {
     fontFamily: 'Bahij',
   );
 
-
+  static TextStyle font14RedColorWeight400 = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.redColor,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Bahij',
+  );
 
 
 
@@ -436,11 +463,7 @@ class TextStyles {
     color: AppColors.darkBlueColor33,
     fontWeight: FontWeight.w400,
   );
-  static TextStyle font14RedColorWeight400 = TextStyle(
-    fontSize: 14.sp,
-    color: AppColors.redColor.withOpacity(.6),
-    fontWeight: FontWeight.w400,
-  );
+
   static TextStyle font14GreyColorC0Weight400 = TextStyle(
     fontSize: 14.sp,
     color: AppColors.greyColorC0,
