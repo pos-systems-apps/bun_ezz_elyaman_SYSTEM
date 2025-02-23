@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/app_text_field.dart';
@@ -54,9 +55,35 @@ class ProductSelectedWidget extends StatelessWidget {
                       maxLines: 2,
                       style: TextStyles.font16GreyColor33Weight500,
                     ),
-                    Text(
-                      "50,00 رس",
-                      style: TextStyles.font14GreyColor66Weight400,
+
+                    Row(
+                      children: [
+                        if (selectedProduct.product.discount == 0)
+                        Text(
+                         "${AppConstant.currency} ${selectedProduct.product.sellingPrice.toStringAsFixed(2)}",
+                          style: TextStyles.font14GreyColor66Weight400,
+                        ),
+                        horizontalSpace(4),
+                        if (selectedProduct.product.discount != 0)
+                          Text(
+                            selectedProduct.product.sellingPrice.toStringAsFixed(2),
+                            style: TextStyles.font14GreyColor66Weight400.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        horizontalSpace(4),
+                        if (selectedProduct.product.discount != 0)
+                          Text(
+                            "${AppConstant.currency}${AppConstant.getDiscountForProduct(
+                                selectedProduct.product.discountType,
+                                selectedProduct.product.sellingPrice,
+                                selectedProduct.product.discount)
+                                .toStringAsFixed(2)}",
+                            style: TextStyles.font14GreyColor66Weight400.copyWith(
+                              color: AppColors.greenColor
+                            ),
+                          ),
+                      ],
                     ),
                   ],
                 ),
@@ -162,7 +189,7 @@ class ProductSelectedWidget extends StatelessWidget {
                         border: Border.all(color: AppColors.blueColorEEE),
                       ),
                       child: Icon(
-                        Icons.edit,
+                        Icons.check,
                         color: AppColors.blackColor,
                         size: 20.r,
                       )),

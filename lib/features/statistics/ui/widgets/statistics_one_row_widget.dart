@@ -1,59 +1,37 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
-import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/features/statistics/data/models/statistics_response_model.dart';
 import 'package:pos_system/features/statistics/ui/widgets/statistics_half_row_widget.dart';
 import 'package:pos_system/features/statistics/ui/widgets/statistics_row_widget.dart';
 
-class StatisticsOneRowWidget extends StatefulWidget {
+class StatisticsOneRowWidget extends StatelessWidget {
   final List<StatisticsData> statisticsData;
 
   const StatisticsOneRowWidget({required this.statisticsData, super.key});
-
-  @override
-  State<StatisticsOneRowWidget> createState() => _StatisticsOneRowWidgetState();
-}
-
-class _StatisticsOneRowWidgetState extends State<StatisticsOneRowWidget> {
-  String? currency;
-
-  @override
-  void initState() {
-    super.initState();
-    getStoreData();
-  }
-
-  getStoreData() async {
-    currency =
-        await CacheHelper.getSecuredString(ConstantKeys.saveCurrencyToShared) ??
-            "";
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.statisticsData.length == 1)
+        if (statisticsData.length == 1)
           StatisticsHalfRowWidget(
             width: (MediaQueryValues(context).width / 2) - 16,
             title: context.locale.languageCode == "ar"
-                ? widget.statisticsData[0].nameAr
-                : widget.statisticsData[0].nameEn,
-            money: (widget.statisticsData[0].currency ? (currency ?? "") : "") +
-                " ${widget.statisticsData[0].money.toStringAsFixed(2)}",
+                ? statisticsData[0].nameAr
+                : statisticsData[0].nameEn,
+            money: (statisticsData[0].currency ? (AppConstant.currency) : "") +
+                " ${statisticsData[0].money.toStringAsFixed(2)}",
             color: AppColors.random1(),
             icon: ImageAsset.random1(),
           ),
-        if (widget.statisticsData.length >= 2)
+        if (statisticsData.length >= 2)
           Row(
-            children: widget.statisticsData
+            children: statisticsData
                 .take(2)
                 .map((item) => Expanded(
                       child: StatisticsHalfRowWidget(
@@ -61,7 +39,7 @@ class _StatisticsOneRowWidgetState extends State<StatisticsOneRowWidget> {
                         title: context.locale.languageCode == "ar"
                             ? item.nameAr
                             : item.nameEn,
-                        money: (item.currency ? (currency ?? "") : "") +
+                        money: (item.currency ? (AppConstant.currency ) : "") +
                             " ${item.money.toStringAsFixed(2)}",
                         color: AppColors.random1(),
                         icon: ImageAsset.random1(),
@@ -70,13 +48,13 @@ class _StatisticsOneRowWidgetState extends State<StatisticsOneRowWidget> {
                 .toList(),
           ),
         verticalSpace(16),
-        if (widget.statisticsData.length == 3)
+        if (statisticsData.length == 3)
           StatisticsRowWidget(
             title: context.locale.languageCode == "ar"
-                ? widget.statisticsData[2].nameAr
-                : widget.statisticsData[2].nameEn,
-            money: (widget.statisticsData[2].currency ? (currency ?? "") : "") +
-                "  ${widget.statisticsData[2].money.toStringAsFixed(2)}",
+                ? statisticsData[2].nameAr
+                : statisticsData[2].nameEn,
+            money: (statisticsData[2].currency ? (AppConstant.currency ) : "") +
+                "  ${statisticsData[2].money.toStringAsFixed(2)}",
             color: AppColors.random1(),
             icon: ImageAsset.random1(),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pos_system/config/routes/routes.dart';
+import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/widgets/error_alert_dialog.dart';
@@ -9,6 +10,7 @@ import 'package:pos_system/features/sales/data/entities/selected_product_class.d
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
+import 'package:pos_system/features/splash/data/models/pay_class.dart';
 import '../data/repo/sales_repo.dart';
 import 'sales_state.dart';
 
@@ -214,6 +216,12 @@ class SalesCubit extends Cubit<SalesState> {
         .any((item) => item.product.productCode == value.product.productCode);
   }
 
+  changeState(){
+    emit(OnChangeSelectedProductState());
+  }
+
+
+
   TextEditingController searchUserController = TextEditingController();
 
   ///
@@ -231,7 +239,17 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
 
+///add extra discount
 
+  ///pays
+  // List<PayClass> pays =
+  // getIt<AppConstant>().pays.where((item) => item.isShown).toList();
+  // PayClass? selectedPay;
+  //
+  // changeSelectedPay(PayClass value) {
+  //   selectedPay = value;
+  //   emit(OnChangePaySelectState());
+  // }
 
 
   static SalesCubit get(context) => BlocProvider.of(context);

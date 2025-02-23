@@ -17,6 +17,9 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PercentTypesClass? selectedPercentType;
+    TextEditingController percentController = TextEditingController();
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: BoxDecoration(
@@ -40,7 +43,9 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                       backgroundColor:
                           WidgetStateProperty.all(AppColors.whiteColor),
                     ),
-                    onSelected: (PercentTypesClass? value) {},
+                    onSelected: (PercentTypesClass? value) {
+                      selectedPercentType = value;
+                    },
                     dropdownMenuEntries: AppConstant.percentTypes
                         .map((item) => DropdownMenuEntry(
                               value: item,
@@ -53,6 +58,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                 flex: 1,
                 child: AppTextFormField(
                     hintText: "",
+                    controller: percentController,
                     hintStyle: TextStyles.font14GreyColorA5Weight400,
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
@@ -81,7 +87,9 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                     borderColor: AppColors.mainColor,
                     borderRadius: 4,
                     textStyle: TextStyles.font14MainColorWeight400,
-                    onPressed: () {}),
+                    onPressed: () {
+                      SalesCubit.get(context).changeState();
+                    }),
               ),
             ],
           ),
@@ -97,18 +105,17 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                   Text("ملخص الطلب",
                       style: TextStyles.font14GreyColor33Weight400),
                   verticalSpace(16),
-                  _moneyWidget(
-                      "اجمالي الفاتوره",
-                      ReseatSelectedProducts(
-                              selectedProducts: SalesCubit.get(context).selectedProducts)
-                          .getTotalReseat()
-                          .toStringAsFixed(2)),
+                  _moneyWidget("اجمالي الفاتوره",
+                      "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotalReseat().toStringAsFixed(2)}"),
                   verticalSpace(16),
-                  _moneyWidget("خصم المنتج", "122"),
+                  _moneyWidget("خصم المنتج",
+                      "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotalDiscount().toStringAsFixed(2)}"),
                   verticalSpace(16),
-                  _moneyWidget("خصم اضافي", "122"),
+                  _moneyWidget("خصم اضافي",
+                      "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getExtraDiscount(selectedPercentType?.id, percentController.text).toStringAsFixed(2)}"),
                   verticalSpace(16),
-                  _moneyWidget("ضريبه القيمه المضافه", "122"),
+                  _moneyWidget("ضريبه القيمه المضافه",
+                      "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getValueTax(selectedPercentType?.id, percentController.text).toStringAsFixed(2)}"),
                   verticalSpace(16),
                   Divider(color: AppColors.blueColorEEE),
                   verticalSpace(16),
@@ -135,13 +142,23 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                           ])),
                         ],
                       )),
-                      Text("122", style: TextStyles.font16GreyColor33Weight500),
+                      Text(
+                          "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotal(selectedPercentType?.id, percentController.text).toStringAsFixed(2)}",
+                          style: TextStyles.font16GreyColor33Weight500),
                     ],
                   ),
+                  verticalSpace(16),
                 ],
               );
             },
           ),
+          Text("طريقه الدفع",style: TextStyles.font18GreyColor33Weight500,),
+          ///
+          // Column(
+          //   children: AppConstant.pays.,
+          // ),
+
+
           verticalSpace(16),
         ],
       ),

@@ -102,6 +102,11 @@ class TextStyles {
     color: AppColors.greyColor33,
     fontWeight: FontWeight.w500,
     fontFamily: 'Bahij',
+  );  static TextStyle font18GreyColor33Weight500 = TextStyle(
+    fontSize: 18.sp,
+    color: AppColors.greyColor33,
+    fontWeight: FontWeight.w500,
+    fontFamily: 'Bahij',
   );
   static TextStyle font14GreyColorA5Weight400 = TextStyle(
     fontSize: 14.sp,

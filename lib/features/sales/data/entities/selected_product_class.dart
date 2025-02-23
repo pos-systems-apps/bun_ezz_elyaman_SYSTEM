@@ -11,39 +11,72 @@ class ReseatSelectedProducts {
 
   ReseatSelectedProducts({
     required this.selectedProducts,
-     this.totalReseat=0,
-     this.totalDiscount=0,
-     this.extraDiscount=0,
-     this.valueTax=0,
-     this.total=0,
+    this.totalReseat = 0,
+    this.totalDiscount = 0,
+    this.extraDiscount = 0,
+    this.valueTax = 0,
+    this.total = 0,
   });
 
-   double getTotalReseat() {
-    print(selectedProducts.length);
+  double getTotalReseat() {
+    totalReseat = 0;
     for (var element in selectedProducts) {
-      print("---------------------");
-      print(element.product.sellingPrice);
-      double quantity = double.tryParse(
+      double selectedQuantity = double.tryParse(
               "${element.maxValueCounter}.${element.minValueCounter}") ??
           1;
-      debugPrint("quantity ${quantity}");
-
-      totalReseat += (element.product.sellingPrice * quantity);
-      debugPrint("totalReseat ${totalReseat}");
+      totalReseat += (element.product.sellingPrice * selectedQuantity);
     }
-
     return totalReseat;
   }
 
-  static getTotalDiscount(List<SelectedProductClass> items) {
-    // return
+  double getTotalDiscount() {
+    totalDiscount = 0;
+    for (var element in selectedProducts) {
+      double selectedQuantity = double.tryParse(
+              "${element.maxValueCounter}.${element.minValueCounter}") ??
+          1;
+      double itemDiscount = 0;
+      if (element.product.discountType == "percent") {
+        itemDiscount =
+            (element.product.discount / 100) * element.product.sellingPrice;
+      } else {
+        itemDiscount = element.product.discount;
+      }
+
+      totalDiscount += (itemDiscount * selectedQuantity);
+    }
+    return totalDiscount;
   }
 
-  static getExtraDiscount(List<SelectedProductClass> items) {}
+  double getExtraDiscount(int? discountId, String discount) {
+    extraDiscount = 0;
+    double productsPriceAfterDiscount = getTotalReseat() - getTotalDiscount();
+    if (discountId == 2) {
+      extraDiscount =
+          ((double.tryParse(discount) ?? 0) * productsPriceAfterDiscount) / 100;
+    } else {
+      extraDiscount = (double.tryParse(discount) ?? 0);
+    }
+    return extraDiscount;
+  }
 
-  static getValueTax(List<SelectedProductClass> items) {}
+  double getValueTax(int? discountId, String discount) {
+    valueTax = 0;
+    double productsPriceAfterAllDiscounts = getTotalReseat() -
+        getTotalDiscount() -
+        getExtraDiscount(discountId, discount);
+    valueTax = (productsPriceAfterAllDiscounts * 15) / 100;
+    return valueTax;
+  }
 
-  static getTotal(List<SelectedProductClass> items) {}
+  double getTotal(int? discountId, String discount) {
+    total = 0;
+    total = getTotalReseat() -
+        getTotalDiscount() -
+        getExtraDiscount(discountId, discount) +
+        getValueTax(discountId, discount);
+    return total;
+  }
 }
 
 class SelectedProductClass {

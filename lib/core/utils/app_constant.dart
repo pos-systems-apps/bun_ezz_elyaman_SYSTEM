@@ -138,6 +138,7 @@ class AppConstant {
     PercentTypesClass(id: 1, nameAr: "كمية", nameEn: "Amount"),
     PercentTypesClass(id: 2, nameAr: "نسبة مئوية", nameEn: "Percentage"),
   ];
+
   static toast(String message, Color colors) {
     return Fluttertoast.showToast(
       msg: message,
@@ -148,6 +149,15 @@ class AppConstant {
       textColor: AppColors.whiteColor,
       fontSize: 16.0.sp,
     );
+  }
+
+  static double getDiscountForProduct(
+      String discountType, double productPrice, double discount) {
+    if (discountType == "percent") {
+      return productPrice - (discount *productPrice) / 100;
+    } else {
+      return  productPrice-discount;
+    }
   }
 
   static showBoxToBeOnline(BuildContext context) {
@@ -165,6 +175,7 @@ class AppConstant {
       ),
     );
   }
+
 // static String getMonthName(int monthNumber) {
 //    if (monthNumber < 1 || monthNumber > 12) {
 //      return 'Invalid month';
