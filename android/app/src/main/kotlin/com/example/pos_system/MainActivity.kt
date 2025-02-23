@@ -1,5 +1,5 @@
-package com.example.pos_system
+package com.pos.system
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity : FlutterActivity()

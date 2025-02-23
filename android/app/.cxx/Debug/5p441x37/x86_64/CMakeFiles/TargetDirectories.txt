@@ -1,0 +1,2 @@
+/Users/ahmedkhattab/programming/projects/pos_system/android/app/.cxx/Debug/5p441x37/x86_64/CMakeFiles/edit_cache.dir
+/Users/ahmedkhattab/programming/projects/pos_system/android/app/.cxx/Debug/5p441x37/x86_64/CMakeFiles/rebuild_cache.dir
