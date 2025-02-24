@@ -40,7 +40,9 @@ class OnGetUsersSuccessState extends SalesState {}
 
 class OnCreateOrderLoadingState extends SalesState {}
 class OnCreateOrderSuccessState extends SalesState {
+  int orderId;
 
+  OnCreateOrderSuccessState({required this.orderId});
 }
 class OnCreateOrderErrorState extends SalesState {
   String message;

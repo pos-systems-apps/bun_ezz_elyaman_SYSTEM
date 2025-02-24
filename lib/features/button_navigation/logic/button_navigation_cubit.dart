@@ -30,18 +30,18 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
     switch (selectedIndex) {
       case 0:
         return BlocProvider(
-          create: (context) => StatisticsCubit(getIt())..getStatistics(),
+          create: (_) => StatisticsCubit(getIt())..getStatistics(),
           child: StatisticsScreen(),
         );
       case 1:
         return BlocProvider(
-          create: (context) =>
+          create: (_) =>
               CollectionsCubit(getIt(), getIt())..getBankAccounts(),
           child: CollectionsScreen(),
         );
       case 2:
         return BlocProvider(
-          create: (context) =>
+          create: (_) =>
               SalesCubit(getIt(), getIt())..getCategoriesFromHere(),
           child: SalesScreen(),
         );

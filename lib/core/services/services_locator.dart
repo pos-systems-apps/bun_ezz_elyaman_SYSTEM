@@ -9,6 +9,7 @@ import 'package:pos_system/features/collections/data/repo/collections_repo.dart'
 import 'package:pos_system/features/collections/data/services/collections_service.dart';
 import 'package:pos_system/features/invoice/data/repo/invoice_repo.dart';
 import 'package:pos_system/features/invoice/data/services/invoice_service.dart';
+
 import 'package:pos_system/features/sales/data/repo/sales_repo.dart';
 import 'package:pos_system/features/sales/data/services/sales_service.dart';
 import 'package:pos_system/features/splash/data/repo/splash_repo.dart';
@@ -55,7 +56,7 @@ class ServicesLocator {
     ///invoice
     getIt.registerLazySingleton<InvoiceRepo>(() => InvoiceRepo(getIt()));
     getIt.registerFactory<InvoiceService>(
-        () => InvoiceService(apiConsumer: getIt()));
+            () => InvoiceService(apiConsumer: getIt()));
 
 
     ///constant

@@ -168,6 +168,8 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
               return Column(
                 children: SalesCubit.get(context)
                     .pays
+                    .where((element) => (element.id == 3 &&
+                        SalesCubit.get(context).selectedOrderType.id == 7))
                     .map((item) => GestureDetector(
                           onTap: () {
                             SalesCubit.get(context).changeSelectedPay(item);
@@ -236,7 +238,8 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
               return current is OnChangePaySelectState;
             },
             builder: (context, state) {
-              if (SalesCubit.get(context).selectedPay?.id == 3) {
+              if (SalesCubit.get(context).selectedPay?.id == 3 &&
+                  SalesCubit.get(context).selectedOrderType.id == 4) {
                 return SalesMoneyTextFieldWidget();
               } else {
                 return const SizedBox.shrink();
@@ -251,13 +254,13 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                   current is OnCreateOrderErrorState ||
                   current is OnCreateOrderCatchErrorState;
             },
-            listener: (context, state) {
+            listener: (_, state) {
               if (state is OnCreateOrderSuccessState) {
-                context.pushNamed(Routes.electronicInvoiceScreen);
+                context.pushNamed(Routes.electronicInvoiceScreen,
+                    arguments: {"invoiceId": state.orderId});
               } else if (state is OnCreateOrderErrorState) {
                 ErrorAlertDialog.getDialog(context, state.message);
-              }
-              if (state is OnCreateOrderCatchErrorState) {
+              } else if (state is OnCreateOrderCatchErrorState) {
                 ErrorAlertDialog.getDialog(context, state.message);
               }
             },
@@ -286,6 +289,8 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                                 context, "قم باختيار طريقة الدفع ");
                           } else {
                             if (SalesCubit.get(context).selectedPay?.id == 3 &&
+                                SalesCubit.get(context).selectedOrderType.id ==
+                                    4 &&
                                 SalesCubit.get(context)
                                     .moneyController
                                     .text
@@ -293,7 +298,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                               ErrorAlertDialog.getDialog(
                                   context, "قم بادخال المبلغ ");
                             } else {
-                              SalesCubit.get(context).createOrder();
+                              SalesCubit.get(context).createOrder(context);
                             }
                           }
                         }
@@ -302,7 +307,6 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                   });
             },
           ),
-
           verticalSpace(16),
         ],
       ),

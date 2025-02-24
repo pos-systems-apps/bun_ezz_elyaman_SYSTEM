@@ -2,9 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
-import 'package:pos_system/core/widgets/error_alert_dialog.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
@@ -245,7 +246,7 @@ class SalesCubit extends Cubit<SalesState> {
   ///add extra discount
 
   ///pays
-  List<PayClass> pays =
+   List<PayClass> pays =
       getIt<AppConstant>().pays.where((item) => item.isShown).toList();
 
   PayClass? selectedPay;
@@ -287,7 +288,7 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   /// CREATE ORDER
-  createOrder() {
+  createOrder(BuildContext context) {
     emit(OnCreateOrderLoadingState());
     _salesRepo
         .createOrder(CreateOrderRequest(
@@ -331,9 +332,12 @@ class SalesCubit extends Cubit<SalesState> {
             }).toList()))
         .then((value) {
       value.fold((l) {
+
         emit(OnCreateOrderErrorState(message: l.message));
       }, (r) {
-        emit(OnCreateOrderSuccessState());
+        // context.pushNamed(Routes.electronicInvoiceScreen,
+        //     arguments: {"orderId": r.orderId});
+        emit(OnCreateOrderSuccessState(orderId: r.orderId ?? 0));
       });
     }).catchError((error) {
       emit(OnCreateOrderCatchErrorState(message: "error".tr()));

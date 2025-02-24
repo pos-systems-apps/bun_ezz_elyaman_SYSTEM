@@ -135,7 +135,7 @@ class ElectronicInvoiceBodyWidget extends StatelessWidget {
                   backGroundColor: AppColors.mainColor,
                   textStyle: TextStyles.font14WhiteColorWeight500,
                   onPressed: () {
-                    context.pushNamed(Routes.printInvoiceScreen);
+                    // context.pushNamed(Routes.printInvoiceScreen);
                   }),
               verticalSpace(16),
               ButtonWidget(

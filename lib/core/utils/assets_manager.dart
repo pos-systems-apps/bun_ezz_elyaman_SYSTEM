@@ -25,6 +25,39 @@ class ImageAsset {
   static const String statics3ICon = 'assets/icons/statics_3_icon.svg';
   static const String statics4ICon = 'assets/icons/statics_4_icon.svg';
   static const String reseatICon = 'assets/icons/reseat_icon.svg';
+  static const String setting1Icon = 'assets/icons/setting_1_icon.svg';
+  static const String setting2Icon = 'assets/icons/setting_2_icon.svg';
+  static const String setting3Icon = 'assets/icons/setting_3_icon.svg';
+  static const String setting4Icon = 'assets/icons/setting_4_icon.svg';
+  static const String setting5Icon = 'assets/icons/setting_5_icon.svg';
+  static const String setting6Icon = 'assets/icons/setting_6_icon.svg';
+  static const String setting7Icon = 'assets/icons/setting_7_icon.svg';
+
+
+
+
+
+  static const String setting2_1Icon = 'assets/icons/setting_2_1_icon.svg';
+  static const String setting2_2Icon = 'assets/icons/setting_2_2_icon.svg';
+  static const String setting2_3Icon = 'assets/icons/setting_2_3_icon.svg';
+  static const String setting2_4Icon = 'assets/icons/setting_2_4_icon.svg';
+  static const String setting2_5Icon = 'assets/icons/setting_2_5_icon.svg';
+  static const String setting2_6Icon = 'assets/icons/setting_2_6_icon.svg';
+  static const String setting2_7Icon = 'assets/icons/setting_2_7_icon.svg';
+  static const String setting2_8Icon = 'assets/icons/setting_2_8_icon.svg';
+  static const String setting2_9Icon = 'assets/icons/setting_2_9_icon.svg';
+  static const String setting2_10Icon = 'assets/icons/setting_2_10_icon.svg';
+  static const String setting2_11Icon = 'assets/icons/setting_2_11_icon.svg';
+  static const String setting2_12Icon = 'assets/icons/setting_2_12_icon.svg';
+  static const String setting2_13Icon = 'assets/icons/setting_2_13_icon.svg';
+  static const String setting2_14Icon = 'assets/icons/setting_2_14_icon.svg';
+  static const String setting2_15Icon = 'assets/icons/setting_2_15_icon.svg';
+  static const String setting2_16Icon = 'assets/icons/setting_2_16_icon.svg';
+  static const String setting3_1Icon = 'assets/icons/setting_3_1_icon.svg';
+  static const String setting3_2Icon = 'assets/icons/setting_3_2_icon.svg';
+  static const String setting3_3Icon = 'assets/icons/setting_3_3_icon.svg';
+
+
 
   static random1(){
     List<String> images = [

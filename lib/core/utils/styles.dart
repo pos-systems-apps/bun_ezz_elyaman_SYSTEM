@@ -29,6 +29,18 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: 'Bahij',
   );
+  static TextStyle font16BlackColorWeight600 = TextStyle(
+    fontSize: 16.sp,
+    color: AppColors.blackColor.withValues(alpha: .87),
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Bahij',
+  );
+  static TextStyle font16BlackColor2Weight600 = TextStyle(
+    fontSize: 16.sp,
+    color: AppColors.blackColor,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Bahij',
+  );
   static TextStyle font16BlackColorWeight400 = TextStyle(
     fontSize: 16.sp,
     color: AppColors.blackColor,

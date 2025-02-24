@@ -53,6 +53,8 @@ class AppColors {
   static Color blueColor1ED = const Color(0xff7A8AED);
   static Color redColor = const Color(0xffFF0000);
   static Color greenColor00 = const Color(0xff41B800);
+  static Color redColor00 = const Color(0xffB50200);
+  static Color redColor39 = const Color(0xff9D3739);
 
   static Color random1() {
     List<Color> colors = [
@@ -69,20 +71,19 @@ class AppColors {
 
   ///
 
-  static Color darkBlueColor33 = const Color(0xff091133);
-  static Color darkBlueColor7C = const Color(0xff192C7C);
-  static Color darkBlueColor4B = const Color(0xff4B4B4B);
-  static Color redColor00 = const Color(0xffB50200);
-  static Color redColor36 = const Color(0xffFE3836);
-  static Color redColor9F = const Color(0xffFFA09F);
-  static Color redColor50 = const Color(0xffCD5250);
-  static Color redColor92 = const Color(0xffFF9292);
-  static Color redColor2 = const Color(0xffFF7675);
-  static Color greyColorC7 = const Color(0xffC7C7C7);
-  static Color grey2Color = const Color(0xffEFEFF0);
-  static Color greyColorD9 = const Color(0xffD9D9D9);
-  static Color greyColorC0 = const Color(0xffC0C0C0);
-  static Color greyColorF5 = const Color(0xffF5F5F5);
-  static Color greyColorE2 = const Color(0xffE4E2E2);
-  static Color greyColorD4 = const Color(0xffD4D4D4);
+  // static Color darkBlueColor33 = const Color(0xff091133);
+  // static Color darkBlueColor7C = const Color(0xff192C7C);
+  // static Color darkBlueColor4B = const Color(0xff4B4B4B);
+  // static Color redColor36 = const Color(0xffFE3836);
+  // static Color redColor9F = const Color(0xffFFA09F);
+  // static Color redColor50 = const Color(0xffCD5250);
+  // static Color redColor92 = const Color(0xffFF9292);
+  // static Color redColor2 = const Color(0xffFF7675);
+  // static Color greyColorC7 = const Color(0xffC7C7C7);
+  // static Color grey2Color = const Color(0xffEFEFF0);
+  // static Color greyColorD9 = const Color(0xffD9D9D9);
+  // static Color greyColorC0 = const Color(0xffC0C0C0);
+  // static Color greyColorF5 = const Color(0xffF5F5F5);
+  // static Color greyColorE2 = const Color(0xffE4E2E2);
+  // static Color greyColorD4 = const Color(0xffD4D4D4);
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
@@ -61,15 +63,8 @@ class SalesBodyWidget extends StatelessWidget {
                         ErrorAlertDialog.getDialog(
                             context, "لم يتم اختيار منتجات ");
                       } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => BlocProvider<SalesCubit>.value(
-                              value: SalesCubit.get(context),
-                              child: ReseatScreen(),
-                            ),
-                          ),
-                        );
+                        context.pushNamed(Routes.reseatScreen,
+                            arguments: {"context": context});
                       }
                     });
               },

@@ -62,13 +62,7 @@ class StatisticAppBarWidget extends StatelessWidget {
             horizontalSpace(12),
             GestureDetector(
                 onTap: () {
-                  print(AppColors.mainColor.hashCode);
-                  print(AppColors.secondColor.hashCode);
-               // var ii=   getIt<AppColors>().getMainColor();
-               // print(ii);
-               // var ee3=    getIt<AppColors>()..getSecondColor();
-               // print(ee3);
-               //    context.pushNamed(Routes.settingScreen);
+                  context.pushNamed(Routes.settingScreen);
                 },
                 child: Container(
                   height: 40.h,

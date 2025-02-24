@@ -1,17 +1,15 @@
-import 'package:equatable/equatable.dart';
-
-class SuccessResponseModel extends Equatable {
+class SuccessResponseModel {
+  final int? orderId;
   final String? message;
 
   const SuccessResponseModel({
+    required this.orderId,
     required this.message,
   });
 
   factory SuccessResponseModel.fromJson(Map<String, dynamic> json) =>
       SuccessResponseModel(
+        orderId: json["order_id"],
         message: json["message"],
       );
-
-  @override
-  List<Object?> get props => [message];
 }
