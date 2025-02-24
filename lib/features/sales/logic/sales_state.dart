@@ -27,5 +27,28 @@ class OnGetSearchProductsCatchErrorState extends SalesState {}
 
 class OnChangeSelectedProductState extends SalesState {}
 class OnChangeSelectedImageState extends SalesState {}
+class OnChangePaySelectState extends SalesState {}
 
 
+
+class OnSelectUserState extends SalesState {}
+class OnGetUsersLoadingState extends SalesState {}
+class OnGetUsersErrorState extends SalesState {}
+class OnGetUsersCatchErrorState extends SalesState {}
+class OnGetUsersSuccessState extends SalesState {}
+
+
+class OnCreateOrderLoadingState extends SalesState {}
+class OnCreateOrderSuccessState extends SalesState {
+
+}
+class OnCreateOrderErrorState extends SalesState {
+  String message;
+
+  OnCreateOrderErrorState({required this.message});
+}
+class OnCreateOrderCatchErrorState extends SalesState {
+  String message;
+
+  OnCreateOrderCatchErrorState({required this.message});
+}

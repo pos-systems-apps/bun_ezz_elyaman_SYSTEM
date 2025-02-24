@@ -7,8 +7,8 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/features/collections/data/repo/collections_repo.dart';
 import 'package:pos_system/features/collections/data/services/collections_service.dart';
-import 'package:pos_system/features/reseat/data/repo/reseat_repo.dart';
-import 'package:pos_system/features/reseat/data/services/reseat_service.dart';
+import 'package:pos_system/features/invoice/data/repo/invoice_repo.dart';
+import 'package:pos_system/features/invoice/data/services/invoice_service.dart';
 import 'package:pos_system/features/sales/data/repo/sales_repo.dart';
 import 'package:pos_system/features/sales/data/services/sales_service.dart';
 import 'package:pos_system/features/splash/data/repo/splash_repo.dart';
@@ -52,10 +52,10 @@ class ServicesLocator {
     getIt.registerFactory<SalesService>(
         () => SalesService(apiConsumer: getIt()));
 
-    ///reseats
-    getIt.registerLazySingleton<ReseatRepo>(() => ReseatRepo(getIt()));
-    getIt.registerFactory<ReseatService>(
-        () => ReseatService(apiConsumer: getIt()));
+    ///invoice
+    getIt.registerLazySingleton<InvoiceRepo>(() => InvoiceRepo(getIt()));
+    getIt.registerFactory<InvoiceService>(
+        () => InvoiceService(apiConsumer: getIt()));
 
 
     ///constant

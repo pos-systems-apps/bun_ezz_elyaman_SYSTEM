@@ -1,23 +1,27 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
-import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/widgets/error_alert_dialog.dart';
+import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
+import 'package:pos_system/features/sales/data/models/create_order_request.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
+import 'package:pos_system/features/splash/data/models/users_response_model.dart';
+import 'package:pos_system/features/splash/data/repo/splash_repo.dart';
 import '../data/repo/sales_repo.dart';
 import 'sales_state.dart';
 
 class SalesCubit extends Cubit<SalesState> {
   final SalesRepo _salesRepo;
+  final SplashRepo _splashRepo;
 
-  SalesCubit(this._salesRepo) : super(InitialState());
+  SalesCubit(this._salesRepo, this._splashRepo) : super(InitialState());
 
   static List<OrderTypeClass> orderTypes = AppConstant.orderTypes;
 
@@ -196,7 +200,9 @@ class SalesCubit extends Cubit<SalesState> {
 
   editInProductFromSelectedProducts(SelectedProductClass value) {
     int index = selectedProducts.indexWhere(
-          (element) => element.product.productCode == value.product.productCode, // Compare by product code
+      (element) =>
+          element.product.productCode ==
+          value.product.productCode, // Compare by product code
     );
     if (index != -1) {
       selectedProducts[index] = value;
@@ -216,11 +222,9 @@ class SalesCubit extends Cubit<SalesState> {
         .any((item) => item.product.productCode == value.product.productCode);
   }
 
-  changeState(){
+  changeState() {
     emit(OnChangeSelectedProductState());
   }
-
-
 
   TextEditingController searchUserController = TextEditingController();
 
@@ -238,19 +242,103 @@ class SalesCubit extends Cubit<SalesState> {
     }
   }
 
-
-///add extra discount
+  ///add extra discount
 
   ///pays
-  // List<PayClass> pays =
-  // getIt<AppConstant>().pays.where((item) => item.isShown).toList();
-  // PayClass? selectedPay;
-  //
-  // changeSelectedPay(PayClass value) {
-  //   selectedPay = value;
-  //   emit(OnChangePaySelectState());
-  // }
+  List<PayClass> pays =
+      getIt<AppConstant>().pays.where((item) => item.isShown).toList();
 
+  PayClass? selectedPay;
+
+  changeSelectedPay(PayClass value) {
+    selectedPay = value;
+    emit(OnChangePaySelectState());
+  }
+
+  PercentTypesClass? selectedPercentType;
+  TextEditingController percentController = TextEditingController();
+
+  TextEditingController moneyController = TextEditingController();
+
+  ///users
+  List<UserResponseData> users = [];
+
+  getUsers() {
+    emit(OnGetUsersLoadingState());
+    _splashRepo.getUsers(searchUserController.text).then((value) {
+      value.fold((l) {
+        emit(OnGetUsersErrorState());
+      }, (r) {
+        users = r.userResponseData;
+        emit(OnGetUsersSuccessState());
+      });
+    }).catchError((error) {
+      emit(OnGetUsersCatchErrorState());
+    });
+  }
+
+  UserResponseData? selectedUser;
+
+  onSelectUser(UserResponseData vale) {
+    searchUserController.text = vale.nameAr;
+    selectedUser = vale;
+    users.clear();
+    emit(OnSelectUserState());
+  }
+
+  /// CREATE ORDER
+  createOrder() {
+    emit(OnCreateOrderLoadingState());
+    _salesRepo
+        .createOrder(CreateOrderRequest(
+            userId: selectedUser!.id,
+            img: selectedImagePath!,
+            totalTax: double.tryParse(
+                    ReseatSelectedProducts(selectedProducts: selectedProducts)
+                        .getValueTax(
+                            selectedPercentType?.id, percentController.text)
+                        .toStringAsFixed(2)) ??
+                0,
+            extraDiscount: double.tryParse(
+                    ReseatSelectedProducts(selectedProducts: selectedProducts)
+                        .getExtraDiscount(
+                            selectedPercentType?.id, percentController.text)
+                        .toStringAsFixed(2)) ??
+                0,
+            collectedCash: double.tryParse(moneyController.text) ?? 0,
+            orderType: selectedOrderType.id,
+            finalOrderAmount: double.tryParse(
+                    ReseatSelectedProducts(selectedProducts: selectedProducts)
+                        .getTotal(selectedPercentType?.id, percentController.text)
+                        .toStringAsFixed(2)) ??
+                0,
+            cash: selectedPay!.id,
+            carts: selectedProducts.map((element) {
+              return Cart(
+                  id: element.product.id,
+                  quantity: element.minValueCounter == 0
+                      ? element.maxValueCounter.toDouble()
+                      : ((element.maxValueCounter * element.product.unitValue) +
+                              element.minValueCounter)
+                          .toDouble(),
+                  price: element.minValueCounter == 0
+                      ? element.product.sellingPrice
+                      : double.tryParse((element.product.sellingPrice /
+                                  element.product.unitValue)
+                              .toStringAsFixed(2)) ??
+                          0,
+                  unit: element.minValueCounter == 0 ? 1 : 0);
+            }).toList()))
+        .then((value) {
+      value.fold((l) {
+        emit(OnCreateOrderErrorState(message: l.message));
+      }, (r) {
+        emit(OnCreateOrderSuccessState());
+      });
+    }).catchError((error) {
+      emit(OnCreateOrderCatchErrorState(message: "error".tr()));
+    });
+  }
 
   static SalesCubit get(context) => BlocProvider.of(context);
 }

@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/app_text_field.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
+import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/logic/sales_state.dart';
+import 'package:pos_system/features/sales/ui/reseat_widgets/sales_money_text_field_widget.dart';
 
 class MoneyAndDiscountsWidget extends StatelessWidget {
   const MoneyAndDiscountsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    PercentTypesClass? selectedPercentType;
-    TextEditingController percentController = TextEditingController();
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       decoration: BoxDecoration(
@@ -44,7 +45,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                           WidgetStateProperty.all(AppColors.whiteColor),
                     ),
                     onSelected: (PercentTypesClass? value) {
-                      selectedPercentType = value;
+                      SalesCubit.get(context).selectedPercentType = value;
                     },
                     dropdownMenuEntries: AppConstant.percentTypes
                         .map((item) => DropdownMenuEntry(
@@ -58,7 +59,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                 flex: 1,
                 child: AppTextFormField(
                     hintText: "",
-                    controller: percentController,
+                    controller: SalesCubit.get(context).percentController,
                     hintStyle: TextStyles.font14GreyColorA5Weight400,
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
@@ -106,16 +107,16 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                       style: TextStyles.font14GreyColor33Weight400),
                   verticalSpace(16),
                   _moneyWidget("اجمالي الفاتوره",
-                      "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotalReseat().toStringAsFixed(2)}"),
+                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotalReseat())}"),
                   verticalSpace(16),
                   _moneyWidget("خصم المنتج",
-                      "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotalDiscount().toStringAsFixed(2)}"),
+                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotalDiscount())}"),
                   verticalSpace(16),
                   _moneyWidget("خصم اضافي",
-                      "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getExtraDiscount(selectedPercentType?.id, percentController.text).toStringAsFixed(2)}"),
+                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getExtraDiscount(SalesCubit.get(context).selectedPercentType?.id, SalesCubit.get(context).percentController.text))}"),
                   verticalSpace(16),
                   _moneyWidget("ضريبه القيمه المضافه",
-                      "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getValueTax(selectedPercentType?.id, percentController.text).toStringAsFixed(2)}"),
+                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getValueTax(SalesCubit.get(context).selectedPercentType?.id, SalesCubit.get(context).percentController.text))}"),
                   verticalSpace(16),
                   Divider(color: AppColors.blueColorEEE),
                   verticalSpace(16),
@@ -143,7 +144,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                         ],
                       )),
                       Text(
-                          "${AppConstant.currency} ${ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotal(selectedPercentType?.id, percentController.text).toStringAsFixed(2)}",
+                          "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getTotal(SalesCubit.get(context).selectedPercentType?.id, SalesCubit.get(context).percentController.text))}",
                           style: TextStyles.font16GreyColor33Weight500),
                     ],
                   ),
@@ -152,12 +153,155 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
               );
             },
           ),
-          Text("طريقه الدفع",style: TextStyles.font18GreyColor33Weight500,),
-          ///
-          // Column(
-          //   children: AppConstant.pays.,
-          // ),
+          Text(
+            "طريقه الدفع",
+            style: TextStyles.font18GreyColor33Weight500,
+          ),
+          verticalSpace(16),
 
+          ///
+          BlocBuilder<SalesCubit, SalesState>(
+            buildWhen: (previous, current) {
+              return current is OnChangePaySelectState;
+            },
+            builder: (context, state) {
+              return Column(
+                children: SalesCubit.get(context)
+                    .pays
+                    .map((item) => GestureDetector(
+                          onTap: () {
+                            SalesCubit.get(context).changeSelectedPay(item);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 10.h),
+                            margin: EdgeInsets.symmetric(vertical: 6.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.r),
+                              border: Border.all(color: AppColors.blueColorEEE),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  item.nameAr,
+                                  style: TextStyles.font15GreyColor66Weight400,
+                                ),
+                                Spacer(),
+                                Container(
+                                  padding: EdgeInsets.all(3.r),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.whiteColor,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      border: Border.all(
+                                          color: SalesCubit.get(context)
+                                                      .selectedPay ==
+                                                  item
+                                              ? AppColors.mainColor
+                                              : AppColors.greyColorBC,
+                                          width: SalesCubit.get(context)
+                                                      .selectedPay ==
+                                                  item
+                                              ? 4
+                                              : 2)),
+                                  child: Container(
+                                    height: 20.r,
+                                    width: 20.r,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          SalesCubit.get(context).selectedPay ==
+                                                  item
+                                              ? AppColors.mainColor
+                                              : AppColors.whiteColor,
+                                      borderRadius: BorderRadius.circular(4.r),
+                                    ),
+                                    child: Icon(
+                                      Icons.check,
+                                      color: AppColors.whiteColor,
+                                      size: 18.r,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              );
+            },
+          ),
+          verticalSpace(16),
+
+          BlocBuilder<SalesCubit, SalesState>(
+            buildWhen: (previous, current) {
+              return current is OnChangePaySelectState;
+            },
+            builder: (context, state) {
+              if (SalesCubit.get(context).selectedPay?.id == 3) {
+                return SalesMoneyTextFieldWidget();
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
+          verticalSpace(16),
+          BlocConsumer<SalesCubit, SalesState>(
+            buildWhen: (previous, current) {
+              return current is OnCreateOrderLoadingState ||
+                  current is OnCreateOrderSuccessState ||
+                  current is OnCreateOrderErrorState ||
+                  current is OnCreateOrderCatchErrorState;
+            },
+            listener: (context, state) {
+              if (state is OnCreateOrderSuccessState) {
+                context.pushNamed(Routes.electronicInvoiceScreen);
+              } else if (state is OnCreateOrderErrorState) {
+                ErrorAlertDialog.getDialog(context, state.message);
+              }
+              if (state is OnCreateOrderCatchErrorState) {
+                ErrorAlertDialog.getDialog(context, state.message);
+              }
+            },
+            builder: (context, state) {
+              return ButtonWidget(
+                  isLoading: state is OnCreateOrderLoadingState,
+                  buttonHeight: 56.h,
+                  buttonText: "إتمام الطلب",
+                  backGroundColor: AppColors.mainColor,
+                  borderRadius: 4.r,
+                  textStyle: TextStyles.font16WhiteColorWeight500,
+                  onPressed: () {
+                    ///create order
+                    if (SalesCubit.get(context).selectedProducts.isEmpty) {
+                      ErrorAlertDialog.getDialog(context, "قم بتحديد منتجات ");
+                    } else {
+                      if (SalesCubit.get(context).selectedUser == null) {
+                        ErrorAlertDialog.getDialog(context, "ادخل اسم عميل ");
+                      } else {
+                        if (SalesCubit.get(context).selectedImagePath == null) {
+                          ErrorAlertDialog.getDialog(
+                              context, "قم برفع الصوره ");
+                        } else {
+                          if (SalesCubit.get(context).selectedPay == null) {
+                            ErrorAlertDialog.getDialog(
+                                context, "قم باختيار طريقة الدفع ");
+                          } else {
+                            if (SalesCubit.get(context).selectedPay?.id == 3 &&
+                                SalesCubit.get(context)
+                                    .moneyController
+                                    .text
+                                    .isEmpty) {
+                              ErrorAlertDialog.getDialog(
+                                  context, "قم بادخال المبلغ ");
+                            } else {
+                              SalesCubit.get(context).createOrder();
+                            }
+                          }
+                        }
+                      }
+                    }
+                  });
+            },
+          ),
 
           verticalSpace(16),
         ],

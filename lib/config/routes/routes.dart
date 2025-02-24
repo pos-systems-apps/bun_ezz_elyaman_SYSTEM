@@ -4,4 +4,6 @@ class Routes{
   static const buttonNavigationScreen = "/ButtonNavigationScreen";
   static const reseatScreen = "/ReseatScreen";
   static const settingScreen = "/SettingScreen";
+  static const electronicInvoiceScreen = "/ElectronicInvoiceScreen";
+  static const printInvoiceScreen = "/PrintInvoiceScreen";
 }

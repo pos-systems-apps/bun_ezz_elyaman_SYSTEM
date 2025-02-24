@@ -17,6 +17,7 @@ class BackGroundWidget extends StatelessWidget {
       children: [
         Container(
           height: context.height / 2,
+          padding: EdgeInsets.symmetric(horizontal: 30.w),
           decoration: BoxDecoration(
             color: AppColors.mainColor,
             image: DecorationImage(

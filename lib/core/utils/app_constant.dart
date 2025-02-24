@@ -154,9 +154,9 @@ class AppConstant {
   static double getDiscountForProduct(
       String discountType, double productPrice, double discount) {
     if (discountType == "percent") {
-      return productPrice - (discount *productPrice) / 100;
+      return productPrice - (discount * productPrice) / 100;
     } else {
-      return  productPrice-discount;
+      return productPrice - discount;
     }
   }
 
@@ -174,6 +174,10 @@ class AppConstant {
         ],
       ),
     );
+  }
+
+  static String confirmRoundTo2Numbers(double number) {
+    return number.toStringAsFixed(2);
   }
 
 // static String getMonthName(int monthNumber) {

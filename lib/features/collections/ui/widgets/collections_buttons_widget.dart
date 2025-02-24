@@ -49,11 +49,9 @@ class CollectionsButtonsWidget extends StatelessWidget {
               if (state is OnConfirmCollectionSuccessState) {
                 ErrorAlertDialog.getDialog(context, state.message);
                 CollectionsCubit.get(context).cancelCollection();
-              }
-              if (state is OnConfirmCollectionErrorState) {
+              } else if (state is OnConfirmCollectionErrorState) {
                 ErrorAlertDialog.getDialog(context, state.error);
-              }
-              if (state is OnConfirmCollectionCatchErrorState) {
+              } else if (state is OnConfirmCollectionCatchErrorState) {
                 ErrorAlertDialog.getDialog(context, state.error);
               }
             },

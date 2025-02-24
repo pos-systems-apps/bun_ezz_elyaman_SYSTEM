@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 
 class ReseatSelectedProducts {
@@ -21,12 +21,16 @@ class ReseatSelectedProducts {
   double getTotalReseat() {
     totalReseat = 0;
     for (var element in selectedProducts) {
-      double selectedQuantity = double.tryParse(
-              "${element.maxValueCounter}.${element.minValueCounter}") ??
-          1;
-      totalReseat += (element.product.sellingPrice * selectedQuantity);
+      if (element.minValueCounter == 0) {
+        totalReseat += (element.product.sellingPrice * element.maxValueCounter);
+      } else {
+        totalReseat += ((element.maxValueCounter * element.product.unitValue) +
+                element.minValueCounter) *
+            (element.product.sellingPrice / element.product.unitValue);
+      }
     }
-    return totalReseat;
+    return double.tryParse(AppConstant.confirmRoundTo2Numbers(totalReseat)) ??
+        0;
   }
 
   double getTotalDiscount() {
@@ -35,6 +39,7 @@ class ReseatSelectedProducts {
       double selectedQuantity = double.tryParse(
               "${element.maxValueCounter}.${element.minValueCounter}") ??
           1;
+
       double itemDiscount = 0;
       if (element.product.discountType == "percent") {
         itemDiscount =
@@ -45,7 +50,9 @@ class ReseatSelectedProducts {
 
       totalDiscount += (itemDiscount * selectedQuantity);
     }
-    return totalDiscount;
+
+    return double.tryParse(AppConstant.confirmRoundTo2Numbers(totalDiscount)) ??
+        0;
   }
 
   double getExtraDiscount(int? discountId, String discount) {
@@ -57,7 +64,8 @@ class ReseatSelectedProducts {
     } else {
       extraDiscount = (double.tryParse(discount) ?? 0);
     }
-    return extraDiscount;
+    return double.tryParse(AppConstant.confirmRoundTo2Numbers(extraDiscount)) ??
+        0;
   }
 
   double getValueTax(int? discountId, String discount) {
@@ -66,7 +74,7 @@ class ReseatSelectedProducts {
         getTotalDiscount() -
         getExtraDiscount(discountId, discount);
     valueTax = (productsPriceAfterAllDiscounts * 15) / 100;
-    return valueTax;
+    return double.tryParse(AppConstant.confirmRoundTo2Numbers(valueTax)) ?? 0;
   }
 
   double getTotal(int? discountId, String discount) {
@@ -75,7 +83,7 @@ class ReseatSelectedProducts {
         getTotalDiscount() -
         getExtraDiscount(discountId, discount) +
         getValueTax(discountId, discount);
-    return total;
+    return double.tryParse(AppConstant.confirmRoundTo2Numbers(total)) ?? 0;
   }
 }
 

@@ -97,7 +97,7 @@ class SearchWidget extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(20.r),
             ),
-        hintStyle: hintStyle ?? TextStyles.font13DarkBlueColor33Weight400,
+        hintStyle: hintStyle ?? TextStyles.font16BlackColorWeight400,
         hintText: hintText,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
@@ -105,7 +105,7 @@ class SearchWidget extends StatelessWidget {
         filled: true,
       ),
       obscureText: isObscureText ?? false,
-      style: textStyle ?? TextStyles.font13DarkBlueColor33Weight400,
+      style: textStyle ?? TextStyles.font16BlackColorWeight400,
       validator: (value) {
         return validator(value);
       },

@@ -1,4 +1,4 @@
-class SalesApiEndPoints {
+class InvoiceApiEndPoints {
   static getCategoriesUrl(String baseUrl, int page) =>
       '${baseUrl}api/v1/category/list?offset=$page';
 
@@ -9,8 +9,4 @@ class SalesApiEndPoints {
   static getSearchProductsUrl(
           String baseUrl, String name, int type, int page) =>
       '${baseUrl}api/v1/product/search?name=$name&type=$type&offset=$page';
-
-  static createOrderURl(String baseUrl) => '${baseUrl}api/v1/pos/place/order';
-
-//
 }

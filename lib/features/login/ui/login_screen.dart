@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             BackGroundWidget(),
             Positioned(
-              bottom: 180.h,
+              bottom: 200.h,
               left: 0,
               right: 0,
               child: LoginFormWidget(

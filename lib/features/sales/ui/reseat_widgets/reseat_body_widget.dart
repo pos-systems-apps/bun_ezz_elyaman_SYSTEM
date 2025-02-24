@@ -31,10 +31,7 @@ class ReseatBodyWidget extends StatelessWidget {
             verticalSpace(24),
             MoneyAndDiscountsWidget(),
 
-
-
-
-            verticalSpace(400),
+            verticalSpace(100),
           ],
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:pos_system/core/api/api_consumer.dart';
 import 'package:pos_system/core/api/app_interceptor.dart';
 import 'package:pos_system/core/services/services_locator.dart';
+import 'package:pos_system/features/sales/data/models/create_order_request.dart';
 
 class HttpConsumer implements ApiConsumer {
   http.Client _client;
@@ -43,18 +44,21 @@ class HttpConsumer implements ApiConsumer {
     if (headers != null) {
       request.headers.addAll(headers);
     }
-    body.forEach((key, value) async {
-      if (key == "images") {
-        for (var item in value as List<String>) {
+    body.forEach((key1, value1) async {
+      if (key1 == "images" && value1 is List<String>) {
+        for (var item in value1) {
           request.files
-              .add(await http.MultipartFile.fromPath(key, item.toString()));
+              .add(await http.MultipartFile.fromPath(key1, item.toString()));
         }
-      } else if (key == "img") {
+      } else if (key1 == "img") {
         request.files
-            .add(await http.MultipartFile.fromPath(key, value.toString()));
+            .add(await http.MultipartFile.fromPath(key1, value1.toString()));
+      } else if (key1 == "cart" && value1 is List<Cart>) {
+        request.fields['cart'] =
+            jsonEncode(value1.map((cart) => cart.toJson()).toList());
       } else {
-        if (value != null) {
-          request.fields[key] = value.toString();
+        if (value1 != null) {
+          request.fields[key1] = value1.toString();
         }
       }
     });

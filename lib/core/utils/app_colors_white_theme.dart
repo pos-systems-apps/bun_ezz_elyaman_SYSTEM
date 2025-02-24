@@ -14,10 +14,13 @@ class AppColors {
 
   static Color mainColor = Color(0xFF37479d);
   static Color secondColor = Color(0xFFF5C31A);
+  static Color greyColor97 = const Color(0xff979797);
 
   static Color blueColor72 = const Color(0xff1B1472);
   static Color blackColor17 = const Color(0xff121217);
   static Color greyColorDA = const Color(0xffD5D7DA);
+  static Color greyColorBC = const Color(0xffA9A9BC);
+  static Color greyColor78 = const Color(0xff6D7278);
   static Color greyColorF8 = const Color(0xffF8F8F8);
   static Color greyColor44 = const Color(0xff444444);
   static Color greyColor62 = const Color(0xff535862);
@@ -79,7 +82,6 @@ class AppColors {
   static Color grey2Color = const Color(0xffEFEFF0);
   static Color greyColorD9 = const Color(0xffD9D9D9);
   static Color greyColorC0 = const Color(0xffC0C0C0);
-  static Color greyColor97 = const Color(0xff979797);
   static Color greyColorF5 = const Color(0xffF5F5F5);
   static Color greyColorE2 = const Color(0xffE4E2E2);
   static Color greyColorD4 = const Color(0xffD4D4D4);
