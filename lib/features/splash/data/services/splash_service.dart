@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
-import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/features/splash/data/models/bank_accounts_response_model.dart';
 import 'package:pos_system/features/splash/data/models/users_response_model.dart';
@@ -19,9 +17,8 @@ class SplashService {
   SplashService({required this.apiConsumer});
 
   Future<UsersResponseModel> getUsers(String parameter) async {
-    String baseUrl = await getIt<EndPoints>().getBaseUrl();
     final response =
-        await apiConsumer.get(SplashApiEndPoints.getUsersUrl(baseUrl, parameter), {
+        await apiConsumer.get(SplashApiEndPoints.getUsersUrl(parameter), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
@@ -34,9 +31,8 @@ class SplashService {
   }
 
   Future<BankAccountsResponseModel> getBankAccounts() async {
-    String baseUrl = await getIt<EndPoints>().getBaseUrl();
     final response =
-        await apiConsumer.get(SplashApiEndPoints.getBankAccountsUrl(baseUrl), {
+        await apiConsumer.get(SplashApiEndPoints.getBankAccountsUrl, {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });

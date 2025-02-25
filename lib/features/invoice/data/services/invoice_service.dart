@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
-import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/features/invoice/data/models/invoice_response_model.dart';
 
@@ -18,10 +16,9 @@ class InvoiceService {
   InvoiceService({required this.apiConsumer});
 
   Future<InvoiceResponseModel> getInvoiceDetails(int invoiceId) async {
-    String baseUrl = await getIt<EndPoints>().getBaseUrl();
 
     final response = await apiConsumer
-        .get(InvoiceApiEndPoints.getInvoiceDetails(baseUrl, invoiceId), {
+        .get(InvoiceApiEndPoints.getInvoiceDetails( invoiceId), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });

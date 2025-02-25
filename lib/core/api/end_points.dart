@@ -1,22 +1,9 @@
-import 'package:pos_system/core/services/cache_helper.dart';
-import 'package:pos_system/core/utils/constant_keys.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 
 class EndPoints {
-  static String? _baseUrl;
-  static const String _imageBaseUrl = "storage/app/public/shop/";
+  static const String _imageBaseUrl = "storage/app/public/";
 
-
-   Future<void> setBaseUrl(String value) async {
-    _baseUrl = value;
-  }
-
-   Future<String> getBaseUrl() async {
-    return EndPoints._baseUrl ??
-        await CacheHelper.getSecuredString(ConstantKeys.saveBaseURLToShared);
-  }
-
-
-   Future<String> getImageFromApi(String imageUrl) async {
-    return (await getBaseUrl()) + _imageBaseUrl + imageUrl;
+  String getImageFromApi(String imageUrl) {
+    return AppConstant.baseUrl + _imageBaseUrl + imageUrl;
   }
 }

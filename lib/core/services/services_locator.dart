@@ -2,11 +2,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:get_it/get_it.dart';
-import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/features/add_customer/data/repo/add_customer_repo.dart';
+import 'package:pos_system/features/add_customer/data/services/add_customer_service.dart';
 import 'package:pos_system/features/collections/data/repo/collections_repo.dart';
 import 'package:pos_system/features/collections/data/services/collections_service.dart';
+import 'package:pos_system/features/create_visit/data/repo/create_visit_repo.dart';
+import 'package:pos_system/features/create_visit/data/services/create_visit_service.dart';
 import 'package:pos_system/features/invoice/data/repo/invoice_repo.dart';
 import 'package:pos_system/features/invoice/data/services/invoice_service.dart';
 
@@ -16,6 +19,8 @@ import 'package:pos_system/features/splash/data/repo/splash_repo.dart';
 import 'package:pos_system/features/splash/data/services/splash_service.dart';
 import 'package:pos_system/features/statistics/data/repo/statistics_repo.dart';
 import 'package:pos_system/features/statistics/data/services/statistics_service.dart';
+import 'package:pos_system/features/transfer_section/data/repo/transfer_section_repo.dart';
+import 'package:pos_system/features/transfer_section/data/services/transfer_section_service.dart';
 
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/login/data/services/login_service.dart';
@@ -56,11 +61,30 @@ class ServicesLocator {
     ///invoice
     getIt.registerLazySingleton<InvoiceRepo>(() => InvoiceRepo(getIt()));
     getIt.registerFactory<InvoiceService>(
-            () => InvoiceService(apiConsumer: getIt()));
+        () => InvoiceService(apiConsumer: getIt()));
 
+    ///setting
+
+    ///create visit
+    getIt
+        .registerLazySingleton<CreateVisitRepo>(() => CreateVisitRepo(getIt()));
+    getIt.registerFactory<CreateVisitService>(
+        () => CreateVisitService(apiConsumer: getIt()));
+
+    ///add user
+    getIt
+        .registerLazySingleton<AddCustomerRepo>(() => AddCustomerRepo(getIt()));
+    getIt.registerFactory<AddCustomerService>(
+        () => AddCustomerService(apiConsumer: getIt()));
+
+    ///transfers sections
+    getIt.registerLazySingleton<TransferSectionRepo>(
+        () => TransferSectionRepo(getIt()));
+    getIt.registerFactory<TransferSectionService>(
+        () => TransferSectionService(apiConsumer: getIt()));
 
     ///constant
-    getIt.registerLazySingleton<EndPoints>(() => EndPoints());
+    // getIt.registerLazySingleton<EndPoints>(() => EndPoints());
     getIt.registerLazySingleton<AppConstant>(() => AppConstant());
     getIt.registerLazySingleton<AppColors>(() => AppColors());
 

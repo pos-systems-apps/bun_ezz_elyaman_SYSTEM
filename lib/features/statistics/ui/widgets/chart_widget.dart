@@ -29,13 +29,11 @@ class ChartWidget extends StatelessWidget {
         legend: Legend(isVisible: false),
         tooltipBehavior: TooltipBehavior(enable: true),
         primaryYAxis: NumericAxis(
-          minimum: double.tryParse(
-                  statisticsResponseModel.minValue.value.toStringAsFixed(2)) ??
-              0,
-          maximum: 2000 +
-              (double.tryParse(statisticsResponseModel.maxValue.value
+          minimum: 0,
+          maximum: (double.tryParse(statisticsResponseModel.maxValue.value
                       .toStringAsFixed(2)) ??
-                  0),
+                  0) *
+              1.5,
           axisLine: AxisLine(
             color: AppColors.whiteColor,
             width: 0,

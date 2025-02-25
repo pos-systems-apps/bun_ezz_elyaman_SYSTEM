@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/cached_network_image.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 
-///images
 class SalesCategoryWidget extends StatelessWidget {
   final Category category;
   final bool isSelected;
@@ -38,7 +38,11 @@ class SalesCategoryWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: CachedNetworkImageWidget(imgUrl: "", radius: 0)),
+          Expanded(
+              child: CachedNetworkImageWidget(
+                  imgUrl:
+                      EndPoints().getImageFromApi("category/${category.image}"),
+                  radius: 0)),
           verticalSpace(4),
           Text(
             category.name,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pos_system/config/routes/routes.dart';
-import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/services/check_network.dart';
 import 'package:pos_system/core/services/services_locator.dart';
@@ -16,6 +15,9 @@ import 'package:pos_system/features/login/data/repo/login_repo.dart';
 
 import '../../login/data/models/setting_response.dart';
 
+
+///if offline and go to login
+///check app setting when login
 class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
 
@@ -44,11 +46,14 @@ class _SplashScreenState extends State<SplashScreen> {
         await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared);
     if (!userToken.isNullOrEmpty()) {
       isLoggedInUser = true;
+      print("isLoggedInUser11${isLoggedInUser}");
       navigationScreenRoute = Routes.buttonNavigationScreen;
       await setupSetting();
     } else {
       isLoggedInUser = false;
+      print("isLoggedInUser2222${isLoggedInUser}");
       navigationScreenRoute = Routes.loginScreen;
+      await setupSetting();
     }
   }
 
@@ -67,7 +72,6 @@ class _SplashScreenState extends State<SplashScreen> {
         navigationScreenRoute = Routes.loginScreen;
       }, (r) async {
         await storeSettingFromApi(r);
-        navigationScreenRoute = Routes.buttonNavigationScreen;
       });
     }).catchError((error) {
       navigationScreenRoute = Routes.loginScreen;
@@ -121,6 +125,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     ///store app constant
     await getIt<AppConstant>().setAppConstantData(
+        basUrl: value.settingResponseInfo.baseURl,
         currencyNew: value.settingResponseInfo.currency,
         shopLogoNew: value.settingResponseInfo.logo,
         shopNameNew: value.settingResponseInfo.shopName,
@@ -146,7 +151,7 @@ class _SplashScreenState extends State<SplashScreen> {
             .toUpperCase());
 
     ///store app end points
-    await getIt<EndPoints>().setBaseUrl(value.settingResponseInfo.baseURl);
+    // await getIt<EndPoints>().setBaseUrl(value.settingResponseInfo.baseURl);
   }
 
   @override

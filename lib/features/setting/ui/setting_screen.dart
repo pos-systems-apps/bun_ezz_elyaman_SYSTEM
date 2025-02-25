@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/config/routes/routes.dart';
+import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
+import 'package:pos_system/core/utils/constant_keys.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/setting/ui/widgets/setting_app_bar_widget.dart';
@@ -43,7 +47,7 @@ class SettingScreen extends StatelessWidget {
                       text: "انشاء زياره",
                       image: ImageAsset.setting3Icon,
                       onTap: () {
-                        print(122);
+                        context.pushNamed(Routes.createVisitScreen);
                       }),
                   verticalSpace(8),
                   SettingItemWidget(
@@ -57,21 +61,21 @@ class SettingScreen extends StatelessWidget {
                       text: "العملاء",
                       image: ImageAsset.setting5Icon,
                       onTap: () {
-                        print(122);
+                        context.pushNamed(Routes.customersScreen);
                       }),
                   verticalSpace(8),
                   SettingItemWidget(
                       text: "اضافه عميل جديد",
                       image: ImageAsset.setting6Icon,
                       onTap: () {
-                        print(122);
+                        context.pushNamed(Routes.addCustomerScreen);
                       }),
                   verticalSpace(8),
                   SettingItemWidget(
                       text: "التحويلات",
                       image: ImageAsset.setting7Icon,
                       onTap: () {
-                        print(122);
+                        context.pushNamed(Routes.transferSectionScreen);
                       }),
                   verticalSpace(16),
                   Text(
@@ -145,10 +149,6 @@ class SettingScreen extends StatelessWidget {
                     ],
                   ),
                   verticalSpace(8),
-
-
-
-
                   Row(
                     children: [
                       Expanded(
@@ -281,16 +281,34 @@ class SettingScreen extends StatelessWidget {
                   SettingItemWidget(
                       text: "تسجيل الخروج",
                       image: ImageAsset.setting3_2Icon,
-                      onTap: () {
-                        print(122);
+                      onTap: () async {
+                        context.pushNamedAndRemoveUntil(Routes.loginScreen,
+                            predicate: (route) => false);
+                        await CacheHelper.removeSecureData(
+                            ConstantKeys.saveTokenToShared);
+                        await CacheHelper.removeSecureData(
+                            ConstantKeys.saveMandoubeNameToShared);
+                        await CacheHelper.removeSecureData(
+                            ConstantKeys.saveEmailToShared);
+                        await CacheHelper.removeSecureData(
+                            ConstantKeys.savePhoneToShared);
                       }),
                   verticalSpace(8),
                   SettingItemWidget(
                       text: "حذف الحساب",
                       image: ImageAsset.setting3_3Icon,
                       isRed: true,
-                      onTap: () {
-                        print(122);
+                      onTap: () async {
+                        context.pushNamedAndRemoveUntil(Routes.loginScreen,
+                            predicate: (route) => false);
+                        await CacheHelper.removeSecureData(
+                            ConstantKeys.saveTokenToShared);
+                        await CacheHelper.removeSecureData(
+                            ConstantKeys.saveMandoubeNameToShared);
+                        await CacheHelper.removeSecureData(
+                            ConstantKeys.saveEmailToShared);
+                        await CacheHelper.removeSecureData(
+                            ConstantKeys.savePhoneToShared);
                       }),
                   verticalSpace(60),
                 ],

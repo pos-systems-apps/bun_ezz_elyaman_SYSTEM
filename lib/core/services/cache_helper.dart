@@ -89,7 +89,7 @@ class CacheHelper {
   /// Removes a value from FlutterSecureStorage with given [key]
 
   static removeSecureData(String key) async {
-    debugPrint('FlutterSecureStorage : all data has been cleared');
+    debugPrint('FlutterSecureStorage : data has been deleted');
     return await _secureStorage.delete(key: key);
   }
 

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
-import 'package:pos_system/features/invoice/logic/invoice_cubit.dart';
-import 'package:pos_system/features/invoice/logic/invoice_state.dart';
 import 'package:pos_system/features/invoice/ui/widgets/electronic_invoice_body_widget.dart';
 
 class ElectronicInvoiceScreen extends StatelessWidget {
@@ -17,63 +14,53 @@ class ElectronicInvoiceScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.mainColor,
       body: SafeArea(
-        child: BlocBuilder<InvoiceCubit, InvoiceState>(
-          buildWhen: (previous, current) {
-            return current is OnGetInvoiceDetailsLoadingState ||
-                current is OnGetInvoiceDetailsErrorState ||
-                current is OnGetInvoiceDetailsSuccessState ||
-                current is OnGetInvoiceDetailsCatchErrorState;
-          },
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            verticalSpace(10),
+            Row(
               children: [
-                verticalSpace(10),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        context.pop();
-                      },
-                      child: Container(
-                        height: 40.h,
-                        width: 40.w,
-                        padding: EdgeInsets.all(8.r),
-                        margin: EdgeInsets.symmetric(horizontal: 20.w),
-                        decoration: BoxDecoration(
-                            color: AppColors.whiteColor,
-                            borderRadius: BorderRadius.circular(12.r),
-                            boxShadow: [
-                              BoxShadow(
-                                  offset: Offset(0, 0),
-                                  blurRadius: 10,
-                                  spreadRadius: 0,
-                                  color: AppColors.blackColor
-                                      .withValues(alpha: .1)),
-                            ]),
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: AppColors.mainColor,
-                        ),
-                      ),
+                GestureDetector(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child: Container(
+                    height: 40.h,
+                    width: 40.w,
+                    padding: EdgeInsets.all(8.r),
+                    margin: EdgeInsets.symmetric(horizontal: 20.w),
+                    decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        borderRadius: BorderRadius.circular(12.r),
+                        boxShadow: [
+                          BoxShadow(
+                              offset: Offset(0, 0),
+                              blurRadius: 10,
+                              spreadRadius: 0,
+                              color:
+                                  AppColors.blackColor.withValues(alpha: .1)),
+                        ]),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: AppColors.mainColor,
                     ),
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Text(
-                      "عرض الفاتوره",
-                      style: TextStyles.font20WhiteColorWeight600,
-                    ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                  ],
+                  ),
                 ),
-                verticalSpace(24),
-                ElectronicInvoiceBodyWidget(),
+                Spacer(
+                  flex: 1,
+                ),
+                Text(
+                  "عرض الفاتوره",
+                  style: TextStyles.font20WhiteColorWeight600,
+                ),
+                Spacer(
+                  flex: 2,
+                ),
               ],
-            );
-          },
+            ),
+            verticalSpace(24),
+            ElectronicInvoiceBodyWidget(),
+          ],
         ),
       ),
     );

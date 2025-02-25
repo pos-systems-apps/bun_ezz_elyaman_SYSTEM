@@ -33,6 +33,20 @@ class ImageAsset {
   static const String setting6Icon = 'assets/icons/setting_6_icon.svg';
   static const String setting7Icon = 'assets/icons/setting_7_icon.svg';
 
+  static const String icon1 = 'assets/icons/icon_1.svg';
+  static const String icon2 = 'assets/icons/icon_2.svg';
+  static const String icon3 = 'assets/icons/icon_3.svg';
+  static const String icon4 = 'assets/icons/icon_4.svg';
+  static const String icon5 = 'assets/icons/icon_5.svg';
+  static const String icon6 = 'assets/icons/icon_6.svg';
+  static const String icon7 = 'assets/icons/icon_7.svg';
+  static const String icon8 = 'assets/icons/icon_8.svg';
+  static const String icon9 = 'assets/icons/icon_9.svg';
+  static const String icon10 = 'assets/icons/icon_10.svg';
+  static const String icon11 = 'assets/icons/icon_11.svg';
+  static const String icon12 = 'assets/icons/icon_12.svg';
+  static const String icon13 = 'assets/icons/icon_13.svg';
+
 
 
 

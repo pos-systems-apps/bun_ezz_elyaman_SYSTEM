@@ -133,7 +133,7 @@
 //   Future<dynamic> onAuthorizer(
 //       String channelName, String socketId, dynamic options) async {
 //     ///
-//     var authUrl = "${EndPoints.baseUrl}/api/users/pusher/auth";
+//     var authUrl = "${EndPoints.baseUrl}/api/customers/pusher/auth";
 //     try {
 //       var result = await http.post(
 //         Uri.parse(authUrl),

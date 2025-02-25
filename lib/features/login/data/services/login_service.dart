@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/features/login/data/models/setting_response.dart';
 
 import '../../../../core/api/api_consumer.dart';
@@ -26,11 +27,14 @@ class LoginService {
   }
 
   Future<LoginResponseModel> login(LoginRequestModel parameter) async {
+    print(AppConstant.baseUrl);
     final response = await apiConsumer.post(
-        LoginApiEndPoints.appSettingUrl,
+        LoginApiEndPoints.loginUrl,
         LoginRequestModel(code: parameter.code, password: parameter.password)
             .toJson(),
         null);
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return LoginResponseModel.fromJson(jsonDecode(response.body));
     } else {

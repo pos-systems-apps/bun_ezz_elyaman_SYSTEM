@@ -7,4 +7,8 @@ class Routes{
   static const settingScreen = "/SettingScreen";
   static const electronicInvoiceScreen = "/ElectronicInvoiceScreen";
   // static const printInvoiceScreen = "/PrintInvoiceScreen";
+  static const createVisitScreen = "/CreateVisitScreen";
+  static const customersScreen = "/CustomersScreen";
+  static const addCustomerScreen = "/AddCustomerScreen";
+  static const transferSectionScreen = "/TransferSectionScreen";
 }

@@ -21,6 +21,8 @@ class UserResponseData {
   String phone;
   String email;
   String image;
+  double money;
+  String address;
   String taxNumber;
   String commercialHistory;
 
@@ -30,6 +32,8 @@ class UserResponseData {
     required this.nameEn,
     required this.email,
     required this.image,
+    required this.address,
+    required this.money,
     required this.phone,
     required this.taxNumber,
     required this.commercialHistory,
@@ -42,6 +46,8 @@ class UserResponseData {
         nameEn: json['name_en'] ?? "",
         email: json['email'] ?? "",
         image: json['image'] ?? "",
+        address: json['address'] ?? "",
+        money: double.tryParse(json['balance'].toString()) ?? 0,
         phone: json['mobile'] ?? "",
         taxNumber: json['tax_number'] ?? "",
         commercialHistory: json['c_history'] ?? "",

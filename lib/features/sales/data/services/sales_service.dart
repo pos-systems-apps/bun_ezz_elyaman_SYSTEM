@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/errors_and_success_response/success/success_response.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
-import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
@@ -22,10 +20,8 @@ class SalesService {
   SalesService({required this.apiConsumer});
 
   Future<CategoryResponse> getCategories(int page) async {
-    String baseUrl = await getIt<EndPoints>().getBaseUrl();
-
-    final response = await apiConsumer
-        .get(SalesApiEndPoints.getCategoriesUrl(baseUrl, page), {
+    final response =
+        await apiConsumer.get(SalesApiEndPoints.getCategoriesUrl(page), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
@@ -39,15 +35,11 @@ class SalesService {
 
   Future<CategoryProductsResponse> getCategoryProducts(
       int categoryId, int type, int page) async {
-    String baseUrl = await getIt<EndPoints>().getBaseUrl();
-
-    final response = await apiConsumer.get(
-        SalesApiEndPoints.getCategoryProductsUrl(
-            baseUrl, categoryId, type, page),
-        {
-          ConstantKeys.appAuthorization:
-              "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-        });
+    final response = await apiConsumer
+        .get(SalesApiEndPoints.getCategoryProductsUrl(categoryId, type, page), {
+      ConstantKeys.appAuthorization:
+          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+    });
     if (response.statusCode == StatusCode.ok) {
       return CategoryProductsResponse.fromJson(jsonDecode(response.body));
     } else {
@@ -58,10 +50,8 @@ class SalesService {
 
   Future<SearchProductsResponse> getSearchProducts(
       String name, int type, int page) async {
-    String baseUrl = await getIt<EndPoints>().getBaseUrl();
-
-    final response = await apiConsumer.get(
-        SalesApiEndPoints.getSearchProductsUrl(baseUrl, name, type, page), {
+    final response = await apiConsumer
+        .get(SalesApiEndPoints.getSearchProductsUrl(name, type, page), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
@@ -73,11 +63,9 @@ class SalesService {
     }
   }
 
-  Future<SuccessResponseModel> createOrder(
-      CreateOrderRequest parameter) async {
-    String baseUrl = await getIt<EndPoints>().getBaseUrl();
+  Future<SuccessResponseModel> createOrder(CreateOrderRequest parameter) async {
     final response = await apiConsumer.multiPost(
-        SalesApiEndPoints.createOrderURl(baseUrl),
+        SalesApiEndPoints.createOrderURl,
         CreateOrderRequest(
           userId: parameter.userId,
           img: parameter.img,
@@ -93,8 +81,6 @@ class SalesService {
           ConstantKeys.appAuthorization:
               "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
         });
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {
@@ -103,4 +89,3 @@ class SalesService {
     }
   }
 }
-//1413

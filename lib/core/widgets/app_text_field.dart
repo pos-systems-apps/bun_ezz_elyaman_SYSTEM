@@ -12,6 +12,7 @@ class AppTextFormField extends StatelessWidget {
   final TextStyle? inputTextStyle;
   final TextStyle? hintStyle;
   final TextStyle? textStyle;
+  final TextAlign? textAlign;
   final int maxLines;
   final String hintText;
   final bool? isObscureText;
@@ -38,6 +39,7 @@ class AppTextFormField extends StatelessWidget {
     this.inputTextStyle,
     this.hintStyle,
     this.textStyle,
+    this.textAlign,
     required this.hintText,
     this.maxLines = 1,
     this.isObscureText,
@@ -61,12 +63,12 @@ class AppTextFormField extends StatelessWidget {
       autofocus: autofocus!,
       controller: controller,
       maxLines: maxLines,
+      textAlign: textAlign ?? TextAlign.start,
       onTapOutside: (PointerDownEvent value) {
         FocusScope.of(context).unfocus();
-        if(onTapOutside!=null){
+        if (onTapOutside != null) {
           onTapOutside!();
         }
-
       },
       cursorColor: AppColors.blackColor.withOpacity(.8),
       enableSuggestions: true,

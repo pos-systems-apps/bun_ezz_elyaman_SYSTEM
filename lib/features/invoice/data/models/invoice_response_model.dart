@@ -1,7 +1,6 @@
-
 class InvoiceResponseModel {
-   bool success;
-   Invoice invoice;
+  bool success;
+  Invoice invoice;
 
   InvoiceResponseModel({required this.success, required this.invoice});
 
@@ -14,24 +13,33 @@ class InvoiceResponseModel {
 }
 
 class Invoice {
-   int id;
-   int userId;
-   double orderAmount;
-   double totalTax;
-   String createdAt;
-   String updatedAt;
-   List<InvoiceDetail> details;
-   Seller seller;
-   Customer customer;
+  int id;
+  int userId;
+  double orderAmount;
+  double totalTax;
+  double collectedCash;
+  double extraDiscount;
+  String sellerImage;
+  String qrCodeImage;
+  String date;
+  String type;
+  Seller seller;
+  Customer customer;
+
+  // List<InvoiceDetail> details;
 
   Invoice({
     required this.id,
     required this.userId,
     required this.orderAmount,
     required this.totalTax,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.details,
+    required this.collectedCash,
+    required this.extraDiscount,
+    required this.date,
+    required this.type,
+    required this.sellerImage,
+    required this.qrCodeImage,
+    // required this.details,
     required this.seller,
     required this.customer,
   });
@@ -40,13 +48,18 @@ class Invoice {
     return Invoice(
       id: json['id'],
       userId: json['user_id'],
-      orderAmount: (json['order_amount'] as num).toDouble(),
-      totalTax: (json['total_tax'] as num).toDouble(),
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      details: (json['details'] as List)
-          .map((item) => InvoiceDetail.fromJson(item))
-          .toList(),
+      orderAmount: json['order_amount'].toDouble(),
+      totalTax: json['total_tax'].toDouble(),
+      collectedCash: json['collected_cash'].toDouble(),
+      extraDiscount: json['extra_discount'].toDouble(),
+      date: json['date'],
+      type: json['type'],
+      sellerImage: json['qrcode'],
+      qrCodeImage: json['img'],
+
+      // details: (json['details'] as List)
+      //     .map((item) => InvoiceDetail.fromJson(item))
+      //     .toList(),
       seller: Seller.fromJson(json['seller']),
       customer: Customer.fromJson(json['customer']),
     );
@@ -54,12 +67,12 @@ class Invoice {
 }
 
 class InvoiceDetail {
-   int id;
-   int productId;
-   int orderId;
-   double price;
-   String productDetails;
-   int quantity;
+  int id;
+  int productId;
+  int orderId;
+  double price;
+  String productDetails;
+  int quantity;
 
   InvoiceDetail({
     required this.id,
@@ -83,45 +96,65 @@ class InvoiceDetail {
 }
 
 class Seller {
-   int id;
-   String fName;
-   String lName;
-   String email;
+  int id;
+  String name;
+  String email;
+  String phone;
+  String mandoubeCode;
+  String vehicleCode;
+  String type;
+  String role;
 
   Seller({
     required this.id,
-    required this.fName,
-    required this.lName,
+    required this.name,
     required this.email,
+    required this.phone,
+    required this.mandoubeCode,
+    required this.vehicleCode,
+    required this.type,
+    required this.role,
   });
 
   factory Seller.fromJson(Map<String, dynamic> json) {
     return Seller(
       id: json['id'],
-      fName: json['f_name'],
-      lName: json['l_name'],
-      email: json['email'],
+      name: (json['f_name'] ?? "") + (json['l_name'] ?? ""),
+      email: json['email'] ?? "",
+      phone: json['phone'] ?? "",
+      mandoubeCode: json['mandob_code'] ?? "",
+      vehicleCode: json['vehicle_code'] ?? "",
+      type: json['type'] ?? "",
+      role: json['role'] ?? "",
     );
   }
 }
 
 class Customer {
-   int id;
-   String name;
-   String mobile;
+  int id;
+  String name;
+  String phone;
+  String email;
+  String image;
+  String comercialHistory;
 
   Customer({
     required this.id,
     required this.name,
-    required this.mobile,
+    required this.phone,
+    required this.email,
+    required this.image,
+    required this.comercialHistory,
   });
 
   factory Customer.fromJson(Map<String, dynamic> json) {
     return Customer(
       id: json['id'],
-      name: json['name'],
-      mobile: json['mobile'],
+      name: json['name'] ?? "",
+      phone: json['mobile'] ?? "",
+      email: json['email'] ?? "",
+      image: json['image'] ?? "",
+      comercialHistory: json['c_history'] ?? "",
     );
   }
 }
-

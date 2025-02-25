@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
@@ -56,7 +57,11 @@ class SalesProductWidget extends StatelessWidget {
               ),
             ),
           verticalSpace(10),
-          Expanded(child: CachedNetworkImageWidget(imgUrl: "", radius: 0)),
+          Expanded(
+              child: CachedNetworkImageWidget(
+                  imgUrl:
+                      EndPoints().getImageFromApi("product/${product.image}"),
+                  radius: 0)),
           verticalSpace(10),
           Text(
               context.locale.languageCode == "ar"

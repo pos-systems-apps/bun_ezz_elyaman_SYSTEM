@@ -2,17 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pos_system/config/routes/routes.dart';
-import 'package:pos_system/core/api/end_points.dart';
-import 'package:pos_system/core/services/services_locator.dart';
+import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
+import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/cached_network_image.dart';
 
-class StatisticAppBarWidget extends StatelessWidget {
+class StatisticAppBarWidget extends StatefulWidget {
   const StatisticAppBarWidget({super.key});
+
+  @override
+  State<StatisticAppBarWidget> createState() => _StatisticAppBarWidgetState();
+}
+
+class _StatisticAppBarWidgetState extends State<StatisticAppBarWidget> {
+  String? name;
+  String? email;
+  String? phone;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserStatus();
+  }
+
+  getUserStatus() async {
+    name = await CacheHelper.getSecuredString(
+        ConstantKeys.saveMandoubeNameToShared);
+    email = await CacheHelper.getSecuredString(ConstantKeys.saveEmailToShared);
+    phone = await CacheHelper.getSecuredString(ConstantKeys.savePhoneToShared);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +75,7 @@ class StatisticAppBarWidget extends StatelessWidget {
                   ),
                   verticalSpace(4),
                   Text(
-                    "مصطفي الحسيني",
+                    name ?? "",
                     maxLines: 1,
                     style: TextStyles.font14WhiteWeight600,
                   ),

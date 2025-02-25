@@ -10,6 +10,7 @@ import 'app_colors_white_theme.dart';
 
 class AppConstant {
   static String language = "";
+  static String baseUrl = "";
   static String currency = "";
   static String shopLogo = "";
   static String shopName = "";
@@ -25,6 +26,7 @@ class AppConstant {
   static String agel = "0";
 
   Future<void> setAppConstantData({
+    required String basUrl,
     required String currencyNew,
     required String shopLogoNew,
     required String shopNameNew,
@@ -39,6 +41,8 @@ class AppConstant {
     required String shabakaNew,
     required String agelNew,
   }) async {
+    print("setAppConstantData");
+    baseUrl = basUrl;
     currency = currencyNew;
     shopLogo = shopLogoNew;
     shopName = shopNameNew;
@@ -52,7 +56,7 @@ class AppConstant {
     cash = cashNew;
     shabaka = shabakaNew;
     agel = agelNew;
-
+print("baseUrl ${baseUrl}");
     pays = [
       PayClass(id: 1, nameAr: "كاش", nameEn: "cash", isShown: getCash() == "1"),
       PayClass(
@@ -122,6 +126,10 @@ class AppConstant {
 
   static String getAgel() {
     return agel;
+  }
+
+  static String getBaseUrl() {
+    return baseUrl;
   }
 
   List<PayClass> pays = [];

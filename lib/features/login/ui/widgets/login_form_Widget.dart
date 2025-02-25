@@ -75,6 +75,20 @@ class LoginFormWidget extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(10.r),
               ),
+              errorBorder:   OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.redColor,
+                  width: 1.3,
+                ),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              focusedErrorBorder:  OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.redColor,
+                  width: 1.3,
+                ),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return "field".tr();
@@ -105,6 +119,20 @@ class LoginFormWidget extends StatelessWidget {
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: AppColors.greyColorDC,
+                  width: 1.3,
+                ),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              errorBorder:   OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.redColor,
+                  width: 1.3,
+                ),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              focusedErrorBorder:  OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.redColor,
                   width: 1.3,
                 ),
                 borderRadius: BorderRadius.circular(10.r),

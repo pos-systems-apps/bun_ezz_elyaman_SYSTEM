@@ -30,17 +30,17 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> saveUserToken(LoginResponseModel loginResponse) async {
+    ///save image
+    // await CacheHelper.setSecuredString(
+    //     ConstantKeys.saveVehicleCodeToShared, loginResponse.data.vehicleCode);
+    // await CacheHelper.setSecuredString(
+    //     ConstantKeys.saveMandoubeCodeToShared, loginResponse.data.mandobCode);
     await CacheHelper.setSecuredString(ConstantKeys.saveMandoubeNameToShared,
         loginResponse.data.firstName + loginResponse.data.lastName);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveVehicleCodeToShared, loginResponse.data.vehicleCode);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveMandoubeCodeToShared, loginResponse.data.mandobCode);
     await CacheHelper.setSecuredString(
         ConstantKeys.saveEmailToShared, loginResponse.data.email);
     await CacheHelper.setSecuredString(
         ConstantKeys.savePhoneToShared, loginResponse.data.phone);
-
     await CacheHelper.setSecuredString(
         ConstantKeys.saveTokenToShared, loginResponse.token);
   }

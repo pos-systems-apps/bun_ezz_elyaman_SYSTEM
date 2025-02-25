@@ -26,7 +26,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
   TextEditingController searchUserController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  ///users
+  ///customers
   List<UserResponseData> users = [];
 
   getUsers() {

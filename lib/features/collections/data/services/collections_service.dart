@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/errors_and_success_response/success/success_response.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
-import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 
 import '../../../../core/api/api_consumer.dart';
@@ -19,9 +17,9 @@ class CollectionsService {
 
   Future<SuccessResponseModel> confirmCollection(
       ConfirmCollectionRequestModel parameter) async {
-    String baseUrl = await getIt<EndPoints>().getBaseUrl();
+
     final response = await apiConsumer.multiPost(
-        CollectionsApiEndPoints.confirmCollection(baseUrl),
+        CollectionsApiEndPoints.confirmCollection,
         ConfirmCollectionRequestModel(
           billID: parameter.billID,
           bankAccountID: parameter.bankAccountID,

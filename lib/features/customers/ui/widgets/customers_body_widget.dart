@@ -1,0 +1,118 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/core/utils/spacing.dart';
+import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/features/customers/logic/customers_cubit.dart';
+import 'package:pos_system/features/customers/logic/customers_state.dart';
+import 'package:pos_system/features/customers/ui/widgets/customers_search_user_widget.dart';
+import 'package:pos_system/features/customers/ui/widgets/customers_shimmer_widget.dart';
+
+class CustomersBodyWidget extends StatelessWidget {
+  const CustomersBodyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomersSearchUserWidget(),
+            verticalSpace(16),
+            Expanded(
+                child: BlocBuilder<CustomersCubit, CustomersState>(
+              buildWhen: (previous, current) {
+                return current is OnGetUsersLoadingState ||
+                    current is OnGetUsersSuccessState ||
+                    current is OnGetUsersErrorState ||
+                    current is OnGetUsersCatchErrorState;
+              },
+              builder: (context, state) {
+                if (CustomersCubit.get(context).users.isEmpty) {
+                  return CustomersShimmerWidget();
+                } else {
+                  return ListView.separated(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: CustomersCubit.get(context).users.length,
+                    separatorBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 16.h),
+                        decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(4.r),
+                            border: Border.all(color: AppColors.blueColorEEE)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.locale.languageCode == "ar"
+                                  ? CustomersCubit.get(context).users[index].nameAr
+                                  : CustomersCubit.get(context).users[index].nameEn,
+                              maxLines: 2,
+                              style: TextStyles.font16BlackWeight500,
+                            ),
+                            verticalSpace(4),
+                            Text(
+                                "العنوان : ${CustomersCubit.get(context).users[index].address}",
+                                maxLines: 1,
+                                style: TextStyles.font14GreyColor66Weight400),
+                            verticalSpace(4),
+                            Text(
+                                "الهاتف : ${CustomersCubit.get(context).users[index].phone}",
+                                maxLines: 1,
+                                style: TextStyles.font14GreyColor66Weight400),
+                            verticalSpace(4),
+                            Row(
+                              children: [
+                                Text.rich(
+                                  TextSpan(children: [
+                                    TextSpan(
+                                      text: "الرصيد",
+                                      style:
+                                          TextStyles.font14GreyColor66Weight400,
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          "${AppConstant.currency}  ${CustomersCubit.get(context).users[index].money.toStringAsFixed(2)}",
+                                      style: TextStyles
+                                          .font14GreyColor66Weight400
+                                          .copyWith(
+                                              color: AppColors.greenColor7C),
+                                    ),
+                                  ]),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  CustomersCubit.get(context).users[index].money < 0
+                                      ? "مدين"
+                                      : "دائن",
+                                  style: TextStyles.font14GreyColor66Weight400
+                                      .copyWith(color: AppColors.yellowColor19),
+                                ),
+                                const Spacer(),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    itemBuilder: (context, index) {
+                      return verticalSpace(16);
+                    },
+                  );
+                }
+              },
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+}

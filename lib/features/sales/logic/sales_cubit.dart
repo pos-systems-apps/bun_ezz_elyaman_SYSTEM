@@ -261,7 +261,7 @@ class SalesCubit extends Cubit<SalesState> {
 
   TextEditingController moneyController = TextEditingController();
 
-  ///users
+  ///customers
   List<UserResponseData> users = [];
 
   getUsers() {
