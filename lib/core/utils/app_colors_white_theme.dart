@@ -42,6 +42,7 @@ class AppColors {
   static Color blueColorDE = const Color(0xffC3FFDE);
   static Color blueColorE5 = const Color(0xff4845E5);
   static Color greenColor7C = const Color(0xff58B27C);
+  static Color greenColor3E = const Color(0xff00DA3E);
   static Color yellowColor19 = const Color(0xffFBC119);
 
   static Color blueColorE3 = const Color(0xffE2FAE3);
@@ -57,6 +58,7 @@ class AppColors {
   static Color greenColor00 = const Color(0xff41B800);
   static Color redColor00 = const Color(0xffB50200);
   static Color redColor39 = const Color(0xff9D3739);
+  static Color redColor000 = const Color(0xffDA0000);
 
   static Color random1() {
     List<Color> colors = [

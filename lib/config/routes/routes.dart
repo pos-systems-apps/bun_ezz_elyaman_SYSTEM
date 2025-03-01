@@ -10,5 +10,16 @@ class Routes{
   static const createVisitScreen = "/CreateVisitScreen";
   static const customersScreen = "/CustomersScreen";
   static const addCustomerScreen = "/AddCustomerScreen";
+  static const addTransferSectionScreen = "/AddTransferSectionScreen";
   static const transferSectionScreen = "/TransferSectionScreen";
+  static const fundListScreen = "/FundListScreen";
+  static const visitsCarriedOutScreen = "/VisitsCarriedOutScreen";
+  static const salesInvoiceScreen = "/SalesInvoiceScreen";
+  static const returnInvoiceScreen = "/ReturnInvoiceScreen";
+  static const myRequestsScreen = "/MyRequestsScreen";
+  static const leaveRequestsScreen = "/LeaveRequestsScreen";
+  static const allCoursesScreen = "/AllCoursesScreen";
+  static const recommendationsFromManagerScreen = "/RecommendationsFromManagerScreen";
+  static const visitsListScreen = "/VisitsListScreen";
+  static const cashInvoiceScreen = "/CashInvoiceScreen";
 }

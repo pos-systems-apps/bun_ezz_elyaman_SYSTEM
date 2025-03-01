@@ -12,6 +12,7 @@ class ImageAsset {
   static const String backGroundImage = 'assets/images/back_ground_image.png';
   static const String logoImage = 'assets/images/logo_image.png';
   static const String chartBackGroundImage = 'assets/images/chart_background_image.png';
+  static const String notFoundImage = 'assets/images/not_found.png';
 ///icons
   static const String scanICon = 'assets/icons/scan_icon.svg';
   static const String chartICon = 'assets/icons/chart_icon.svg';
@@ -42,10 +43,12 @@ class ImageAsset {
   static const String icon7 = 'assets/icons/icon_7.svg';
   static const String icon8 = 'assets/icons/icon_8.svg';
   static const String icon9 = 'assets/icons/icon_9.svg';
+
   static const String icon10 = 'assets/icons/icon_10.svg';
   static const String icon11 = 'assets/icons/icon_11.svg';
   static const String icon12 = 'assets/icons/icon_12.svg';
   static const String icon13 = 'assets/icons/icon_13.svg';
+  static const String calenderIcon = 'assets/icons/calendar_icon.svg';
 
 
 

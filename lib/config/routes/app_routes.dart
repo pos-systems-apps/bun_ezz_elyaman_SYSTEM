@@ -3,20 +3,43 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/features/add_customer/logic/add_customer_cubit.dart';
 import 'package:pos_system/features/add_customer/ui/add_customer_screen.dart';
+import 'package:pos_system/features/add_transfer_section/logic/add_transfer_section_cubit.dart';
+import 'package:pos_system/features/add_transfer_section/ui/add_transfer_section_screen.dart';
+import 'package:pos_system/features/all_courses/data/repo/all_courses_repo.dart';
+import 'package:pos_system/features/all_courses/logic/all_courses_cubit.dart';
+import 'package:pos_system/features/all_courses/ui/all_courses_screen.dart';
 import 'package:pos_system/features/button_navigation/logic/button_navigation_cubit.dart';
 import 'package:pos_system/features/button_navigation/ui/button_navigation_screen.dart';
+import 'package:pos_system/features/cash_invoice/logic/cash_invoice_cubit.dart';
+import 'package:pos_system/features/cash_invoice/ui/cash_invoice_screen.dart';
 import 'package:pos_system/features/create_visit/logic/create_visit_cubit.dart';
 import 'package:pos_system/features/create_visit/ui/create_visit_screen.dart';
 import 'package:pos_system/features/customers/logic/customers_cubit.dart';
 import 'package:pos_system/features/customers/ui/customers_screen.dart';
+import 'package:pos_system/features/fund_list/logic/fund_list_cubit.dart';
+import 'package:pos_system/features/fund_list/ui/fund_list_screen.dart';
 import 'package:pos_system/features/invoice/logic/invoice_cubit.dart';
 import 'package:pos_system/features/invoice/ui/electronic_invoice_screen.dart';
+import 'package:pos_system/features/leave_requests/logic/leave_requests_cubit.dart';
+import 'package:pos_system/features/leave_requests/ui/leave_requests_screen.dart';
+import 'package:pos_system/features/my_requests/logic/my_requests_cubit.dart';
+import 'package:pos_system/features/my_requests/ui/my_requests_screen.dart';
+import 'package:pos_system/features/recommendations_from_manager/logic/recommendations_from_manager_cubit.dart';
+import 'package:pos_system/features/recommendations_from_manager/ui/recommendations_from_manager_screen.dart';
+import 'package:pos_system/features/return_invoice/logic/return_invoice_cubit.dart';
+import 'package:pos_system/features/return_invoice/ui/return_invoice_screen.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/ui/reseat_screen.dart';
+import 'package:pos_system/features/sales_invoice/logic/sales_invoice_cubit.dart';
+import 'package:pos_system/features/sales_invoice/ui/sales_invoice_screen.dart';
 import 'package:pos_system/features/setting/ui/setting_screen.dart';
 import 'package:pos_system/features/splash/ui/splash_screen.dart';
-import 'package:pos_system/features/transfer_section/logic/transfer_section_cubit.dart';
-import 'package:pos_system/features/transfer_section/ui/transfer_section_screen.dart';
+import 'package:pos_system/features/transfers_section/logic/transfer_section_cubit.dart';
+import 'package:pos_system/features/transfers_section/ui/transfer_section_screen.dart';
+import 'package:pos_system/features/visits_carried_out/logic/visits_carried_out_cubit.dart';
+import 'package:pos_system/features/visits_carried_out/ui/visits_carried_out_screen.dart';
+import 'package:pos_system/features/visits_list/logic/visits_list_cubit.dart';
+import 'package:pos_system/features/visits_list/ui/visits_list_screen.dart';
 
 import '../../core/services/services_locator.dart';
 import '../../features/login/logic/login_cubit.dart';
@@ -77,11 +100,77 @@ class RouteGenerator {
                   create: (_) => AddCustomerCubit(getIt()),
                   child: AddCustomerScreen(),
                 ));
+      case Routes.addTransferSectionScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => AddTransferSectionCubit(getIt()),
+                  child: AddTransferSectionScreen(),
+                ));
       case Routes.transferSectionScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (_) => TransferSectionCubit(getIt()),
                   child: TransferSectionScreen(),
+                ));
+      case Routes.fundListScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => FundListCubit(getIt()),
+                  child: FundListScreen(),
+                ));
+      case Routes.visitsCarriedOutScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => VisitsCarriedOutCubit(getIt()),
+                  child: VisitsCarriedOutScreen(),
+                ));
+      case Routes.salesInvoiceScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => SalesInvoiceCubit(getIt()),
+                  child: SalesInvoiceScreen(),
+                ));
+      case Routes.returnInvoiceScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => ReturnInvoiceCubit(getIt()),
+                  child: ReturnInvoiceScreen(),
+                ));
+      case Routes.leaveRequestsScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => LeaveRequestsCubit(getIt()),
+                  child: LeaveRequestsScreen(),
+                ));
+      case Routes.myRequestsScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => MyRequestsCubit(getIt()),
+                  child: MyRequestsScreen(),
+                ));
+      case Routes.allCoursesScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => AllCoursesCubit(getIt()),
+                  child: AllCoursesScreen(),
+                ));
+      case Routes.recommendationsFromManagerScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => RecommendationsFromManagerCubit(getIt()),
+                  child: RecommendationsFromManagerScreen(),
+                ));
+      case Routes.visitsListScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => VisitsListCubit(getIt()),
+                  child: VisitsListScreen(),
+                ));
+      case Routes.cashInvoiceScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => CashInvoiceCubit(getIt()),
+                  child: CashInvoiceScreen(),
                 ));
 
       // case Routes.printInvoiceScreen:

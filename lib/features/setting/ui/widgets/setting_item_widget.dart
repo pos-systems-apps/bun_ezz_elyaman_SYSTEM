@@ -50,7 +50,7 @@ class SettingItemWidget extends StatelessWidget {
             Expanded(
                 child: Text(
               text,
-              maxLines: 2,
+              maxLines: 3,
               style: TextStyles.font16BlackColorWeight600,
             )),
           ],

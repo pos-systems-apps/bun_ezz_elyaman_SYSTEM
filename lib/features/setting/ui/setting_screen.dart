@@ -40,7 +40,7 @@ class SettingScreen extends StatelessWidget {
                       text: "قائمه الصندوق",
                       image: ImageAsset.setting2Icon,
                       onTap: () {
-                        print(122);
+                        context.pushNamed(Routes.fundListScreen);
                       }),
                   verticalSpace(8),
                   SettingItemWidget(
@@ -72,6 +72,13 @@ class SettingScreen extends StatelessWidget {
                       }),
                   verticalSpace(8),
                   SettingItemWidget(
+                      text: "اضافة تحويل",
+                      image: ImageAsset.setting7Icon,
+                      onTap: () {
+                        context.pushNamed(Routes.addTransferSectionScreen);
+                      }),
+                  verticalSpace(8),
+                  SettingItemWidget(
                       text: "التحويلات",
                       image: ImageAsset.setting7Icon,
                       onTap: () {
@@ -91,7 +98,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_1Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.recommendationsFromManagerScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
@@ -100,7 +107,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_2Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.allCoursesScreen);
                               })),
                     ],
                   ),
@@ -113,7 +120,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_3Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.myRequestsScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
@@ -122,7 +129,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_4Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+
                               })),
                     ],
                   ),
@@ -135,7 +142,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_5Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                             context.pushNamed(Routes.leaveRequestsScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
@@ -144,7 +151,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_6Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.visitsListScreen);
                               })),
                     ],
                   ),
@@ -157,7 +164,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_7Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.visitsCarriedOutScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
@@ -166,7 +173,8 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_16Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.salesInvoiceScreen);
+
                               })),
                     ],
                   ),
@@ -179,7 +187,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_8Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.returnInvoiceScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
@@ -210,7 +218,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_10Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.cashInvoiceScreen);
                               })),
                     ],
                   ),
