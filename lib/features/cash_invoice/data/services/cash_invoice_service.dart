@@ -20,9 +20,10 @@ class CashInvoiceService {
       CreateVisitRequest parameter) async {
     final response = await apiConsumer.post(
         CashInvoiceApiEndPoints.getFuncListUrl,
-        CreateVisitRequest(
-                customerId: parameter.customerId, note: parameter.note)
-            .toJson(),
+        null,
+        // CreateVisitRequest(
+        //         customerId: parameter.customerId, note: parameter.note)
+        //     .toJson(),
         {
           ConstantKeys.appAuthorization:
               "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",

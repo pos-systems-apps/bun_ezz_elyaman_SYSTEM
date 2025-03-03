@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/customers/logic/customers_cubit.dart';
@@ -35,6 +36,20 @@ class CustomersBodyWidget extends StatelessWidget {
               builder: (context, state) {
                 if (CustomersCubit.get(context).users.isEmpty) {
                   return CustomersShimmerWidget();
+                } else if (CustomersCubit.get(context).users.isEmpty &&
+                    state is! OnGetUsersLoadingState) {
+                  return Center(
+                    child: Column(
+                      children: [
+                        Image.asset(ImageAsset.notFoundImage),
+                        verticalSpace(24),
+                        Text(
+                          "لا يوجد بايانات",
+                          style: TextStyles.font20MainColorWeightBold,
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
                   return ListView.separated(
                     padding: EdgeInsets.zero,
@@ -53,8 +68,12 @@ class CustomersBodyWidget extends StatelessWidget {
                           children: [
                             Text(
                               context.locale.languageCode == "ar"
-                                  ? CustomersCubit.get(context).users[index].nameAr
-                                  : CustomersCubit.get(context).users[index].nameEn,
+                                  ? CustomersCubit.get(context)
+                                      .users[index]
+                                      .nameAr
+                                  : CustomersCubit.get(context)
+                                      .users[index]
+                                      .nameEn,
                               maxLines: 2,
                               style: TextStyles.font16BlackWeight500,
                             ),
@@ -90,7 +109,10 @@ class CustomersBodyWidget extends StatelessWidget {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  CustomersCubit.get(context).users[index].money < 0
+                                  CustomersCubit.get(context)
+                                              .users[index]
+                                              .money <
+                                          0
                                       ? "مدين"
                                       : "دائن",
                                   style: TextStyles.font14GreyColor66Weight400

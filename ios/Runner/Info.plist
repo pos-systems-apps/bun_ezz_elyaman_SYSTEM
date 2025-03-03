@@ -49,5 +49,13 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
     <string>This app requires access to the gallery to upload profile picture.</string>
+      <key>NSLocationAlwaysUsageDescription</key>
+     <string>Iqbrandx uses your location to help you accurately select your order's delivery location and provide better service. For example, we use your location to ensure your orders are delivered to the correct address.</string>
+     <key>NSLocationWhenInUseUsageDescription</key>
+        <string>Iqbrandx uses your location to help you accurately select your order's delivery location and provide better service. For example, we use your location to ensure your orders are delivered to the correct address.</string>
+   <key>NSLocationUsageDescription</key>
+        <string>Iqbrandx uses your location to help you accurately select your order's delivery location and provide better service. For example, we use your location to ensure your orders are delivered to the correct address.</string>
+
+
 </dict>
 </plist>

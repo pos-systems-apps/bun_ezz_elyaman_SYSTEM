@@ -5,8 +5,6 @@ import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/create_visit/ui/widgets/create_visit_body_widget.dart';
-import 'package:pos_system/features/statistics/ui/widgets/statistic_app_bar_widget.dart';
-import 'package:pos_system/features/statistics/ui/widgets/statistics_widget.dart';
 
 class CreateVisitScreen extends StatelessWidget {
   const CreateVisitScreen({super.key});

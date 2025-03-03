@@ -54,7 +54,7 @@ class SettingScreen extends StatelessWidget {
                       text: "انشاء مخطط شهري",
                       image: ImageAsset.setting4Icon,
                       onTap: () {
-                        print(122);
+                        context.pushNamed(Routes.createMonthlyPlanScreen);
                       }),
                   verticalSpace(8),
                   SettingItemWidget(
@@ -98,7 +98,8 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_1Icon,
                               isBig: false,
                               onTap: () {
-                                context.pushNamed(Routes.recommendationsFromManagerScreen);
+                                context.pushNamed(
+                                    Routes.recommendationsFromManagerScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
@@ -128,9 +129,7 @@ class SettingScreen extends StatelessWidget {
                               text: "المرتبات",
                               image: ImageAsset.setting2_4Icon,
                               isBig: false,
-                              onTap: () {
-
-                              })),
+                              onTap: () {})),
                     ],
                   ),
                   verticalSpace(8),
@@ -142,12 +141,12 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_5Icon,
                               isBig: false,
                               onTap: () {
-                             context.pushNamed(Routes.leaveRequestsScreen);
+                                context.pushNamed(Routes.leaveRequestsScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
                           child: SettingItemWidget(
-                              text: "قائمه الزيارات",
+                              text: "قائمه الزيارات المطلوبة",
                               image: ImageAsset.setting2_6Icon,
                               isBig: false,
                               onTap: () {
@@ -164,7 +163,8 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_7Icon,
                               isBig: false,
                               onTap: () {
-                                context.pushNamed(Routes.visitsCarriedOutScreen);
+                                context
+                                    .pushNamed(Routes.visitsCarriedOutScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
@@ -174,7 +174,6 @@ class SettingScreen extends StatelessWidget {
                               isBig: false,
                               onTap: () {
                                 context.pushNamed(Routes.salesInvoiceScreen);
-
                               })),
                     ],
                   ),

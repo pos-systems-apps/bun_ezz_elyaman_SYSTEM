@@ -1,68 +1,28 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pos_system/features/create_visit/data/repo/create_visit_repo.dart';
+import 'package:pos_system/features/transfers_section/data/models/transaction_section_response_model.dart';
+import 'package:pos_system/features/transfers_section/data/repo/transfer_section_repo.dart';
 import 'package:pos_system/features/transfers_section/logic/transfer_section_state.dart';
 
 class TransferSectionCubit extends Cubit<TransferSectionState> {
-  final CreateVisitRepo _createVisitRepo;
+  final TransferSectionRepo _transferSectionRepo;
 
-  TransferSectionCubit(this._createVisitRepo) : super(InitialState());
+  TransferSectionCubit(this._transferSectionRepo) : super(InitialState());
 
+  List<TransactionSectionResponseModel> transactionSection = [];
 
-
-  //
-  // getUsers() {
-  //   emit(OnGetUsersLoadingState());
-  //   _splashRepo.getUsers(searchUserController.text).then((value) {
-  //     value.fold((l) {
-  //       emit(OnGetUsersErrorState());
-  //     }, (r) {
-  //       users = r.userResponseData;
-  //       emit(OnGetUsersSuccessState());
-  //     });
-  //   }).catchError((error) {
-  //     emit(OnGetUsersCatchErrorState());
-  //   });
-  // }
-  //
-  // UserResponseData? selectedUser;
-  //
-  // onSelectUser(UserResponseData vale) {
-  //   searchUserController.text = vale.nameAr;
-  //   selectedUser = vale;
-  //   users.clear();
-  //   emit(OnSelectUserState());
-  // }
-  //
-  // clearSelectedUSer() {
-  //   selectedUser = null;
-  //   users.clear();
-  //   emit(OnSelectUserState());
-  // }
-  //
-  // TextEditingController notesController = TextEditingController();
-  //
-  // createVisit() {
-  //   emit(OnCreateVisitLoadingState());
-  //   _createVisitRepo
-  //       .createVisit(CreateVisitRequest(
-  //           customerId: selectedUser!.id, note: notesController.text))
-  //       .then((value) {
-  //     value.fold((l) {
-  //       emit(OnCreateVisitErrorState());
-  //     }, (r) async {
-  //       emit(OnCreateVisitSuccessState());
-  //     });
-  //   }).catchError((error) {
-  //     emit(OnCreateVisitCatchErrorState(error: "error".tr()));
-  //   });
-  // }
-
-  // clearSelectedData() {
-  //   notesController.clear();
-  //   selectedUser = null;
-  //   searchUserController.clear();
-  //   users = [];
-  // }
+  getTransactionSection() {
+    emit(OnGetTransactionSectionLoadingState());
+    _transferSectionRepo.getTransactionSection().then((value) {
+      value.fold((l) {
+        emit(OnGetTransactionSectionErrorState());
+      }, (r) {
+        transactionSection = r;
+        emit(OnGetTransactionSectionSuccessState());
+      });
+    }).catchError((error) {
+      emit(OnGetTransactionSectionCatchErrorState());
+    });
+  }
 
   static TransferSectionCubit get(context) => BlocProvider.of(context);
 }

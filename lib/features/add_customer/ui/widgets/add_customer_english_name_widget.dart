@@ -39,10 +39,6 @@ class AddCustomerEnglishNameWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.r)),
       keyboardType: TextInputType.name,
       validator: (String? value) {
-        if (value == null || value.isEmpty) {
-          return "field".tr();
-        }
-        return null;
       },
       onchange: (String? value) {},
     );

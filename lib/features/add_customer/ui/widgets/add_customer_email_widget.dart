@@ -38,12 +38,7 @@ class AddCustomerEmailWidget extends StatelessWidget {
           borderSide: BorderSide(color: AppColors.redColor, width: 1.3),
           borderRadius: BorderRadius.circular(8.r)),
       keyboardType: TextInputType.emailAddress,
-      validator: (String? value) {
-        if (value == null || value.isEmpty) {
-          return "field".tr();
-        }
-        return null;
-      },
+      validator: (String? value) {},
       onchange: (String? value) {},
     );
   }

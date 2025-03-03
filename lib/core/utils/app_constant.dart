@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
 import 'package:pos_system/features/sales/data/entities/unit_of_measure_class.dart';
@@ -58,7 +59,7 @@ class AppConstant {
     cash = cashNew;
     shabaka = shabakaNew;
     agel = agelNew;
-print("baseUrl ${baseUrl}");
+    print("baseUrl ${baseUrl}");
     pays = [
       PayClass(id: 1, nameAr: "كاش", nameEn: "cash", isShown: getCash() == "1"),
       PayClass(
@@ -190,9 +191,6 @@ print("baseUrl ${baseUrl}");
     return number.toStringAsFixed(2);
   }
 
-
-
-
 // static String getMonthName(int monthNumber) {
 //    if (monthNumber < 1 || monthNumber > 12) {
 //      return 'Invalid month';
@@ -215,25 +213,26 @@ print("baseUrl ${baseUrl}");
 //   }
 // }
 
-// static Future getLocationFromCoordinates(
-//     double latitude, double longitude) async {
-//   try {
-//     if (latitude != 0 && longitude != 0) {
-//       List<Placemark> placeMarks = await placemarkFromCoordinates(
-//         latitude,
-//         longitude,
-//       );
-//       if (placeMarks != null && placeMarks.isNotEmpty) {
-//         Placemark placeMark = placeMarks[0];
-//         String address =
-//             '${placeMark.thoroughfare} , ${placeMark.administrativeArea!.replaceAll("Governorate", "")},${placeMark.country!}';
-//         await CacheHelper.setData(
-//             ConstantKeys.saveAddressToShared, address.toString());
-//       }
-//     }
-//   } catch (e) {
-//     // print('Error retrieving location: $e');
-//   }
-//   // return 'Location not found';
-// }
+  static Future<String> getLocationFromCoordinates(
+      double latitude, double longitude) async {
+    try {
+      if (latitude != 0 && longitude != 0) {
+        List<Placemark> placeMarks = await placemarkFromCoordinates(
+          latitude,
+          longitude,
+        );
+        if (placeMarks != null && placeMarks.isNotEmpty) {
+          Placemark placeMark = placeMarks[0];
+          String address =
+              '${placeMark.thoroughfare} , ${placeMark.administrativeArea!.replaceAll("Governorate", "")},${placeMark.country!}';
+          return address;
+        }
+      }
+    } catch (e) {
+      return "";
+      // print('Error retrieving location: $e');
+    }
+    return "";
+    // return 'Location not found';
+  }
 }

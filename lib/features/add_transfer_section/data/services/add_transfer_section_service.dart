@@ -7,20 +7,23 @@ import 'package:pos_system/core/exceptions/exceptions.dart';
 import 'package:pos_system/core/exceptions/failure.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
+import 'package:pos_system/features/add_transfer_section/data/models/add_transfer_section_request.dart';
 import 'package:pos_system/features/add_transfer_section/data/services/add_transfer_section_api_end_points.dart';
-import 'package:pos_system/features/create_visit/data/models/create_visit_request.dart';
 
 class AddTransferSectionService {
   ApiConsumer apiConsumer;
 
   AddTransferSectionService({required this.apiConsumer});
 
-  Future<SuccessResponseModel> createVisit(
-      CreateVisitRequest parameter) async {
-    final response = await apiConsumer.post(
-        AddTransferSectionApiEndPoints.createVisitURl,
-        CreateVisitRequest(
-                customerId: parameter.customerId, note: parameter.note)
+  Future<SuccessResponseModel> addTransferSection(
+      AddTransferSectionRequest parameter) async {
+    final response = await apiConsumer.multiPost(
+        AddTransferSectionApiEndPoints.addTransferSectionUrl,
+        AddTransferSectionRequest(
+                bankAccountId: parameter.bankAccountId,
+                amount: parameter.amount,
+                note: parameter.note,
+                image: parameter.image)
             .toJson(),
         {
           ConstantKeys.appAuthorization:

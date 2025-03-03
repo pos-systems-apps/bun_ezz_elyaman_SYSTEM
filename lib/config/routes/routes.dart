@@ -22,4 +22,5 @@ class Routes{
   static const recommendationsFromManagerScreen = "/RecommendationsFromManagerScreen";
   static const visitsListScreen = "/VisitsListScreen";
   static const cashInvoiceScreen = "/CashInvoiceScreen";
+  static const createMonthlyPlanScreen = "/CreateMonthlyPlanScreen";
 }

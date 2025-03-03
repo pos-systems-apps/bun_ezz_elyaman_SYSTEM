@@ -1,26 +1,27 @@
 abstract class AddTransferSectionState {}
 
 class InitialState extends AddTransferSectionState {}
+
 class OnChangeSelectedImageState extends AddTransferSectionState {}
 
-class OnGetUsersLoadingState extends AddTransferSectionState {}
+class OnChangeSelectedBankAccountState extends AddTransferSectionState {}
 
-class OnGetUsersErrorState extends AddTransferSectionState {}
+class OnGetBankAccountLoadingState extends AddTransferSectionState {}
 
-// class OnGetUsersSuccessState extends CreateVisitState {}
-//
-// class OnGetUsersCatchErrorState extends CreateVisitState {}
-//
-// class OnSelectUserState extends CreateVisitState {}
-//
-// class OnCreateVisitLoadingState extends CreateVisitState {}
-//
-// class OnCreateVisitSuccessState extends CreateVisitState {}
-//
-// class OnCreateVisitErrorState extends CreateVisitState {}
-//
-// class OnCreateVisitCatchErrorState extends CreateVisitState {
-//   String error;
-//
-//   OnCreateVisitCatchErrorState({required this.error});
-// }
+class OnGetBankAccountErrorState extends AddTransferSectionState {}
+
+class OnGetBankAccountSuccessState extends AddTransferSectionState {}
+
+class OnGetBankAccountCatchErrorState extends AddTransferSectionState {}
+
+class OnAddTransferSectionLoadingState extends AddTransferSectionState {}
+
+class OnAddTransferSectionSuccessState extends AddTransferSectionState {}
+
+class OnAddTransferSectionErrorState extends AddTransferSectionState {}
+
+class OnAddTransferSectionCatchErrorState extends AddTransferSectionState {
+  String error;
+
+  OnAddTransferSectionCatchErrorState({required this.error});
+}

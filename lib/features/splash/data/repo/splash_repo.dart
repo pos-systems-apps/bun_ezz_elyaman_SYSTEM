@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:pos_system/features/splash/data/models/bank_accounts_response_model.dart';
+import 'package:pos_system/features/splash/data/models/categories_and_regions_response.dart';
 
 import '../../../../core/exceptions/exceptions.dart';
 import '../../../../core/exceptions/failure.dart';
@@ -17,9 +18,19 @@ class SplashRepo {
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }
-  }  Future<Either<Failure, BankAccountsResponseModel>> getBankAccounts() async {
+  }
+
+  Future<Either<Failure, BankAccountsResponseModel>> getBankAccounts() async {
     try {
       return Right(await _splashService.getBankAccounts());
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(message: failure.serverFailure.message));
+    }
+  }
+
+  Future<Either<Failure, CategoriesAndRegionsResponse>> getCategoriesAndRegions() async {
+    try {
+      return Right(await _splashService.getCategoriesAndRegions());
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

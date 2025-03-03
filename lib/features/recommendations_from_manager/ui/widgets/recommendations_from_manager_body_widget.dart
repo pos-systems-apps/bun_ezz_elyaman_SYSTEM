@@ -8,7 +8,6 @@ import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
 import 'package:pos_system/features/add_transfer_section/logic/add_transfer_section_cubit.dart';
 import 'package:pos_system/features/add_transfer_section/logic/add_transfer_section_state.dart';
-import 'package:pos_system/features/add_transfer_section/ui/widgets/add_transfer_section_account_text_field_widget.dart';
 import 'package:pos_system/features/add_transfer_section/ui/widgets/add_transfer_section_money_text_field_widget.dart';
 import 'package:pos_system/features/add_transfer_section/ui/widgets/add_transfers_notes_text_field_widget.dart';
 import 'package:pos_system/features/add_transfer_section/ui/widgets/add_transfers_upload_image_widget.dart';

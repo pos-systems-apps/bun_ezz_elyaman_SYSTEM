@@ -5,6 +5,7 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/features/fund_list/logic/fund_list_cubit.dart';
 
 class MandoubeNameWidget extends StatelessWidget {
   const MandoubeNameWidget({super.key});
@@ -22,7 +23,9 @@ class MandoubeNameWidget extends StatelessWidget {
           SvgPicture.asset(ImageAsset.icon10),
           horizontalSpace(16),
           Text(
-            "عبد الرحمن محمد",
+            FundListCubit.get(context).seller == null
+                ? ""
+                : FundListCubit.get(context).seller!.name,
             style: TextStyles.font14BlackColorWeight400,
           )
         ],

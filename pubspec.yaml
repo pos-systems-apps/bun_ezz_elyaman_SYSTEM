@@ -51,6 +51,15 @@ dependencies:
   syncfusion_flutter_charts: ^28.2.4+1
   dotted_border: ^2.1.0
   image_picker: ^1.1.2
+#  widgets_to_image: ^1.0.0
+  path_provider: ^2.0.2
+  pdf: ^3.11.1
+  open_file: ^3.5.10
+  screenshot: ^3.0.0
+  geolocator: ^13.0.2
+  geocoding: ^3.0.0
+
+
 
   animated_bottom_navigation_bar:
     path: packages/animated-bottom-navigation-bar-flutter-master

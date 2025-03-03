@@ -15,12 +15,14 @@ class ReturnInvoiceService {
 
   ReturnInvoiceService({required this.apiConsumer});
 
-  Future<SuccessResponseModel> createVisit(
-      CreateVisitRequest parameter) async {
+  Future<SuccessResponseModel> createVisit(CreateVisitRequest parameter) async {
     final response = await apiConsumer.post(
         ReturnInvoiceApiEndPoints.getFuncListUrl,
         CreateVisitRequest(
-                customerId: parameter.customerId, note: parameter.note)
+                lang: parameter.lang,
+                lat: parameter.lat,
+                customerId: parameter.customerId,
+                note: parameter.note)
             .toJson(),
         {
           ConstantKeys.appAuthorization:

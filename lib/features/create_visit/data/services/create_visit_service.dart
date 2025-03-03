@@ -20,6 +20,8 @@ class CreateVisitService {
     final response = await apiConsumer.post(
         CreateVisitApiEndPoints.createVisitURl,
         CreateVisitRequest(
+          lang: parameter.lang,
+          lat: parameter.lat,
                 customerId: parameter.customerId, note: parameter.note)
             .toJson(),
         {

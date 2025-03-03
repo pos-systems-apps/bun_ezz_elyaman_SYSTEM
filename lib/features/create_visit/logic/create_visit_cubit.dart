@@ -16,6 +16,7 @@ class CreateVisitCubit extends Cubit<CreateVisitState> {
       : super(InitialState());
 
   TextEditingController searchUserController = TextEditingController();
+  GlobalKey<FormState> visitKey = GlobalKey();
 
   ///customers
   List<UserResponseData> users = [];
@@ -51,11 +52,14 @@ class CreateVisitCubit extends Cubit<CreateVisitState> {
 
   TextEditingController notesController = TextEditingController();
 
-  createVisit() {
+  createVisit(double lat, double lang) {
     emit(OnCreateVisitLoadingState());
     _createVisitRepo
         .createVisit(CreateVisitRequest(
-            customerId: selectedUser!.id, note: notesController.text))
+            lang: lang,
+            lat: lat,
+            customerId: selectedUser!.id,
+            note: notesController.text))
         .then((value) {
       value.fold((l) {
         emit(OnCreateVisitErrorState());

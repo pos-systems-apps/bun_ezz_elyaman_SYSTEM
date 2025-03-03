@@ -63,7 +63,7 @@ class CollectionsBankAccountWidget extends StatelessWidget {
                                 .changeSelectedBankAccount(value);
                           },
                           child: CollectionsSelectItemWidget(
-                              name: value.accountName,
+                              name: value.name,
                               isSelected: value.id ==
                                   CollectionsCubit.get(context)
                                       .selectedBankAccount

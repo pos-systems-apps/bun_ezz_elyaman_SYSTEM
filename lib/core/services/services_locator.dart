@@ -14,6 +14,8 @@ import 'package:pos_system/features/cash_invoice/data/repo/cash_invoice_repo.dar
 import 'package:pos_system/features/cash_invoice/data/services/cash_invoice_service.dart';
 import 'package:pos_system/features/collections/data/repo/collections_repo.dart';
 import 'package:pos_system/features/collections/data/services/collections_service.dart';
+import 'package:pos_system/features/create_monthly_plan/data/repo/create_monthly_plan_repo.dart';
+import 'package:pos_system/features/create_monthly_plan/data/services/create_monthly_plan_service.dart';
 import 'package:pos_system/features/create_visit/data/repo/create_visit_repo.dart';
 import 'package:pos_system/features/create_visit/data/services/create_visit_service.dart';
 import 'package:pos_system/features/fund_list/data/repo/fund_list_repo.dart';
@@ -24,9 +26,10 @@ import 'package:pos_system/features/leave_requests/data/repo/leave_requests_repo
 import 'package:pos_system/features/leave_requests/data/services/leave_requests_service.dart';
 import 'package:pos_system/features/my_requests/data/repo/my_requests_repo.dart';
 import 'package:pos_system/features/my_requests/data/services/my_requests_service.dart';
-import 'package:pos_system/features/my_requests/logic/my_requests_cubit.dart';
 import 'package:pos_system/features/recommendations_from_manager/data/repo/recommendations_from_manager_repo.dart';
 import 'package:pos_system/features/recommendations_from_manager/data/services/recommendations_from_manager_service.dart';
+import 'package:pos_system/features/required_visits_list/data/repo/required_visits_list_repo.dart';
+import 'package:pos_system/features/required_visits_list/data/services/required_visits_list_service.dart';
 import 'package:pos_system/features/return_invoice/data/repo/return_invoice_repo.dart';
 import 'package:pos_system/features/return_invoice/data/services/return_invoice_service.dart';
 
@@ -40,8 +43,8 @@ import 'package:pos_system/features/statistics/data/repo/statistics_repo.dart';
 import 'package:pos_system/features/statistics/data/services/statistics_service.dart';
 import 'package:pos_system/features/transfers_section/data/repo/transfer_section_repo.dart';
 import 'package:pos_system/features/transfers_section/data/services/transfer_section_service.dart';
-import 'package:pos_system/features/visits_list/data/repo/visits_list_repo.dart';
-import 'package:pos_system/features/visits_list/data/services/visits_list_service.dart';
+import 'package:pos_system/features/visits_carried_out/data/repo/visits_carried_out_repo.dart';
+import 'package:pos_system/features/visits_carried_out/data/services/visits_carried_out_service.dart';
 
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/login/data/services/login_service.dart';
@@ -151,16 +154,28 @@ class ServicesLocator {
             () => RecommendationsFromManagerService(apiConsumer: getIt()));
 
     ///visit list
-    getIt.registerLazySingleton<VisitsListRepo>(
-            () => VisitsListRepo(getIt()));
-    getIt.registerFactory<VisitsListService>(
-            () => VisitsListService(apiConsumer: getIt()));
+    getIt.registerLazySingleton<RequiredVisitsListRepo>(
+            () => RequiredVisitsListRepo(getIt()));
+    getIt.registerFactory<RequiredVisitsListService>(
+            () => RequiredVisitsListService(apiConsumer: getIt()));
 
     ///Cash Invoice
     getIt.registerLazySingleton<CashInvoiceRepo>(
             () => CashInvoiceRepo(getIt()));
     getIt.registerFactory<CashInvoiceService>(
             () => CashInvoiceService(apiConsumer: getIt()));
+
+    ///monthly plan
+    getIt.registerLazySingleton<CreateMonthlyPlanRepo>(
+            () => CreateMonthlyPlanRepo(getIt()));
+    getIt.registerFactory<CreateMonthlyPlanService>(
+            () => CreateMonthlyPlanService(apiConsumer: getIt()));
+
+    ///visits carried out
+    getIt.registerLazySingleton<VisitsCarriedOutRepo>(
+            () => VisitsCarriedOutRepo(getIt()));
+    getIt.registerFactory<VisitsCarriedOutService>(
+            () => VisitsCarriedOutService(apiConsumer: getIt()));
 
     ///constant
     // getIt.registerLazySingleton<EndPoints>(() => EndPoints());

@@ -336,6 +336,11 @@ class TextStyles {
     color: AppColors.mainColor,
     fontWeight: FontWeight.w600,
     fontFamily: 'Bahij',
+  );  static TextStyle font20MainColorWeightBold = TextStyle(
+    fontSize: 20.sp,
+    color: AppColors.mainColor,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'Bahij',
   );
   static TextStyle font20WhiteColorWeight700 = TextStyle(
     fontSize: 20.sp,
