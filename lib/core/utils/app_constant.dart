@@ -191,6 +191,12 @@ class AppConstant {
     return number.toStringAsFixed(2);
   }
 
+  static Map<String, int> requestsType = {
+    "orders_from_manager": 0,
+    "my_orders": 1,
+    "leave_orders": 2,
+  };
+
 // static String getMonthName(int monthNumber) {
 //    if (monthNumber < 1 || monthNumber > 12) {
 //      return 'Invalid month';

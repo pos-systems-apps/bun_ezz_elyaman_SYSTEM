@@ -3,9 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/features/my_requests/data/models/all_requests_response.dart';
 
 class MyRequestsItemWidget extends StatelessWidget {
-  const MyRequestsItemWidget({super.key});
+  final RequestDataModel item;
+
+  const MyRequestsItemWidget({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class MyRequestsItemWidget extends StatelessWidget {
                   style: TextStyles.font14GreyColor66Weight400.copyWith(
                       color: AppColors.greyColor66.withValues(alpha: .5))),
               TextSpan(
-                  text: ": 12", style: TextStyles.font14GreyColor66Weight400),
+                  text: ": ${item.id}", style: TextStyles.font14GreyColor66Weight400),
             ]),
           ),
           verticalSpace(4),
@@ -45,34 +48,24 @@ class MyRequestsItemWidget extends StatelessWidget {
                   style: TextStyles.font14GreyColor66Weight400.copyWith(
                       color: AppColors.greyColor66.withValues(alpha: .5))),
               TextSpan(
-                  text: ": مصر عاصمه لبنان",
+                  text: ": ${item.note}",
                   style: TextStyles.font14GreyColor66Weight400),
             ]),
           ),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "التاريخ",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": 27 نوفبير 2025  12:55م",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
-          verticalSpace(4),
-          Text("قيد الانتظار",
-              style: TextStyles.font14GreyColor66Weight600.copyWith(
-                  color: AppColors.greyColor66.withValues(alpha: .5))),
-          verticalSpace(4),
-          Text("تم الموافقه علي طلب الاجازه",
-              style: TextStyles.font14greenColor3EWeight600),
-          verticalSpace(4),
-          Text("تم رفض طلب الاجازه",
-              style: TextStyles.font14redColor000Weight600),
-          verticalSpace(4),
+          if (item.active == 0)
+            Text("قيد الانتظار",
+                style: TextStyles.font14GreyColor66Weight600.copyWith(
+                    color: AppColors.greyColor66.withValues(alpha: .5))),
+          if (item.active == 0) verticalSpace(4),
+          if (item.active == 1)
+            Text("تم الموافقه علي طلب الاجازه",
+                style: TextStyles.font14greenColor3EWeight600),
+          if (item.active == 1) verticalSpace(4),
+          if (item.active == 2)
+            Text("تم رفض طلب الاجازه",
+                style: TextStyles.font14redColor000Weight600),
+          if (item.active == 2) verticalSpace(4),
         ],
       ),
     );

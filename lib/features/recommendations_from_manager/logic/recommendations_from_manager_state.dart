@@ -1,26 +1,8 @@
 abstract class RecommendationsFromManagerState {}
 
 class InitialState extends RecommendationsFromManagerState {}
-class OnChangeSelectedImageState extends RecommendationsFromManagerState {}
 
-class OnGetUsersLoadingState extends RecommendationsFromManagerState {}
-
-class OnGetUsersErrorState extends RecommendationsFromManagerState {}
-
-// class OnGetUsersSuccessState extends CreateVisitState {}
-//
-// class OnGetUsersCatchErrorState extends CreateVisitState {}
-//
-// class OnSelectUserState extends CreateVisitState {}
-//
-// class OnCreateVisitLoadingState extends CreateVisitState {}
-//
-// class OnCreateVisitSuccessState extends CreateVisitState {}
-//
-// class OnCreateVisitErrorState extends CreateVisitState {}
-//
-// class OnCreateVisitCatchErrorState extends CreateVisitState {
-//   String error;
-//
-//   OnCreateVisitCatchErrorState({required this.error});
-// }
+class OnGetManagerRequestsLoadingState extends RecommendationsFromManagerState {}
+class OnGetManagerRequestsErrorState extends RecommendationsFromManagerState {}
+class OnGetManagerRequestsSuccessState extends RecommendationsFromManagerState {}
+class OnGetManagerRequestsCatchErrorState extends RecommendationsFromManagerState {}

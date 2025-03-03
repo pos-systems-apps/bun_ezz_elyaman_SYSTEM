@@ -17,6 +17,8 @@ class Routes{
   static const salesInvoiceScreen = "/SalesInvoiceScreen";
   static const returnInvoiceScreen = "/ReturnInvoiceScreen";
   static const myRequestsScreen = "/MyRequestsScreen";
+  static const addMyRequestScreen = "/AddMyRequestScreen";
+  static const addLeaveRequestScreen = "/AddLeaveRequestScreen";
   static const leaveRequestsScreen = "/LeaveRequestsScreen";
   static const allCoursesScreen = "/AllCoursesScreen";
   static const recommendationsFromManagerScreen = "/RecommendationsFromManagerScreen";

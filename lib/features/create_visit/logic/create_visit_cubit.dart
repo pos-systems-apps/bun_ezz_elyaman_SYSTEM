@@ -6,7 +6,6 @@ import 'package:pos_system/features/create_visit/data/repo/create_visit_repo.dar
 import 'package:pos_system/features/create_visit/logic/create_visit_state.dart';
 import 'package:pos_system/features/splash/data/models/users_response_model.dart';
 import 'package:pos_system/features/splash/data/repo/splash_repo.dart';
-import 'package:pos_system/features/statistics/data/models/statistics_response_model.dart';
 
 class CreateVisitCubit extends Cubit<CreateVisitState> {
   final CreateVisitRepo _createVisitRepo;

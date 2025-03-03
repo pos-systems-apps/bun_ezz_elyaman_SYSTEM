@@ -5,11 +5,10 @@ import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/my_requests/data/models/all_requests_response.dart';
 
-class LeaveRequestsItemWidget extends StatelessWidget {
+class RecommendationFromManagerItemWidget extends StatelessWidget {
   final RequestDataModel item;
 
-  const LeaveRequestsItemWidget({required this.item, super.key});
-
+  const RecommendationFromManagerItemWidget({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,32 +53,7 @@ class LeaveRequestsItemWidget extends StatelessWidget {
             ]),
           ),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "التاريخ",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": ${item.date}",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
-          verticalSpace(4),
-          if (item.active == 0)
-            Text("قيد الانتظار",
-                style: TextStyles.font14GreyColor66Weight600.copyWith(
-                    color: AppColors.greyColor66.withValues(alpha: .5))),
-          if (item.active == 0) verticalSpace(4),
-          if (item.active == 1)
-            Text("تم الموافقه علي طلب الاجازه",
-                style: TextStyles.font14greenColor3EWeight600),
-          if (item.active == 1) verticalSpace(4),
-          if (item.active == 2)
-            Text("تم رفض طلب الاجازه",
-                style: TextStyles.font14redColor000Weight600),
-          if (item.active == 2) verticalSpace(4),
+
         ],
       ),
     );

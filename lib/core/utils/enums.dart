@@ -1,28 +1,6 @@
-enum EnumTextField {
-  email,
-  forgetEmail,
-  password,
-  resetPassword,
-  confirmResetPassword,
-  name,
-  phone,
-  money,
-  paymentMoney,
-  comment,
-  verifyCode,
-  sendMessage,
-  location,
-  message,
-  idNumber,
-  profileName,
-  profileOldPassword,
-  profileNewPassword,
-  profilePhone,
-  profileEmail,
-  ninjaPayment,
-}
 
-enum EnumPopup {
+
+enum RequestsType {
   noInternet,
   signIn,
   userPayment,

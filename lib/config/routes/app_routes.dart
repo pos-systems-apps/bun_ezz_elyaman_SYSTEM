@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/features/add_customer/logic/add_customer_cubit.dart';
 import 'package:pos_system/features/add_customer/ui/add_customer_screen.dart';
+import 'package:pos_system/features/add_leave_request/logic/add_leave_request_cubit.dart';
+import 'package:pos_system/features/add_leave_request/ui/add_leave_request_screen.dart';
+import 'package:pos_system/features/add_my_request/logic/add_my_request_cubit.dart';
+import 'package:pos_system/features/add_my_request/ui/add_my_request_screen.dart';
 import 'package:pos_system/features/add_transfer_section/logic/add_transfer_section_cubit.dart';
 import 'package:pos_system/features/add_transfer_section/ui/add_transfer_section_screen.dart';
 import 'package:pos_system/features/all_courses/logic/all_courses_cubit.dart';
@@ -27,7 +31,6 @@ import 'package:pos_system/features/my_requests/logic/my_requests_cubit.dart';
 import 'package:pos_system/features/my_requests/ui/my_requests_screen.dart';
 import 'package:pos_system/features/recommendations_from_manager/logic/recommendations_from_manager_cubit.dart';
 import 'package:pos_system/features/recommendations_from_manager/ui/recommendations_from_manager_screen.dart';
-import 'package:pos_system/features/required_visits_list/data/repo/required_visits_list_repo.dart';
 import 'package:pos_system/features/required_visits_list/logic/required_visits_list_cubit.dart';
 import 'package:pos_system/features/required_visits_list/ui/required_visits_list_screen.dart';
 import 'package:pos_system/features/return_invoice/logic/return_invoice_cubit.dart';
@@ -145,14 +148,27 @@ class RouteGenerator {
       case Routes.leaveRequestsScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => LeaveRequestsCubit(getIt()),
+                  create: (_) =>
+                      LeaveRequestsCubit(getIt())..getAllRequestsUrl(),
                   child: LeaveRequestsScreen(),
                 ));
       case Routes.myRequestsScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => MyRequestsCubit(getIt()),
+                  create: (_) => MyRequestsCubit(getIt())..getAllRequestsUrl(),
                   child: MyRequestsScreen(),
+                ));
+      case Routes.addMyRequestScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => AddMyRequestCubit(getIt()),
+                  child: AddMyRequestScreen(),
+                ));
+      case Routes.addLeaveRequestScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => AddLeaveRequestCubit(getIt()),
+                  child: AddLeaveRequestScreen(),
                 ));
       case Routes.allCoursesScreen:
         return MaterialPageRoute(
@@ -163,7 +179,8 @@ class RouteGenerator {
       case Routes.recommendationsFromManagerScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => RecommendationsFromManagerCubit(getIt()),
+                  create: (_) => RecommendationsFromManagerCubit(getIt())
+                    ..getManagerRequests(),
                   child: RecommendationsFromManagerScreen(),
                 ));
       case Routes.visitsListScreen:

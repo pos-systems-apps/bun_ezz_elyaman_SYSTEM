@@ -6,6 +6,8 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/features/add_customer/data/repo/add_customer_repo.dart';
 import 'package:pos_system/features/add_customer/data/services/add_customer_service.dart';
+import 'package:pos_system/features/add_my_request/data/repo/add_my_request_repo.dart';
+import 'package:pos_system/features/add_my_request/data/services/add_my_request_service.dart';
 import 'package:pos_system/features/add_transfer_section/data/repo/add_transfer_section_repo.dart';
 import 'package:pos_system/features/add_transfer_section/data/services/add_transfer_section_service.dart';
 import 'package:pos_system/features/all_courses/data/repo/all_courses_repo.dart';
@@ -22,12 +24,8 @@ import 'package:pos_system/features/fund_list/data/repo/fund_list_repo.dart';
 import 'package:pos_system/features/fund_list/data/services/fund_list_service.dart';
 import 'package:pos_system/features/invoice/data/repo/invoice_repo.dart';
 import 'package:pos_system/features/invoice/data/services/invoice_service.dart';
-import 'package:pos_system/features/leave_requests/data/repo/leave_requests_repo.dart';
-import 'package:pos_system/features/leave_requests/data/services/leave_requests_service.dart';
 import 'package:pos_system/features/my_requests/data/repo/my_requests_repo.dart';
 import 'package:pos_system/features/my_requests/data/services/my_requests_service.dart';
-import 'package:pos_system/features/recommendations_from_manager/data/repo/recommendations_from_manager_repo.dart';
-import 'package:pos_system/features/recommendations_from_manager/data/services/recommendations_from_manager_service.dart';
 import 'package:pos_system/features/required_visits_list/data/repo/required_visits_list_repo.dart';
 import 'package:pos_system/features/required_visits_list/data/services/required_visits_list_service.dart';
 import 'package:pos_system/features/return_invoice/data/repo/return_invoice_repo.dart';
@@ -135,11 +133,6 @@ class ServicesLocator {
     getIt.registerFactory<MyRequestsService>(
             () => MyRequestsService(apiConsumer: getIt()));
 
-    ///leave requests
-    getIt.registerLazySingleton<LeaveRequestsRepo>(
-            () => LeaveRequestsRepo(getIt()));
-    getIt.registerFactory<LeaveRequestsService>(
-            () => LeaveRequestsService(apiConsumer: getIt()));
 
     ///all courses
     getIt.registerLazySingleton<AllCoursesRepo>(
@@ -147,11 +140,6 @@ class ServicesLocator {
     getIt.registerFactory<AllCoursesService>(
             () => AllCoursesService(apiConsumer: getIt()));
 
-    ///all courses
-    getIt.registerLazySingleton<RecommendationsFromManagerRepo>(
-            () => RecommendationsFromManagerRepo(getIt()));
-    getIt.registerFactory<RecommendationsFromManagerService>(
-            () => RecommendationsFromManagerService(apiConsumer: getIt()));
 
     ///visit list
     getIt.registerLazySingleton<RequiredVisitsListRepo>(
@@ -176,6 +164,12 @@ class ServicesLocator {
             () => VisitsCarriedOutRepo(getIt()));
     getIt.registerFactory<VisitsCarriedOutService>(
             () => VisitsCarriedOutService(apiConsumer: getIt()));
+
+    ///add my request
+    getIt.registerLazySingleton<AddMyRequestRepo>(
+            () => AddMyRequestRepo(getIt()));
+    getIt.registerFactory<AddMyRequestService>(
+            () => AddMyRequestService(apiConsumer: getIt()));
 
     ///constant
     // getIt.registerLazySingleton<EndPoints>(() => EndPoints());

@@ -60,8 +60,9 @@ class TransactionSectionItemWidget extends StatelessWidget {
                 style: TextStyles.font14greenColor3EWeight600),
           if (item.active) verticalSpace(4),
           if (!item.active)
-            Text("تم رفض طلب الاجازه",
-                style: TextStyles.font14redColor000Weight600),
+            Text("قيد الانتظار",
+                style: TextStyles.font14GreyColor66Weight600.copyWith(
+                    color: AppColors.greyColor66.withValues(alpha: .5))),
           if (!item.active) verticalSpace(4),
         ],
       ),
