@@ -11,6 +11,7 @@ class AppColors {
   static Color whiteColor = Colors.white;
   static Color blackColor = Colors.black;
   static Color greenColor = Colors.green;
+  static Color blueColor = Colors.blue;
 
   static Color mainColor = Color(0xFF37479d);
   static Color secondColor = Color(0xFFF5C31A);

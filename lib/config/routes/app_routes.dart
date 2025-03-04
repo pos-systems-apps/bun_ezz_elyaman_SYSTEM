@@ -173,7 +173,7 @@ class RouteGenerator {
       case Routes.allCoursesScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => AllCoursesCubit(getIt()),
+                  create: (_) => AllCoursesCubit(getIt())..getAllCourses(),
                   child: AllCoursesScreen(),
                 ));
       case Routes.recommendationsFromManagerScreen:

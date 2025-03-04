@@ -45,12 +45,12 @@ class HttpConsumer implements ApiConsumer {
       request.headers.addAll(headers);
     }
     body.forEach((key1, value1) async {
-      if (key1 == "images" && value1 is List<String>) {
+      if (key1 == "images" && (value1 is List<String>)) {
+
         for (var item in value1) {
-          request.files
-              .add(await http.MultipartFile.fromPath(key1, item.toString()));
+          request.files.add(await http.MultipartFile.fromPath("$key1[]", item));
         }
-      } else if (key1 == "img" || key1 == "image" ) {
+      } else if (key1 == "img" || key1 == "image") {
         request.files
             .add(await http.MultipartFile.fromPath(key1, value1.toString()));
       } else if (key1 == "cart" && value1 is List<Cart>) {

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +7,7 @@ import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
 import 'package:pos_system/features/sales/data/entities/unit_of_measure_class.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'app_colors_white_theme.dart';
 
@@ -197,6 +197,14 @@ class AppConstant {
     "leave_orders": 2,
   };
 
+  static void openUrl(String webUrl) async {
+    final String url = webUrl;
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw "Could not launch $url";
+    }
+  }
 // static String getMonthName(int monthNumber) {
 //    if (monthNumber < 1 || monthNumber > 12) {
 //      return 'Invalid month';

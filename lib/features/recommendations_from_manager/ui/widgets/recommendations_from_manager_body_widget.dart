@@ -14,8 +14,7 @@ class RecommendationsFromManagerBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecommendationsFromManagerCubit,
-        RecommendationsFromManagerState>(
+    return BlocBuilder<RecommendationsFromManagerCubit, RecommendationsFromManagerState>(
       buildWhen: (previous, current) {
         return current is OnGetManagerRequestsLoadingState ||
             current is OnGetManagerRequestsSuccessState ||

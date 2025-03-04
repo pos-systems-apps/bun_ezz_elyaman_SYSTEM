@@ -1,26 +1,14 @@
 abstract class AllCoursesState {}
 
 class InitialState extends AllCoursesState {}
-class OnChangeSelectedImageState extends AllCoursesState {}
+class OnGetAllCoursesLoadingState extends AllCoursesState {}
+class OnGetAllCoursesSuccessState extends AllCoursesState {}
+class OnGetAllCoursesErrorState extends AllCoursesState {}
+class OnGetAllCoursesCatchErrorState extends AllCoursesState {}
 
-class OnGetUsersLoadingState extends AllCoursesState {}
+class OnChangeSelectedImagesState extends AllCoursesState {}
 
-class OnGetUsersErrorState extends AllCoursesState {}
-
-// class OnGetUsersSuccessState extends CreateVisitState {}
-//
-// class OnGetUsersCatchErrorState extends CreateVisitState {}
-//
-// class OnSelectUserState extends CreateVisitState {}
-//
-// class OnCreateVisitLoadingState extends CreateVisitState {}
-//
-// class OnCreateVisitSuccessState extends CreateVisitState {}
-//
-// class OnCreateVisitErrorState extends CreateVisitState {}
-//
-// class OnCreateVisitCatchErrorState extends CreateVisitState {
-//   String error;
-//
-//   OnCreateVisitCatchErrorState({required this.error});
-// }
+class OnCompleteCourseLoadingState extends AllCoursesState {}
+class OnCompleteCourseSuccessState extends AllCoursesState {}
+class OnCompleteCourseErrorState extends AllCoursesState {}
+class OnCompleteCourseCatchErrorState extends AllCoursesState {}
