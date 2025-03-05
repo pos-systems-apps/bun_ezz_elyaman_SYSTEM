@@ -8,6 +8,8 @@ import 'package:pos_system/features/add_customer/data/repo/add_customer_repo.dar
 import 'package:pos_system/features/add_customer/data/services/add_customer_service.dart';
 import 'package:pos_system/features/add_my_request/data/repo/add_my_request_repo.dart';
 import 'package:pos_system/features/add_my_request/data/services/add_my_request_service.dart';
+import 'package:pos_system/features/add_request_resources/data/repo/add_request_resources_repo.dart';
+import 'package:pos_system/features/add_request_resources/data/services/add_request_resources_service.dart';
 import 'package:pos_system/features/add_transfer_section/data/repo/add_transfer_section_repo.dart';
 import 'package:pos_system/features/add_transfer_section/data/services/add_transfer_section_service.dart';
 import 'package:pos_system/features/all_courses/data/repo/all_courses_repo.dart';
@@ -28,8 +30,8 @@ import 'package:pos_system/features/my_requests/data/repo/my_requests_repo.dart'
 import 'package:pos_system/features/my_requests/data/services/my_requests_service.dart';
 import 'package:pos_system/features/required_visits_list/data/repo/required_visits_list_repo.dart';
 import 'package:pos_system/features/required_visits_list/data/services/required_visits_list_service.dart';
-import 'package:pos_system/features/return_invoice/data/repo/return_invoice_repo.dart';
-import 'package:pos_system/features/return_invoice/data/services/return_invoice_service.dart';
+import 'package:pos_system/features/salary/data/repo/salary_repo.dart';
+import 'package:pos_system/features/salary/data/services/salary_service.dart';
 
 import 'package:pos_system/features/sales/data/repo/sales_repo.dart';
 import 'package:pos_system/features/sales/data/services/sales_service.dart';
@@ -112,64 +114,66 @@ class ServicesLocator {
         () => TransferSectionService(apiConsumer: getIt()));
 
     ///fund list
-    getIt.registerLazySingleton<FundListRepo>(
-        () => FundListRepo(getIt()));
+    getIt.registerLazySingleton<FundListRepo>(() => FundListRepo(getIt()));
     getIt.registerFactory<FundListService>(
         () => FundListService(apiConsumer: getIt()));
+
     ///sales invoice
     getIt.registerLazySingleton<SalesInvoiceRepo>(
-            () => SalesInvoiceRepo(getIt()));
+        () => SalesInvoiceRepo(getIt()));
     getIt.registerFactory<SalesInvoiceService>(
-            () => SalesInvoiceService(apiConsumer: getIt()));
-    ///return invoice
-    getIt.registerLazySingleton<ReturnInvoiceRepo>(
-            () => ReturnInvoiceRepo(getIt()));
-    getIt.registerFactory<ReturnInvoiceService>(
-            () => ReturnInvoiceService(apiConsumer: getIt()));
+        () => SalesInvoiceService(apiConsumer: getIt()));
 
     ///my requests
-    getIt.registerLazySingleton<MyRequestsRepo>(
-            () => MyRequestsRepo(getIt()));
+    getIt.registerLazySingleton<MyRequestsRepo>(() => MyRequestsRepo(getIt()));
     getIt.registerFactory<MyRequestsService>(
-            () => MyRequestsService(apiConsumer: getIt()));
-
+        () => MyRequestsService(apiConsumer: getIt()));
 
     ///all courses
-    getIt.registerLazySingleton<AllCoursesRepo>(
-            () => AllCoursesRepo(getIt()));
+    getIt.registerLazySingleton<AllCoursesRepo>(() => AllCoursesRepo(getIt()));
     getIt.registerFactory<AllCoursesService>(
-            () => AllCoursesService(apiConsumer: getIt()));
-
+        () => AllCoursesService(apiConsumer: getIt()));
 
     ///visit list
     getIt.registerLazySingleton<RequiredVisitsListRepo>(
-            () => RequiredVisitsListRepo(getIt()));
+        () => RequiredVisitsListRepo(getIt()));
     getIt.registerFactory<RequiredVisitsListService>(
-            () => RequiredVisitsListService(apiConsumer: getIt()));
+        () => RequiredVisitsListService(apiConsumer: getIt()));
 
     ///Cash Invoice
-    getIt.registerLazySingleton<CashInvoiceRepo>(
-            () => CashInvoiceRepo(getIt()));
+    getIt
+        .registerLazySingleton<CashInvoiceRepo>(() => CashInvoiceRepo(getIt()));
     getIt.registerFactory<CashInvoiceService>(
-            () => CashInvoiceService(apiConsumer: getIt()));
+        () => CashInvoiceService(apiConsumer: getIt()));
 
     ///monthly plan
     getIt.registerLazySingleton<CreateMonthlyPlanRepo>(
-            () => CreateMonthlyPlanRepo(getIt()));
+        () => CreateMonthlyPlanRepo(getIt()));
     getIt.registerFactory<CreateMonthlyPlanService>(
-            () => CreateMonthlyPlanService(apiConsumer: getIt()));
+        () => CreateMonthlyPlanService(apiConsumer: getIt()));
 
     ///visits carried out
     getIt.registerLazySingleton<VisitsCarriedOutRepo>(
-            () => VisitsCarriedOutRepo(getIt()));
+        () => VisitsCarriedOutRepo(getIt()));
     getIt.registerFactory<VisitsCarriedOutService>(
-            () => VisitsCarriedOutService(apiConsumer: getIt()));
+        () => VisitsCarriedOutService(apiConsumer: getIt()));
 
     ///add my request
     getIt.registerLazySingleton<AddMyRequestRepo>(
-            () => AddMyRequestRepo(getIt()));
+        () => AddMyRequestRepo(getIt()));
     getIt.registerFactory<AddMyRequestService>(
-            () => AddMyRequestService(apiConsumer: getIt()));
+        () => AddMyRequestService(apiConsumer: getIt()));
+
+    ///sales
+    getIt.registerLazySingleton<SalaryRepo>(() => SalaryRepo(getIt()));
+    getIt.registerFactory<SalaryService>(
+        () => SalaryService(apiConsumer: getIt()));
+
+    ///Add Request Resources
+    getIt.registerLazySingleton<AddRequestResourcesRepo>(
+        () => AddRequestResourcesRepo(getIt()));
+    getIt.registerFactory<AddRequestResourcesService>(
+        () => AddRequestResourcesService(apiConsumer: getIt()));
 
     ///constant
     // getIt.registerLazySingleton<EndPoints>(() => EndPoints());

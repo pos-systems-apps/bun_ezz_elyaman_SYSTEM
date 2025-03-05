@@ -32,6 +32,7 @@ class SalesCubit extends Cubit<SalesState> {
     selectedOrderType = value;
     getCategoriesFromHere();
     changeSelectedCategory(null);
+    selectedProducts = [];
     emit(OnChangeOrderTypeSelectState());
   }
 
@@ -246,7 +247,7 @@ class SalesCubit extends Cubit<SalesState> {
   ///add extra discount
 
   ///pays
-   List<PayClass> pays =
+  List<PayClass> pays =
       getIt<AppConstant>().pays.where((item) => item.isShown).toList();
 
   PayClass? selectedPay;
@@ -294,12 +295,15 @@ class SalesCubit extends Cubit<SalesState> {
         .createOrder(CreateOrderRequest(
             userId: selectedUser!.id,
             img: selectedImagePath!,
-            totalTax: double.tryParse(
-                    ReseatSelectedProducts(selectedProducts: selectedProducts)
-                        .getValueTax(
-                            selectedPercentType?.id, percentController.text)
-                        .toStringAsFixed(2)) ??
-                0,
+            totalTax: 0,
+
+            ///stop value tax
+            // double.tryParse(
+            //         ReseatSelectedProducts(selectedProducts: selectedProducts)
+            //             .getValueTax(
+            //                 selectedPercentType?.id, percentController.text)
+            //             .toStringAsFixed(2)) ??
+            //     0,
             extraDiscount: double.tryParse(
                     ReseatSelectedProducts(selectedProducts: selectedProducts)
                         .getExtraDiscount(
@@ -308,10 +312,10 @@ class SalesCubit extends Cubit<SalesState> {
                 0,
             collectedCash: double.tryParse(moneyController.text) ?? 0,
             orderType: selectedOrderType.id,
-            finalOrderAmount: double.tryParse(
-                    ReseatSelectedProducts(selectedProducts: selectedProducts)
-                        .getTotal(selectedPercentType?.id, percentController.text)
-                        .toStringAsFixed(2)) ??
+            finalOrderAmount: double.tryParse(ReseatSelectedProducts(
+                        selectedProducts: selectedProducts)
+                    .getTotal(selectedPercentType?.id, percentController.text)
+                    .toStringAsFixed(2)) ??
                 0,
             cash: selectedPay!.id,
             carts: selectedProducts.map((element) {
@@ -332,7 +336,6 @@ class SalesCubit extends Cubit<SalesState> {
             }).toList()))
         .then((value) {
       value.fold((l) {
-
         emit(OnCreateOrderErrorState(message: l.message));
       }, (r) {
         // context.pushNamed(Routes.electronicInvoiceScreen,

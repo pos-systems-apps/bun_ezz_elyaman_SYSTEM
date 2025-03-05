@@ -1,12 +1,13 @@
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 
+///stop value tax
 class ReseatSelectedProducts {
   List<SelectedProductClass> selectedProducts;
   double totalReseat;
   double totalDiscount;
   double extraDiscount;
-  double valueTax;
+  // double valueTax;
   double total;
 
   ReseatSelectedProducts({
@@ -14,7 +15,7 @@ class ReseatSelectedProducts {
     this.totalReseat = 0,
     this.totalDiscount = 0,
     this.extraDiscount = 0,
-    this.valueTax = 0,
+    // this.valueTax = 0,
     this.total = 0,
   });
 
@@ -68,21 +69,22 @@ class ReseatSelectedProducts {
         0;
   }
 
-  double getValueTax(int? discountId, String discount) {
-    valueTax = 0;
-    double productsPriceAfterAllDiscounts = getTotalReseat() -
-        getTotalDiscount() -
-        getExtraDiscount(discountId, discount);
-    valueTax = (productsPriceAfterAllDiscounts * 15) / 100;
-    return double.tryParse(AppConstant.confirmRoundTo2Numbers(valueTax)) ?? 0;
-  }
+  // double getValueTax(int? discountId, String discount) {
+  //   valueTax = 0;
+  //   double productsPriceAfterAllDiscounts = getTotalReseat() -
+  //       getTotalDiscount() -
+  //       getExtraDiscount(discountId, discount);
+  //   valueTax = (productsPriceAfterAllDiscounts * 15) / 100;
+  //   return double.tryParse(AppConstant.confirmRoundTo2Numbers(valueTax)) ?? 0;
+  // }
 
   double getTotal(int? discountId, String discount) {
     total = 0;
     total = getTotalReseat() -
         getTotalDiscount() -
-        getExtraDiscount(discountId, discount) +
-        getValueTax(discountId, discount);
+        getExtraDiscount(discountId, discount)
+        // + getValueTax(discountId, discount)
+    ;
     return double.tryParse(AppConstant.confirmRoundTo2Numbers(total)) ?? 0;
   }
 }

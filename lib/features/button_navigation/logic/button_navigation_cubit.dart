@@ -6,6 +6,8 @@ import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/features/add_request_resources/logic/add_request_resources_cubit.dart';
+import 'package:pos_system/features/add_request_resources/ui/add_request_resources_screen.dart';
 import 'package:pos_system/features/button_navigation/entities/button_navigation_items.dart';
 
 import 'package:pos_system/features/button_navigation/logic/button_navigation_state.dart';
@@ -35,19 +37,19 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
         );
       case 1:
         return BlocProvider(
-          create: (_) =>
-              CollectionsCubit(getIt(), getIt())..getBankAccounts(),
+          create: (_) => CollectionsCubit(getIt(), getIt())..getBankAccounts(),
           child: CollectionsScreen(),
         );
       case 2:
         return BlocProvider(
-          create: (_) =>
-              SalesCubit(getIt(), getIt())..getCategoriesFromHere(),
+          create: (_) => SalesCubit(getIt(), getIt())..getCategoriesFromHere(),
           child: SalesScreen(),
         );
       case 3:
-        return StatisticsScreen();
-
+        return BlocProvider(
+          create: (_) => AddRequestResourcesCubit(getIt(), getIt(),getIt())..getCategoriesFromHere(),
+          child: AddRequestResourcesScreen(),
+        );
       default:
         return StatisticsScreen();
     }

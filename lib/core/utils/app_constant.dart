@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:pos_system/features/add_request_resources/data/entities/resource_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
 import 'package:pos_system/features/sales/data/entities/unit_of_measure_class.dart';
@@ -145,6 +146,13 @@ class AppConstant {
     OrderTypeClass(id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales invoice"),
     OrderTypeClass(id: 7, nameAr: "فاتورة مرتجعات ", nameEn: "Return invoice"),
   ];
+
+  static List<ResourceTypeClass> resourcesTypes = [
+    ResourceTypeClass(id: 4, nameAr: "طلب توريد", nameEn: "Supply request"),
+    ResourceTypeClass(id: 7, nameAr: "رد توريد", nameEn: "Supply reply"),
+  ];
+
+
   static List<PercentTypesClass> percentTypes = [
     PercentTypesClass(id: 1, nameAr: "كمية", nameEn: "Amount"),
     PercentTypesClass(id: 2, nameAr: "نسبة مئوية", nameEn: "Percentage"),
@@ -171,21 +179,7 @@ class AppConstant {
     }
   }
 
-  static showBoxToBeOnline(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('No Internet'),
-        content: const Text('You are offline. Please check your connection.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   static String confirmRoundTo2Numbers(double number) {
     return number.toStringAsFixed(2);

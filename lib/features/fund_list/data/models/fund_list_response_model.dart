@@ -11,6 +11,7 @@ class FundListResponseModel {
           : null,
       boxList: List<BoxItem>.from(
           json['boxlist'].map((item) => BoxItem.fromJson(item))).toList(),
+
     );
   }
 }

@@ -34,7 +34,7 @@ class SalesService {
   }
 
   Future<CategoryProductsResponse> getCategoryProducts(
-      int categoryId, int type, int page) async {
+      int categoryId, int? type, int page) async {
     final response = await apiConsumer
         .get(SalesApiEndPoints.getCategoryProductsUrl(categoryId, type, page), {
       ConstantKeys.appAuthorization:
@@ -49,7 +49,7 @@ class SalesService {
   }
 
   Future<SearchProductsResponse> getSearchProducts(
-      String name, int type, int page) async {
+      String name, int? type, int page) async {
     final response = await apiConsumer
         .get(SalesApiEndPoints.getSearchProductsUrl(name, type, page), {
       ConstantKeys.appAuthorization:

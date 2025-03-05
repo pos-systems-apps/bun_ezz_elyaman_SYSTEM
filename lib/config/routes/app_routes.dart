@@ -35,6 +35,8 @@ import 'package:pos_system/features/required_visits_list/logic/required_visits_l
 import 'package:pos_system/features/required_visits_list/ui/required_visits_list_screen.dart';
 import 'package:pos_system/features/return_invoice/logic/return_invoice_cubit.dart';
 import 'package:pos_system/features/return_invoice/ui/return_invoice_screen.dart';
+import 'package:pos_system/features/salary/logic/salary_cubit.dart';
+import 'package:pos_system/features/salary/ui/salary_screen.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/ui/reseat_screen.dart';
 import 'package:pos_system/features/sales_invoice/logic/sales_invoice_cubit.dart';
@@ -136,13 +138,14 @@ class RouteGenerator {
       case Routes.salesInvoiceScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => SalesInvoiceCubit(getIt()),
+                  create: (_) => SalesInvoiceCubit(getIt())..getInvoices(),
                   child: SalesInvoiceScreen(),
                 ));
       case Routes.returnInvoiceScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => ReturnInvoiceCubit(getIt()),
+                  create: (_) =>
+                      ReturnInvoiceCubit(getIt())..getReturnInvoices(),
                   child: ReturnInvoiceScreen(),
                 ));
       case Routes.leaveRequestsScreen:
@@ -202,9 +205,14 @@ class RouteGenerator {
                   create: (_) => CreateMonthlyPlanCubit(getIt(), getIt()),
                   child: CreateMonthlyPlanScreen(),
                 ));
+      case Routes.salaryScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) =>
+                      SalaryCubit(getIt())..getSalary(args['context']),
+                  child: SalaryScreen(),
+                ));
 
-      // case Routes.printInvoiceScreen:
-      //   return MaterialPageRoute(builder: (_) => PrintInvoiceScreen());
       default:
         return null;
     }

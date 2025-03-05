@@ -114,9 +114,10 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                   verticalSpace(16),
                   _moneyWidget("خصم اضافي",
                       "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getExtraDiscount(SalesCubit.get(context).selectedPercentType?.id, SalesCubit.get(context).percentController.text))}"),
-                  verticalSpace(16),
-                  _moneyWidget("ضريبه القيمه المضافه",
-                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getValueTax(SalesCubit.get(context).selectedPercentType?.id, SalesCubit.get(context).percentController.text))}"),
+                 ///stop value tax
+                  // verticalSpace(16),
+                  // _moneyWidget("ضريبه القيمه المضافه",
+                  //     "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getValueTax(SalesCubit.get(context).selectedPercentType?.id, SalesCubit.get(context).percentController.text))}"),
                   verticalSpace(16),
                   Divider(color: AppColors.blueColorEEE),
                   verticalSpace(16),

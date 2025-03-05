@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ReturnInvoiceShimmerWidget extends StatelessWidget {
-  const ReturnInvoiceShimmerWidget({super.key});
+class SalaryShimmerWidget extends StatelessWidget {
+  const SalaryShimmerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

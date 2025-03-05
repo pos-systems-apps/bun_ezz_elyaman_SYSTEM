@@ -1,11 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
 import 'package:pos_system/core/widgets/error_alert_dialog.dart';
+import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
@@ -57,11 +60,12 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                   ///item not found add it
                   ///
                   await _productSelectedDetailsWidget(
-                    context,
-                    isSearch
-                        ? SalesCubit.get(context).searchProducts[index]
-                        : SalesCubit.get(context).products[index],
-                  ).then((value) {
+                          context,
+                          isSearch
+                              ? SalesCubit.get(context).searchProducts[index]
+                              : SalesCubit.get(context).products[index],
+                          SalesCubit.get(context).selectedOrderType)
+                      .then((value) {
                     if (value != null) {
                       SalesCubit.get(context)
                           .addProductToSelectedProducts(value);
@@ -84,7 +88,9 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
   }
 
   Future<SelectedProductClass?> _productSelectedDetailsWidget(
-      BuildContext context, Product product) async {
+      BuildContext context,
+      Product product,
+      OrderTypeClass selectedOrderType) async {
     return await showModalBottomSheet<SelectedProductClass>(
         context: context,
         enableDrag: true,
@@ -118,7 +124,9 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                "عصير صان توب 200 ملي",
+                                context.locale.languageCode == "ar"
+                                    ? product.nameAr
+                                    : product.nameEn,
                                 maxLines: 2,
                                 style: TextStyles.font18greyColor27Weight600,
                               ),
@@ -156,22 +164,29 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     if (selectedIntOrDecimal == 1) {
-                                      ///integer part
-                                      if (integerPart <
-                                          product.quantity.toInt()) {
-                                        integerPart++;
-                                      }
-                                      if (integerPart ==
-                                          product.quantity.toInt()) {
-                                        if (decimalPart >
-                                            ((product.quantity - integerPart) *
-                                                    product.unitValue)
-                                                .toInt()) {
-                                          decimalPart = ((product.quantity -
-                                                      integerPart) *
-                                                  product.unitValue)
-                                              .toInt();
+                                      if (selectedOrderType.id ==
+                                          AppConstant.orderTypes[0].id) {
+                                        ///integer part
+                                        if (integerPart <
+                                            product.quantity.toInt()) {
+                                          integerPart++;
                                         }
+                                        if (integerPart ==
+                                            product.quantity.toInt()) {
+                                          ///to change decimal to int count
+                                          if (decimalPart >
+                                              ((product.quantity -
+                                                          integerPart) *
+                                                      product.unitValue)
+                                                  .toInt()) {
+                                            decimalPart = ((product.quantity -
+                                                        integerPart) *
+                                                    product.unitValue)
+                                                .toInt();
+                                          }
+                                        }
+                                      } else {
+                                        integerPart++;
                                       }
                                     } else {
                                       ///decimal part

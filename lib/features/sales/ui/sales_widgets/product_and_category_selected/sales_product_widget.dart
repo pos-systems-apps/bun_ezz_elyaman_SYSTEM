@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/cached_network_image.dart';
@@ -71,10 +72,31 @@ class SalesProductWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyles.font12BlackColorWeight400),
           verticalSpace(4),
-          Text("1200 ر.س",
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              style: TextStyles.font12GreenColor00WeightBold),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (product.discount == 0)
+                  Text(
+                    "${AppConstant.currency} ${product.sellingPrice.toStringAsFixed(2)}",
+                    style: TextStyles.font12GreenColor00WeightBold,
+                  ),
+                horizontalSpace(4),
+                if (product.discount != 0)
+                  Text(
+                    product.sellingPrice.toStringAsFixed(2),
+                    style: TextStyles.font14GreyColor66Weight400.copyWith(
+                      decoration: TextDecoration.lineThrough,
+                    ),
+                  ),
+                horizontalSpace(4),
+                if (product.discount != 0)
+                  Text(
+                      "${AppConstant.currency}${AppConstant.getDiscountForProduct(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
+                      style: TextStyles.font12GreenColor00WeightBold),
+              ],
+            ),
+          ),
           verticalSpace(10),
           Text("كود المنتج : ${product.productCode}",
               maxLines: 1,

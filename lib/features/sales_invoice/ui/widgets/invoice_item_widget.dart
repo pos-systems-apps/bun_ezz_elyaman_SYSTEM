@@ -1,12 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
+import 'package:pos_system/features/sales_invoice/data/models/get_invoices_response_model.dart';
+import 'package:intl/intl.dart' as intl;
+import 'package:pos_system/features/sales_invoice/logic/sales_invoice_cubit.dart';
 
 class InvoiceItemWidget extends StatelessWidget {
-  const InvoiceItemWidget({super.key});
+  final Invoices item;
+
+  const InvoiceItemWidget({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,107 +34,26 @@ class InvoiceItemWidget extends StatelessWidget {
                 style: TextStyles.font16MainColorWeight500),
           ),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "رقم الفاتوره",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": 7458ا",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("رقم الفاتوره", " ${item.id}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "التاريخ",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": 27 نوفبير 2025  12:55م",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("التاريخ",
+              " ${intl.DateFormat("d MMMM yyyy h:mm:ss a", context.locale.languageCode).format(DateTime.parse(item.createdAt).toLocal())}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "نوع الفاتوره",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": بيع", style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget(
+              "نوع الفاتوره", " ${AppConstant.orderTypes[0].nameAr}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "اجمالي الفاتوره",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: " : 2355.5",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("اجمالي الفاتوره", " ${item.orderAmount}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "ضربيه",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: " : 000", style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("ضربيه", " ${item.totalTax}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "خصم",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: " : 0000",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("المبلغ المدفوع ", " ${item.collectedCash}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "المبلغ المدفوع ",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: " : 15546",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget(
+              "المبلغ المتبقي ", "${item.orderAmount - item.collectedCash}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "طريقه الدفع ",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: " : بنك ",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("خصم", "${item.extraDiscount}"),
+          verticalSpace(4),
+          _itemTextWidget("طريقه الدفع ", SalesInvoiceCubit.get(context).pays[item.cash-1].nameAr),
           verticalSpace(16),
           ButtonWidget(
               isLoading: false,
@@ -143,6 +69,20 @@ class InvoiceItemWidget extends StatelessWidget {
           verticalSpace(4),
         ],
       ),
+    );
+  }
+
+  Text _itemTextWidget(String title, String value) {
+    return Text.rich(
+      textAlign: TextAlign.start,
+      TextSpan(children: [
+        TextSpan(
+            text: title,
+            style: TextStyles.font14GreyColor66Weight400
+                .copyWith(color: AppColors.greyColor66.withValues(alpha: .5))),
+        TextSpan(
+            text: " : $value ", style: TextStyles.font14GreyColor66Weight400),
+      ]),
     );
   }
 }

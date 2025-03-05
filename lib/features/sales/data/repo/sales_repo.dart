@@ -23,7 +23,7 @@ class SalesRepo {
   }
 
   Future<Either<Failure, CategoryProductsResponse>> getCategoryProducts(
-      int categoryId, int type, int page) async {
+      int categoryId, int? type, int page) async {
     try {
       return Right(
           await _salesService.getCategoryProducts(categoryId, type, page));
@@ -33,7 +33,7 @@ class SalesRepo {
   }
 
   Future<Either<Failure, SearchProductsResponse>> getSearchProducts(
-      String name, int type, int page) async {
+      String name, int? type, int page) async {
     try {
       return Right(await _salesService.getSearchProducts(name, type, page));
     } on ServerException catch (failure) {

@@ -129,7 +129,10 @@ class SettingScreen extends StatelessWidget {
                               text: "المرتبات",
                               image: ImageAsset.setting2_4Icon,
                               isBig: false,
-                              onTap: () {})),
+                              onTap: () {
+                                context.pushNamed(Routes.salaryScreen,
+                                    arguments: {"context": context});
+                              })),
                     ],
                   ),
                   verticalSpace(8),
@@ -191,28 +194,6 @@ class SettingScreen extends StatelessWidget {
                       horizontalSpace(13),
                       Expanded(
                           child: SettingItemWidget(
-                              text: "فواتير محصله",
-                              image: ImageAsset.setting2_9Icon,
-                              isBig: false,
-                              onTap: () {
-                                print(122);
-                              })),
-                    ],
-                  ),
-                  verticalSpace(8),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "فواتير غير محصله",
-                              image: ImageAsset.setting2_9Icon,
-                              isBig: false,
-                              onTap: () {
-                                print(122);
-                              })),
-                      horizontalSpace(13),
-                      Expanded(
-                          child: SettingItemWidget(
                               text: "ايصلات نقديه",
                               image: ImageAsset.setting2_10Icon,
                               isBig: false,
@@ -226,8 +207,8 @@ class SettingScreen extends StatelessWidget {
                     children: [
                       Expanded(
                           child: SettingItemWidget(
-                              text: "قائمه التحويلات",
-                              image: ImageAsset.setting2_11Icon,
+                              text: "طلبات الحجز",
+                              image: ImageAsset.setting2_12Icon,
                               isBig: false,
                               onTap: () {
                                 print(122);
@@ -235,8 +216,8 @@ class SettingScreen extends StatelessWidget {
                       horizontalSpace(13),
                       Expanded(
                           child: SettingItemWidget(
-                              text: "طلبات الحجز",
-                              image: ImageAsset.setting2_12Icon,
+                              text: "طلبات رد الحجز",
+                              image: ImageAsset.setting2_13Icon,
                               isBig: false,
                               onTap: () {
                                 print(122);
@@ -248,8 +229,8 @@ class SettingScreen extends StatelessWidget {
                     children: [
                       Expanded(
                           child: SettingItemWidget(
-                              text: "طلبات رد الحجز",
-                              image: ImageAsset.setting2_13Icon,
+                              text: "لائحه تصفير الرحلات",
+                              image: ImageAsset.setting2_14Icon,
                               isBig: false,
                               onTap: () {
                                 print(122);
@@ -257,21 +238,13 @@ class SettingScreen extends StatelessWidget {
                       horizontalSpace(13),
                       Expanded(
                           child: SettingItemWidget(
-                              text: "لائحه تصفير الرحلات",
-                              image: ImageAsset.setting2_14Icon,
-                              isBig: false,
+                              text: "تصفير رحله المندوب",
+                              image: ImageAsset.setting2_15Icon,
                               onTap: () {
                                 print(122);
                               })),
                     ],
                   ),
-                  verticalSpace(8),
-                  SettingItemWidget(
-                      text: "تصفير رحله المندوب",
-                      image: ImageAsset.setting2_15Icon,
-                      onTap: () {
-                        print(122);
-                      }),
                   verticalSpace(16),
                   Text(
                     "اعدادات الحساب",

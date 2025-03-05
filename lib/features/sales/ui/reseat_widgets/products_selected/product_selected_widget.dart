@@ -55,33 +55,29 @@ class ProductSelectedWidget extends StatelessWidget {
                       maxLines: 2,
                       style: TextStyles.font16GreyColor33Weight500,
                     ),
-
                     Row(
                       children: [
                         if (selectedProduct.product.discount == 0)
-                        Text(
-                         "${AppConstant.currency} ${selectedProduct.product.sellingPrice.toStringAsFixed(2)}",
-                          style: TextStyles.font14GreyColor66Weight400,
-                        ),
+                          Text(
+                            "${AppConstant.currency} ${selectedProduct.product.sellingPrice.toStringAsFixed(2)}",
+                            style: TextStyles.font14GreyColor66Weight400,
+                          ),
                         horizontalSpace(4),
                         if (selectedProduct.product.discount != 0)
                           Text(
-                            selectedProduct.product.sellingPrice.toStringAsFixed(2),
-                            style: TextStyles.font14GreyColor66Weight400.copyWith(
+                            selectedProduct.product.sellingPrice
+                                .toStringAsFixed(2),
+                            style:
+                                TextStyles.font14GreyColor66Weight400.copyWith(
                               decoration: TextDecoration.lineThrough,
                             ),
                           ),
                         horizontalSpace(4),
                         if (selectedProduct.product.discount != 0)
                           Text(
-                            "${AppConstant.currency}${AppConstant.getDiscountForProduct(
-                                selectedProduct.product.discountType,
-                                selectedProduct.product.sellingPrice,
-                                selectedProduct.product.discount)
-                                .toStringAsFixed(2)}",
-                            style: TextStyles.font14GreyColor66Weight400.copyWith(
-                              color: AppColors.greenColor
-                            ),
+                            "${AppConstant.currency}${AppConstant.getDiscountForProduct(selectedProduct.product.discountType, selectedProduct.product.sellingPrice, selectedProduct.product.discount).toStringAsFixed(2)}",
+                            style: TextStyles.font14GreyColor66Weight400
+                                .copyWith(color: AppColors.greenColor),
                           ),
                       ],
                     ),
@@ -159,8 +155,10 @@ class ProductSelectedWidget extends StatelessWidget {
                       ),
                       validator: (String? value) {
                         if (value != null &&
-                            (double.tryParse(value.toString()) ?? 0) >
-                                selectedProduct.product.quantity) {
+                            ((double.tryParse(value.toString()) ?? 0) >
+                                selectedProduct.product.quantity) &&
+                            SalesCubit.get(context).selectedOrderType.id ==
+                                AppConstant.orderTypes[0].id) {
                           return "notAvailable".tr();
                         }
                         return null;
