@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
@@ -8,20 +9,23 @@ import 'package:pos_system/core/widgets/button_widget.dart';
 import 'package:pos_system/features/add_request_resources/data/entities/resource_selected_product_class.dart';
 import 'package:pos_system/features/add_request_resources/data/entities/resource_type_class.dart';
 import 'package:pos_system/features/add_request_resources/logic/add_request_resources_cubit.dart';
+import 'package:pos_system/features/add_request_resources/ui/add_request_resources_widgets/add_resources_type/requested_quantity_text_field_widget.dart';
 import 'package:pos_system/features/add_request_resources/ui/add_request_resources_widgets/product_and_category_selected/add_request_resources_product_widget.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 
 class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
   final bool isSearch;
 
-  const AddRequestResourcesProductsAndSearchWidget({required this.isSearch, super.key});
+  const AddRequestResourcesProductsAndSearchWidget(
+      {required this.isSearch, super.key});
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
         padding: EdgeInsets.zero,
         shrinkWrap: true,
-        controller: AddRequestResourcesCubit.get(context).categoryProductsScrollController,
+        controller: AddRequestResourcesCubit.get(context)
+            .categoryProductsScrollController,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 13.w,
@@ -35,45 +39,54 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () async {
-                if (AddRequestResourcesCubit.get(context).selectedProductsIsContainProduct(
-                    ResourceSelectedProduct(
+              if (AddRequestResourcesCubit.get(context)
+                  .selectedProductsIsContainProduct(ResourceSelectedProduct(
+                      product: isSearch
+                          ? AddRequestResourcesCubit.get(context)
+                              .searchProducts[index]
+                          : AddRequestResourcesCubit.get(context)
+                              .products[index]))) {
+                ///item found remove it
+                ///
+                AddRequestResourcesCubit.get(context)
+                    .removeProductFromSelectedProducts(ResourceSelectedProduct(
                         product: isSearch
-                            ? AddRequestResourcesCubit.get(context).searchProducts[index]
-                            : AddRequestResourcesCubit.get(context).products[index]))) {
-                  ///item found remove it
-                  ///
-                  AddRequestResourcesCubit.get(context).removeProductFromSelectedProducts(
-                      ResourceSelectedProduct(
-                          product: isSearch
-                              ? AddRequestResourcesCubit.get(context).searchProducts[index]
-                              : AddRequestResourcesCubit.get(context).products[index]));
-                } else {
-                  ///item not found add it
-                  ///
-                  await _productSelectedDetailsWidget(
-                          context,
-                          isSearch
-                              ? AddRequestResourcesCubit.get(context).searchProducts[index]
-                              : AddRequestResourcesCubit.get(context).products[index],
-                      AddRequestResourcesCubit.get(context).selectedResourcesTypes)
-                      .then((value) {
-                    if (value != null) {
-                      AddRequestResourcesCubit.get(context)
-                          .addProductToSelectedProducts(value);
-                    }
-                  });
-                }
-
+                            ? AddRequestResourcesCubit.get(context)
+                                .searchProducts[index]
+                            : AddRequestResourcesCubit.get(context)
+                                .products[index]));
+              } else {
+                ///item not found add it
+                ///
+                await _productSelectedDetailsWidget(
+                        context,
+                        isSearch
+                            ? AddRequestResourcesCubit.get(context)
+                                .searchProducts[index]
+                            : AddRequestResourcesCubit.get(context)
+                                .products[index],
+                        AddRequestResourcesCubit.get(context)
+                            .selectedResourcesTypes)
+                    .then((value) {
+                  if (value != null) {
+                    AddRequestResourcesCubit.get(context)
+                        .addProductToSelectedProducts(value);
+                  }
+                });
+              }
             },
             child: AddRequestResourcesProductWidget(
                 product: isSearch
-                    ? AddRequestResourcesCubit.get(context).searchProducts[index]
+                    ? AddRequestResourcesCubit.get(context)
+                        .searchProducts[index]
                     : AddRequestResourcesCubit.get(context).products[index],
                 isSelected: AddRequestResourcesCubit.get(context)
                     .selectedProductsIsContainProduct(ResourceSelectedProduct(
                         product: isSearch
-                            ? AddRequestResourcesCubit.get(context).searchProducts[index]
-                            : AddRequestResourcesCubit.get(context).products[index]))),
+                            ? AddRequestResourcesCubit.get(context)
+                                .searchProducts[index]
+                            : AddRequestResourcesCubit.get(context)
+                                .products[index]))),
           );
         });
   }
@@ -82,6 +95,8 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
       BuildContext context,
       Product product,
       ResourceTypeClass selectedResourceType) async {
+    TextEditingController selectRequestingQuantity = TextEditingController();
+    GlobalKey<FormState> selectRequestingQuantityKey=GlobalKey();
     return await showModalBottomSheet<ResourceSelectedProduct>(
         context: context,
         enableDrag: true,
@@ -90,7 +105,6 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
         builder: (BuildContext context) {
-
           return StatefulBuilder(
             builder: (BuildContext context, setState) {
               return Container(
@@ -107,235 +121,63 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-
                         SizedBox(height: 20.h),
+                        Text(
+                          context.locale.languageCode == "ar"
+                              ? product.nameAr
+                              : product.nameEn,
+                          maxLines: 2,
+                          style: TextStyles.font18greyColor27Weight600,
+                        ),
+                        SizedBox(height: 40.h),
                         Row(
                           children: [
                             Expanded(
-                              child: Text(
-                                "عصير صان توب 200 ملي",
-                                maxLines: 2,
-                                style: TextStyles.font18greyColor27Weight600,
-                              ),
-                            ),
-                            horizontalSpace(5),
-                            Container(
-                              padding: EdgeInsets.all(10.r),
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                borderRadius: BorderRadius.circular(12.r),
-                                border: Border.all(
-                                    color: AppColors.mainColor, width: 1.6),
-                              ),
-                              child: Text(
-                                product.quantity.toStringAsFixed(1),
-                                maxLines: 1,
-                                style: TextStyles.font18greyColor27Weight600,
-                              ),
-                            ),
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "الرصيد المتاح",
+                                  style: TextStyles.font14greyColor62Weight400,
+                                ),
+                                verticalSpace(6),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    border: Border.all(
+                                        color: AppColors.greyColorDB),
+                                  ),
+                                  child: Text(
+                                    product.quantity.toStringAsFixed(2),
+                                    style:
+                                        TextStyles.font14BlackColor17Weight500,
+                                  ),
+                                ),
+                              ],
+                            )),
+                            horizontalSpace(20),
+                            Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "الكميه المطلوبة",
+                                  style: TextStyles.font14greyColor62Weight400,
+                                ),
+                                verticalSpace(6),
+
+                                Form(
+                                  key: selectRequestingQuantityKey,
+                                  child: RequestedQuantityTextFieldWidget(
+                                      selectRequestingQuantity:
+                                          selectRequestingQuantity),
+                                ),
+                              ],
+                            )),
                           ],
                         ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "ادخل الكميه المطلوبه",
-                          style: TextStyles.font14greyColor62Weight400,
-                        ),
-                        SizedBox(height: 30.h),
-                        // Center(
-                        //   child: SingleChildScrollView(
-                        //     scrollDirection: Axis.horizontal,
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       children: [
-                        //         ///increase counter
-                        //         GestureDetector(
-                        //           onTap: () {
-                        //             if (selectedIntOrDecimal == 1) {
-                        //               if (selectedOrderType.id ==
-                        //                   AppConstant.orderTypes[0].id) {
-                        //                 ///integer part
-                        //                 if (integerPart <
-                        //                     product.quantity.toInt()) {
-                        //                   integerPart++;
-                        //                 }
-                        //                 if (integerPart ==
-                        //                     product.quantity.toInt()) {
-                        //                   ///to change decimal to int count
-                        //                   if (decimalPart >
-                        //                       ((product.quantity -
-                        //                                   integerPart) *
-                        //                               product.unitValue)
-                        //                           .toInt()) {
-                        //                     decimalPart = ((product.quantity -
-                        //                                 integerPart) *
-                        //                             product.unitValue)
-                        //                         .toInt();
-                        //                   }
-                        //                 }
-                        //               } else {
-                        //                 integerPart++;
-                        //               }
-                        //             } else {
-                        //               ///decimal part
-                        //               if (integerPart ==
-                        //                   product.quantity.toInt()) {
-                        //                 if (decimalPart <
-                        //                     ((product.quantity - integerPart) *
-                        //                             product.unitValue)
-                        //                         .toInt()) {
-                        //                   decimalPart++;
-                        //                 }
-                        //               } else {
-                        //                 if (decimalPart <
-                        //                     product.unitValue - 1) {
-                        //                   decimalPart++;
-                        //                 } else if (decimalPart ==
-                        //                     product.unitValue - 1) {
-                        //                   decimalPart = 0;
-                        //                   integerPart++;
-                        //                 }
-                        //               }
-                        //             }
-                        //             setState(() {});
-                        //           },
-                        //           child: Container(
-                        //             height: 36.h,
-                        //             width: 36.w,
-                        //             decoration: BoxDecoration(
-                        //                 color: AppColors.whiteColor,
-                        //                 borderRadius:
-                        //                     BorderRadius.circular(8.r),
-                        //                 border: Border.all(
-                        //                     color: AppColors.greyColorDA,
-                        //                     width: 1)),
-                        //             child: Icon(
-                        //               Icons.add,
-                        //               color: AppColors.blackColor,
-                        //               size: 24.r,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         horizontalSpace(24),
-                        //
-                        //         ///decimal part
-                        //         GestureDetector(
-                        //           onTap: () {
-                        //             selectedIntOrDecimal = 2;
-                        //             setState(() {});
-                        //           },
-                        //           child: Container(
-                        //             height: 45.h,
-                        //             padding:
-                        //                 EdgeInsets.symmetric(horizontal: 12.w),
-                        //             alignment: Alignment.center,
-                        //             decoration: BoxDecoration(
-                        //               color: AppColors.whiteColor,
-                        //               borderRadius: BorderRadius.circular(8.r),
-                        //               border: Border.all(
-                        //                   color: AppColors.mainColor,
-                        //                   width: selectedIntOrDecimal == 2
-                        //                       ? 2
-                        //                       : 1),
-                        //             ),
-                        //             child: Text(
-                        //               decimalPart.toString(),
-                        //               maxLines: 1,
-                        //               style:
-                        //                   TextStyles.font18greyColor27Weight600,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         Text("\t.\t",
-                        //             style:
-                        //                 TextStyles.font48greyColor27Weight700),
-                        //
-                        //         ///integer part
-                        //         GestureDetector(
-                        //           onTap: () {
-                        //             selectedIntOrDecimal = 1;
-                        //             setState(() {});
-                        //           },
-                        //           child: Container(
-                        //             height: 45.h,
-                        //             padding:
-                        //                 EdgeInsets.symmetric(horizontal: 12.w),
-                        //             alignment: Alignment.center,
-                        //             decoration: BoxDecoration(
-                        //               color: AppColors.whiteColor,
-                        //               borderRadius: BorderRadius.circular(8.r),
-                        //               border: Border.all(
-                        //                   color: AppColors.mainColor,
-                        //                   width: selectedIntOrDecimal == 1
-                        //                       ? 2
-                        //                       : 1),
-                        //             ),
-                        //             child: Text(
-                        //               integerPart.toString(),
-                        //               maxLines: 1,
-                        //               style:
-                        //                   TextStyles.font18greyColor27Weight600,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         horizontalSpace(24),
-                        //
-                        //         ///decrease counter
-                        //         GestureDetector(
-                        //           onTap: () {
-                        //             if (selectedIntOrDecimal == 1) {
-                        //               ///integer part
-                        //               if (integerPart > 0) {
-                        //                 integerPart--;
-                        //               }
-                        //               if (integerPart == 0) {
-                        //                 if (decimalPart == 0 &&
-                        //                     ((product.quantity - integerPart) *
-                        //                                 product.unitValue)
-                        //                             .toInt() >
-                        //                         1) {
-                        //                   decimalPart = 1;
-                        //                 }
-                        //               }
-                        //             } else {
-                        //               ///decimal part
-                        //               if (integerPart == 0) {
-                        //                 if (decimalPart > 1) {
-                        //                   decimalPart--;
-                        //                 }
-                        //               } else {
-                        //                 if (decimalPart > 0) {
-                        //                   decimalPart--;
-                        //                 } else {
-                        //                   if (decimalPart == 0) {
-                        //                     decimalPart = product.unitValue - 1;
-                        //                     integerPart--;
-                        //                   }
-                        //                 }
-                        //               }
-                        //             }
-                        //             setState(() {});
-                        //           },
-                        //           child: Container(
-                        //             height: 36.h,
-                        //             width: 36.w,
-                        //             decoration: BoxDecoration(
-                        //                 color: AppColors.whiteColor,
-                        //                 borderRadius:
-                        //                     BorderRadius.circular(8.r),
-                        //                 border: Border.all(
-                        //                     color: AppColors.greyColorDA,
-                        //                     width: 1)),
-                        //             child: Icon(
-                        //               Icons.remove,
-                        //               color: AppColors.blackColor,
-                        //               size: 24.r,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                         SizedBox(height: 30.h),
                         ButtonWidget(
                             isLoading: false,
@@ -347,13 +189,16 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
                             backGroundColor: AppColors.mainColor,
                             borderColor: AppColors.mainColor,
                             onPressed: () {
-                              // Navigator.pop(
-                              //     context,
-                              //     SelectedProductClass(
-                              //       product: product,
-                              //       maxValueCounter: integerPart,
-                              //       minValueCounter: decimalPart,
-                              //     ));
+                              if(selectRequestingQuantityKey.currentState!.validate()){
+                                Navigator.pop(
+                                    context,
+                                    ResourceSelectedProduct(
+                                      product: product,
+                                      requestQuantity: double.tryParse(selectRequestingQuantity.text)??0,
+                                      yourQuantity: product.quantity,
+                                    ));
+                              }
+
                             }),
                         SizedBox(height: 12.h),
                         ButtonWidget(

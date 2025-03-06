@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
@@ -53,7 +55,8 @@ class InvoiceItemWidget extends StatelessWidget {
           verticalSpace(4),
           _itemTextWidget("خصم", "${item.extraDiscount}"),
           verticalSpace(4),
-          _itemTextWidget("طريقه الدفع ", SalesInvoiceCubit.get(context).pays[item.cash-1].nameAr),
+          _itemTextWidget("طريقه الدفع ",
+              SalesInvoiceCubit.get(context).pays[item.cash - 1].nameAr),
           verticalSpace(16),
           ButtonWidget(
               isLoading: false,
@@ -64,7 +67,8 @@ class InvoiceItemWidget extends StatelessWidget {
               borderColor: AppColors.mainColor,
               textStyle: TextStyles.font16WhiteColorWeight500,
               onPressed: () {
-                // AddCustomerCubit.get(context).clearAddCustomerData();
+                context.pushNamed(Routes.electronicInvoiceScreen,
+                    arguments: {"invoiceId": item.id});
               }),
           verticalSpace(4),
         ],

@@ -47,7 +47,7 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
         );
       case 3:
         return BlocProvider(
-          create: (_) => AddRequestResourcesCubit(getIt(), getIt(),getIt())..getCategoriesFromHere(),
+          create: (_) => AddRequestResourcesCubit(getIt(), getIt())..getCategoriesFromHere(),
           child: AddRequestResourcesScreen(),
         );
       default:

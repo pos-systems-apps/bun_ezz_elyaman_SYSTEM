@@ -18,11 +18,14 @@ class SplashService {
   SplashService({required this.apiConsumer});
 
   Future<UsersResponseModel> getUsers(String parameter) async {
+
     final response =
         await apiConsumer.get(SplashApiEndPoints.getUsersUrl(parameter), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return UsersResponseModel.fromJson(jsonDecode(response.body));
     } else {
@@ -37,6 +40,7 @@ class SplashService {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
+
     if (response.statusCode == StatusCode.ok) {
       return BankAccountsResponseModel.fromJson(jsonDecode(response.body));
     } else {

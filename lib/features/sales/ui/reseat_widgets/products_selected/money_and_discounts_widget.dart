@@ -15,6 +15,7 @@ import 'package:pos_system/features/sales/data/entities/selected_product_class.d
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/logic/sales_state.dart';
 import 'package:pos_system/features/sales/ui/reseat_widgets/sales_money_text_field_widget.dart';
+import 'package:pos_system/features/splash/data/models/pay_class.dart';
 
 class MoneyAndDiscountsWidget extends StatelessWidget {
   const MoneyAndDiscountsWidget({super.key});
@@ -114,7 +115,8 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                   verticalSpace(16),
                   _moneyWidget("خصم اضافي",
                       "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getExtraDiscount(SalesCubit.get(context).selectedPercentType?.id, SalesCubit.get(context).percentController.text))}"),
-                 ///stop value tax
+
+                  ///stop value tax
                   // verticalSpace(16),
                   // _moneyWidget("ضريبه القيمه المضافه",
                   //     "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getValueTax(SalesCubit.get(context).selectedPercentType?.id, SalesCubit.get(context).percentController.text))}"),
@@ -166,11 +168,15 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
               return current is OnChangePaySelectState;
             },
             builder: (context, state) {
+              List<PayClass> selectedItems =
+                  SalesCubit.get(context).selectedOrderType.id == 7
+                      ? SalesCubit.get(context)
+                          .pays
+                          .where((item) => item.id == 3)
+                          .toList()
+                      : SalesCubit.get(context).pays;
               return Column(
-                children: SalesCubit.get(context)
-                    .pays
-                    .where((element) => (element.id == 3 &&
-                        SalesCubit.get(context).selectedOrderType.id == 7))
+                children: selectedItems
                     .map((item) => GestureDetector(
                           onTap: () {
                             SalesCubit.get(context).changeSelectedPay(item);

@@ -50,7 +50,7 @@ class AddLeaveRequestScreen extends StatelessWidget {
                   flex: 1,
                 ),
                 Text(
-                  "انشاء طلب",
+                  "انشاء طلب اجازة",
                   style: TextStyles.font20BlueColorA4Weight600,
                 ),
                 Spacer(

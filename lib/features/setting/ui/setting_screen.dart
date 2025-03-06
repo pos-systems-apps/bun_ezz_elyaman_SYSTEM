@@ -211,7 +211,7 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_12Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.requestResourcesInvoicesScreen);
                               })),
                       horizontalSpace(13),
                       Expanded(
@@ -220,31 +220,31 @@ class SettingScreen extends StatelessWidget {
                               image: ImageAsset.setting2_13Icon,
                               isBig: false,
                               onTap: () {
-                                print(122);
+                                context.pushNamed(Routes.returnResourcesInvoicesScreen);
                               })),
                     ],
                   ),
-                  verticalSpace(8),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "لائحه تصفير الرحلات",
-                              image: ImageAsset.setting2_14Icon,
-                              isBig: false,
-                              onTap: () {
-                                print(122);
-                              })),
-                      horizontalSpace(13),
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "تصفير رحله المندوب",
-                              image: ImageAsset.setting2_15Icon,
-                              onTap: () {
-                                print(122);
-                              })),
-                    ],
-                  ),
+                  // verticalSpace(8),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //         child: SettingItemWidget(
+                  //             text: "لائحه تصفير الرحلات",
+                  //             image: ImageAsset.setting2_14Icon,
+                  //             isBig: false,
+                  //             onTap: () {
+                  //               print(122);
+                  //             })),
+                  //     horizontalSpace(13),
+                  //     Expanded(
+                  //         child: SettingItemWidget(
+                  //             text: "تصفير رحله المندوب",
+                  //             image: ImageAsset.setting2_15Icon,
+                  //             onTap: () {
+                  //               print(122);
+                  //             })),
+                  //   ],
+                  // ),
                   verticalSpace(16),
                   Text(
                     "اعدادات الحساب",

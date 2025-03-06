@@ -18,71 +18,73 @@ class CreateVisitBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Form(
-        key: CreateVisitCubit.get(context).visitKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CreateVisitSearchUserWidget(),
-            verticalSpace(16),
-            CreateVisitNotesTextFieldWidget(),
-            verticalSpace(36),
-            Row(
-              children: [
-                Expanded(
-                  child: ButtonWidget(
-                      isLoading: false,
-                      buttonHeight: 56.h,
-                      buttonText: "الغاء",
-                      borderRadius: 4.r,
-                      backGroundColor: AppColors.whiteColor,
-                      borderColor: AppColors.mainColor,
-                      textStyle: TextStyles.font16MainColorWeight500,
-                      onPressed: () {
+    return Expanded(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Form(
+          key: CreateVisitCubit.get(context).visitKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CreateVisitSearchUserWidget(),
+              verticalSpace(16),
+              CreateVisitNotesTextFieldWidget(),
+              verticalSpace(36),
+              Row(
+                children: [
+                  Expanded(
+                    child: ButtonWidget(
+                        isLoading: false,
+                        buttonHeight: 56.h,
+                        buttonText: "الغاء",
+                        borderRadius: 4.r,
+                        backGroundColor: AppColors.whiteColor,
+                        borderColor: AppColors.mainColor,
+                        textStyle: TextStyles.font16MainColorWeight500,
+                        onPressed: () {
+                          CreateVisitCubit.get(context).clearSelectedData();
+                        }),
+                  ),
+                  horizontalSpace(20),
+                  BlocConsumer<CreateVisitCubit, CreateVisitState>(
+                    buildWhen: (previous, current) {
+                      return current is OnCreateVisitLoadingState ||
+                          current is OnCreateVisitSuccessState ||
+                          current is OnCreateVisitErrorState ||
+                          current is OnCreateVisitCatchErrorState;
+                    },
+                    listener: (context, state) {
+                      if (state is OnCreateVisitSuccessState) {
+                        ErrorAlertDialog.getDialog(context, "تم انشاء زياره");
                         CreateVisitCubit.get(context).clearSelectedData();
-                      }),
-                ),
-                horizontalSpace(20),
-                BlocConsumer<CreateVisitCubit, CreateVisitState>(
-                  buildWhen: (previous, current) {
-                    return current is OnCreateVisitLoadingState ||
-                        current is OnCreateVisitSuccessState ||
-                        current is OnCreateVisitErrorState ||
-                        current is OnCreateVisitCatchErrorState;
-                  },
-                  listener: (context, state) {
-                    if (state is OnCreateVisitSuccessState) {
-                      ErrorAlertDialog.getDialog(context, "تم انشاء زياره");
-                      CreateVisitCubit.get(context).clearSelectedData();
-                    } else if (state is OnCreateVisitErrorState) {
-                      ErrorAlertDialog.getDialog(
-                          context, "حدث خطآ ما حاول مره اخري");
-                    } else if (state is OnCreateVisitCatchErrorState) {
-                      ErrorAlertDialog.getDialog(
-                          context, "حدث خطآ ما حاول مره اخري");
-                    }
-                  },
-                  builder: (context, state) {
-                    return Expanded(
-                      child: ButtonWidget(
-                          isLoading: state is OnCreateVisitLoadingState,
-                          buttonHeight: 56.h,
-                          buttonText: "اضافه زياره",
-                          borderRadius: 4.r,
-                          backGroundColor: AppColors.mainColor,
-                          borderColor: AppColors.mainColor,
-                          textStyle: TextStyles.font16WhiteColorWeight500,
-                          onPressed: () {
-                            validateCreateVisit(context);
-                          }),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                      } else if (state is OnCreateVisitErrorState) {
+                        ErrorAlertDialog.getDialog(
+                            context, "حدث خطآ ما حاول مره اخري");
+                      } else if (state is OnCreateVisitCatchErrorState) {
+                        ErrorAlertDialog.getDialog(
+                            context, "حدث خطآ ما حاول مره اخري");
+                      }
+                    },
+                    builder: (context, state) {
+                      return Expanded(
+                        child: ButtonWidget(
+                            isLoading: state is OnCreateVisitLoadingState,
+                            buttonHeight: 56.h,
+                            buttonText: "اضافه زياره",
+                            borderRadius: 4.r,
+                            backGroundColor: AppColors.mainColor,
+                            borderColor: AppColors.mainColor,
+                            textStyle: TextStyles.font16WhiteColorWeight500,
+                            onPressed: () {
+                              validateCreateVisit(context);
+                            }),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

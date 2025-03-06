@@ -1,12 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
+import 'package:pos_system/features/cash_invoice/data/models/cash_invoices_response_model.dart';
+import 'package:intl/intl.dart' as intl;
 
 class CashInvoiceItemWidget extends StatelessWidget {
-  const CashInvoiceItemWidget({super.key});
+  final CashInvoice item;
+
+  const CashInvoiceItemWidget({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,69 +32,16 @@ class CashInvoiceItemWidget extends StatelessWidget {
                 style: TextStyles.font16MainColorWeight500),
           ),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "رقم الفاتوره",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": 7458ا",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("رقم الفاتوره", " ${item.id}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "التاريخ",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": 27 نوفبير 2025  12:55م",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("التاريخ",
+              " ${intl.DateFormat("d MMMM yyyy h:mm:ss a", context.locale.languageCode).format(DateTime.parse(item.createdAt).toLocal())}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "سم البائع",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": شاوثتت", style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("اجمالي الفاتوره", " ${item.price}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "اسم العميل",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: " : شاوثي",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
+          _itemTextWidget("اسم المندوب", " ${item.sellerName}"),
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "السعر",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: " : 1234", style: TextStyles.font14GreyColor66Weight400),
-            ]),
-          ),
-
+          _itemTextWidget("اسم العميل", " ${item.customerName}"),
           verticalSpace(16),
           ButtonWidget(
               isLoading: false,
@@ -105,6 +57,20 @@ class CashInvoiceItemWidget extends StatelessWidget {
           verticalSpace(4),
         ],
       ),
+    );
+  }
+
+  Text _itemTextWidget(String title, String value) {
+    return Text.rich(
+      textAlign: TextAlign.start,
+      TextSpan(children: [
+        TextSpan(
+            text: title,
+            style: TextStyles.font14GreyColor66Weight400
+                .copyWith(color: AppColors.greyColor66.withValues(alpha: .5))),
+        TextSpan(
+            text: " : $value ", style: TextStyles.font14GreyColor66Weight400),
+      ]),
     );
   }
 }

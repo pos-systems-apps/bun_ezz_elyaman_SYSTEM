@@ -6,7 +6,9 @@ class Routes{
   static const reseatScreen = "/ReseatScreen";
   static const settingScreen = "/SettingScreen";
   static const electronicInvoiceScreen = "/ElectronicInvoiceScreen";
+  static const electronicResourcesInvoicesScreen = "/ElectronicResourcesInvoicesScreen";
   // static const printInvoiceScreen = "/PrintInvoiceScreen";
+
   static const createVisitScreen = "/CreateVisitScreen";
   static const customersScreen = "/CustomersScreen";
   static const addCustomerScreen = "/AddCustomerScreen";
@@ -15,6 +17,8 @@ class Routes{
   static const fundListScreen = "/FundListScreen";
   static const visitsCarriedOutScreen = "/VisitsCarriedOutScreen";
   static const salesInvoiceScreen = "/SalesInvoiceScreen";
+  static const requestResourcesInvoicesScreen = "/RequestResourcesInvoicesScreen";
+  static const returnResourcesInvoicesScreen = "/ReturnResourcesInvoicesScreen";
   static const returnInvoiceScreen = "/ReturnInvoiceScreen";
   static const myRequestsScreen = "/MyRequestsScreen";
   static const addMyRequestScreen = "/AddMyRequestScreen";

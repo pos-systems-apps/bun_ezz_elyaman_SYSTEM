@@ -5,6 +5,7 @@ class ImageAsset {
 
 ///animation
   static const String collectionDoneAnimation = 'assets/animation/confirm_collection_animation.json';
+  static const String requestResourceDoneAnimation = 'assets/animation/request_resources_animation.json';
   static const String loadingAnimation = 'assets/animation/loading_animation.json';
   static const String notFoundAnimation = 'assets/animation/not_found_animation.json';
 

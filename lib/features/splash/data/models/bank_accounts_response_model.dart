@@ -1,19 +1,13 @@
 class BankAccountsResponseModel {
-  int total;
-  int limit;
-
   List<AccountsResponseData> accounts;
 
   BankAccountsResponseModel({
-    required this.total,
-    required this.limit,
+
     required this.accounts,
   });
 
   factory BankAccountsResponseModel.fromJson(Map<String, dynamic> json) =>
       BankAccountsResponseModel(
-          total: json['total'],
-          limit: json['limit'],
           accounts: List<AccountsResponseData>.from(json['accounts']
               .map((item) => AccountsResponseData.fromJson(item))));
 }

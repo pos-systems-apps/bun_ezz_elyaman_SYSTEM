@@ -1,0 +1,2 @@
+/Users/ahmedkhattab/programming/projects/pos_system/android/app/.cxx/RelWithDebInfo/6o2b4h44/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/ahmedkhattab/programming/projects/pos_system/android/app/.cxx/RelWithDebInfo/6o2b4h44/armeabi-v7a/CMakeFiles/rebuild_cache.dir

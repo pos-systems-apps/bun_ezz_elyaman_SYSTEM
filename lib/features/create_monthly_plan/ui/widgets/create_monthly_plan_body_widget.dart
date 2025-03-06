@@ -19,73 +19,75 @@ class CreateMonthlyPlanBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Form(
-        key: CreateMonthlyPlanCubit.get(context).monthlyKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CreateMonthlyPlanSearchUserWidget(),
-            verticalSpace(16),
-            CreateMonthlyPlanSelectDateWidget(),
-            verticalSpace(16),
-            CreateMonthlyPlanNotesTextFieldWidget(),
-            verticalSpace(36),
-            Row(
-              children: [
-                Expanded(
-                  child: ButtonWidget(
-                      isLoading: false,
-                      buttonHeight: 56.h,
-                      buttonText: "الغاء",
-                      borderRadius: 4.r,
-                      backGroundColor: AppColors.whiteColor,
-                      borderColor: AppColors.mainColor,
-                      textStyle: TextStyles.font16MainColorWeight500,
-                      onPressed: () {
+    return Expanded(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Form(
+          key: CreateMonthlyPlanCubit.get(context).monthlyKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CreateMonthlyPlanSearchUserWidget(),
+              verticalSpace(16),
+              CreateMonthlyPlanSelectDateWidget(),
+              verticalSpace(16),
+              CreateMonthlyPlanNotesTextFieldWidget(),
+              verticalSpace(36),
+              Row(
+                children: [
+                  Expanded(
+                    child: ButtonWidget(
+                        isLoading: false,
+                        buttonHeight: 56.h,
+                        buttonText: "الغاء",
+                        borderRadius: 4.r,
+                        backGroundColor: AppColors.whiteColor,
+                        borderColor: AppColors.mainColor,
+                        textStyle: TextStyles.font16MainColorWeight500,
+                        onPressed: () {
+                          CreateMonthlyPlanCubit.get(context).clearSelectedData();
+                        }),
+                  ),
+                  horizontalSpace(20),
+                  BlocConsumer<CreateMonthlyPlanCubit, CreateMonthlyPlanState>(
+                    buildWhen: (previous, current) {
+                      return current is OnCreateMonthlyLoadingState ||
+                          current is OnCreateMonthlySuccessState ||
+                          current is OnCreateMonthlyErrorState ||
+                          current is OnCreateMonthlyCatchErrorState;
+                    },
+                    listener: (context, state) {
+                      if (state is OnCreateMonthlySuccessState) {
+                        ErrorAlertDialog.getDialog(context, "تم انشاء مخطط شهري");
                         CreateMonthlyPlanCubit.get(context).clearSelectedData();
-                      }),
-                ),
-                horizontalSpace(20),
-                BlocConsumer<CreateMonthlyPlanCubit, CreateMonthlyPlanState>(
-                  buildWhen: (previous, current) {
-                    return current is OnCreateMonthlyLoadingState ||
-                        current is OnCreateMonthlySuccessState ||
-                        current is OnCreateMonthlyErrorState ||
-                        current is OnCreateMonthlyCatchErrorState;
-                  },
-                  listener: (context, state) {
-                    if (state is OnCreateMonthlySuccessState) {
-                      ErrorAlertDialog.getDialog(context, "تم انشاء زياره");
-                      CreateMonthlyPlanCubit.get(context).clearSelectedData();
-                    } else if (state is OnCreateMonthlyErrorState) {
-                      ErrorAlertDialog.getDialog(
-                          context, "حدث خطآ ما حاول مره اخري");
-                    } else if (state is OnCreateMonthlyCatchErrorState) {
-                      ErrorAlertDialog.getDialog(
-                          context, "حدث خطآ ما حاول مره اخري");
-                    }
-                  },
-                  builder: (context, state) {
-                    return Expanded(
-                      child: ButtonWidget(
-                          isLoading: state is OnCreateMonthlyLoadingState,
-                          buttonHeight: 56.h,
-                          buttonText: "اضافه زياره",
-                          borderRadius: 4.r,
-                          backGroundColor: AppColors.mainColor,
-                          borderColor: AppColors.mainColor,
-                          textStyle: TextStyles.font16WhiteColorWeight500,
-                          onPressed: () {
-                            validateCreateMonthlyPlan(context);
-                          }),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                      } else if (state is OnCreateMonthlyErrorState) {
+                        ErrorAlertDialog.getDialog(
+                            context, "حدث خطآ ما حاول مره اخري");
+                      } else if (state is OnCreateMonthlyCatchErrorState) {
+                        ErrorAlertDialog.getDialog(
+                            context, "حدث خطآ ما حاول مره اخري");
+                      }
+                    },
+                    builder: (context, state) {
+                      return Expanded(
+                        child: ButtonWidget(
+                            isLoading: state is OnCreateMonthlyLoadingState,
+                            buttonHeight: 56.h,
+                            buttonText: "اضافه زياره",
+                            borderRadius: 4.r,
+                            backGroundColor: AppColors.mainColor,
+                            borderColor: AppColors.mainColor,
+                            textStyle: TextStyles.font16WhiteColorWeight500,
+                            onPressed: () {
+                              validateCreateMonthlyPlan(context);
+                            }),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

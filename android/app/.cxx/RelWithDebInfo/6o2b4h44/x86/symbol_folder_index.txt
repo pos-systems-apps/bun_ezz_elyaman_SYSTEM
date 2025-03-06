@@ -1,0 +1,1 @@
+/Users/ahmedkhattab/programming/projects/pos_system/build/app/intermediates/cxx/RelWithDebInfo/6o2b4h44/obj/x86

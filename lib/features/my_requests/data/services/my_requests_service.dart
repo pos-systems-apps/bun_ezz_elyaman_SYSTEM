@@ -21,8 +21,6 @@ class MyRequestsService {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return AllRequestsResponse.fromJson(jsonDecode(response.body));
     } else {
@@ -30,30 +28,4 @@ class MyRequestsService {
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
     }
   }
-
-  // Future<SuccessResponseModel> createOrder(CreateOrderRequest parameter) async {
-  //   final response = await apiConsumer.multiPost(
-  //       MyRequestsApiEndPoints.createOrderURl,
-  //       CreateOrderRequest(
-  //         userId: parameter.userId,
-  //         img: parameter.img,
-  //         totalTax: parameter.totalTax,
-  //         extraDiscount: parameter.extraDiscount,
-  //         collectedCash: parameter.collectedCash,
-  //         orderType: parameter.orderType,
-  //         finalOrderAmount: parameter.finalOrderAmount,
-  //         cash: parameter.cash,
-  //         carts: parameter.carts,
-  //       ).toJson(),
-  //       {
-  //         ConstantKeys.appAuthorization:
-  //             "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-  //       });
-  //   if (response.statusCode == StatusCode.ok) {
-  //     return SuccessResponseModel.fromJson(jsonDecode(response.body));
-  //   } else {
-  //     throw ServerException(
-  //         serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
-  //   }
-  // }
 }

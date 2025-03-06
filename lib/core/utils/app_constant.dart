@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -45,7 +44,6 @@ class AppConstant {
     required String shabakaNew,
     required String agelNew,
   }) async {
-    print("setAppConstantData");
     baseUrl = basUrl;
     currency = currencyNew;
     shopLogo = shopLogoNew;
@@ -60,7 +58,6 @@ class AppConstant {
     cash = cashNew;
     shabaka = shabakaNew;
     agel = agelNew;
-    print("baseUrl ${baseUrl}");
     pays = [
       PayClass(id: 1, nameAr: "كاش", nameEn: "cash", isShown: getCash() == "1"),
       PayClass(
@@ -137,21 +134,22 @@ class AppConstant {
   }
 
   List<PayClass> pays = [];
+
+  ///dont change this
   static List<UnitMeasure> measureUnits = [
     UnitMeasure(id: 1, nameAr: "كبري", nameEn: 'Big'),
     UnitMeasure(id: 0, nameAr: 'صغري', nameEn: 'Small'),
   ];
 
   static List<OrderTypeClass> orderTypes = [
-    OrderTypeClass(id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales invoice"),
-    OrderTypeClass(id: 7, nameAr: "فاتورة مرتجعات ", nameEn: "Return invoice"),
+    OrderTypeClass(id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales print_invoice"),
+    OrderTypeClass(id: 7, nameAr: "فاتورة مرتجعات ", nameEn: "Return print_invoice"),
   ];
 
   static List<ResourceTypeClass> resourcesTypes = [
     ResourceTypeClass(id: 4, nameAr: "طلب توريد", nameEn: "Supply request"),
     ResourceTypeClass(id: 7, nameAr: "رد توريد", nameEn: "Supply reply"),
   ];
-
 
   static List<PercentTypesClass> percentTypes = [
     PercentTypesClass(id: 1, nameAr: "كمية", nameEn: "Amount"),
@@ -179,8 +177,6 @@ class AppConstant {
     }
   }
 
-
-
   static String confirmRoundTo2Numbers(double number) {
     return number.toStringAsFixed(2);
   }
@@ -199,6 +195,7 @@ class AppConstant {
       throw "Could not launch $url";
     }
   }
+
 // static String getMonthName(int monthNumber) {
 //    if (monthNumber < 1 || monthNumber > 12) {
 //      return 'Invalid month';

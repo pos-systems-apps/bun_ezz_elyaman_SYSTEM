@@ -1,33 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pos_system/config/routes/routes.dart';
-import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
-import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/features/add_request_resources/data/entities/resource_selected_product_class.dart';
 import 'package:pos_system/features/add_request_resources/data/entities/resource_type_class.dart';
+import 'package:pos_system/features/add_request_resources/data/models/create_request_resources_request.dart';
 import 'package:pos_system/features/add_request_resources/data/repo/add_request_resources_repo.dart';
 import 'package:pos_system/features/add_request_resources/logic/add_request_resources_state.dart';
-import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
-import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
-import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
-import 'package:pos_system/features/sales/data/models/create_order_request.dart';
 import 'package:pos_system/features/sales/data/repo/sales_repo.dart';
-import 'package:pos_system/features/splash/data/models/pay_class.dart';
-import 'package:pos_system/features/splash/data/models/users_response_model.dart';
-import 'package:pos_system/features/splash/data/repo/splash_repo.dart';
 
 class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
   final SalesRepo _salesRepo;
   final AddRequestResourcesRepo _addRequestResourcesRepo;
-  final SplashRepo _splashRepo;
 
-  AddRequestResourcesCubit(
-      this._salesRepo, this._splashRepo, this._addRequestResourcesRepo)
+  AddRequestResourcesCubit(this._salesRepo, this._addRequestResourcesRepo)
       : super(InitialState());
 
   static List<ResourceTypeClass> resourcesTypes = AppConstant.resourcesTypes;
@@ -38,10 +26,9 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
     selectedResourcesTypes = value;
     getCategoriesFromHere();
     changeSelectedCategory(null);
-    // selectedProducts = [];
+    selectedProducts = [];
     emit(OnChangeResourcesTypeSelectState());
   }
-
 
   ///categories
 
@@ -117,6 +104,7 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
     scrollListenerGetCategoryProducts(categoryID);
     getCategoryProducts(categoryID);
   }
+
   //
   scrollListenerGetCategoryProducts(int categoryID) {
     categoryProductsScrollController.addListener(() {
@@ -133,8 +121,7 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
   getCategoryProducts(int categoryID) {
     emit(OnGetCategoryProductsLoadingState());
     _salesRepo
-        .getCategoryProducts(
-            categoryID, null, categoryProductsCurrentPage)
+        .getCategoryProducts(categoryID, null, categoryProductsCurrentPage)
         .then((value) {
       value.fold((l) {
         emit(OnGetCategoryProductsErrorState());
@@ -198,8 +185,6 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
     });
   }
 
-
-
   ///select product
   List<ResourceSelectedProduct> selectedProducts = [];
 
@@ -235,124 +220,32 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
     emit(OnChangeSelectedProductState());
   }
 
-  // TextEditingController searchUserController = TextEditingController();
-  //
-  // ///
-  // ///upload image
-  //
-  // String? selectedImagePath;
-  //
-  // uploadImage() async {
-  //   final ImagePicker picker = ImagePicker();
-  //   final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-  //   if (image != null) {
-  //     selectedImagePath = image.path;
-  //     emit(OnChangeSelectedImageState());
-  //   }
-  // }
-  //
-  // ///add extra discount
-  //
-  // ///pays
-  // List<PayClass> pays =
-  //     getIt<AppConstant>().pays.where((item) => item.isShown).toList();
-  //
-  // PayClass? selectedPay;
-  //
-  // changeSelectedPay(PayClass value) {
-  //   selectedPay = value;
-  //   emit(OnChangePaySelectState());
-  // }
-  //
-  // PercentTypesClass? selectedPercentType;
-  // TextEditingController percentController = TextEditingController();
-  //
-  // TextEditingController moneyController = TextEditingController();
-  //
-  // ///customers
-  // List<UserResponseData> users = [];
-  //
-  // getUsers() {
-  //   emit(OnGetUsersLoadingState());
-  //   _splashRepo.getUsers(searchUserController.text).then((value) {
-  //     value.fold((l) {
-  //       emit(OnGetUsersErrorState());
-  //     }, (r) {
-  //       users = r.userResponseData;
-  //       emit(OnGetUsersSuccessState());
-  //     });
-  //   }).catchError((error) {
-  //     emit(OnGetUsersCatchErrorState());
-  //   });
-  // }
-  //
-  // UserResponseData? selectedUser;
-  //
-  // onSelectUser(UserResponseData vale) {
-  //   searchUserController.text = vale.nameAr;
-  //   selectedUser = vale;
-  //   users.clear();
-  //   emit(OnSelectUserState());
-  // }
-  //
-  // /// CREATE ORDER
-  // createOrder(BuildContext context) {
-  //   emit(OnCreateOrderLoadingState());
-  //   _salesRepo
-  //       .createOrder(CreateOrderRequest(
-  //           userId: selectedUser!.id,
-  //           img: selectedImagePath!,
-  //           totalTax: 0,
-  //
-  //           ///stop value tax
-  //           // double.tryParse(
-  //           //         ReseatSelectedProducts(selectedProducts: selectedProducts)
-  //           //             .getValueTax(
-  //           //                 selectedPercentType?.id, percentController.text)
-  //           //             .toStringAsFixed(2)) ??
-  //           //     0,
-  //           extraDiscount: double.tryParse(
-  //                   ReseatSelectedProducts(selectedProducts: selectedProducts)
-  //                       .getExtraDiscount(
-  //                           selectedPercentType?.id, percentController.text)
-  //                       .toStringAsFixed(2)) ??
-  //               0,
-  //           collectedCash: double.tryParse(moneyController.text) ?? 0,
-  //           orderType: selectedOrderType.id,
-  //           finalOrderAmount: double.tryParse(ReseatSelectedProducts(
-  //                       selectedProducts: selectedProducts)
-  //                   .getTotal(selectedPercentType?.id, percentController.text)
-  //                   .toStringAsFixed(2)) ??
-  //               0,
-  //           cash: selectedPay!.id,
-  //           carts: selectedProducts.map((element) {
-  //             return Cart(
-  //                 id: element.product.id,
-  //                 quantity: element.minValueCounter == 0
-  //                     ? element.maxValueCounter.toDouble()
-  //                     : ((element.maxValueCounter * element.product.unitValue) +
-  //                             element.minValueCounter)
-  //                         .toDouble(),
-  //                 price: element.minValueCounter == 0
-  //                     ? element.product.sellingPrice
-  //                     : double.tryParse((element.product.sellingPrice /
-  //                                 element.product.unitValue)
-  //                             .toStringAsFixed(2)) ??
-  //                         0,
-  //                 unit: element.minValueCounter == 0 ? 1 : 0);
-  //           }).toList()))
-  //       .then((value) {
-  //     value.fold((l) {
-  //       emit(OnCreateOrderErrorState(message: l.message));
-  //     }, (r) {
-  //       // context.pushNamed(Routes.electronicInvoiceScreen,
-  //       //     arguments: {"orderId": r.orderId});
-  //       emit(OnCreateOrderSuccessState(orderId: r.orderId ?? 0));
-  //     });
-  //   }).catchError((error) {
-  //     emit(OnCreateOrderCatchErrorState(message: "error".tr()));
-  //   });
-  // }
+  /// add Request Resources
+  addRequestResources(BuildContext context) {
+    emit(OnAddResourcesLoadingState());
+    _addRequestResourcesRepo
+        .addRequestResources(CreateRequestResourcesRequest(
+            type: selectedResourcesTypes.id,
+            resourceItems: selectedProducts
+                .map((item) => ResourceItem(
+                    itemId: item.product.id,
+                    itemName: item.product.nameAr,
+                    price: item.product.sellingPrice,
+                    requestQuantity: item.requestQuantity,
+                    yourQuantity: item.yourQuantity))
+                .toList()))
+        .then((value) {
+      value.fold((l) {
+        emit(OnAddResourcesErrorState(message: l.message));
+      }, (r) {
+        // context.pushNamed(Routes.electronicInvoiceScreen,
+        //     arguments: {"orderId": r.orderId});
+        emit(OnAddResourcesSuccessState(orderId: r.id ?? 0));
+      });
+    }).catchError((error) {
+      emit(OnAddResourcesCatchErrorState(message: "error".tr()));
+    });
+  }
 
   static AddRequestResourcesCubit get(context) => BlocProvider.of(context);
 }

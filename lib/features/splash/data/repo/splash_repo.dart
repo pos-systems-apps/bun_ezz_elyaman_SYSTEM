@@ -22,6 +22,7 @@ class SplashRepo {
 
   Future<Either<Failure, BankAccountsResponseModel>> getBankAccounts() async {
     try {
+       print( _splashService.getBankAccounts());
       return Right(await _splashService.getBankAccounts());
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));

@@ -34,7 +34,8 @@ class CustomersBodyWidget extends StatelessWidget {
                     current is OnGetUsersCatchErrorState;
               },
               builder: (context, state) {
-                if (CustomersCubit.get(context).users.isEmpty) {
+                if (CustomersCubit.get(context).users.isEmpty &&
+                    state is OnGetUsersLoadingState) {
                   return CustomersShimmerWidget();
                 } else if (CustomersCubit.get(context).users.isEmpty &&
                     state is! OnGetUsersLoadingState) {
@@ -56,6 +57,9 @@ class CustomersBodyWidget extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: CustomersCubit.get(context).users.length,
                     separatorBuilder: (context, index) {
+                      return verticalSpace(16);
+                    },
+                    itemBuilder: (context, index) {
                       return Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 16.w, vertical: 16.h),
@@ -124,9 +128,6 @@ class CustomersBodyWidget extends StatelessWidget {
                           ],
                         ),
                       );
-                    },
-                    itemBuilder: (context, index) {
-                      return verticalSpace(16);
                     },
                   );
                 }

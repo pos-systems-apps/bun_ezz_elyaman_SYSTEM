@@ -56,7 +56,7 @@ class TransactionSectionItemWidget extends StatelessWidget {
           ),
           verticalSpace(4),
           if (item.active)
-            Text("تم الموافقه علي طلب الاجازه",
+            Text("تم الموافقه علي التحويل",
                 style: TextStyles.font14greenColor3EWeight600),
           if (item.active) verticalSpace(4),
           if (!item.active)

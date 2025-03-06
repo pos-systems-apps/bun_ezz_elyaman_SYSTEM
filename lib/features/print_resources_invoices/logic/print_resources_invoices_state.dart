@@ -1,0 +1,9 @@
+abstract class PrintResourcesInvoicesState {}
+
+class InitialState extends PrintResourcesInvoicesState {}
+
+
+class OnGetResourcesInvoiceDetailsLoadingState extends PrintResourcesInvoicesState {}
+class OnGetResourcesInvoiceDetailsErrorState extends PrintResourcesInvoicesState {}
+class OnGetResourcesInvoiceDetailsSuccessState extends PrintResourcesInvoicesState {}
+class OnGetResourcesInvoiceDetailsCatchErrorState extends PrintResourcesInvoicesState {}

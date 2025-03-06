@@ -10,12 +10,12 @@ class ResourceSelectedProductClass {
 
 class ResourceSelectedProduct {
   Product product;
-  double stock; //your data that you need
-  double quantity; // your items that you have
+  double requestQuantity; //your data that you need
+  double yourQuantity; // your items that you have
 
   ResourceSelectedProduct({
     required this.product,
-    this.stock = 0,
-    this.quantity = 0,
+    this.requestQuantity = 0,
+    this.yourQuantity = 0,
   });
 }

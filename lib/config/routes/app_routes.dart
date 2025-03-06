@@ -23,18 +23,24 @@ import 'package:pos_system/features/customers/logic/customers_cubit.dart';
 import 'package:pos_system/features/customers/ui/customers_screen.dart';
 import 'package:pos_system/features/fund_list/logic/fund_list_cubit.dart';
 import 'package:pos_system/features/fund_list/ui/fund_list_screen.dart';
-import 'package:pos_system/features/invoice/logic/invoice_cubit.dart';
-import 'package:pos_system/features/invoice/ui/electronic_invoice_screen.dart';
 import 'package:pos_system/features/leave_requests/logic/leave_requests_cubit.dart';
 import 'package:pos_system/features/leave_requests/ui/leave_requests_screen.dart';
 import 'package:pos_system/features/my_requests/logic/my_requests_cubit.dart';
 import 'package:pos_system/features/my_requests/ui/my_requests_screen.dart';
+import 'package:pos_system/features/print_invoice/logic/print_invoice_cubit.dart';
+import 'package:pos_system/features/print_invoice/ui/electronic_invoice_screen.dart';
+import 'package:pos_system/features/print_resources_invoices/logic/print_resources_invoices_cubit.dart';
+import 'package:pos_system/features/print_resources_invoices/ui/electronic_resources_invoices_screen.dart';
 import 'package:pos_system/features/recommendations_from_manager/logic/recommendations_from_manager_cubit.dart';
 import 'package:pos_system/features/recommendations_from_manager/ui/recommendations_from_manager_screen.dart';
+import 'package:pos_system/features/request_resources_invoices/logic/request_resources_invoices_cubit.dart';
+import 'package:pos_system/features/request_resources_invoices/ui/request_resources_invoices_screen.dart';
 import 'package:pos_system/features/required_visits_list/logic/required_visits_list_cubit.dart';
 import 'package:pos_system/features/required_visits_list/ui/required_visits_list_screen.dart';
 import 'package:pos_system/features/return_invoice/logic/return_invoice_cubit.dart';
 import 'package:pos_system/features/return_invoice/ui/return_invoice_screen.dart';
+import 'package:pos_system/features/return_resources_invoices/logic/return_resources_invoices_cubit.dart';
+import 'package:pos_system/features/return_resources_invoices/ui/return_resources_invoices_screen.dart';
 import 'package:pos_system/features/salary/logic/salary_cubit.dart';
 import 'package:pos_system/features/salary/ui/salary_screen.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
@@ -85,9 +91,16 @@ class RouteGenerator {
       case Routes.electronicInvoiceScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => InvoiceCubit(getIt())
+                  create: (_) => PrintInvoiceCubit(getIt())
                     ..getInvoiceDetails(args['invoiceId']),
                   child: ElectronicInvoiceScreen(),
+                ));
+      case Routes.electronicResourcesInvoicesScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => PrintResourcesInvoicesCubit(getIt())
+                    ..getInvoiceDetails(args['invoiceId']),
+                  child: ElectronicResourcesInvoicesScreen(),
                 ));
       case Routes.createVisitScreen:
         return MaterialPageRoute(
@@ -140,6 +153,20 @@ class RouteGenerator {
             builder: (_) => BlocProvider(
                   create: (_) => SalesInvoiceCubit(getIt())..getInvoices(),
                   child: SalesInvoiceScreen(),
+                ));
+      case Routes.requestResourcesInvoicesScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => RequestResourcesInvoicesCubit(getIt())
+                    ..getRequestResourcesInvoices(),
+                  child: RequestResourcesInvoicesScreen(),
+                ));
+      case Routes.returnResourcesInvoicesScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => ReturnResourcesInvoicesCubit(getIt())
+                    ..getRequestResourcesInvoices(),
+                  child: ReturnResourcesInvoicesScreen(),
                 ));
       case Routes.returnInvoiceScreen:
         return MaterialPageRoute(
@@ -196,7 +223,7 @@ class RouteGenerator {
       case Routes.cashInvoiceScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => CashInvoiceCubit(getIt()),
+                  create: (_) => CashInvoiceCubit(getIt())..getCashInvoice(),
                   child: CashInvoiceScreen(),
                 ));
       case Routes.createMonthlyPlanScreen:

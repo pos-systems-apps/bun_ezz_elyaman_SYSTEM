@@ -15,70 +15,72 @@ class AddMyRequestBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Form(
-        key: AddMyRequestCubit.get(context).addRequestKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AddMyRequestNotesTextFieldWidget(),
-            verticalSpace(36),
-            Row(
-              children: [
-                Expanded(
-                  child: ButtonWidget(
-                      isLoading: false,
-                      buttonHeight: 56.h,
-                      buttonText: "الغاء",
-                      borderRadius: 4.r,
-                      backGroundColor: AppColors.whiteColor,
-                      borderColor: AppColors.mainColor,
-                      textStyle: TextStyles.font16MainColorWeight500,
-                      onPressed: () {
+    return Expanded(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Form(
+          key: AddMyRequestCubit.get(context).addRequestKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AddMyRequestNotesTextFieldWidget(),
+              verticalSpace(36),
+              Row(
+                children: [
+                  Expanded(
+                    child: ButtonWidget(
+                        isLoading: false,
+                        buttonHeight: 56.h,
+                        buttonText: "الغاء",
+                        borderRadius: 4.r,
+                        backGroundColor: AppColors.whiteColor,
+                        borderColor: AppColors.mainColor,
+                        textStyle: TextStyles.font16MainColorWeight500,
+                        onPressed: () {
+                          AddMyRequestCubit.get(context).clearSelectedData();
+                        }),
+                  ),
+                  horizontalSpace(20),
+                  BlocConsumer<AddMyRequestCubit, AddMyRequestState>(
+                    buildWhen: (previous, current) {
+                      return current is OnAddMyRequestLoadingState ||
+                          current is OnAddMyRequestErrorState ||
+                          current is OnAddMyRequestCatchErrorState ||
+                          current is OnAddMyRequestSuccessState;
+                    },
+                    listener: (context, state) {
+                      if (state is OnAddMyRequestSuccessState) {
+                        ErrorAlertDialog.getDialog(context, "تم ارسال طلبك ",
+                            isPop: true);
                         AddMyRequestCubit.get(context).clearSelectedData();
-                      }),
-                ),
-                horizontalSpace(20),
-                BlocConsumer<AddMyRequestCubit, AddMyRequestState>(
-                  buildWhen: (previous, current) {
-                    return current is OnAddMyRequestLoadingState ||
-                        current is OnAddMyRequestErrorState ||
-                        current is OnAddMyRequestCatchErrorState ||
-                        current is OnAddMyRequestSuccessState;
-                  },
-                  listener: (context, state) {
-                    if (state is OnAddMyRequestSuccessState) {
-                      ErrorAlertDialog.getDialog(context, "تم ارسال طلبك ",
-                          isPop: true);
-                      AddMyRequestCubit.get(context).clearSelectedData();
-                    } else if (state is OnAddMyRequestErrorState) {
-                      ErrorAlertDialog.getDialog(
-                          context, "حدث خطآ ما حاول مره اخري");
-                    } else if (state is OnAddMyRequestCatchErrorState) {
-                      ErrorAlertDialog.getDialog(
-                          context, "حدث خطآ ما حاول مره اخري");
-                    }
-                  },
-                  builder: (context, state) {
-                    return Expanded(
-                      child: ButtonWidget(
-                          isLoading: state is OnAddMyRequestLoadingState,
-                          buttonHeight: 56.h,
-                          buttonText: "انشاء طلب",
-                          borderRadius: 4.r,
-                          backGroundColor: AppColors.mainColor,
-                          borderColor: AppColors.mainColor,
-                          textStyle: TextStyles.font16WhiteColorWeight500,
-                          onPressed: () {
-                            validateAddRequest(context);
-                          }),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                      } else if (state is OnAddMyRequestErrorState) {
+                        ErrorAlertDialog.getDialog(
+                            context, "حدث خطآ ما حاول مره اخري");
+                      } else if (state is OnAddMyRequestCatchErrorState) {
+                        ErrorAlertDialog.getDialog(
+                            context, "حدث خطآ ما حاول مره اخري");
+                      }
+                    },
+                    builder: (context, state) {
+                      return Expanded(
+                        child: ButtonWidget(
+                            isLoading: state is OnAddMyRequestLoadingState,
+                            buttonHeight: 56.h,
+                            buttonText: "انشاء طلب",
+                            borderRadius: 4.r,
+                            backGroundColor: AppColors.mainColor,
+                            borderColor: AppColors.mainColor,
+                            textStyle: TextStyles.font16WhiteColorWeight500,
+                            onPressed: () {
+                              validateAddRequest(context);
+                            }),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
