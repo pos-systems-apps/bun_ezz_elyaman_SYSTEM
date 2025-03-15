@@ -55,6 +55,14 @@
         <string>Iqbrandx uses your location to help you accurately select your order's delivery location and provide better service. For example, we use your location to ensure your orders are delivered to the correct address.</string>
    <key>NSLocationUsageDescription</key>
         <string>Iqbrandx uses your location to help you accurately select your order's delivery location and provide better service. For example, we use your location to ensure your orders are delivered to the correct address.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Iqbrandx uses your location to help you accurately select your order's delivery location and provide better service. For example, we use your location to ensure your orders are delivered to the correct address.</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+<string>This app uses Bluetooth to connect to a printer and a reset finger device.</string>
+ 	<key>NSBluetoothPeripheralUsageDescription</key>
+<string>This app requires Bluetooth to communicate with external devices for printing and reset functions.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>The Iqbrandx app utilizes your device's camera to provide essential features that enhance your experience and facilitate ease of use. The camera is primarily used to allow you to scan QR codes for faster access to information or services, upload photos for better customization of your profile or orders, and enable specific functionality such as capturing images for visual content. We ensure that any data collected via the camera is used solely for the intended purposes of improving the app's functionality and delivering a seamless, user-friendly experience. At Iqbrandx, your privacy is our priority, and we do not access or store your photos or camera data without your explicit consent. By granting access, you unlock advanced features that help make the app more personalized and efficient for your needs.</string>
 
 
 </dict>

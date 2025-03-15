@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '12.0'
+# platform :ios, '12.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -25,32 +25,20 @@ end
 
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
+flutter_ios_podfile_setup
+
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
 end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    
-    # Start of the permission-related settings
-    target.build_configurations.each do |config|
-      # You can enable the permissions needed here
-      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
-        '$(inherited)',
-        'PERMISSION_INTERNET=1',
-      ]
-      
-      # Minimum deployment target
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-      
-      # Enable arm64 for simulators
-      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'i386'
-      
-      # Add any other build settings here
-    end
   end
 end

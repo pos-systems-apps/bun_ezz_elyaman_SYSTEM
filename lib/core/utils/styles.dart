@@ -376,6 +376,12 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: 'Bahij',
   );
+  static TextStyle font14mainColorWeight400 = TextStyle(
+    fontSize: 14.sp,
+    color: AppColors.mainColor,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Bahij',
+  );
 
   ///
 

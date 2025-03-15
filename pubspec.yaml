@@ -60,8 +60,10 @@ dependencies:
   geocoding: ^3.0.0
   url_launcher: ^6.3.1
   intl: ^0.19.0
-
-
+  x_printer: ^0.0.7
+  widgets_to_image: ^1.0.0
+  permission_handler: ^11.4.0
+  app_settings: ^5.2.0
 
   animated_bottom_navigation_bar:
     path: packages/animated-bottom-navigation-bar-flutter-master

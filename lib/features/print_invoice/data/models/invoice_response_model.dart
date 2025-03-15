@@ -7,7 +7,7 @@ class InvoiceResponseModel {
   factory InvoiceResponseModel.fromJson(Map<String, dynamic> json) {
     return InvoiceResponseModel(
       success: json['success'],
-      invoice: Invoice.fromJson(json['print_invoice']),
+      invoice: Invoice.fromJson(json['invoice']),
     );
   }
 }
