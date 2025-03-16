@@ -294,7 +294,7 @@ class SalesCubit extends Cubit<SalesState> {
     _salesRepo
         .createOrder(CreateOrderRequest(
             userId: selectedUser!.id,
-            img: selectedImagePath!,
+            img: selectedImagePath,
             totalTax: 0,
 
             ///stop value tax

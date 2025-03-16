@@ -4,8 +4,8 @@
 // import 'package:pos_system/core/widgets/horizontal_dashed_widget.dart';
 // import 'package:shimmer/shimmer.dart';
 //
-// class InvoiceShimmerWidget extends StatelessWidget {
-//   const InvoiceShimmerWidget({super.key});
+// class CashInvoiceShimmerWidget extends StatelessWidget {
+//   const CashInvoiceShimmerWidget({super.key});
 //
 //   @override
 //   Widget build(BuildContext context) {

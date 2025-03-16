@@ -26,6 +26,8 @@ import 'package:pos_system/features/fund_list/data/repo/fund_list_repo.dart';
 import 'package:pos_system/features/fund_list/data/services/fund_list_service.dart';
 import 'package:pos_system/features/my_requests/data/repo/my_requests_repo.dart';
 import 'package:pos_system/features/my_requests/data/services/my_requests_service.dart';
+import 'package:pos_system/features/print_cash_invoice/data/repo/print_cash_invoice_repo.dart';
+import 'package:pos_system/features/print_cash_invoice/data/services/print_cash_invoice_service.dart';
 import 'package:pos_system/features/print_invoice/data/repo/print_invoice_repo.dart';
 import 'package:pos_system/features/print_invoice/data/services/print_invoice_service.dart';
 import 'package:pos_system/features/print_resources_invoices/data/repo/print_resources_invoices_repo.dart';
@@ -91,6 +93,12 @@ class ServicesLocator {
         () => PrintInvoiceRepo(getIt()));
     getIt.registerFactory<PrintInvoiceService>(
         () => PrintInvoiceService(apiConsumer: getIt()));
+
+    ///print_cash_invoice
+    getIt.registerLazySingleton<PrintCashInvoiceRepo>(
+        () => PrintCashInvoiceRepo(getIt()));
+    getIt.registerFactory<PrintCashInvoiceService>(
+        () => PrintCashInvoiceService(apiConsumer: getIt()));
 
     ///print_Resources_InvoicesRepo
     getIt.registerLazySingleton<PrintResourcesInvoicesRepo>(

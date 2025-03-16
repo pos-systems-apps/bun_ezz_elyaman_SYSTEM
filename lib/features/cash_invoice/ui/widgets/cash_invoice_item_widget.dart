@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
+import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
@@ -52,7 +54,10 @@ class CashInvoiceItemWidget extends StatelessWidget {
               borderColor: AppColors.mainColor,
               textStyle: TextStyles.font16WhiteColorWeight500,
               onPressed: () {
-                // AddCustomerCubit.get(context).clearAddCustomerData();
+                context
+                    .pushNamed(Routes.electronicCashInvoiceScreen, arguments: {
+                  "instalmentID": item.id,
+                });
               }),
           verticalSpace(4),
         ],

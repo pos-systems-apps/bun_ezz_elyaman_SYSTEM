@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,8 +52,10 @@ class UploadImageWidget extends StatelessWidget {
                           ),
                         ],
                       )
-                    : Image.asset(
-                        CollectionsCubit.get(context).selectedImagePath!,
+                    : Image.file(
+                        File(
+                          CollectionsCubit.get(context).selectedImagePath!,
+                        ),
                         fit: BoxFit.fitWidth,
                       ),
               ),

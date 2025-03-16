@@ -6,6 +6,7 @@ class Routes{
   static const reseatScreen = "/ReseatScreen";
   static const settingScreen = "/SettingScreen";
   static const electronicInvoiceScreen = "/ElectronicInvoiceScreen";
+  static const electronicCashInvoiceScreen = "/ElectronicCashInvoiceScreen";
   static const electronicResourcesInvoicesScreen = "/ElectronicResourcesInvoicesScreen";
   // static const printInvoiceScreen = "/PrintInvoiceScreen";
 

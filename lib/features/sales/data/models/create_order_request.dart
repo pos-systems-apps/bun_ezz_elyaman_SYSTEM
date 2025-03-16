@@ -1,6 +1,6 @@
 class CreateOrderRequest {
   int userId; // user
-  String img; //
+  String? img; //
   double totalTax; //total tax amount
   double extraDiscount; //extra total discount
   double collectedCash; // money that payed
@@ -23,7 +23,7 @@ class CreateOrderRequest {
 
   Map<String, dynamic> toJson() => {
         "user_id": userId,
-        "img": img,
+        if(img!=null)"img": img,
         "total_tax": totalTax,
         "extra_discount": extraDiscount,
         "collected_cash": collectedCash,

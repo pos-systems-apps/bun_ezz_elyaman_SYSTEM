@@ -9,12 +9,12 @@ import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
 import 'package:pos_system/core/widgets/horizontal_dashed_widget.dart';
+import 'package:pos_system/features/print_invoice/ui/widgets/invoice_shimmer_widget.dart';
+import 'package:pos_system/features/print_invoice/ui/widgets/money_title_widget_2.dart';
+import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_1.dart';
+import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_2.dart';
+import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_3.dart';
 import 'package:pos_system/features/print_resources_invoices/logic/print_resources_invoices_state.dart';
-import 'package:pos_system/features/print_resources_invoices/ui/widgets/invoice_shimmer_widget.dart';
-import 'package:pos_system/features/print_resources_invoices/ui/widgets/money_title_widget_2.dart';
-import 'package:pos_system/features/print_resources_invoices/ui/widgets/money_widget_1.dart';
-import 'package:pos_system/features/print_resources_invoices/ui/widgets/money_widget_2.dart';
-import 'package:pos_system/features/print_resources_invoices/ui/widgets/money_widget_3.dart';
 import 'package:pos_system/features/print_resources_invoices/logic/print_resources_invoices_cubit.dart';
 
 class ElectronicResourcesInvoicesBodyWidget extends StatelessWidget {

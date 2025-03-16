@@ -287,10 +287,10 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                       if (SalesCubit.get(context).selectedUser == null) {
                         ErrorAlertDialog.getDialog(context, "ادخل اسم عميل ");
                       } else {
-                        if (SalesCubit.get(context).selectedImagePath == null) {
-                          ErrorAlertDialog.getDialog(
-                              context, "قم برفع الصوره ");
-                        } else {
+                        // if (SalesCubit.get(context).selectedImagePath == null) {
+                        //   ErrorAlertDialog.getDialog(
+                        //       context, "قم برفع الصوره ");
+                        // } else {
                           if (SalesCubit.get(context).selectedPay == null) {
                             ErrorAlertDialog.getDialog(
                                 context, "قم باختيار طريقة الدفع ");
@@ -310,7 +310,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                           }
                         }
                       }
-                    }
+                    // }
                   });
             },
           ),

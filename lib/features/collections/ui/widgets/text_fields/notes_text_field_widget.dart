@@ -39,10 +39,10 @@ class NotesTextFieldWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.r)),
       keyboardType: TextInputType.text,
       validator: (String? value) {
-        if (value == null || value.isEmpty) {
-          return "field".tr();
-        }
-        return null;
+        // if (value == null || value.isEmpty) {
+        //   return "field".tr();
+        // }
+        // return null;
       },
       onchange: (String? value) {},
     );

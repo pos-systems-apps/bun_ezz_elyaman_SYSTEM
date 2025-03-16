@@ -84,11 +84,11 @@ class CollectionsButtonsWidget extends StatelessWidget {
         if (CollectionsCubit.get(context).selectedPay == null) {
           ErrorAlertDialog.getDialog(context, "selectPayWay".tr());
         } else {
-          if (CollectionsCubit.get(context).selectedImagePath == null) {
-            ErrorAlertDialog.getDialog(context, "selectImage".tr());
-          } else {
+          // if (CollectionsCubit.get(context).selectedImagePath == null) {
+          //   ErrorAlertDialog.getDialog(context, "selectImage".tr());
+          // } else {
             _collectionDoneWidget(context);
-          }
+          // }
         }
       }
     }

@@ -27,6 +27,8 @@ import 'package:pos_system/features/leave_requests/logic/leave_requests_cubit.da
 import 'package:pos_system/features/leave_requests/ui/leave_requests_screen.dart';
 import 'package:pos_system/features/my_requests/logic/my_requests_cubit.dart';
 import 'package:pos_system/features/my_requests/ui/my_requests_screen.dart';
+import 'package:pos_system/features/print_cash_invoice/logic/print_cash_invoice_cubit.dart';
+import 'package:pos_system/features/print_cash_invoice/ui/electronic_cash_invoice_screen.dart';
 import 'package:pos_system/features/print_invoice/logic/print_invoice_cubit.dart';
 import 'package:pos_system/features/print_invoice/ui/electronic_invoice_screen.dart';
 import 'package:pos_system/features/print_resources_invoices/logic/print_resources_invoices_cubit.dart';
@@ -94,6 +96,13 @@ class RouteGenerator {
                   create: (_) => PrintInvoiceCubit(getIt())
                     ..getInvoiceDetails(args['invoiceId']),
                   child: ElectronicInvoiceScreen(),
+                ));
+      case Routes.electronicCashInvoiceScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => PrintCashInvoiceCubit(getIt())
+                    ..getCashInvoiceDetails(args['instalmentID']),
+                  child: ElectronicCashInvoiceScreen(),
                 ));
       case Routes.electronicResourcesInvoicesScreen:
         return MaterialPageRoute(
