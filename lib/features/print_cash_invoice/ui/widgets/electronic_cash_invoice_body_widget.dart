@@ -247,7 +247,7 @@ class _ElectronicCashInvoiceBodyWidgetState
                                   text: "المبلغ المدفوع",
                                   value:
                                       "${AppConstant.currency} ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.price}"),
-                              verticalSpace(30),
+                              verticalSpace(50),
 
                             ],
                           ),
