@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
-import 'package:pos_system/features/print_resources_invoices/data/models/invoice_response_model.dart';
+import 'package:pos_system/features/print_resources_invoices/data/models/invoice_resources_response_model.dart';
 import 'package:pos_system/features/print_resources_invoices/data/services/print_resources_invoices_api_end_points.dart';
 
 import '../../../../core/api/api_consumer.dart';
@@ -15,7 +15,7 @@ class PrintResourcesInvoicesService {
 
   PrintResourcesInvoicesService({required this.apiConsumer});
 
-  Future<InvoiceResponseModel> getResourcesInvoiceDetails(int invoiceId) async {
+  Future<InvoiceResourcesResponseModel> getResourcesInvoiceDetails(int invoiceId) async {
 
     final response = await apiConsumer
         .get(PrintResourcesInvoicesApiEndPoints.getResourcesInvoiceDetails( invoiceId), {
@@ -23,7 +23,7 @@ class PrintResourcesInvoicesService {
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
     if (response.statusCode == StatusCode.ok) {
-      return InvoiceResponseModel.fromJson(jsonDecode(response.body));
+      return InvoiceResourcesResponseModel.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));

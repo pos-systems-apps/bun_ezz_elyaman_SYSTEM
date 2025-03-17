@@ -149,6 +149,7 @@ class _ElectronicInvoiceBodyWidgetState
                               verticalSpace(10),
                               HorizontalDashedWidget(width: 4, space: 4),
                               verticalSpace(16),
+
                               MoneyWidget1(
                                   text: "اسم المندوب",
                                   value: PrintInvoiceCubit.get(context)
@@ -156,6 +157,14 @@ class _ElectronicInvoiceBodyWidgetState
                                       .invoice
                                       .seller
                                       .name),
+                              verticalSpace(8),
+                              MoneyWidget1(
+                                  text: "السجل التجاري",
+                                  value: AppConstant.commercialRegistry),
+                              verticalSpace(8),
+                              MoneyWidget1(
+                                  text: "الرقم الضريبي",
+                                  value: AppConstant.numberTax),
                               verticalSpace(8),
                               MoneyWidget1(
                                   text: "كود العربه",
