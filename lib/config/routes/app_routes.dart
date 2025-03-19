@@ -55,6 +55,8 @@ import 'package:pos_system/features/transfers_section/logic/transfer_section_cub
 import 'package:pos_system/features/transfers_section/ui/transfer_section_screen.dart';
 import 'package:pos_system/features/visits_carried_out/logic/visits_carried_out_cubit.dart';
 import 'package:pos_system/features/visits_carried_out/ui/visits_carried_out_screen.dart';
+import 'package:pos_system/features/zeroing_my_trips/logic/zeroing_my_trips_cubit.dart';
+import 'package:pos_system/features/zeroing_my_trips/ui/zeroing_my_trips_screen.dart';
 
 import '../../core/services/services_locator.dart';
 import '../../features/login/logic/login_cubit.dart';
@@ -247,6 +249,12 @@ class RouteGenerator {
                   create: (_) =>
                       SalaryCubit(getIt())..getSalary(args['context']),
                   child: SalaryScreen(),
+                ));
+      case Routes.zeroingMyTripsScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => ZeroingMyTripsCubit(getIt()),
+                  child: ZeroingMyTripsScreen(),
                 ));
 
       default:

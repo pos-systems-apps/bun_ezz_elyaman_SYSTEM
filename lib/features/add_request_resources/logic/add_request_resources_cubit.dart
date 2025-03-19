@@ -238,8 +238,6 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
       value.fold((l) {
         emit(OnAddResourcesErrorState(message: l.message));
       }, (r) {
-        // context.pushNamed(Routes.electronicInvoiceScreen,
-        //     arguments: {"orderId": r.orderId});
         emit(OnAddResourcesSuccessState(orderId: r.id ?? 0));
       });
     }).catchError((error) {

@@ -172,7 +172,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                   SalesCubit.get(context).selectedOrderType.id == 7
                       ? SalesCubit.get(context)
                           .pays
-                          .where((item) => item.id == 3)
+                          .where((item) => item.id == 2)
                           .toList()
                       : SalesCubit.get(context).pays;
               return Column(
@@ -238,21 +238,21 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
               );
             },
           ),
-          verticalSpace(16),
-
-          BlocBuilder<SalesCubit, SalesState>(
-            buildWhen: (previous, current) {
-              return current is OnChangePaySelectState;
-            },
-            builder: (context, state) {
-              if (SalesCubit.get(context).selectedPay?.id == 3 &&
-                  SalesCubit.get(context).selectedOrderType.id == 4) {
-                return SalesMoneyTextFieldWidget();
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          ),
+          // verticalSpace(16),
+          //
+          // BlocBuilder<SalesCubit, SalesState>(
+          //   buildWhen: (previous, current) {
+          //     return current is OnChangePaySelectState;
+          //   },
+          //   builder: (context, state) {
+          //     if (SalesCubit.get(context).selectedPay?.id == 3 &&
+          //         SalesCubit.get(context).selectedOrderType.id == 4) {
+          //       return SalesMoneyTextFieldWidget();
+          //     } else {
+          //       return const SizedBox.shrink();
+          //     }
+          //   },
+          // ),
           verticalSpace(16),
           BlocConsumer<SalesCubit, SalesState>(
             buildWhen: (previous, current) {
@@ -291,25 +291,14 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                         //   ErrorAlertDialog.getDialog(
                         //       context, "قم برفع الصوره ");
                         // } else {
-                          if (SalesCubit.get(context).selectedPay == null) {
-                            ErrorAlertDialog.getDialog(
-                                context, "قم باختيار طريقة الدفع ");
-                          } else {
-                            if (SalesCubit.get(context).selectedPay?.id == 3 &&
-                                SalesCubit.get(context).selectedOrderType.id ==
-                                    4 &&
-                                SalesCubit.get(context)
-                                    .moneyController
-                                    .text
-                                    .isEmpty) {
-                              ErrorAlertDialog.getDialog(
-                                  context, "قم بادخال المبلغ ");
-                            } else {
-                              SalesCubit.get(context).createOrder(context);
-                            }
-                          }
+                        if (SalesCubit.get(context).selectedPay == null) {
+                          ErrorAlertDialog.getDialog(
+                              context, "قم باختيار طريقة الدفع ");
+                        } else {
+                          SalesCubit.get(context).createOrder(context);
                         }
                       }
+                    }
                     // }
                   });
             },

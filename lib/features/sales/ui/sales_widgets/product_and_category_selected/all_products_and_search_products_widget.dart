@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
-import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/core/widgets/app_text_field.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
 import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
@@ -61,6 +61,9 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                   ///
                   await _productSelectedDetailsWidget(
                           context,
+                          GlobalKey(),
+                          TextEditingController(),
+                          TextEditingController(),
                           isSearch
                               ? SalesCubit.get(context).searchProducts[index]
                               : SalesCubit.get(context).products[index],
@@ -89,6 +92,9 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
 
   Future<SelectedProductClass?> _productSelectedDetailsWidget(
       BuildContext context,
+      GlobalKey<FormState> formKEy,
+      TextEditingController bigItemController,
+      TextEditingController smallItemController,
       Product product,
       OrderTypeClass selectedOrderType) async {
     return await showModalBottomSheet<SelectedProductClass>(
@@ -99,293 +105,233 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          int integerPart = product.quantity.toInt();
-          int decimalPart =
-              ((product.quantity - integerPart) * product.unitValue).toInt();
-          int selectedIntOrDecimal = 1;
-          return StatefulBuilder(
-            builder: (BuildContext context, setState) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12.r),
-                      topRight: Radius.circular(12.r)),
-                ),
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
+          int bigQuantity = product.quantity.toInt();
+          int smallQuantity =
+              ((product.quantity - bigQuantity) * product.unitValue).toInt();
+          return Container(
+            decoration: BoxDecoration(
+              color: AppColors.whiteColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12.r),
+                  topRight: Radius.circular(12.r)),
+            ),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 20.h),
+                    Row(
                       children: [
-                        SizedBox(height: 20.h),
-                        Row(
+                        Expanded(
+                          child: Text(
+                            context.locale.languageCode == "ar"
+                                ? product.nameAr
+                                : product.nameEn,
+                            maxLines: 2,
+                            style: TextStyles.font18greyColor27Weight600,
+                          ),
+                        ),
+                        horizontalSpace(5),
+                        Container(
+                          padding: EdgeInsets.all(10.r),
+                          decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(
+                                color: AppColors.mainColor, width: 1.6),
+                          ),
+                          child: Text(
+                            product.quantity.toStringAsFixed(1),
+                            maxLines: 1,
+                            style: TextStyles.font18greyColor27Weight600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      "ادخل الكميه المطلوبه",
+                      style: TextStyles.font14greyColor62Weight400,
+                    ),
+                    SizedBox(height: 30.h),
+
+                    ///
+                    ///
+                    Center(
+                      child: Form(
+                        key: formKEy,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
-                              child: Text(
-                                context.locale.languageCode == "ar"
-                                    ? product.nameAr
-                                    : product.nameEn,
-                                maxLines: 2,
-                                style: TextStyles.font18greyColor27Weight600,
-                              ),
+                            ///decimal part
+                            Spacer(
+                              flex: 2,
                             ),
-                            horizontalSpace(5),
-                            Container(
-                              padding: EdgeInsets.all(10.r),
-                              decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                borderRadius: BorderRadius.circular(12.r),
-                                border: Border.all(
-                                    color: AppColors.mainColor, width: 1.6),
-                              ),
-                              child: Text(
-                                product.quantity.toStringAsFixed(1),
-                                maxLines: 1,
-                                style: TextStyles.font18greyColor27Weight600,
-                              ),
+                            Expanded(
+                                flex: 1,
+                                child: AppTextFormField(
+                                  hintText: smallQuantity.toString(),
+                                  controller: smallItemController,
+                                  hintStyle:
+                                      TextStyles.font16BlackColorWeight400,
+                                  backgroundColor: AppColors.whiteColor,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 14.h),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.blueColorEEE,
+                                      width: 1.3,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.blueColorEEE,
+                                      width: 1.3,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.redColor00,
+                                      width: 1.3,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.redColor00,
+                                      width: 1.3,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  validator: (String? value) {
+                                    if (value != null &&
+                                        ((int.tryParse(bigItemController.text
+                                                    .toString()) ??
+                                                0) >
+                                            bigQuantity) &&
+                                        ((int.tryParse(value.toString()) ?? 0) >
+                                            smallQuantity)) {
+                                      return "";
+                                    }
+                                    return null;
+                                  },
+                                  onchange: (String? value) {},
+                                  onTapOutside: () {},
+                                  keyboardType: TextInputType.number,
+                                )),
+                            Text("\t.\t",
+                                style: TextStyles.font48greyColor27Weight700),
+                            Expanded(
+                                flex: 1,
+                                child: AppTextFormField(
+                                  hintText: bigQuantity.toString(),
+                                  controller: bigItemController,
+                                  hintStyle:
+                                      TextStyles.font16BlackColorWeight400,
+                                  backgroundColor: AppColors.whiteColor,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 14.h),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.blueColorEEE,
+                                      width: 1.3,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.blueColorEEE,
+                                      width: 1.3,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.redColor00,
+                                      width: 1.3,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.redColor00,
+                                      width: 1.3,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  validator: (String? value) {
+                                    if (value != null &&
+                                        ((int.tryParse(value.toString()) ?? 0) >
+                                            bigQuantity)) {
+                                      return "";
+                                    }
+                                    return null;
+                                  },
+                                  onchange: (String? value) {},
+                                  onTapOutside: () {},
+                                  keyboardType: TextInputType.number,
+                                )),
+                            Spacer(
+                              flex: 2,
                             ),
                           ],
                         ),
-                        SizedBox(height: 10.h),
-                        Text(
-                          "ادخل الكميه المطلوبه",
-                          style: TextStyles.font14greyColor62Weight400,
-                        ),
-                        SizedBox(height: 30.h),
-                        Center(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ///increase counter
-                                GestureDetector(
-                                  onTap: () {
-                                    if (selectedIntOrDecimal == 1) {
-                                      if (selectedOrderType.id ==
-                                          AppConstant.orderTypes[0].id) {
-                                        ///integer part
-                                        if (integerPart <
-                                            product.quantity.toInt()) {
-                                          integerPart++;
-                                        }
-                                        if (integerPart ==
-                                            product.quantity.toInt()) {
-                                          ///to change decimal to int count
-                                          if (decimalPart >
-                                              ((product.quantity -
-                                                          integerPart) *
-                                                      product.unitValue)
-                                                  .toInt()) {
-                                            decimalPart = ((product.quantity -
-                                                        integerPart) *
-                                                    product.unitValue)
-                                                .toInt();
-                                          }
-                                        }
-                                      } else {
-                                        integerPart++;
-                                      }
-                                    } else {
-                                      ///decimal part
-                                      if (integerPart ==
-                                          product.quantity.toInt()) {
-                                        if (decimalPart <
-                                            ((product.quantity - integerPart) *
-                                                    product.unitValue)
-                                                .toInt()) {
-                                          decimalPart++;
-                                        }
-                                      } else {
-                                        if (decimalPart <
-                                            product.unitValue - 1) {
-                                          decimalPart++;
-                                        } else if (decimalPart ==
-                                            product.unitValue - 1) {
-                                          decimalPart = 0;
-                                          integerPart++;
-                                        }
-                                      }
-                                    }
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    height: 36.h,
-                                    width: 36.w,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.whiteColor,
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                        border: Border.all(
-                                            color: AppColors.greyColorDA,
-                                            width: 1)),
-                                    child: Icon(
-                                      Icons.add,
-                                      color: AppColors.blackColor,
-                                      size: 24.r,
-                                    ),
-                                  ),
-                                ),
-                                horizontalSpace(24),
+                      ),
+                    ),
 
-                                ///decimal part
-                                GestureDetector(
-                                  onTap: () {
-                                    selectedIntOrDecimal = 2;
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    height: 45.h,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 12.w),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.whiteColor,
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      border: Border.all(
-                                          color: AppColors.mainColor,
-                                          width: selectedIntOrDecimal == 2
-                                              ? 2
-                                              : 1),
-                                    ),
-                                    child: Text(
-                                      decimalPart.toString(),
-                                      maxLines: 1,
-                                      style:
-                                          TextStyles.font18greyColor27Weight600,
-                                    ),
-                                  ),
-                                ),
-                                Text("\t.\t",
-                                    style:
-                                        TextStyles.font48greyColor27Weight700),
+                    ///
+                    ///
 
-                                ///integer part
-                                GestureDetector(
-                                  onTap: () {
-                                    selectedIntOrDecimal = 1;
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    height: 45.h,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 12.w),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.whiteColor,
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      border: Border.all(
-                                          color: AppColors.mainColor,
-                                          width: selectedIntOrDecimal == 1
-                                              ? 2
-                                              : 1),
-                                    ),
-                                    child: Text(
-                                      integerPart.toString(),
-                                      maxLines: 1,
-                                      style:
-                                          TextStyles.font18greyColor27Weight600,
-                                    ),
-                                  ),
-                                ),
-                                horizontalSpace(24),
-
-                                ///decrease counter
-                                GestureDetector(
-                                  onTap: () {
-                                    if (selectedIntOrDecimal == 1) {
-                                      ///integer part
-                                      if (integerPart > 0) {
-                                        integerPart--;
-                                      }
-                                      if (integerPart == 0) {
-                                        if (decimalPart == 0 &&
-                                            ((product.quantity - integerPart) *
-                                                        product.unitValue)
-                                                    .toInt() >
-                                                1) {
-                                          decimalPart = 1;
-                                        }
-                                      }
-                                    } else {
-                                      ///decimal part
-                                      if (integerPart == 0) {
-                                        if (decimalPart > 1) {
-                                          decimalPart--;
-                                        }
-                                      } else {
-                                        if (decimalPart > 0) {
-                                          decimalPart--;
-                                        } else {
-                                          if (decimalPart == 0) {
-                                            decimalPart = product.unitValue - 1;
-                                            integerPart--;
-                                          }
-                                        }
-                                      }
-                                    }
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    height: 36.h,
-                                    width: 36.w,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.whiteColor,
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                        border: Border.all(
-                                            color: AppColors.greyColorDA,
-                                            width: 1)),
-                                    child: Icon(
-                                      Icons.remove,
-                                      color: AppColors.blackColor,
-                                      size: 24.r,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 30.h),
-                        ButtonWidget(
-                            isLoading: false,
-                            buttonHeight: 44.h,
-                            buttonWidth: double.infinity,
-                            borderRadius: 8.r,
-                            buttonText: "تاكيد",
-                            textStyle: TextStyles.font16WhiteColorWeight600,
-                            backGroundColor: AppColors.mainColor,
-                            borderColor: AppColors.mainColor,
-                            onPressed: () {
-                              Navigator.pop(
-                                  context,
-                                  SelectedProductClass(
-                                    product: product,
-                                    maxValueCounter: integerPart,
-                                    minValueCounter: decimalPart,
-                                  ));
-                            }),
-                        SizedBox(height: 12.h),
-                        ButtonWidget(
-                            isLoading: false,
-                            buttonHeight: 44.h,
-                            buttonWidth: double.infinity,
-                            borderRadius: 8.r,
-                            backGroundColor: AppColors.whiteColor,
-                            borderColor: AppColors.mainColor,
-                            buttonText: "الغاء",
-                            textStyle: TextStyles.font16MainColorWeight600,
-                            onPressed: () {
-                              context.pop();
-                            }),
-                        SizedBox(height: 20.h),
-                      ]),
-                ),
-              );
-            },
+                    SizedBox(height: 30.h),
+                    ButtonWidget(
+                        isLoading: false,
+                        buttonHeight: 44.h,
+                        buttonWidth: double.infinity,
+                        borderRadius: 8.r,
+                        buttonText: "تاكيد",
+                        textStyle: TextStyles.font16WhiteColorWeight600,
+                        backGroundColor: AppColors.mainColor,
+                        borderColor: AppColors.mainColor,
+                        onPressed: () {
+                          if (formKEy.currentState!.validate()) {
+                            Navigator.pop(
+                                context,
+                                SelectedProductClass(
+                                  product: product,
+                                  maxValueCounter:
+                                      (int.tryParse(bigItemController.text) ??
+                                          bigQuantity),
+                                  minValueCounter:
+                                      smallItemController.text.isEmpty
+                                          ? smallQuantity
+                                          : (int.tryParse(smallItemController
+                                                      .text[0]) ??
+                                                  smallQuantity)
+                                              .floor(),
+                                ));
+                          }
+                        }),
+                    SizedBox(height: 12.h),
+                    ButtonWidget(
+                        isLoading: false,
+                        buttonHeight: 44.h,
+                        buttonWidth: double.infinity,
+                        borderRadius: 8.r,
+                        backGroundColor: AppColors.whiteColor,
+                        borderColor: AppColors.mainColor,
+                        buttonText: "الغاء",
+                        textStyle: TextStyles.font16MainColorWeight600,
+                        onPressed: () {
+                          context.pop();
+                        }),
+                    SizedBox(height: 20.h),
+                  ]),
+            ),
           );
         });
   }

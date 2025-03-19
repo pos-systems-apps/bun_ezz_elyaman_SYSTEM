@@ -14,7 +14,7 @@ class RequestedQuantityTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTextFormField(
-      hintText: "ادخل المبلغ",
+      hintText: "الكميه المطلوبة",
       hintStyle: TextStyles.font14GreyColor87Weight400,
       textStyle: TextStyles.font14BlackColor17Weight500,
       controller: selectRequestingQuantity,

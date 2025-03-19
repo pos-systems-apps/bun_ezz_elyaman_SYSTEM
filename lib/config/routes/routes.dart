@@ -31,4 +31,5 @@ class Routes{
   static const cashInvoiceScreen = "/CashInvoiceScreen";
   static const createMonthlyPlanScreen = "/CreateMonthlyPlanScreen";
   static const salaryScreen = "/SalaryScreen";
+  static const zeroingMyTripsScreen = "/ZeroingMyTripsScreen";
 }

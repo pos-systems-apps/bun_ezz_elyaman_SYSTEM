@@ -51,6 +51,8 @@ import 'package:pos_system/features/transfers_section/data/repo/transfer_section
 import 'package:pos_system/features/transfers_section/data/services/transfer_section_service.dart';
 import 'package:pos_system/features/visits_carried_out/data/repo/visits_carried_out_repo.dart';
 import 'package:pos_system/features/visits_carried_out/data/services/visits_carried_out_service.dart';
+import 'package:pos_system/features/zeroing_my_trips/data/repo/zeroing_my_trips_repo.dart';
+import 'package:pos_system/features/zeroing_my_trips/data/services/zeroing_my_trips_service.dart';
 
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/login/data/services/login_service.dart';
@@ -199,6 +201,12 @@ class ServicesLocator {
         () => AddRequestResourcesRepo(getIt()));
     getIt.registerFactory<AddRequestResourcesService>(
         () => AddRequestResourcesService(apiConsumer: getIt()));
+
+    /// Zeroing My TripsScreen
+    getIt.registerLazySingleton<ZeroingMyTripsRepo>(
+        () => ZeroingMyTripsRepo(getIt()));
+    getIt.registerFactory<ZeroingMyTripsService>(
+        () => ZeroingMyTripsService(apiConsumer: getIt()));
 
     ///constant
     // getIt.registerLazySingleton<EndPoints>(() => EndPoints());

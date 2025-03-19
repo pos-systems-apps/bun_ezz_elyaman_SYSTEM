@@ -51,15 +51,15 @@ class Invoice {
   factory Invoice.fromJson(Map<String, dynamic> json) {
     return Invoice(
       id: json['id'],
-      paymentType: json['cash'],
+      paymentType: json['cash'] ?? 0,
       orderAmount: json['order_amount'].toDouble(),
       totalTax: json['total_tax'].toDouble(),
       collectedCash: json['collected_cash'].toDouble(),
       extraDiscount: json['extra_discount'].toDouble(),
-      date: json['date'],
-      type: json['type'],
-      sellerImage: json['qrcode'],
-      qrCodeImage: json['img'],
+      date: json['date'] ?? "",
+      type: json['type'] ?? "",
+      sellerImage: json['qrcode'] ?? "",
+      qrCodeImage: json['img'] ?? "",
       details: List<InvoiceDetail>.from(
           json['details'].map((item) => InvoiceDetail.fromJson(item))).toList(),
       seller: Seller.fromJson(json['seller']),
@@ -94,7 +94,7 @@ class InvoiceDetail {
       nameEn: json['product']['name_en'] ?? "",
       quantity: (json['quantity'] ?? 0).toDouble(),
       discountPerItem: (json['discount_on_product'] ?? 0).toDouble(),
-      unitValue: json['unit'],
+      unitValue: json['unit']??0,
       price: (json['price'] ?? 0).toDouble(),
     );
   }

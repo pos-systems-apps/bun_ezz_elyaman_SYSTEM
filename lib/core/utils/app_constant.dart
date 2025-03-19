@@ -60,12 +60,13 @@ class AppConstant {
     agel = agelNew;
     pays = [
       PayClass(id: 1, nameAr: "كاش", nameEn: "cash", isShown: getCash() == "1"),
+    PayClass(id: 2, nameAr: "اجل", nameEn: "agel", isShown: getAgel() == "1"),
       PayClass(
-          id: 2,
+          id: 3,
           nameAr: "شبكة",
           nameEn: "shabaka",
           isShown: getShabake() == "1"),
-      PayClass(id: 3, nameAr: "اجل", nameEn: "agel", isShown: getAgel() == "1"),
+
     ];
   }
 

@@ -9,7 +9,7 @@ class CreateRequestResourcesRequest {
 
   Map<String, dynamic> toJson() => {
         "type": type,
-        "data": resourceItems,
+        "data": resourceItems.map((item) =>  item.toJson()).toList(),
       };
 }
 

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/core/api/end_points.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/spacing.dart';
@@ -41,7 +42,10 @@ class ProductSelectedWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4.r),
                   border: Border.all(color: AppColors.blueColorEEE),
                 ),
-                child: CachedNetworkImageWidget(imgUrl: "", radius: 4.r),
+                child: CachedNetworkImageWidget(
+                    imgUrl: EndPoints().getImageFromApi(
+                        "product/${selectedProduct.product.image}"),
+                    radius: 4.r),
               ),
               horizontalSpace(16),
               Expanded(

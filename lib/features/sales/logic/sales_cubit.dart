@@ -260,7 +260,7 @@ class SalesCubit extends Cubit<SalesState> {
   PercentTypesClass? selectedPercentType;
   TextEditingController percentController = TextEditingController();
 
-  TextEditingController moneyController = TextEditingController();
+  // TextEditingController moneyController = TextEditingController();
 
   ///customers
   List<UserResponseData> users = [];
@@ -304,16 +304,20 @@ class SalesCubit extends Cubit<SalesState> {
             //                 selectedPercentType?.id, percentController.text)
             //             .toStringAsFixed(2)) ??
             //     0,
-            extraDiscount: double.tryParse(
-                    ReseatSelectedProducts(selectedProducts: selectedProducts)
-                        .getExtraDiscount(
+            extraDiscount: double.tryParse(ReseatSelectedProducts(selectedProducts: selectedProducts)
+                    .getExtraDiscount(
+                        selectedPercentType?.id, percentController.text)
+                    .toStringAsFixed(2)) ??
+                0,
+            collectedCash: selectedPay!.id == 2
+                ? 0
+                : (double.tryParse(ReseatSelectedProducts(selectedProducts: selectedProducts)
+                        .getTotal(
                             selectedPercentType?.id, percentController.text)
                         .toStringAsFixed(2)) ??
-                0,
-            collectedCash: double.tryParse(moneyController.text) ?? 0,
+                    0),
             orderType: selectedOrderType.id,
-            finalOrderAmount: double.tryParse(ReseatSelectedProducts(
-                        selectedProducts: selectedProducts)
+            finalOrderAmount: double.tryParse(ReseatSelectedProducts(selectedProducts: selectedProducts)
                     .getTotal(selectedPercentType?.id, percentController.text)
                     .toStringAsFixed(2)) ??
                 0,

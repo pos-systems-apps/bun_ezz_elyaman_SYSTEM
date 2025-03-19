@@ -149,7 +149,6 @@ class _ElectronicInvoiceBodyWidgetState
                               verticalSpace(10),
                               HorizontalDashedWidget(width: 4, space: 4),
                               verticalSpace(16),
-
                               MoneyWidget1(
                                   text: "اسم المندوب",
                                   value: PrintInvoiceCubit.get(context)
@@ -203,12 +202,15 @@ class _ElectronicInvoiceBodyWidgetState
                               MoneyWidget1(
                                   text: "طريقه الدفع",
                                   value: getIt<AppConstant>()
-                                      .pays[PrintInvoiceCubit.get(context)
+                                      .pays
+                                      .firstWhere((item2) =>
+                                          item2.id ==
+                                          PrintInvoiceCubit.get(context)
                                               .invoiceResponseModel!
                                               .invoice
-                                              .paymentType -
-                                          1]
-                                      .nameAr),
+                                              .paymentType)
+                                      .nameAr
+                                      .toString()),
                               verticalSpace(16),
                               HorizontalDashedWidget(width: 4, space: 4),
                               verticalSpace(16),
@@ -236,7 +238,8 @@ class _ElectronicInvoiceBodyWidgetState
                                                       : AppConstant
                                                           .measureUnits[0]
                                                           .nameAr,
-                                                  price: "80:00"),
+                                                  price: item.price
+                                                      .toStringAsFixed(2)),
                                               verticalSpace(8),
                                             ],
                                           )),
