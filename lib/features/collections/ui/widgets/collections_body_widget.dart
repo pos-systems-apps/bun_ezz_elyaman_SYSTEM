@@ -25,8 +25,8 @@ class CollectionsBodyWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BillWidget(),
-            verticalSpace(24),
+            // BillWidget(),
+            // verticalSpace(24),
             SearchUserWidget(),
             verticalSpace(16),
             Text.rich(
