@@ -96,7 +96,7 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
       Product product,
       ResourceTypeClass selectedResourceType) async {
     TextEditingController selectRequestingQuantity = TextEditingController();
-    GlobalKey<FormState> selectRequestingQuantityKey=GlobalKey();
+    GlobalKey<FormState> selectRequestingQuantityKey = GlobalKey();
     return await showModalBottomSheet<ResourceSelectedProduct>(
         context: context,
         enableDrag: true,
@@ -108,6 +108,7 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
           return StatefulBuilder(
             builder: (BuildContext context, setState) {
               return Container(
+                padding: EdgeInsets.only(bottom: context.viewInsetsBottom),
                 decoration: BoxDecoration(
                   color: AppColors.whiteColor,
                   borderRadius: BorderRadius.only(
@@ -167,7 +168,6 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
                                   style: TextStyles.font14greyColor62Weight400,
                                 ),
                                 verticalSpace(6),
-
                                 Form(
                                   key: selectRequestingQuantityKey,
                                   child: RequestedQuantityTextFieldWidget(
@@ -189,16 +189,18 @@ class AddRequestResourcesProductsAndSearchWidget extends StatelessWidget {
                             backGroundColor: AppColors.mainColor,
                             borderColor: AppColors.mainColor,
                             onPressed: () {
-                              if(selectRequestingQuantityKey.currentState!.validate()){
+                              if (selectRequestingQuantityKey.currentState!
+                                  .validate()) {
                                 Navigator.pop(
                                     context,
                                     ResourceSelectedProduct(
                                       product: product,
-                                      requestQuantity: double.tryParse(selectRequestingQuantity.text)??0,
+                                      requestQuantity: double.tryParse(
+                                              selectRequestingQuantity.text) ??
+                                          0,
                                       yourQuantity: product.quantity,
                                     ));
                               }
-
                             }),
                         SizedBox(height: 12.h),
                         ButtonWidget(
