@@ -43,11 +43,12 @@ class SalesCubit extends Cubit<SalesState> {
   ScrollController categoriesScrollController = ScrollController();
 
   getCategoriesFromHere() {
+
     categories = [];
     categoriesCurrentPage = 1;
     categoriesLastPage = 10000;
     scrollListenerGetCategories();
-    getCategories();
+     getCategories();
   }
 
   scrollListenerGetCategories() {
@@ -65,6 +66,7 @@ class SalesCubit extends Cubit<SalesState> {
   List<Category> categories = [];
 
   getCategories() {
+
     emit(OnGetCategoryLoadingState());
     _salesRepo.getCategories(categoriesCurrentPage).then((value) {
       value.fold((l) {
@@ -76,7 +78,6 @@ class SalesCubit extends Cubit<SalesState> {
         if (r.categoryPagination.categories.isNotEmpty &&
             selectedCategory == null) {
           changeSelectedCategory(r.categoryPagination.categories[0]);
-          getCategoryProductsFromHere(r.categoryPagination.categories[0].id);
         }
         emit(OnGetCategorySuccessState());
       });
@@ -125,6 +126,7 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   getCategoryProducts(int categoryID) {
+    print("object1212");
     emit(OnGetCategoryProductsLoadingState());
     _salesRepo
         .getCategoryProducts(

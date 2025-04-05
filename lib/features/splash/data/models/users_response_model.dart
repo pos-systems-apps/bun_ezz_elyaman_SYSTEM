@@ -21,7 +21,9 @@ class UserResponseData {
   String phone;
   String email;
   String image;
-  double money;
+  double balance;
+  double discount;
+  double credit;
   String address;
   String taxNumber;
   String commercialHistory;
@@ -33,7 +35,9 @@ class UserResponseData {
     required this.email,
     required this.image,
     required this.address,
-    required this.money,
+    required this.balance,
+    required this.discount,
+    required this.credit,
     required this.phone,
     required this.taxNumber,
     required this.commercialHistory,
@@ -47,7 +51,9 @@ class UserResponseData {
         email: json['email'] ?? "",
         image: json['image'] ?? "",
         address: json['address'] ?? "",
-        money: double.tryParse(json['balance'].toString()) ?? 0,
+        balance: double.tryParse(json['balance'].toString()) ?? 0,
+        discount: double.tryParse(json['discount'].toString()) ?? 0,
+        credit: double.tryParse(json['credit'].toString()) ?? 0,
         phone: json['mobile'] ?? "",
         taxNumber: json['tax_number'] ?? "",
         commercialHistory: json['c_history'] ?? "",
