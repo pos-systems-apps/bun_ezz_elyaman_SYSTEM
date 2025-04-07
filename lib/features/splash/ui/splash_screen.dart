@@ -11,10 +11,10 @@ import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/widgets/offline_alert_dialog.dart';
+import 'package:pos_system/features/login/data/models/user_setting_response.dart';
 import 'package:pos_system/features/login/data/repo/login_repo.dart';
 
-import '../../login/data/models/setting_response.dart';
-
+import '../../login/data/models/system_setting_response.dart';
 
 ///if offline and go to login
 ///check app setting when login
@@ -67,91 +67,110 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> getAppSettings() async {
-    await LoginRepo(getIt()).appSetting().then((value) async {
+    await LoginRepo(getIt()).systemSetting().then((value) async {
       await value.fold((l) {
         navigationScreenRoute = Routes.loginScreen;
       }, (r) async {
         await storeSettingFromApi(r);
+        await LoginRepo(getIt()).userSetting().then((value) async {
+          await value.fold((l) {
+            navigationScreenRoute = Routes.loginScreen;
+          }, (r) async {
+            await userSettingFromApi(r);
+          });
+        }).catchError((error) {
+          navigationScreenRoute = Routes.loginScreen;
+        });
       });
     }).catchError((error) {
       navigationScreenRoute = Routes.loginScreen;
     });
   }
 
-  Future<void> storeSettingFromApi(SettingResponse value) async {
+  Future<void> storeSettingFromApi(SystemSettingResponse value) async {
     await CacheHelper.setSecuredString(
-        ConstantKeys.saveLogoToShared, value.settingResponseInfo.logo);
+        ConstantKeys.saveLogoToShared, value.systemSettingResponseInfo.logo);
     await CacheHelper.setSecuredString(
         ConstantKeys.savePaginationNumberToShared,
-        value.settingResponseInfo.paginationNumber);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveCurrencyToShared, value.settingResponseInfo.currency);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveShopNameToShared, value.settingResponseInfo.shopName);
+        value.systemSettingResponseInfo.paginationNumber);
+    await CacheHelper.setSecuredString(ConstantKeys.saveCurrencyToShared,
+        value.systemSettingResponseInfo.currency);
+    await CacheHelper.setSecuredString(ConstantKeys.saveShopNameToShared,
+        value.systemSettingResponseInfo.shopName);
     await CacheHelper.setSecuredString(ConstantKeys.saveShopAddressToShared,
-        value.settingResponseInfo.shopAddress);
+        value.systemSettingResponseInfo.shopAddress);
     await CacheHelper.setSecuredString(ConstantKeys.saveShopPhoneToShared,
-        value.settingResponseInfo.shopPhone);
+        value.systemSettingResponseInfo.shopPhone);
     await CacheHelper.setSecuredString(ConstantKeys.saveShopEmailToShared,
-        value.settingResponseInfo.shopEmail);
+        value.systemSettingResponseInfo.shopEmail);
     await CacheHelper.setSecuredString(ConstantKeys.saveFooterTextToShared,
-        value.settingResponseInfo.footerText);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveCountryToShared, value.settingResponseInfo.country);
+        value.systemSettingResponseInfo.footerText);
+    await CacheHelper.setSecuredString(ConstantKeys.saveCountryToShared,
+        value.systemSettingResponseInfo.country);
     await CacheHelper.setSecuredString(ConstantKeys.saveStockLimitToShared,
-        value.settingResponseInfo.stockLimit);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveTimeZoneToShared, value.settingResponseInfo.timeZone);
+        value.systemSettingResponseInfo.stockLimit);
+    await CacheHelper.setSecuredString(ConstantKeys.saveTimeZoneToShared,
+        value.systemSettingResponseInfo.timeZone);
     await CacheHelper.setSecuredString(
         ConstantKeys.saveCommercialRegistryToShared,
-        value.settingResponseInfo.commercialRegistry);
+        value.systemSettingResponseInfo.commercialRegistry);
     await CacheHelper.setSecuredString(ConstantKeys.saveNumberTaxToShared,
-        value.settingResponseInfo.numberTax);
+        value.systemSettingResponseInfo.numberTax);
     await CacheHelper.setSecuredString(ConstantKeys.saveMainColorToShared,
-        value.settingResponseInfo.mainColor);
+        value.systemSettingResponseInfo.mainColor);
     await CacheHelper.setSecuredString(ConstantKeys.saveSecondColorToShared,
-        value.settingResponseInfo.secondColor);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveBaseURLToShared, value.settingResponseInfo.baseURl);
+        value.systemSettingResponseInfo.secondColor);
+    await CacheHelper.setSecuredString(ConstantKeys.saveBaseURLToShared,
+        value.systemSettingResponseInfo.baseURl);
 
     await CacheHelper.setSecuredString(
-        ConstantKeys.saveCashToShared, value.settingResponseInfo.cash);
+        ConstantKeys.saveCashToShared, value.systemSettingResponseInfo.cash);
+    await CacheHelper.setSecuredString(ConstantKeys.saveShabakaToShared,
+        value.systemSettingResponseInfo.shabaka);
     await CacheHelper.setSecuredString(
-        ConstantKeys.saveShabakaToShared, value.settingResponseInfo.shabaka);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveAgelToShared, value.settingResponseInfo.agel);
-
-
+        ConstantKeys.saveAgelToShared, value.systemSettingResponseInfo.agel);
 
     ///store app constant
     await getIt<AppConstant>().setAppConstantData(
-        basUrl: value.settingResponseInfo.baseURl,
-        currencyNew: value.settingResponseInfo.currency,
-        shopLogoNew: value.settingResponseInfo.logo,
-        shopNameNew: value.settingResponseInfo.shopName,
-        shopAddressNew: value.settingResponseInfo.shopAddress,
-        shopPhoneNew: value.settingResponseInfo.shopPhone,
-        shopEmailNew: value.settingResponseInfo.shopEmail,
-        countryNew: value.settingResponseInfo.country,
-        timeZoneNew: value.settingResponseInfo.timeZone,
-        numberTaxNew: value.settingResponseInfo.numberTax,
-        commercialRegistryNew: value.settingResponseInfo.commercialRegistry,
-        cashNew: value.settingResponseInfo.cash,
-        shabakaNew: value.settingResponseInfo.shabaka,
-        agelNew: value.settingResponseInfo.agel);
-
-
+        basUrl: value.systemSettingResponseInfo.baseURl,
+        currencyNew: value.systemSettingResponseInfo.currency,
+        shopLogoNew: value.systemSettingResponseInfo.logo,
+        shopNameNew: value.systemSettingResponseInfo.shopName,
+        shopAddressNew: value.systemSettingResponseInfo.shopAddress,
+        shopPhoneNew: value.systemSettingResponseInfo.shopPhone,
+        shopEmailNew: value.systemSettingResponseInfo.shopEmail,
+        countryNew: value.systemSettingResponseInfo.country,
+        timeZoneNew: value.systemSettingResponseInfo.timeZone,
+        numberTaxNew: value.systemSettingResponseInfo.numberTax,
+        commercialRegistryNew:
+            value.systemSettingResponseInfo.commercialRegistry,
+        cashNew: value.systemSettingResponseInfo.cash,
+        shabakaNew: value.systemSettingResponseInfo.shabaka,
+        agelNew: value.systemSettingResponseInfo.agel);
 
     ///store app colors
 
     await getIt<AppColors>().setColors(
-        value.settingResponseInfo.mainColor.replaceAll("#", "").toUpperCase(),
-        value.settingResponseInfo.secondColor
+        value.systemSettingResponseInfo.mainColor
+            .replaceAll("#", "")
+            .toUpperCase(),
+        value.systemSettingResponseInfo.secondColor
             .replaceAll("#", "")
             .toUpperCase());
 
     ///store app end points
     // await getIt<EndPoints>().setBaseUrl(value.settingResponseInfo.baseURl);
+  }
+
+  Future<void> userSettingFromApi(UserSettingResponse value) async {
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveMandoubeNameToShared,
+        value.userSettingResponseInfo.firstName +
+            value.userSettingResponseInfo.lastName);
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveEmailToShared, value.userSettingResponseInfo.email);
+    await CacheHelper.setSecuredString(
+        ConstantKeys.savePhoneToShared, value.userSettingResponseInfo.phone);
   }
 
   @override

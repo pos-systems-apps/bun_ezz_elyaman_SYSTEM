@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
-import 'package:pos_system/features/login/data/models/setting_response.dart';
+import 'package:pos_system/core/utils/constant_keys.dart';
+import 'package:pos_system/features/login/data/models/system_setting_response.dart';
+import 'package:pos_system/features/login/data/models/user_setting_response.dart';
 
 import '../../../../core/api/api_consumer.dart';
 import '../../../../core/api/status_code.dart';
@@ -16,10 +19,22 @@ class LoginService {
 
   LoginService({required this.apiConsumer});
 
-  Future<SettingResponse> appSetting() async {
-    final response = await apiConsumer.get(LoginApiEndPoints.appSettingUrl, null);
+  Future<SystemSettingResponse> systemSetting() async {
+    final response = await apiConsumer.get(LoginApiEndPoints.systemSettingUrl, null);
     if (response.statusCode == StatusCode.ok) {
-      return SettingResponse.fromJson(jsonDecode(response.body));
+      return SystemSettingResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw ServerException(
+          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
+    }
+  }
+  Future<UserSettingResponse> userSetting() async {
+    final response = await apiConsumer.get(LoginApiEndPoints.userSettingUrl, {
+      ConstantKeys.appAuthorization:
+      "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+    });
+    if (response.statusCode == StatusCode.ok) {
+      return UserSettingResponse.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));

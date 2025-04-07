@@ -1,17 +1,17 @@
 
-class SettingResponse {
-  SettingResponseInfo settingResponseInfo;
+class SystemSettingResponse {
+  SystemSettingResponseInfo systemSettingResponseInfo;
 
-  SettingResponse({required this.settingResponseInfo});
+  SystemSettingResponse({required this.systemSettingResponseInfo});
 
-  factory SettingResponse.fromJson(Map<String, dynamic> json) =>
-      SettingResponse(
-        settingResponseInfo:
-            SettingResponseInfo.fromJson(json['business_info']),
+  factory SystemSettingResponse.fromJson(Map<String, dynamic> json) =>
+      SystemSettingResponse(
+        systemSettingResponseInfo:
+        SystemSettingResponseInfo.fromJson(json['business_info']),
       );
 }
 
-class SettingResponseInfo {
+class SystemSettingResponseInfo {
   String logo;
   String paginationNumber;
   String currency;
@@ -33,7 +33,7 @@ class SettingResponseInfo {
   String shabaka;
   String agel;
 
-  SettingResponseInfo({
+  SystemSettingResponseInfo({
     required this.logo,
     required this.paginationNumber,
     required this.currency,
@@ -55,8 +55,8 @@ class SettingResponseInfo {
     required this.agel,
   });
 
-  factory SettingResponseInfo.fromJson(Map<String, dynamic> json) =>
-      SettingResponseInfo(
+  factory SystemSettingResponseInfo.fromJson(Map<String, dynamic> json) =>
+      SystemSettingResponseInfo(
         logo: json['shop_logo'],
         // logo: EndPoints.getImageFromApi(json['shop_logo']),
         paginationNumber: json['pagination_limit'],

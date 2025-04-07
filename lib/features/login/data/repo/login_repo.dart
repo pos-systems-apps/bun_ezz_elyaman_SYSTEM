@@ -1,6 +1,7 @@
 
 import 'package:dartz/dartz.dart';
-import 'package:pos_system/features/login/data/models/setting_response.dart';
+import 'package:pos_system/features/login/data/models/system_setting_response.dart';
+import 'package:pos_system/features/login/data/models/user_setting_response.dart';
 
 import '../../../../core/exceptions/exceptions.dart';
 import '../../../../core/exceptions/failure.dart';
@@ -13,9 +14,16 @@ class LoginRepo {
 
   LoginRepo(this._loginService);
 
-  Future<Either<Failure, SettingResponse>> appSetting() async {
+  Future<Either<Failure, SystemSettingResponse>> systemSetting() async {
     try {
-      return Right(await _loginService.appSetting());
+      return Right(await _loginService.systemSetting());
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(message: failure.serverFailure.message));
+    }
+  }
+  Future<Either<Failure, UserSettingResponse>> userSetting() async {
+    try {
+      return Right(await _loginService.userSetting());
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

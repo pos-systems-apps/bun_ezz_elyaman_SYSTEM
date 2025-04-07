@@ -1,25 +1,20 @@
-class LoginResponseModel {
-  int kilometer;
-  String message;
-  String token;
-  LoginResponseDataModel data;
+class UserSettingResponse {
+  int distanceInKilometers;
+  UserSettingResponseInfo userSettingResponseInfo;
 
-  LoginResponseModel({
-    required this.kilometer,
-    required this.message,
-    required this.token,
-    required this.data,
-  });
+  UserSettingResponse(
+      {required this.distanceInKilometers,
+      required this.userSettingResponseInfo});
 
-  factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
-      LoginResponseModel(
-          kilometer: json['kilometer'],
-          message: json['message'],
-          token: json['token'],
-          data: LoginResponseDataModel.fromJson(json['admin']));
+  factory UserSettingResponse.fromJson(Map<String, dynamic> json) =>
+      UserSettingResponse(
+        distanceInKilometers: json['kilometer'] ?? 0,
+        userSettingResponseInfo:
+            UserSettingResponseInfo.fromJson(json['admin']),
+      );
 }
 
-class LoginResponseDataModel {
+class UserSettingResponseInfo {
   int id;
   String firstName;
   String lastName;
@@ -27,13 +22,14 @@ class LoginResponseDataModel {
   String email;
   String phone;
   String image;
+
   String mandobCode;
   String vehicleCode;
   String type;
   String role;
   int numberOfDays;
 
-  LoginResponseDataModel({
+  UserSettingResponseInfo({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -47,8 +43,8 @@ class LoginResponseDataModel {
     required this.numberOfDays,
   });
 
-  factory LoginResponseDataModel.fromJson(Map<String, dynamic> json) =>
-      LoginResponseDataModel(
+  factory UserSettingResponseInfo.fromJson(Map<String, dynamic> json) =>
+      UserSettingResponseInfo(
         id: json['id'],
         firstName: json['f_name'] ?? "",
         lastName: json['l_name'] ?? "",
