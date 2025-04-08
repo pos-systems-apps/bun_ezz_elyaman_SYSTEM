@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart' show Position;
 import 'package:lottie/lottie.dart';
 import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/services/cache_helper.dart';
 import 'package:pos_system/core/services/check_network.dart';
+import 'package:pos_system/core/services/location_service.dart';
 import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
@@ -11,6 +13,7 @@ import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/widgets/offline_alert_dialog.dart';
+import 'package:pos_system/features/login/data/models/update_user_location_request.dart';
 import 'package:pos_system/features/login/data/models/user_setting_response.dart';
 import 'package:pos_system/features/login/data/repo/login_repo.dart';
 
@@ -77,6 +80,11 @@ class _SplashScreenState extends State<SplashScreen> {
             navigationScreenRoute = Routes.loginScreen;
           }, (r) async {
             await userSettingFromApi(r);
+            Position? position = await YourLocation.getCurrentLocation();
+            await LoginRepo(getIt()).updateUseLocation(
+                UpdateUserLocationRequest(
+                    latitude: position?.latitude ?? 0,
+                    longitude: position?.longitude ?? 0));
           });
         }).catchError((error) {
           navigationScreenRoute = Routes.loginScreen;

@@ -1,14 +1,21 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
+import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/button_navigation/entities/button_navigation_items.dart';
 import 'package:pos_system/features/button_navigation/logic/button_navigation_cubit.dart';
 import 'package:pos_system/features/button_navigation/logic/button_navigation_state.dart';
+import 'package:pos_system/features/sales/logic/sales_cubit.dart';
+import 'package:pos_system/features/sales/ui/sales_screen.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class ButtonNavigationScreen extends StatefulWidget {
   const ButtonNavigationScreen({super.key});
@@ -37,38 +44,49 @@ class _ButtonNavigationScreenState extends State<ButtonNavigationScreen>
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         backgroundColor: AppColors.mainColor,
         child: SvgPicture.asset(ImageAsset.scanICon),
-        onPressed: () {
-          ///
-          ///
+        onPressed: () async {
+          if (ButtonNavigationCubit
+              .get(context)
+              .selectedIndex == 2) {
+            String? scanResult = await SimpleBarcodeScanner.scanBarcode(
+              context,
+              isShowFlashIcon: true,
+              delayMillis: 2000,
+              cameraFace: CameraFace.back,
+            );
+            SalesCubit.get(context).changeSearchController(scanResult??"");
+          } else {
+            ErrorAlertDialog.getDialog(
+                context, "قم بالانتقال الي صفحة المبيعات");
+          }
         },
       ),
       bottomNavigationBar:
-          BlocBuilder<ButtonNavigationCubit, ButtonNavigationState>(
+      BlocBuilder<ButtonNavigationCubit, ButtonNavigationState>(
         buildWhen: (previous, current) {
           return current is OnChangeTapState;
         },
         builder: (context, state) {
           return AnimatedBottomNavigationBar(
             icons: ButtonNavigationItems(
-                    items: ButtonNavigationCubit.get(context)
-                        .buttonBarItems(context))
+                items: ButtonNavigationCubit.get(context)
+                    .buttonBarItems(context))
                 .items
                 .map((item) => item.image)
                 .toList(),
             titleText: ButtonNavigationItems(
-                    items: ButtonNavigationCubit.get(context)
-                        .buttonBarItems(context))
+                items: ButtonNavigationCubit.get(context)
+                    .buttonBarItems(context))
                 .items
                 .map((item) => item.title)
                 .toList(),
             titleTextStyle: ButtonNavigationItems(
-                    items: ButtonNavigationCubit.get(context)
-                        .buttonBarItems(context))
+                items: ButtonNavigationCubit.get(context)
+                    .buttonBarItems(context))
                 .items
                 .map((item) => item.titleTextStyle)
                 .toList(),

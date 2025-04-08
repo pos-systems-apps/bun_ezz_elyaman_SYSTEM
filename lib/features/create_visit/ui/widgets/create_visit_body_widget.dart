@@ -92,13 +92,8 @@ class CreateVisitBodyWidget extends StatelessWidget {
 
   void validateCreateVisit(BuildContext context) async {
     if (CreateVisitCubit.get(context).visitKey.currentState!.validate()) {
-      Position? position = await YourLocation.getCurrentLocation();
-      if (position == null) {
-        ErrorAlertDialog.getDialog(context, "قم باختيار الموقع ");
-      } else {
-        CreateVisitCubit.get(context)
-            .createVisit(position.latitude, position.longitude);
-      }
+      CreateVisitCubit.get(context)
+          .createVisit(context);
     }
   }
 }

@@ -24,8 +24,6 @@ class SplashService {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return UsersResponseModel.fromJson(jsonDecode(response.body));
     } else {

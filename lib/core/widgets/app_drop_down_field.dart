@@ -61,8 +61,10 @@ class AppDropDownField extends StatelessWidget {
       onChanged: (dynamic item) {
         onChanged(item!);
       },
+      isExpanded: true,
       decoration: InputDecoration(
         isDense: true,
+
         contentPadding: contentPadding ??
             EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
         focusedBorder: focusedBorder ??

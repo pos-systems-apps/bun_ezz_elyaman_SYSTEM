@@ -75,12 +75,14 @@ class RouteGenerator {
                   create: (context) => LoginCubit(getIt()),
                   child: LoginScreen(),
                 ));
-
       case Routes.buttonNavigationScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) => ButtonNavigationCubit(),
-                  child: ButtonNavigationScreen(),
+                  create:(context) => SalesCubit(getIt(),getIt())..getCategoriesFromHere(),
+                  child: BlocProvider(
+                    create: (context) => ButtonNavigationCubit(),
+                    child: ButtonNavigationScreen(),
+                  ),
                 ));
 
       case Routes.reseatScreen:

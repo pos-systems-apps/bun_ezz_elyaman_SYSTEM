@@ -22,6 +22,8 @@ class PrintResourcesInvoicesService {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
+
+
     if (response.statusCode == StatusCode.ok) {
       return InvoiceResourcesResponseModel.fromJson(jsonDecode(response.body));
     } else {

@@ -41,10 +41,7 @@ class ButtonNavigationCubit extends Cubit<ButtonNavigationState> {
           child: CollectionsScreen(),
         );
       case 2:
-        return BlocProvider(
-          create: (_) => SalesCubit(getIt(), getIt())..getCategoriesFromHere(),
-          child: SalesScreen(),
-        );
+        return SalesScreen();
       case 3:
         return BlocProvider(
           create: (_) => AddRequestResourcesCubit(getIt(), getIt())..getCategoriesFromHere(),

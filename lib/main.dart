@@ -26,7 +26,7 @@ Future<void> main() async {
   runApp(EasyLocalization(
     supportedLocales: const [
       Locale('ar', 'EG'), // Arabic first
-      Locale('en', 'US'), // English second
+      Locale('en', 'US'), // English second1
     ],
     saveLocale: true,
     startLocale: const Locale('ar', 'EG'),

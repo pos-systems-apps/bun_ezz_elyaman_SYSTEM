@@ -43,12 +43,11 @@ class SalesCubit extends Cubit<SalesState> {
   ScrollController categoriesScrollController = ScrollController();
 
   getCategoriesFromHere() {
-
     categories = [];
     categoriesCurrentPage = 1;
     categoriesLastPage = 10000;
     scrollListenerGetCategories();
-     getCategories();
+    getCategories();
   }
 
   scrollListenerGetCategories() {
@@ -66,7 +65,6 @@ class SalesCubit extends Cubit<SalesState> {
   List<Category> categories = [];
 
   getCategories() {
-
     emit(OnGetCategoryLoadingState());
     _salesRepo.getCategories(categoriesCurrentPage).then((value) {
       value.fold((l) {
@@ -147,15 +145,20 @@ class SalesCubit extends Cubit<SalesState> {
 
   ///search product
   ///
-  TextEditingController searchProductController = TextEditingController();
+   TextEditingController searchProductController = TextEditingController();
 
-  List<Product> searchProducts = [];
+   changeSearchController(String search) {
+    searchProductController.text = search;
+    getSearchProductsFromHere();
+  }
 
-  int searchProductsCurrentPage = 1;
-  int searchProductsLastPage = 10000;
-  ScrollController searchProductsScrollController = ScrollController();
+   List<Product> searchProducts = [];
 
-  getSearchProductsFromHere() {
+   int searchProductsCurrentPage = 1;
+   int searchProductsLastPage = 10000;
+   ScrollController searchProductsScrollController = ScrollController();
+
+    getSearchProductsFromHere() {
     searchProducts = [];
     searchProductsCurrentPage = 1;
     searchProductsLastPage = 10000;
@@ -163,7 +166,7 @@ class SalesCubit extends Cubit<SalesState> {
     getSearchProducts();
   }
 
-  scrollListenerGetSearchProducts() {
+   scrollListenerGetSearchProducts() {
     searchProductsScrollController.addListener(() {
       if (searchProductsCurrentPage < searchProductsLastPage) {
         if (searchProductsScrollController.position.pixels ==
@@ -175,7 +178,7 @@ class SalesCubit extends Cubit<SalesState> {
     });
   }
 
-  getSearchProducts() {
+   getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
         .getSearchProducts(searchProductController.text, selectedOrderType.id,

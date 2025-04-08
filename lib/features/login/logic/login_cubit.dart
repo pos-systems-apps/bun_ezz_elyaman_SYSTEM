@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:pos_system/core/services/location_service.dart';
 import 'package:pos_system/features/login/data/models/login_response_model.dart';
+import 'package:pos_system/features/login/data/models/update_user_location_request.dart';
 
 import '../../../core/services/cache_helper.dart';
 import '../../../core/utils/constant_keys.dart';
@@ -22,6 +25,10 @@ class LoginCubit extends Cubit<LoginState> {
         emit(OnLoginErrorState(error: l.message));
       }, (r) async {
         await saveUserToken(r);
+        Position? position = await YourLocation.getCurrentLocation();
+        await _loginRepo.updateUseLocation(UpdateUserLocationRequest(
+            latitude: position?.latitude ?? 0,
+            longitude: position?.longitude ?? 0));
         emit(OnLoginSuccessState());
       });
     }).catchError((error) {

@@ -11,4 +11,5 @@ class LoginApiEndPoints {
   static const systemSettingUrl = 'https://testnewpos.iqbrandx.com/api/v1/config';
   static final userSettingUrl = '${AppConstant.baseUrl}api/v1/dataadmin';
   static final loginUrl = '${AppConstant.baseUrl}api/v1/login';
+  static final updateUserLocationUrl = '${AppConstant.baseUrl}api/v1/update/user';
 }

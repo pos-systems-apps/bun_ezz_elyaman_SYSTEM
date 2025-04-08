@@ -12,7 +12,6 @@ class PrintResourcesInvoicesRepo {
   Future<Either<Failure, InvoiceResourcesResponseModel>> getResourcesInvoiceDetails(
       int invoiceId) async {
     try {
-       Right( _printResourcesInvoicesService.getResourcesInvoiceDetails(invoiceId));
       return Right(await _printResourcesInvoicesService.getResourcesInvoiceDetails(invoiceId));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
