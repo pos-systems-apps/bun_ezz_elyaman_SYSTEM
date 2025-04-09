@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pos_system/core/services/location_service.dart';
+import 'package:pos_system/core/services/services_locator.dart';
+import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/features/login/data/models/login_response_model.dart';
 import 'package:pos_system/features/login/data/models/update_user_location_request.dart';
 
@@ -37,11 +39,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> saveUserToken(LoginResponseModel loginResponse) async {
-    ///save image
-    // await CacheHelper.setSecuredString(
-    //     ConstantKeys.saveVehicleCodeToShared, loginResponse.data.vehicleCode);
-    // await CacheHelper.setSecuredString(
-    //     ConstantKeys.saveMandoubeCodeToShared, loginResponse.data.mandobCode);
+
     await CacheHelper.setSecuredString(ConstantKeys.saveMandoubeNameToShared,
         loginResponse.data.firstName + loginResponse.data.lastName);
     await CacheHelper.setSecuredString(
@@ -50,6 +48,24 @@ class LoginCubit extends Cubit<LoginState> {
         ConstantKeys.savePhoneToShared, loginResponse.data.phone);
     await CacheHelper.setSecuredString(
         ConstantKeys.saveTokenToShared, loginResponse.token);
+  await CacheHelper.setSecuredString(
+        ConstantKeys.saveImageToShared, loginResponse.data.image);
+
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveDashBoardToShared, loginResponse.data.dashboard.toString());
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveStockToShared, loginResponse.data.stock.toString());
+
+    ///type == cash or credit or full
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveTypeToShared, loginResponse.data.type);
+
+    ///store user constant
+    await getIt<AppConstant>().setUserConstantData(
+        typeNew: loginResponse.data.type );
+
+
+
   }
 
   static LoginCubit get(context) => BlocProvider.of(context);

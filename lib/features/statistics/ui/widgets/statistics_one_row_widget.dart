@@ -24,8 +24,7 @@ class StatisticsOneRowWidget extends StatelessWidget {
             title: context.locale.languageCode == "ar"
                 ? statisticsData[0].nameAr
                 : statisticsData[0].nameEn,
-            money: (statisticsData[0].currency ? (AppConstant.currency) : "") +
-                " ${statisticsData[0].money.toStringAsFixed(2)}",
+            money: "${statisticsData[0].currency ? (AppConstant.currency) : ""} ${statisticsData[0].money.toStringAsFixed(2)}",
             color: AppColors.random1(),
             icon: ImageAsset.random1(),
           ),
@@ -39,8 +38,7 @@ class StatisticsOneRowWidget extends StatelessWidget {
                         title: context.locale.languageCode == "ar"
                             ? item.nameAr
                             : item.nameEn,
-                        money: (item.currency ? (AppConstant.currency ) : "") +
-                            " ${item.money.toStringAsFixed(2)}",
+                        money: "${item.currency ? (AppConstant.currency ) : ""} ${item.money.toStringAsFixed(2)}",
                         color: AppColors.random1(),
                         icon: ImageAsset.random1(),
                       ),
@@ -53,8 +51,7 @@ class StatisticsOneRowWidget extends StatelessWidget {
             title: context.locale.languageCode == "ar"
                 ? statisticsData[2].nameAr
                 : statisticsData[2].nameEn,
-            money: (statisticsData[2].currency ? (AppConstant.currency ) : "") +
-                "  ${statisticsData[2].money.toStringAsFixed(2)}",
+            money: "${statisticsData[2].currency ? (AppConstant.currency ) : ""}  ${statisticsData[2].money.toStringAsFixed(2)}",
             color: AppColors.random1(),
             icon: ImageAsset.random1(),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:pos_system/core/utils/enums.dart';
 import 'package:pos_system/features/add_request_resources/data/entities/resource_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
@@ -24,9 +25,7 @@ class AppConstant {
   static String timeZone = "";
   static String numberTax = "";
   static String commercialRegistry = "";
-  static String cash = "0";
-  static String shabaka = "0";
-  static String agel = "0";
+  static UserPayType? type;
 
   Future<void> setAppConstantData({
     required String basUrl,
@@ -40,9 +39,6 @@ class AppConstant {
     required String timeZoneNew,
     required String numberTaxNew,
     required String commercialRegistryNew,
-    required String cashNew,
-    required String shabakaNew,
-    required String agelNew,
   }) async {
     baseUrl = basUrl;
     currency = currencyNew;
@@ -55,18 +51,24 @@ class AppConstant {
     timeZone = timeZoneNew;
     numberTax = numberTaxNew;
     commercialRegistry = commercialRegistryNew;
-    cash = cashNew;
-    shabaka = shabakaNew;
-    agel = agelNew;
+  }
+
+  Future<void> setUserConstantData({
+    required String typeNew,
+  }) async {
+    type = typeNew == "cash"
+        ? UserPayType.cash
+        : typeNew == "credit"
+            ? UserPayType.credit
+            : UserPayType.full;
     pays = [
-      PayClass(id: 1, nameAr: "كاش", nameEn: "cash", isShown: getCash() == "1"),
-    PayClass(id: 2, nameAr: "اجل", nameEn: "agel", isShown: getAgel() == "1"),
+      PayClass(id: 1, nameAr: "كاش", nameEn: "cash", isShown: (getType()==UserPayType.cash  ||getType()==UserPayType.full) ),
+      PayClass(id: 2, nameAr: "اجل", nameEn: "agel", isShown: (getType()==UserPayType.credit  ||getType()==UserPayType.full)),
       PayClass(
           id: 3,
           nameAr: "شبكة",
           nameEn: "shabaka",
-          isShown: getShabake() == "1"),
-
+          isShown: getType()==UserPayType.full),
     ];
   }
 
@@ -118,16 +120,8 @@ class AppConstant {
     return commercialRegistry;
   }
 
-  static String getCash() {
-    return cash;
-  }
-
-  static String getShabake() {
-    return shabaka;
-  }
-
-  static String getAgel() {
-    return agel;
+  static UserPayType? getType() {
+    return type;
   }
 
   static String getBaseUrl() {
@@ -143,8 +137,10 @@ class AppConstant {
   ];
 
   static List<OrderTypeClass> orderTypes = [
-    OrderTypeClass(id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales print_invoice"),
-    OrderTypeClass(id: 7, nameAr: "فاتورة مرتجعات ", nameEn: "Return print_invoice"),
+    OrderTypeClass(
+        id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales print_invoice"),
+    OrderTypeClass(
+        id: 7, nameAr: "فاتورة مرتجعات ", nameEn: "Return print_invoice"),
   ];
 
   static List<ResourceTypeClass> resourcesTypes = [

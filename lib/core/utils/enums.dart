@@ -1,5 +1,13 @@
 
 
+
+enum UserPayType {
+  cash,
+  credit,
+  full
+}
+
+
 enum RequestsType {
   noInternet,
   signIn,

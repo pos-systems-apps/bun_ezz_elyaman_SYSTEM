@@ -32,6 +32,8 @@ class LoginResponseDataModel {
   String type;
   String role;
   int numberOfDays;
+  int dashboard;
+  int stock;
 
   LoginResponseDataModel({
     required this.id,
@@ -45,6 +47,8 @@ class LoginResponseDataModel {
     required this.vehicleCode,
     required this.role,
     required this.numberOfDays,
+    required this.dashboard,
+    required this.stock,
   });
 
   factory LoginResponseDataModel.fromJson(Map<String, dynamic> json) =>
@@ -60,5 +64,7 @@ class LoginResponseDataModel {
         vehicleCode: json['vehicle_code'] ?? "",
         role: json['role'] ?? "",
         numberOfDays: json['number_of_days'] ?? 0,
+        dashboard: json['dashboard'] ?? 0,
+        stock: json['stock'] ?? 0,
       );
 }

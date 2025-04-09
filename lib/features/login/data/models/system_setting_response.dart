@@ -29,9 +29,6 @@ class SystemSettingResponseInfo {
   String mainColor;
   String secondColor;
   String baseURl;
-  String cash;
-  String shabaka;
-  String agel;
 
   SystemSettingResponseInfo({
     required this.logo,
@@ -50,9 +47,6 @@ class SystemSettingResponseInfo {
     required this.mainColor,
     required this.secondColor,
     required this.baseURl,
-    required this.cash,
-    required this.shabaka,
-    required this.agel,
   });
 
   factory SystemSettingResponseInfo.fromJson(Map<String, dynamic> json) =>
@@ -74,8 +68,5 @@ class SystemSettingResponseInfo {
         mainColor: json['color1'] ?? "",
         secondColor: json['color2'] ?? "",
         baseURl: json['base_url'] ?? "",
-        cash: json['cash'] ?? "0",
-        shabaka: json['shabaka'] ?? "0",
-        agel: json['agel'] ?? "0",
       );
 }

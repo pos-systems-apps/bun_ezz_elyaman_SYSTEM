@@ -2,14 +2,21 @@ class ConstantKeys {
   /// shared
   static const saveTokenToShared = "TOKEN";
 
+
+  ///user setting
   static const saveMandoubeNameToShared = "MANDOUBE_NAME";
   static const saveMandoubeCodeToShared = "MANDOUBE_CODE";
   static const saveVehicleCodeToShared = "VECICLE_CODE";
   static const saveEmailToShared = "EMAIL";
   static const savePhoneToShared = "PHONE";
 
+  static const saveImageToShared = "IMAGE";
+  static const saveTypeToShared = "TYPE";
+  static const saveDashBoardToShared = "DASHBOARD";
+  static const saveStockToShared = "STOCK";
 
 
+  ///system setting
   static const saveLogoToShared = "SHOP_LOGO";
   static const savePaginationNumberToShared = "PAGINATION_NUMBER";
   static const saveCurrencyToShared = "CURRENCY";
@@ -26,9 +33,7 @@ class ConstantKeys {
   static const saveMainColorToShared = "MAIN_COLOR";
   static const saveSecondColorToShared = "SECOND_COLOR";
   static const saveBaseURLToShared = "BASE_URL";
-  static const saveCashToShared = "CASH";
-  static const saveShabakaToShared = "SHABAKA";
-  static const saveAgelToShared = "AGEL";
+
 
 
   ///

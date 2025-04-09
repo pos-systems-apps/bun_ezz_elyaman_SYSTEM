@@ -131,12 +131,6 @@ class _SplashScreenState extends State<SplashScreen> {
     await CacheHelper.setSecuredString(ConstantKeys.saveBaseURLToShared,
         value.systemSettingResponseInfo.baseURl);
 
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveCashToShared, value.systemSettingResponseInfo.cash);
-    await CacheHelper.setSecuredString(ConstantKeys.saveShabakaToShared,
-        value.systemSettingResponseInfo.shabaka);
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveAgelToShared, value.systemSettingResponseInfo.agel);
 
     ///store app constant
     await getIt<AppConstant>().setAppConstantData(
@@ -151,10 +145,7 @@ class _SplashScreenState extends State<SplashScreen> {
         timeZoneNew: value.systemSettingResponseInfo.timeZone,
         numberTaxNew: value.systemSettingResponseInfo.numberTax,
         commercialRegistryNew:
-            value.systemSettingResponseInfo.commercialRegistry,
-        cashNew: value.systemSettingResponseInfo.cash,
-        shabakaNew: value.systemSettingResponseInfo.shabaka,
-        agelNew: value.systemSettingResponseInfo.agel);
+            value.systemSettingResponseInfo.commercialRegistry,);
 
     ///store app colors
 
@@ -179,6 +170,25 @@ class _SplashScreenState extends State<SplashScreen> {
         ConstantKeys.saveEmailToShared, value.userSettingResponseInfo.email);
     await CacheHelper.setSecuredString(
         ConstantKeys.savePhoneToShared, value.userSettingResponseInfo.phone);
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveImageToShared, value.userSettingResponseInfo.image);
+
+   await CacheHelper.setSecuredString(
+        ConstantKeys.saveDashBoardToShared, value.userSettingResponseInfo.dashboard.toString());
+
+   await CacheHelper.setSecuredString(
+        ConstantKeys.saveStockToShared, value.userSettingResponseInfo.stock.toString());
+
+    ///type == cash or credit or full
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveTypeToShared, value.userSettingResponseInfo.type);
+
+    ///store user constant
+    await getIt<AppConstant>().setUserConstantData(
+      typeNew: value.userSettingResponseInfo.type );
+
+
+
   }
 
   @override

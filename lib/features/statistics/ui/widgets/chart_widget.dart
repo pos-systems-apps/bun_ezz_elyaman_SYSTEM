@@ -8,9 +8,10 @@ import 'package:pos_system/features/statistics/data/models/statistics_response_m
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartWidget extends StatelessWidget {
+  final bool showAll;
   final StatisticsResponseModel statisticsResponseModel;
 
-  const ChartWidget({required this.statisticsResponseModel, super.key});
+  const ChartWidget({required this.showAll,required this.statisticsResponseModel, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class ChartWidget extends StatelessWidget {
         series: <ColumnSeries<StatisticsData, String>>[
           ColumnSeries<StatisticsData, String>(
             dataSource: statisticsResponseModel.statisticsData
-                .where((item) => item.money > 0)
+                .where((item) => showAll ?  item.money > 0 :(item.showInAllStatus))
                 .toList(),
             width: .6,
             dataLabelSettings: DataLabelSettings(isVisible: true),

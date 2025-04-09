@@ -23,18 +23,21 @@ class StatisticsData {
   String nameEn;
   bool currency;
   double money;
+  bool showInAllStatus;
 
   StatisticsData({
     required this.nameAr,
     required this.nameEn,
     required this.currency,
     required this.money,
+    required this.showInAllStatus,
   });
 
   factory StatisticsData.fromJson(Map<String, dynamic> json) => StatisticsData(
         nameAr: json['ar'] ?? "",
         nameEn: json['en'] ?? "",
         currency: json['currency'] == null ? true : false,
+    showInAllStatus: json['type'] == null ? true : false,
         money: double.tryParse(json['value'].toString()) ?? 0,
       );
 }

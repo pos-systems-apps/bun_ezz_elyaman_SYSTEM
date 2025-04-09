@@ -25,9 +25,12 @@ class UserSettingResponseInfo {
 
   String mandobCode;
   String vehicleCode;
-  String type;
   String role;
+  String type;
+
   int numberOfDays;
+  int dashboard;
+  int stock;
 
   UserSettingResponseInfo({
     required this.id,
@@ -41,6 +44,8 @@ class UserSettingResponseInfo {
     required this.vehicleCode,
     required this.role,
     required this.numberOfDays,
+    required this.dashboard,
+    required this.stock,
   });
 
   factory UserSettingResponseInfo.fromJson(Map<String, dynamic> json) =>
@@ -56,5 +61,7 @@ class UserSettingResponseInfo {
         vehicleCode: json['vehicle_code'] ?? "",
         role: json['role'] ?? "",
         numberOfDays: json['number_of_days'] ?? 0,
+        dashboard: json['dashboard'] ?? 0,
+        stock: json['stock'] ?? 0,
       );
 }
