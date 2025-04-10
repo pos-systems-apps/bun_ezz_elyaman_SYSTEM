@@ -31,6 +31,11 @@ class UserSettingResponseInfo {
   int numberOfDays;
   int dashboard;
   int stock;
+  int store;
+  int admin;
+  int pos;
+  int sales;
+
 
   UserSettingResponseInfo({
     required this.id,
@@ -46,6 +51,10 @@ class UserSettingResponseInfo {
     required this.numberOfDays,
     required this.dashboard,
     required this.stock,
+    required this.store,
+    required this.admin,
+    required this.pos,
+    required this.sales,
   });
 
   factory UserSettingResponseInfo.fromJson(Map<String, dynamic> json) =>
@@ -63,5 +72,10 @@ class UserSettingResponseInfo {
         numberOfDays: json['number_of_days'] ?? 0,
         dashboard: json['dashboard'] ?? 0,
         stock: json['stock'] ?? 0,
+
+        store: json['store'] ?? 0,
+        admin: json['admin'] ?? 0,
+        pos: json['pos'] ?? 0,
+        sales: json['sales'] ?? 0,
       );
 }

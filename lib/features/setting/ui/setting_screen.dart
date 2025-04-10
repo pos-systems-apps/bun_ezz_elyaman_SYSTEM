@@ -8,6 +8,7 @@ import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/setting/ui/widgets/setting_app_bar_widget.dart';
 import 'package:pos_system/features/setting/ui/widgets/setting_item_widget.dart';
 
@@ -74,8 +75,19 @@ class SettingScreen extends StatelessWidget {
                   SettingItemWidget(
                       text: "اضافة تحويل",
                       image: ImageAsset.setting7Icon,
-                      onTap: () {
-                        context.pushNamed(Routes.addTransferSectionScreen);
+                      onTap: () async{
+
+                       String?  sales =
+                            await CacheHelper.getSecuredString(ConstantKeys.saveSalesToShared);
+
+
+                       if(sales=="1"){
+                         context.pushNamed(Routes.addTransferSectionScreen);
+                       }else{
+                         ErrorAlertDialog.getDialog(context, "غير مسموح لك باضافة تحويلات . اطلب اذن من المدير");
+                       }
+
+
                       }),
                   verticalSpace(8),
                   SettingItemWidget(

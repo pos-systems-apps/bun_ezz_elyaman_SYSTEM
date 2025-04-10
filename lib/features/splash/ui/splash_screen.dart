@@ -179,6 +179,18 @@ class _SplashScreenState extends State<SplashScreen> {
    await CacheHelper.setSecuredString(
         ConstantKeys.saveStockToShared, value.userSettingResponseInfo.stock.toString());
 
+
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveStoreToShared, value.userSettingResponseInfo.store.toString());
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveAdminToShared, value.userSettingResponseInfo.admin.toString());
+    await CacheHelper.setSecuredString(
+        ConstantKeys.savePosToShared, value.userSettingResponseInfo.pos.toString());
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveSalesToShared, value.userSettingResponseInfo.sales.toString());
+
+
+
     ///type == cash or credit or full
     await CacheHelper.setSecuredString(
         ConstantKeys.saveTypeToShared, value.userSettingResponseInfo.type);

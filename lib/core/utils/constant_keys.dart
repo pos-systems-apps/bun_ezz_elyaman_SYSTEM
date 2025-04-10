@@ -15,6 +15,11 @@ class ConstantKeys {
   static const saveDashBoardToShared = "DASHBOARD";
   static const saveStockToShared = "STOCK";
 
+  static const saveStoreToShared = "STORE";
+  static const saveAdminToShared = "ADMIN";
+  static const savePosToShared = "POS";
+  static const saveSalesToShared = "SALES";
+
 
   ///system setting
   static const saveLogoToShared = "SHOP_LOGO";

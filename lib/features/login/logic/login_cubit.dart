@@ -56,6 +56,18 @@ class LoginCubit extends Cubit<LoginState> {
     await CacheHelper.setSecuredString(
         ConstantKeys.saveStockToShared, loginResponse.data.stock.toString());
 
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveStoreToShared, loginResponse.data.store.toString());
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveAdminToShared, loginResponse.data.admin.toString());
+    await CacheHelper.setSecuredString(
+        ConstantKeys.savePosToShared, loginResponse.data.pos.toString());
+    await CacheHelper.setSecuredString(
+        ConstantKeys.saveSalesToShared, loginResponse.data.sales.toString());
+
+
+
+
     ///type == cash or credit or full
     await CacheHelper.setSecuredString(
         ConstantKeys.saveTypeToShared, loginResponse.data.type);
