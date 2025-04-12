@@ -6,7 +6,7 @@ import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/features/add_request_resources/logic/add_request_resources_cubit.dart';
 import 'package:pos_system/features/add_request_resources/logic/add_request_resources_state.dart';
 import 'package:pos_system/features/add_request_resources/ui/add_request_resources_widgets/product_and_category_selected/add_request_resources_products_and_search_widget.dart';
-import 'package:pos_system/features/sales/ui/sales_widgets/product_and_category_selected/category_products_shimmer_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_section_widget/sales_widgets/product_and_category_selected/category_products_shimmer_widget.dart';
 
 class AddRequestResourcesProductsWidget extends StatelessWidget {
   const AddRequestResourcesProductsWidget({super.key});

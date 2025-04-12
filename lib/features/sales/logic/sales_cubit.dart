@@ -6,6 +6,8 @@ import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/extentions.dart';
+import 'package:pos_system/features/print_invoice/data/models/invoice_response_model.dart';
+import 'package:pos_system/features/print_invoice/data/repo/print_invoice_repo.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
@@ -21,18 +23,23 @@ import 'sales_state.dart';
 class SalesCubit extends Cubit<SalesState> {
   final SalesRepo _salesRepo;
   final SplashRepo _splashRepo;
+  final PrintInvoiceRepo _printInvoiceRepo;
 
-  SalesCubit(this._salesRepo, this._splashRepo) : super(InitialState());
+  SalesCubit(this._salesRepo, this._splashRepo, this._printInvoiceRepo)
+      : super(InitialState());
 
+  ///sales section
   static List<OrderTypeClass> orderTypes = AppConstant.orderTypes;
 
   OrderTypeClass selectedOrderType = orderTypes[0];
 
   changeSelectedBillType(OrderTypeClass value) {
     selectedOrderType = value;
-    getCategoriesFromHere();
-    changeSelectedCategory(null);
-    selectedProducts = [];
+    if (value.id == 4) {
+      getCategoriesFromHere();
+      changeSelectedCategory(null);
+      selectedProducts = [];
+    } else {}
     emit(OnChangeOrderTypeSelectState());
   }
 
@@ -145,20 +152,20 @@ class SalesCubit extends Cubit<SalesState> {
 
   ///search product
   ///
-   TextEditingController searchProductController = TextEditingController();
+  TextEditingController searchProductController = TextEditingController();
 
-   changeSearchController(String search) {
+  changeSearchController(String search) {
     searchProductController.text = search;
     getSearchProductsFromHere();
   }
 
-   List<Product> searchProducts = [];
+  List<Product> searchProducts = [];
 
-   int searchProductsCurrentPage = 1;
-   int searchProductsLastPage = 10000;
-   ScrollController searchProductsScrollController = ScrollController();
+  int searchProductsCurrentPage = 1;
+  int searchProductsLastPage = 10000;
+  ScrollController searchProductsScrollController = ScrollController();
 
-    getSearchProductsFromHere() {
+  getSearchProductsFromHere() {
     searchProducts = [];
     searchProductsCurrentPage = 1;
     searchProductsLastPage = 10000;
@@ -166,7 +173,7 @@ class SalesCubit extends Cubit<SalesState> {
     getSearchProducts();
   }
 
-   scrollListenerGetSearchProducts() {
+  scrollListenerGetSearchProducts() {
     searchProductsScrollController.addListener(() {
       if (searchProductsCurrentPage < searchProductsLastPage) {
         if (searchProductsScrollController.position.pixels ==
@@ -178,7 +185,7 @@ class SalesCubit extends Cubit<SalesState> {
     });
   }
 
-   getSearchProducts() {
+  getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
         .getSearchProducts(searchProductController.text, selectedOrderType.id,
@@ -353,6 +360,31 @@ class SalesCubit extends Cubit<SalesState> {
       });
     }).catchError((error) {
       emit(OnCreateOrderCatchErrorState(message: "error".tr()));
+    });
+  }
+
+  ///return section
+
+  TextEditingController billIdController = TextEditingController();
+
+  GlobalKey<FormState> billKey = GlobalKey();
+
+  InvoiceResponseModel? invoiceResponseModel;
+
+  getInvoiceDetails() {
+    invoiceResponseModel=null;
+    emit(OnGetInvoiceDetailsLoadingState());
+    _printInvoiceRepo
+        .getInvoiceDetails(int.tryParse(billIdController.text) ?? 0)
+        .then((value) {
+      value.fold((l) {
+        emit(OnGetInvoiceDetailsErrorState());
+      }, (r) {
+        invoiceResponseModel = r;
+        emit(OnGetInvoiceDetailsSuccessState());
+      });
+    }).catchError((error) {
+      emit(OnGetInvoiceDetailsCatchErrorState());
     });
   }
 

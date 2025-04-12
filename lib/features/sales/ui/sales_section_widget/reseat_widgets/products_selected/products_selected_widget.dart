@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/logic/sales_state.dart';
-import 'package:pos_system/features/sales/ui/reseat_widgets/products_selected/product_selected_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_section_widget/reseat_widgets/products_selected/product_selected_widget.dart';
 
 class ProductsSelectedWidget extends StatelessWidget {
   const ProductsSelectedWidget({super.key});

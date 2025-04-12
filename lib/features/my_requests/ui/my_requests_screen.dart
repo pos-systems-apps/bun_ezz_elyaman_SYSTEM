@@ -5,7 +5,6 @@ import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/my_requests/ui/widgets/my_requests_body_widget.dart';
-import 'package:pos_system/features/sales/ui/sales_widgets/sales_body_widget.dart';
 
 class MyRequestsScreen extends StatelessWidget {
   const MyRequestsScreen({super.key});

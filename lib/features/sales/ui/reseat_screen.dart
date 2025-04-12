@@ -4,7 +4,7 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
-import 'package:pos_system/features/sales/ui/reseat_widgets/reseat_body_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_section_widget/reseat_widgets/reseat_body_widget.dart';
 
 class ReseatScreen extends StatelessWidget {
   const ReseatScreen({

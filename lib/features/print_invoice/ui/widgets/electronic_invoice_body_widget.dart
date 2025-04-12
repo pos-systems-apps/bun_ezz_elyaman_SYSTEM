@@ -212,6 +212,8 @@ class _ElectronicInvoiceBodyWidgetState
                                       .nameAr
                                       .toString()),
                               verticalSpace(16),
+
+
                               HorizontalDashedWidget(width: 4, space: 4),
                               verticalSpace(16),
                               MoneyTitleWidget2(),
@@ -231,7 +233,7 @@ class _ElectronicInvoiceBodyWidgetState
                                                   text: item.nameAr,
                                                   quantity: item.quantity
                                                       .toStringAsFixed(2),
-                                                  measure: item.unitValue == 0
+                                                  measure: item.unit == 0
                                                       ? AppConstant
                                                           .measureUnits[1]
                                                           .nameAr
@@ -261,20 +263,20 @@ class _ElectronicInvoiceBodyWidgetState
                               MoneyWidget3(
                                   text: "اجمالي الفاتوره",
                                   value:
-                                      "${AppConstant.currency} ${PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount}"),
+                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "خصم المنتج",
                                   value:
-                                      "${AppConstant.currency} ${PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount}"),
+                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount)}"),
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "خصم اضافي",
                                   value:
-                                      "${AppConstant.currency} ${PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount}"),
+                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
                               verticalSpace(8),
                               MoneyWidget3(
-                                  text: "ضريبه القيمه المضافه",
+                                  text: "الضريبة",
                                   value: "${AppConstant.currency} 0"),
                               verticalSpace(24),
                               HorizontalDashedWidget(width: 4, space: 4),
@@ -312,7 +314,13 @@ class _ElectronicInvoiceBodyWidgetState
                                           .font12greyColor33Weight600),
                                 ],
                               ),
+
+
+
                               verticalSpace(24),
+
+
+
                               if (PrintInvoiceCubit.get(context)
                                       .invoiceResponseModel!
                                       .invoice
@@ -392,6 +400,8 @@ class _ElectronicInvoiceBodyWidgetState
                             );
                           },
                         ),
+
+
                         verticalSpace(16),
                         _selectDeviceWidget(),
                         verticalSpace(50),

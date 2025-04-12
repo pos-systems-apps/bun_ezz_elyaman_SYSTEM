@@ -12,7 +12,7 @@ import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
-import 'package:pos_system/features/sales/ui/sales_widgets/product_and_category_selected/sales_product_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_section_widget/sales_widgets/product_and_category_selected/sales_product_widget.dart';
 
 class AllProductsAndSearchProductsWidget extends StatelessWidget {
   final bool isSearch;

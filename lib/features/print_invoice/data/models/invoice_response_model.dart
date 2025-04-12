@@ -45,7 +45,12 @@ class Invoice {
       required this.customer,
       this.productsDiscount = 0}) {
     productsDiscount = ((details.fold(
-        0, (sum, item) => sum + (item.discountPerItem * item.quantity))));
+        0,
+        (sum, item) =>
+            sum +
+            ((item.unit == 0)
+                ? (item.discountPerItem/item.unitValuePerItem) * item.quantity
+                : item.discountPerItem * item.quantity))));
   }
 
   factory Invoice.fromJson(Map<String, dynamic> json) {
@@ -74,7 +79,8 @@ class InvoiceDetail {
   String nameEn;
   double quantity;
   double discountPerItem;
-  int unitValue;
+  int unit;
+  double unitValuePerItem;
   double price;
 
   InvoiceDetail({
@@ -83,7 +89,8 @@ class InvoiceDetail {
     required this.nameEn,
     required this.quantity,
     required this.discountPerItem,
-    required this.unitValue,
+    required this.unit,
+    required this.unitValuePerItem,
     required this.price,
   });
 
@@ -94,7 +101,8 @@ class InvoiceDetail {
       nameEn: json['product']['name_en'] ?? "",
       quantity: (json['quantity'] ?? 0).toDouble(),
       discountPerItem: (json['discount_on_product'] ?? 0).toDouble(),
-      unitValue: json['unit']??0,
+      unit: json['unit'] ?? 0,
+      unitValuePerItem: (json['product']['unit_value'] ?? 0).toDouble(),
       price: (json['price'] ?? 0).toDouble(),
     );
   }

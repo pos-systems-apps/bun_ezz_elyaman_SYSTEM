@@ -14,7 +14,6 @@ import 'package:pos_system/features/sales/data/entities/percent_types_class.dart
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/logic/sales_state.dart';
-import 'package:pos_system/features/sales/ui/reseat_widgets/sales_money_text_field_widget.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
 
 class MoneyAndDiscountsWidget extends StatelessWidget {

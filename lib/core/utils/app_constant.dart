@@ -175,7 +175,7 @@ class AppConstant {
   }
 
   static String confirmRoundTo2Numbers(double number) {
-    return number.toStringAsFixed(2);
+    return number.toStringAsFixed(3);
   }
 
   static Map<String, int> requestsType = {

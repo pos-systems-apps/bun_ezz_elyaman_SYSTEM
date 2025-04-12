@@ -58,10 +58,12 @@ class ReseatSelectedProducts {
 
   double getExtraDiscount(int? discountId, String discount) {
     extraDiscount = 0;
+
     double productsPriceAfterDiscount = getTotalReseat() - getTotalDiscount();
     if (discountId == 2) {
       extraDiscount =
           ((double.tryParse(discount) ?? 0) * productsPriceAfterDiscount) / 100;
+
     } else {
       extraDiscount = (double.tryParse(discount) ?? 0);
     }

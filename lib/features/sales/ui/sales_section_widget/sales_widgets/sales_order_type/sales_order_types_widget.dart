@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/logic/sales_state.dart';
-import 'package:pos_system/features/sales/ui/sales_widgets/sales_order_type/sales_select_item_widget.dart';
-import 'package:pos_system/features/sales/ui/sales_widgets/sales_order_type/sales_vertical_divider_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_section_widget/sales_widgets/sales_order_type/sales_select_item_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_section_widget/sales_widgets/sales_order_type/sales_vertical_divider_widget.dart';
 
 class SalesOrderTypesWidget extends StatelessWidget {
   const SalesOrderTypesWidget({super.key});

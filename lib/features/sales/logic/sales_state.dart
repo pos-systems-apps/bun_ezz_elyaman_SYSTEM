@@ -54,3 +54,10 @@ class OnCreateOrderCatchErrorState extends SalesState {
 
   OnCreateOrderCatchErrorState({required this.message});
 }
+class OnGetInvoiceDetailsLoadingState extends SalesState {}
+class OnGetInvoiceDetailsErrorState extends SalesState {}
+class OnGetInvoiceDetailsSuccessState extends SalesState {}
+class OnGetInvoiceDetailsCatchErrorState extends SalesState {}
+
+
+

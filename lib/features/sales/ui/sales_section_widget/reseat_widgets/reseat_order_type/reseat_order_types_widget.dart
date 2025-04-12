@@ -2,10 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
-import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
-import 'package:pos_system/features/sales/ui/reseat_widgets/reseat_order_type/reseat_select_item_widget.dart';
-import 'package:pos_system/features/sales/ui/reseat_widgets/reseat_order_type/reseat_vertical_divider_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_section_widget/reseat_widgets/reseat_order_type/reseat_select_item_widget.dart';
+import 'package:pos_system/features/sales/ui/sales_section_widget/reseat_widgets/reseat_order_type/reseat_vertical_divider_widget.dart';
 
 class ReseatOrderTypesWidget extends StatelessWidget {
   const ReseatOrderTypesWidget({super.key});
