@@ -28,7 +28,6 @@ class AllSalesProductsWidget extends StatelessWidget {
             current is OnGetSearchProductsCatchErrorState;
       },
       builder: (context, state) {
-        print(21212121);
         if (SalesCubit.get(context).searchProductController.text.isNotEmpty) {
           if (SalesCubit.get(context).searchProducts.isEmpty &&
               state is OnGetSearchProductsLoadingState) {

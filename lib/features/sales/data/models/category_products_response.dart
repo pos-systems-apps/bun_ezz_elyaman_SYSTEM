@@ -31,6 +31,7 @@ class Product {
   double discount;
   double quantity;
   String image;
+  String taxesAmount;
 
   Product({
     required this.id,
@@ -44,6 +45,7 @@ class Product {
     required this.discount,
     required this.quantity,
     required this.image,
+    required this.taxesAmount,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -58,5 +60,6 @@ class Product {
         discount: (json['discount'].toDouble()) ?? 0,
         quantity: (double.tryParse(json['quantity'].toString())) ?? 0,
         image: json['image'] ?? "",
+        taxesAmount: json['taxes'] ?? "0",
       );
 }

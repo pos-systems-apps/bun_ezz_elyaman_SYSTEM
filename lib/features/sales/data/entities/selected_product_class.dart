@@ -7,7 +7,7 @@ class ReseatSelectedProducts {
   double totalReseat;
   double totalDiscount;
   double extraDiscount;
-  // double valueTax;
+  double valueTax;
   double total;
 
   ReseatSelectedProducts({
@@ -15,7 +15,7 @@ class ReseatSelectedProducts {
     this.totalReseat = 0,
     this.totalDiscount = 0,
     this.extraDiscount = 0,
-    // this.valueTax = 0,
+    this.valueTax = 0,
     this.total = 0,
   });
 
@@ -71,14 +71,27 @@ class ReseatSelectedProducts {
         0;
   }
 
-  // double getValueTax(int? discountId, String discount) {
-  //   valueTax = 0;
-  //   double productsPriceAfterAllDiscounts = getTotalReseat() -
-  //       getTotalDiscount() -
-  //       getExtraDiscount(discountId, discount);
-  //   valueTax = (productsPriceAfterAllDiscounts * 15) / 100;
-  //   return double.tryParse(AppConstant.confirmRoundTo2Numbers(valueTax)) ?? 0;
-  // }
+  double getValueTax() {
+    valueTax = 0;
+    for (var element in selectedProducts) {
+      double selectedQuantity = double.tryParse(
+          "${element.maxValueCounter}.${element.minValueCounter}") ??
+          1;
+      double itemTaxes = 0;
+      itemTaxes =
+            ((double.tryParse(element.product.taxesAmount)??0) / 100) * element.product.sellingPrice;
+
+      valueTax += (itemTaxes * selectedQuantity);
+    }
+
+    print(valueTax);
+
+
+    return double.tryParse(AppConstant.confirmRoundTo2Numbers(valueTax)) ?? 0;
+
+  }
+
+
 
   double getTotal(int? discountId, String discount) {
     total = 0;
