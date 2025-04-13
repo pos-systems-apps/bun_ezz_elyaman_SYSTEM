@@ -2,6 +2,9 @@ import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 
 ///stop value tax
+///الضريبة بتتحسب علي كل منتج والخصم الاضافي بيتحسب علي كل منتج
+///لو نسبة بتضربها في كل قيمة ولو كمية وبتحولها لنسبة وتضربها في كل منتج وبعدها تجيب الضريبة تاني
+///
 class ReseatSelectedProducts {
   List<SelectedProductClass> selectedProducts;
   double totalReseat;
@@ -71,6 +74,7 @@ class ReseatSelectedProducts {
         0;
   }
 
+  ///
   double getValueTax() {
     valueTax = 0;
     for (var element in selectedProducts) {
