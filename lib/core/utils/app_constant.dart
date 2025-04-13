@@ -165,7 +165,7 @@ class AppConstant {
     );
   }
 
-  static double getDiscountForProduct(
+  static double getProductPriceAfterDiscount(
       String discountType, double productPrice, double discount) {
     if (discountType == "percent") {
       return productPrice - (discount * productPrice) / 100;
@@ -174,7 +174,16 @@ class AppConstant {
     }
   }
 
-  static String confirmRoundTo2Numbers(double number) {
+  static double getDiscountOnProduct(
+      String discountType, double productPrice, double discount) {
+    if (discountType == "percent") {
+      return  (discount * productPrice) / 100;
+    } else {
+      return discount;
+    }
+  }
+
+  static String confirmRoundTo3Numbers(double number) {
     return number.toStringAsFixed(3);
   }
 

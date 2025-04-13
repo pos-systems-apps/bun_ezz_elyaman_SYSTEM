@@ -79,7 +79,7 @@ class ProductSelectedWidget extends StatelessWidget {
                         horizontalSpace(4),
                         if (selectedProduct.product.discount != 0)
                           Text(
-                            "${AppConstant.currency}${AppConstant.getDiscountForProduct(selectedProduct.product.discountType, selectedProduct.product.sellingPrice, selectedProduct.product.discount).toStringAsFixed(2)}",
+                            "${AppConstant.currency}${AppConstant.getProductPriceAfterDiscount(selectedProduct.product.discountType, selectedProduct.product.sellingPrice, selectedProduct.product.discount).toStringAsFixed(2)}",
                             style: TextStyles.font14GreyColor66Weight400
                                 .copyWith(color: AppColors.greenColor),
                           ),

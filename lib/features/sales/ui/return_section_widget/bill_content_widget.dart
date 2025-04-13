@@ -60,17 +60,17 @@ class BillContentWidget extends StatelessWidget {
               MoneyWidget3(
                   text: "اجمالي الفاتوره",
                   value:
-                  "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount + SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
+                  "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount + SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
               verticalSpace(8),
               MoneyWidget3(
                   text: "خصم المنتج",
                   value:
-                  "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount)}"),
+                  "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount)}"),
               verticalSpace(8),
               MoneyWidget3(
                   text: "خصم اضافي",
                   value:
-                  "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
+                  "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
 
               verticalSpace(8),
               MoneyWidget3(
@@ -86,7 +86,7 @@ class BillContentWidget extends StatelessWidget {
                           .font10GreyColor33Weight500),
                   Spacer(),
                   Text(
-                      "${AppConstant.currency} ${AppConstant.confirmRoundTo2Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount)}",
+                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount)}",
                       style: TextStyles
                           .font12greyColor33Weight600),
                 ],

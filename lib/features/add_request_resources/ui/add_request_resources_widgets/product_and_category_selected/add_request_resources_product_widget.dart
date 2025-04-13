@@ -92,7 +92,7 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
                 horizontalSpace(4),
                 if (product.discount != 0)
                   Text(
-                      "${AppConstant.currency}${AppConstant.getDiscountForProduct(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
+                      "${AppConstant.currency}${AppConstant.getProductPriceAfterDiscount(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
                       style: TextStyles.font12GreenColor00WeightBold),
               ],
             ),

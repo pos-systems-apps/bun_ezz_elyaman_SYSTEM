@@ -316,23 +316,23 @@ class SalesCubit extends Cubit<SalesState> {
             //                 selectedPercentType?.id, percentController.text)
             //             .toStringAsFixed(2)) ??
             //     0,
-            extraDiscount: double.tryParse(ReseatSelectedProducts(selectedProducts: selectedProducts)
-                    .getExtraDiscount(
-                        selectedPercentType?.id, percentController.text)
-                    .toStringAsFixed(2)) ??
-                0,
+            extraDiscount:
+                ReseatSelectedProducts(selectedProducts: selectedProducts)
+                    .getReseatData(
+                        discountTypeId: selectedPercentType?.id,
+                        discount: percentController.text)['extraDiscount']!,
             collectedCash: selectedPay!.id == 2
                 ? 0
-                : (double.tryParse(ReseatSelectedProducts(selectedProducts: selectedProducts)
-                        .getTotal(
-                            selectedPercentType?.id, percentController.text)
-                        .toStringAsFixed(2)) ??
-                    0),
+                : (ReseatSelectedProducts(selectedProducts: selectedProducts)
+                    .getReseatData(
+                        discountTypeId: selectedPercentType?.id,
+                        discount: percentController.text)['total']!),
             orderType: selectedOrderType.id,
-            finalOrderAmount: double.tryParse(ReseatSelectedProducts(selectedProducts: selectedProducts)
-                    .getTotal(selectedPercentType?.id, percentController.text)
-                    .toStringAsFixed(2)) ??
-                0,
+            finalOrderAmount:
+                ReseatSelectedProducts(selectedProducts: selectedProducts)
+                    .getReseatData(
+                        discountTypeId: selectedPercentType?.id,
+                        discount: percentController.text)['total']!,
             cash: selectedPay!.id,
             carts: selectedProducts.map((element) {
               return Cart(
@@ -372,7 +372,7 @@ class SalesCubit extends Cubit<SalesState> {
   InvoiceResponseModel? invoiceResponseModel;
 
   getInvoiceDetails() {
-    invoiceResponseModel=null;
+    invoiceResponseModel = null;
     emit(OnGetInvoiceDetailsLoadingState());
     _printInvoiceRepo
         .getInvoiceDetails(int.tryParse(billIdController.text) ?? 0)
