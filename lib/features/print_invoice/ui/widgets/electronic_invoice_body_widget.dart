@@ -277,7 +277,7 @@ class _ElectronicInvoiceBodyWidgetState
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "الضريبة",
-                                  value: "${AppConstant.currency} 0"),
+                                  value: "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
                               verticalSpace(24),
                               HorizontalDashedWidget(width: 4, space: 4),
                               verticalSpace(16),
@@ -296,7 +296,7 @@ class _ElectronicInvoiceBodyWidgetState
                                       verticalSpace(4),
                                       Text.rich(TextSpan(children: [
                                         TextSpan(
-                                          text: "الاسعار شاملة للضريبة ",
+                                          text: "الاسعار شاملة الضريبة ",
                                           style: TextStyles
                                               .font10GreyColorA5Weight400,
                                         ),
@@ -344,7 +344,7 @@ class _ElectronicInvoiceBodyWidgetState
                                 MoneyWidget3(
                                     text: "المبلغ المتبقي",
                                     value:
-                                        "${AppConstant.currency} ${(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount) - PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash}"),
+                                        "${AppConstant.currency} ${PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount   - PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash}"),
                               verticalSpace(30),
                             ],
                           ),

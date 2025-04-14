@@ -75,7 +75,7 @@ class BillContentWidget extends StatelessWidget {
               verticalSpace(8),
               MoneyWidget3(
                   text: "الضريبة",
-                  value: "${AppConstant.currency} 0"),
+                  value: "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
               verticalSpace(8),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

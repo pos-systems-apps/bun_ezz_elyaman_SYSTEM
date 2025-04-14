@@ -35,7 +35,7 @@ class SalesCubit extends Cubit<SalesState> {
 
   changeSelectedBillType(OrderTypeClass value) {
     selectedOrderType = value;
-    if (value.id == 4) {
+    if (value.id == AppConstant.orderTypes[0].id) {
       getCategoriesFromHere();
       changeSelectedCategory(null);
       selectedProducts = [];
@@ -135,7 +135,7 @@ class SalesCubit extends Cubit<SalesState> {
     emit(OnGetCategoryProductsLoadingState());
     _salesRepo
         .getCategoryProducts(
-            categoryID, selectedOrderType.id, categoryProductsCurrentPage)
+            categoryID, AppConstant.orderTypes[0].id, categoryProductsCurrentPage)
         .then((value) {
       value.fold((l) {
         emit(OnGetCategoryProductsErrorState());
@@ -188,7 +188,7 @@ class SalesCubit extends Cubit<SalesState> {
   getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
-        .getSearchProducts(searchProductController.text, selectedOrderType.id,
+        .getSearchProducts(searchProductController.text, AppConstant.orderTypes[0].id,
             searchProductsCurrentPage)
         .then((value) {
       value.fold((l) {
@@ -307,15 +307,10 @@ class SalesCubit extends Cubit<SalesState> {
         .createOrder(CreateOrderRequest(
             userId: selectedUser!.id,
             img: selectedImagePath,
-            totalTax: 0,
-
-            ///stop value tax
-            // double.tryParse(
-            //         ReseatSelectedProducts(selectedProducts: selectedProducts)
-            //             .getValueTax(
-            //                 selectedPercentType?.id, percentController.text)
-            //             .toStringAsFixed(2)) ??
-            //     0,
+            totalTax: ReseatSelectedProducts(selectedProducts: selectedProducts)
+                .getReseatData(
+                discountTypeId: selectedPercentType?.id,
+                discount: percentController.text)['valueTax']!,
             extraDiscount:
                 ReseatSelectedProducts(selectedProducts: selectedProducts)
                     .getReseatData(
@@ -327,7 +322,7 @@ class SalesCubit extends Cubit<SalesState> {
                     .getReseatData(
                         discountTypeId: selectedPercentType?.id,
                         discount: percentController.text)['total']!),
-            orderType: selectedOrderType.id,
+            orderType: AppConstant.orderTypes[0].id,
             finalOrderAmount:
                 ReseatSelectedProducts(selectedProducts: selectedProducts)
                     .getReseatData(
