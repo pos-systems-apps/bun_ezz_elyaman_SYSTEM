@@ -116,11 +116,6 @@ class ReseatSelectedProducts {
   }
 }
 
-
-
-
-
-
 class SelectedProductClass {
   Product product;
   int maxValueCounter;
