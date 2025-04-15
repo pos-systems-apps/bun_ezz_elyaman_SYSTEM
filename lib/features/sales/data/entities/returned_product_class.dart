@@ -5,15 +5,24 @@ class ReturnedProductClass {
 
   double getProductExtraDiscountPriceInReseat(
       InvoiceDetail product, double discount, double totalPrice) {
-    return ((((product.price * product.quantity) -
-                    (product.discountPerItem * product.quantity)) /
-                totalPrice) *
-            discount) /
+
+    print("discount  ${discount}");
+    print("product.price  ${product.price}");
+    print("product.quantity  ${product.quantity}");
+    print("  product.discountPerItem ${product.discountPerItem} ");
+    print("totalPrice${totalPrice}");
+
+    return ((((product.price * product.quantity) - (product.discountPerItem * product.quantity)) / totalPrice) * discount) /
         product.quantity;
   }
 
   double getProductTotalPrice(
       InvoiceDetail product, double discount, double totalPrice) {
+
+    // print(" getProductExtraDiscountPriceInReseat(product, discount, totalPrice) ${ getProductExtraDiscountPriceInReseat(product, discount, totalPrice)}");
+    // print("price  ${product.price}");
+    // print("  product.discountPerItem ${product.discountPerItem} ");
+    // print("product.taxPerItem${product.taxPerItem}");
     return product.price -
         product.discountPerItem -
         getProductExtraDiscountPriceInReseat(product, discount, totalPrice) +
