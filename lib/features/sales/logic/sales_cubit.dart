@@ -9,6 +9,7 @@ import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/features/print_invoice/data/models/invoice_response_model.dart';
 import 'package:pos_system/features/print_invoice/data/repo/print_invoice_repo.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
+import 'package:pos_system/features/sales/data/entities/returned_product_class.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
@@ -382,6 +383,32 @@ class SalesCubit extends Cubit<SalesState> {
       emit(OnGetInvoiceDetailsCatchErrorState());
     });
   }
+
+  List<SelectedReturnProductClass> selectedReturnProducts = [];
+
+  addProductToSelectedReturnProducts(SelectedReturnProductClass value) {
+    selectedReturnProducts.add(value);
+    emit(OnChangeSelectedReturnProductState());
+  }
+
+  removeProductFromSelectedReturnProducts(SelectedReturnProductClass value) {
+    selectedReturnProducts.removeWhere(
+            (item) => item.product.id == value.product.id);
+    emit(OnChangeSelectedReturnProductState());
+  }
+
+  bool selectedReturnedProductsIsContainProduct(SelectedReturnProductClass value) {
+    return selectedReturnProducts
+        .any((item) => item.product.id == value.product.id);
+  }
+
+
+
+
+
+
+
+
 
   static SalesCubit get(context) => BlocProvider.of(context);
 }

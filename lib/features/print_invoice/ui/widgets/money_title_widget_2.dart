@@ -15,9 +15,6 @@ class MoneyTitleWidget2 extends StatelessWidget {
               maxLines: 1,
               style: TextStyles.font10GreyColor78Weight400),
         ),
-        Spacer(
-          flex: 1,
-        ),
         Expanded(
           flex: 2,
           child: Text("الكميه",
@@ -25,18 +22,12 @@ class MoneyTitleWidget2 extends StatelessWidget {
               maxLines: 1,
               style: TextStyles.font10GreyColor78Weight400),
         ),
-        Spacer(
-          flex: 1,
-        ),
         Expanded(
           flex: 2,
           child: Text("القياس",
               textAlign: TextAlign.start,
               maxLines: 1,
               style: TextStyles.font10GreyColor78Weight400),
-        ),
-        Spacer(
-          flex: 1,
         ),
         Expanded(
           flex: 2,

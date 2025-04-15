@@ -22,11 +22,8 @@ class MoneyWidget2 extends StatelessWidget {
           flex: 4,
           child: Text(text,
               textAlign: TextAlign.start,
-              maxLines: 1,
+              maxLines: 3,
               style: TextStyles.font10GreyColor33Weight500),
-        ),
-        Spacer(
-          flex: 1,
         ),
         Expanded(
           flex: 2,
@@ -35,9 +32,6 @@ class MoneyWidget2 extends StatelessWidget {
               maxLines: 1,
               style: TextStyles.font10BlackColorWeight500),
         ),
-        Spacer(
-          flex: 1,
-        ),
         Expanded(
           flex: 2,
           child: Text(measure,
@@ -45,9 +39,7 @@ class MoneyWidget2 extends StatelessWidget {
               maxLines: 1,
               style: TextStyles.font10BlackColorWeight500),
         ),
-        Spacer(
-          flex: 1,
-        ),
+
         Expanded(
           flex: 2,
           child: Text(price,

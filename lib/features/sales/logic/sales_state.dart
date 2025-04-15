@@ -60,4 +60,5 @@ class OnGetInvoiceDetailsSuccessState extends SalesState {}
 class OnGetInvoiceDetailsCatchErrorState extends SalesState {}
 
 
+class OnChangeSelectedReturnProductState extends SalesState {}
 
