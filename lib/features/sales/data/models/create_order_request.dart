@@ -40,11 +40,13 @@ class Cart {
   double price; // price for one item
   int unit; // 1,0 big or small
 
+
   Cart({
     required this.id,
     required this.quantity,
     required this.price,
     required this.unit,
+
   });
 
   Map<String, dynamic> toJson() => {

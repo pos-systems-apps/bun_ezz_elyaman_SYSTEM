@@ -5,24 +5,12 @@ class ReturnedProductClass {
 
   double getProductExtraDiscountPriceInReseat(
       InvoiceDetail product, double discount, double totalPrice) {
-
-    print("discount  ${discount}");
-    print("product.price  ${product.price}");
-    print("product.quantity  ${product.quantity}");
-    print("  product.discountPerItem ${product.discountPerItem} ");
-    print("totalPrice${totalPrice}");
-
     return ((((product.price * product.quantity) - (product.discountPerItem * product.quantity)) / totalPrice) * discount) /
         product.quantity;
   }
 
   double getProductTotalPrice(
       InvoiceDetail product, double discount, double totalPrice) {
-
-    // print(" getProductExtraDiscountPriceInReseat(product, discount, totalPrice) ${ getProductExtraDiscountPriceInReseat(product, discount, totalPrice)}");
-    // print("price  ${product.price}");
-    // print("  product.discountPerItem ${product.discountPerItem} ");
-    // print("product.taxPerItem${product.taxPerItem}");
     return product.price -
         product.discountPerItem -
         getProductExtraDiscountPriceInReseat(product, discount, totalPrice) +
@@ -31,19 +19,17 @@ class ReturnedProductClass {
 
   double getTotalPriceReturnedProducts(
       List<SelectedReturnProductClass> products, double discount, double totalPrice) {
-    double totalPrice = 0;
+    double totalProductPrice = 0;
     for (var item in products) {
-      print("item.returnQuantity ${item.returnQuantity}");
-      print("getProductTotalPrice(item.product, discount, totalPrice) ${getProductTotalPrice(item.product, discount, totalPrice)}");
-      totalPrice += (item.returnQuantity * getProductTotalPrice(item.product, discount, totalPrice));
+      totalProductPrice += (item.returnQuantity * getProductTotalPrice(item.product, discount, totalPrice));
     }
-    return totalPrice;
+    return totalProductPrice;
   }
 }
 
 class SelectedReturnProductClass {
   InvoiceDetail product;
-  int returnQuantity;
+  double returnQuantity;
 
   SelectedReturnProductClass({
     required this.product,

@@ -268,7 +268,7 @@ class ProductsWidget extends StatelessWidget {
                                 context,
                                 SelectedReturnProductClass(
                                   product: product,
-                                  returnQuantity: (int.tryParse(returnItemQuantityController.text) ??int.tryParse(quantity)??0
+                                  returnQuantity: (double.tryParse(returnItemQuantityController.text) ??double.tryParse(quantity)??0
                           )));
                           }
                         }),

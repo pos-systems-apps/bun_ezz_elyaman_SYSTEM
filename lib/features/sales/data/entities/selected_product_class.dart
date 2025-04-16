@@ -36,7 +36,7 @@ class ReseatSelectedProducts {
       ///get total reseat
       totalReseat += _getProductTotalPriceInReseat(element);
       ///product discount
-      totalDiscount += _getProductDiscountPriceInReseat(element);
+      totalDiscount += getProductDiscountPriceInReseat(element);
     }
 
 
@@ -77,7 +77,7 @@ class ReseatSelectedProducts {
     }
   }
 
-  double _getProductDiscountPriceInReseat(SelectedProductClass element) {
+  double getProductDiscountPriceInReseat(SelectedProductClass element) {
     double elementDiscount = AppConstant.getDiscountOnProduct(
         element.product.discountType,
         element.product.sellingPrice,
@@ -97,22 +97,24 @@ class ReseatSelectedProducts {
       return 0;
     }else{
       if(discountTypeId==1){
-        double productAfterDiscount =  _getProductTotalPriceInReseat(element) - _getProductDiscountPriceInReseat(element);
+        double productAfterDiscount =  _getProductTotalPriceInReseat(element) - getProductDiscountPriceInReseat(element);
         return (productAfterDiscount * (((double.tryParse(discount!)??0) / totalPrice)));
 
       }else{
-        double productAfterDiscount = _getProductTotalPriceInReseat(element) - _getProductDiscountPriceInReseat(element);
+        double productAfterDiscount = _getProductTotalPriceInReseat(element) - getProductDiscountPriceInReseat(element);
         return (productAfterDiscount * ((double.tryParse(discount!) ?? 0)/100));
       }
     }
   }
 
   double _getProductTaxesPriceInReseat(SelectedProductClass element,int? discountTypeId, String? discount,{double totalPrice=0}) {
-    double productAfterDiscount = _getProductTotalPriceInReseat(element) - _getProductDiscountPriceInReseat(element) -_getProductExtraDiscountPriceInReseat(element, discountTypeId, discount,totalPrice: totalPrice);
+
+    double productAfterDiscount = _getProductTotalPriceInReseat(element) - getProductDiscountPriceInReseat(element) -_getProductExtraDiscountPriceInReseat(element, discountTypeId, discount,totalPrice: totalPrice);
     return (productAfterDiscount * ((double.tryParse(element.product.taxesAmount) ?? 0)/100));
   }
+
   double _getTotalReseat(SelectedProductClass element,int? discountTypeId, String? discount,{double totalPrice=0}) {
-    return (_getProductTotalPriceInReseat(element) - _getProductDiscountPriceInReseat(element) - _getProductExtraDiscountPriceInReseat(element, discountTypeId, discount,totalPrice: totalPrice) + _getProductTaxesPriceInReseat(element, discountTypeId, discount,totalPrice: totalPrice));
+    return (_getProductTotalPriceInReseat(element) - getProductDiscountPriceInReseat(element) - _getProductExtraDiscountPriceInReseat(element, discountTypeId, discount,totalPrice: totalPrice) + _getProductTaxesPriceInReseat(element, discountTypeId, discount,totalPrice: totalPrice));
   }
 }
 

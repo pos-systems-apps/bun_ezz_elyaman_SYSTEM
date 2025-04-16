@@ -149,6 +149,16 @@ class BillContentWidget extends StatelessWidget {
                                               .totalTax)
                                   .toStringAsFixed(3)),
                           verticalSpace(8),
+                          Text(ReturnedProductClass()
+                              .getProductExtraDiscountPriceInReseat(
+                              item,
+                              SalesCubit.get(context)
+                                  .invoiceResponseModel!
+                                  .invoice
+                                  .extraDiscount,
+                              SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount +
+                                  SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount -
+                                  SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax).toString()),
                         ],
                       )),
             ],
@@ -181,14 +191,15 @@ class BillContentWidget extends StatelessWidget {
                                   .invoiceResponseModel!
                                   .invoice
                                   .extraDiscount,
-
                               SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount +
                                   SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount -
                                   SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax)
                               .toStringAsFixed(3)}");
+
                 },
               ),
               verticalSpace(8),
+
             ],
           ),
         ),

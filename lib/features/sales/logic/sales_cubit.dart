@@ -135,8 +135,8 @@ class SalesCubit extends Cubit<SalesState> {
     print("object1212");
     emit(OnGetCategoryProductsLoadingState());
     _salesRepo
-        .getCategoryProducts(
-            categoryID, AppConstant.orderTypes[0].id, categoryProductsCurrentPage)
+        .getCategoryProducts(categoryID, AppConstant.orderTypes[0].id,
+            categoryProductsCurrentPage)
         .then((value) {
       value.fold((l) {
         emit(OnGetCategoryProductsErrorState());
@@ -189,8 +189,8 @@ class SalesCubit extends Cubit<SalesState> {
   getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
-        .getSearchProducts(searchProductController.text, AppConstant.orderTypes[0].id,
-            searchProductsCurrentPage)
+        .getSearchProducts(searchProductController.text,
+            AppConstant.orderTypes[0].id, searchProductsCurrentPage)
         .then((value) {
       value.fold((l) {
         emit(OnGetSearchProductsErrorState());
@@ -310,8 +310,8 @@ class SalesCubit extends Cubit<SalesState> {
             img: selectedImagePath,
             totalTax: ReseatSelectedProducts(selectedProducts: selectedProducts)
                 .getReseatData(
-                discountTypeId: selectedPercentType?.id,
-                discount: percentController.text)['valueTax']!,
+                    discountTypeId: selectedPercentType?.id,
+                    discount: percentController.text)['valueTax']!,
             extraDiscount:
                 ReseatSelectedProducts(selectedProducts: selectedProducts)
                     .getReseatData(
@@ -340,10 +340,26 @@ class SalesCubit extends Cubit<SalesState> {
                           .toDouble(),
                   price: element.minValueCounter == 0
                       ? element.product.sellingPrice
-                      : double.tryParse((element.product.sellingPrice /
-                                  element.product.unitValue)
-                              .toStringAsFixed(2)) ??
+                      : double.tryParse((element.product.sellingPrice / element.product.unitValue).toStringAsFixed(3)) ??
                           0,
+                  // discount: element.minValueCounter == 0
+                  //     ? AppConstant.getDiscountOnProduct(
+                  //         element.product.discountType,
+                  //         element.product.sellingPrice,
+                  //         element.product.discount)
+                  //     : AppConstant.getDiscountOnProduct(
+                  //             element.product.discountType,
+                  //             element.product.sellingPrice,
+                  //             element.product.discount) /
+                  //         element.product.unitValue,
+                  //
+                  // tax: element.minValueCounter == 0
+                  //     ? (element.product.sellingPrice *
+                  //         (double.tryParse(element.product.taxesAmount) ?? 0) /
+                  //         100)
+                  //     : ((element.product.sellingPrice / element.product.unitValue) *
+                  //         ((double.tryParse(element.product.taxesAmount) ?? 0) /
+                  //             100)),
                   unit: element.minValueCounter == 0 ? 1 : 0);
             }).toList()))
         .then((value) {
@@ -392,23 +408,16 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   removeProductFromSelectedReturnProducts(SelectedReturnProductClass value) {
-    selectedReturnProducts.removeWhere(
-            (item) => item.product.id == value.product.id);
+    selectedReturnProducts
+        .removeWhere((item) => item.product.id == value.product.id);
     emit(OnChangeSelectedReturnProductState());
   }
 
-  bool selectedReturnedProductsIsContainProduct(SelectedReturnProductClass value) {
+  bool selectedReturnedProductsIsContainProduct(
+      SelectedReturnProductClass value) {
     return selectedReturnProducts
         .any((item) => item.product.id == value.product.id);
   }
-
-
-
-
-
-
-
-
 
   static SalesCubit get(context) => BlocProvider.of(context);
 }

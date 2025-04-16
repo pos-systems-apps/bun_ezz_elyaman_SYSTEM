@@ -263,7 +263,7 @@ class _ElectronicInvoiceBodyWidgetState
                               MoneyWidget3(
                                   text: "اجمالي الفاتوره",
                                   value:
-                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
+                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount- PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "خصم المنتج",
