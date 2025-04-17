@@ -6,6 +6,7 @@ import 'package:pos_system/config/routes/routes.dart';
 import 'package:pos_system/core/services/services_locator.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/extentions.dart';
+import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/print_invoice/data/models/invoice_response_model.dart';
 import 'package:pos_system/features/print_invoice/data/repo/print_invoice_repo.dart';
 import 'package:pos_system/features/sales/data/entities/percent_types_class.dart';
@@ -15,6 +16,7 @@ import 'package:pos_system/features/sales/data/models/category_products_response
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/data/models/create_order_request.dart';
+import 'package:pos_system/features/sales/data/models/create_return_order_request.dart';
 import 'package:pos_system/features/splash/data/models/pay_class.dart';
 import 'package:pos_system/features/splash/data/models/users_response_model.dart';
 import 'package:pos_system/features/splash/data/repo/splash_repo.dart';
@@ -308,45 +310,60 @@ class SalesCubit extends Cubit<SalesState> {
         .createOrder(CreateOrderRequest(
             userId: selectedUser!.id,
             img: selectedImagePath,
+            allOrderAmount: ReseatSelectedProducts(selectedProducts: selectedProducts)
+                .getReseatData(
+                    discountTypeId: selectedPercentType?.id,
+                    discount: percentController.text)['totalReseat']!
+                .toString(),
             totalTax: ReseatSelectedProducts(selectedProducts: selectedProducts)
                 .getReseatData(
                     discountTypeId: selectedPercentType?.id,
-                    discount: percentController.text)['valueTax']!.toString(),
-        totalProductsDiscount: ReseatSelectedProducts(selectedProducts: selectedProducts)
+                    discount: percentController.text)['valueTax']!
+                .toString(),
+            totalProductsDiscount:
+                ReseatSelectedProducts(selectedProducts: selectedProducts)
+                    .getReseatData(
+                        discountTypeId: selectedPercentType?.id,
+                        discount: percentController.text)['totalDiscount']!
+                    .toString(),
+            extraDiscount: ReseatSelectedProducts(selectedProducts: selectedProducts)
                 .getReseatData(
                     discountTypeId: selectedPercentType?.id,
-                    discount: percentController.text)['totalDiscount']!.toString(),
-
-            extraDiscount:
-                ReseatSelectedProducts(selectedProducts: selectedProducts)
-                    .getReseatData(
-                        discountTypeId: selectedPercentType?.id,
-                        discount: percentController.text)['extraDiscount']!.toString(),
+                    discount: percentController.text)['extraDiscount']!
+                .toString(),
             collectedCash: selectedPay!.id == 2
                 ? "0"
-                : (ReseatSelectedProducts(selectedProducts: selectedProducts)
-                    .getReseatData(
+                : (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
                         discountTypeId: selectedPercentType?.id,
-                        discount: percentController.text)['total']!).toString(),
+                        discount: percentController.text)['total']!)
+                    .toString(),
             orderType: AppConstant.orderTypes[0].id,
-            finalOrderAmount:
-                ReseatSelectedProducts(selectedProducts: selectedProducts)
-                    .getReseatData(
-                        discountTypeId: selectedPercentType?.id,
-                        discount: percentController.text)['total']!.toString(),
+            finalOrderAmount: ReseatSelectedProducts(selectedProducts: selectedProducts)
+                .getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['total']!
+                .toString(),
             cash: selectedPay!.id,
             carts: selectedProducts.map((element) {
               return Cart(
                   id: element.product.id,
                   quantity: element.minValueCounter == 0
                       ? element.maxValueCounter.toDouble()
-                      : ((element.maxValueCounter * element.product.unitValue) +
-                              element.minValueCounter)
+                      : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
                           .toDouble(),
                   price: element.minValueCounter == 0
                       ? element.product.sellingPrice
                       : double.tryParse((element.product.sellingPrice / element.product.unitValue).toString()) ??
                           0,
+                  tax: ReseatSelectedProducts(selectedProducts: selectedProducts).getProductTaxesPriceInReseat(
+                      element, selectedPercentType?.id, percentController.text,
+                      totalPrice: (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
+                              discountTypeId: selectedPercentType?.id,
+                              discount:
+                                  percentController.text)['totalReseat']! -
+                          ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
+                              discountTypeId: selectedPercentType?.id,
+                              discount: percentController.text)['totalDiscount']!))
+                      /((element.maxValueCounter * element.product.unitValue) +
+                      element.minValueCounter),
                   unit: element.minValueCounter == 0 ? 1 : 0);
             }).toList()))
         .then((value) {
@@ -370,8 +387,13 @@ class SalesCubit extends Cubit<SalesState> {
 
   InvoiceResponseModel? invoiceResponseModel;
 
-  getInvoiceDetails() {
+  removeReturnInvoiceData() {
     invoiceResponseModel = null;
+    selectedReturnProducts.clear();
+  }
+
+  getInvoiceDetails() {
+    removeReturnInvoiceData();
     emit(OnGetInvoiceDetailsLoadingState());
     _printInvoiceRepo
         .getInvoiceDetails(int.tryParse(billIdController.text) ?? 0)
@@ -404,6 +426,32 @@ class SalesCubit extends Cubit<SalesState> {
       SelectedReturnProductClass value) {
     return selectedReturnProducts
         .any((item) => item.product.id == value.product.id);
+  }
+
+  /// RETURN ORDER
+  returnOrder(BuildContext context) {
+    emit(OnCreateReturnLoadingState());
+    _salesRepo
+        .createReturn(CreateReturnOrderRequest(
+            orderId: billIdController.text,
+            returnQuantitiesHidden: {
+              for (var item in selectedReturnProducts)
+                item.product.productID.toString(): item.returnQuantity
+            },
+            returnUnitHidden: {
+              for (var item in selectedReturnProducts)
+                item.product.productID.toString(): item.product.unit
+            },
+            date: DateTime.now().toString()))
+        .then((value) {
+      value.fold((l) {
+        emit(OnCreateReturnErrorState(message: l.message));
+      }, (r) {
+        emit(OnCreateReturnSuccessState(returnOrderId: r.returnOrderId ?? 0));
+      });
+    }).catchError((error) {
+      emit(OnCreateReturnCatchErrorState(message: "error".tr()));
+    });
   }
 
   static SalesCubit get(context) => BlocProvider.of(context);

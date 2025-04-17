@@ -5,13 +5,8 @@ class ReturnedProductClass {
 
   double getProductTotalPrice(
       InvoiceDetail product) {
-//20.6797908
-  //11.97888494
-    print("object/////");
-    print("product.price  ${product.price }");
-    print("product.discountPerItem  ${product.discountPerItem }");
-    print("product.extraDiscountPerItem  ${product.extraDiscountPerItem }");
-    print("product.taxPerItem  ${product.taxPerItem }");
+
+
    return product.price -
         product.discountPerItem -
         product.extraDiscountPerItem +

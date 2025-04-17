@@ -5,6 +5,9 @@ class Routes{
   static const statisticsScreen = "/StatisticsScreen";
   static const reseatScreen = "/ReseatScreen";
   static const settingScreen = "/SettingScreen";
+
+
+  static const dailyFingerprintManagementScreen = "/DailyFingerprintManagementScreen";
   static const electronicInvoiceScreen = "/ElectronicInvoiceScreen";
   static const electronicCashInvoiceScreen = "/ElectronicCashInvoiceScreen";
   static const electronicResourcesInvoicesScreen = "/ElectronicResourcesInvoicesScreen";

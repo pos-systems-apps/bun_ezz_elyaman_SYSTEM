@@ -6,6 +6,7 @@ import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 import 'package:pos_system/features/sales/data/models/create_order_request.dart';
+import 'package:pos_system/features/sales/data/models/create_return_order_request.dart';
 import 'package:pos_system/features/sales/data/models/search_products_response.dart';
 
 import '../../../../core/api/api_consumer.dart';
@@ -69,6 +70,7 @@ class SalesService {
         CreateOrderRequest(
           userId: parameter.userId,
           img: parameter.img,
+          allOrderAmount: parameter.allOrderAmount,
           totalTax: parameter.totalTax,
           extraDiscount: parameter.extraDiscount,
           totalProductsDiscount: parameter.totalProductsDiscount,
@@ -82,8 +84,27 @@ class SalesService {
           ConstantKeys.appAuthorization:
               "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
         });
-    print(response.statusCode);
-    print(response.body);
+    if (response.statusCode == StatusCode.ok) {
+      return SuccessResponseModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw ServerException(
+          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
+    }
+  }
+  Future<SuccessResponseModel> createReturn(CreateReturnOrderRequest parameter) async {
+    final response = await apiConsumer.post(
+        SalesApiEndPoints.createReturnURl,
+        CreateReturnOrderRequest(
+           orderId : parameter.orderId,
+           returnQuantitiesHidden: parameter.returnQuantitiesHidden,
+           returnUnitHidden: parameter.returnUnitHidden,
+          date: parameter.date,
+        ).toJson(),
+        {
+          ConstantKeys.appAuthorization:
+              "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+        });print(response.statusCode);
+        print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {

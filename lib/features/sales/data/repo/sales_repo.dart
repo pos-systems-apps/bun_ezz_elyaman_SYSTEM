@@ -3,6 +3,7 @@ import 'package:pos_system/core/errors_and_success_response/success/success_resp
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 import 'package:pos_system/features/sales/data/models/create_order_request.dart';
+import 'package:pos_system/features/sales/data/models/create_return_order_request.dart';
 import 'package:pos_system/features/sales/data/models/search_products_response.dart';
 
 import '../../../../core/exceptions/exceptions.dart';
@@ -45,6 +46,14 @@ class SalesRepo {
       CreateOrderRequest parameter) async {
     try {
       return Right(await _salesService.createOrder(parameter));
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(message: failure.serverFailure.message));
+    }
+  }
+  Future<Either<Failure, SuccessResponseModel>> createReturn(
+      CreateReturnOrderRequest parameter) async {
+    try {
+      return Right(await _salesService.createReturn(parameter));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

@@ -7,6 +7,7 @@ class CreateOrderRequest {
   String collectedCash; // money that payed
   int orderType; // 4,7      7 ==>mortag3
   String finalOrderAmount; // all money after discount and tax
+  String allOrderAmount; // all money
   int cash; // shabaka , agel ,cash
   List<Cart> carts;
 
@@ -19,6 +20,7 @@ class CreateOrderRequest {
     required this.collectedCash,
     required this.orderType,
     required this.finalOrderAmount,
+    required this.allOrderAmount,
     required this.cash,
     required this.carts,
   });
@@ -32,6 +34,7 @@ class CreateOrderRequest {
         "collected_cash": collectedCash,
         "order_type": orderType,
         "order_amount": finalOrderAmount,
+        "subtotal": allOrderAmount,
         "cash": cash,
         "cart": carts.map((item) => item.toJson()).toList(),
       };
@@ -41,6 +44,7 @@ class Cart {
   int id; //id
   double quantity; // quantity for item
   double price; // price for one item
+  double tax; // tax for one item
   int unit; // 1,0 big or small
 
 
@@ -48,6 +52,7 @@ class Cart {
     required this.id,
     required this.quantity,
     required this.price,
+    required this.tax,
     required this.unit,
 
   });
@@ -57,9 +62,7 @@ class Cart {
         "quantity": quantity,
         "price": price,
         "discount": 0,
-        "tax": 0,
+        "tax": tax,
         "unit": unit,
       };
 }
-//345.488
-//345.28

@@ -54,6 +54,27 @@ class OnCreateOrderCatchErrorState extends SalesState {
 
   OnCreateOrderCatchErrorState({required this.message});
 }
+
+
+class OnCreateReturnLoadingState extends SalesState {}
+class OnCreateReturnSuccessState extends SalesState {
+  int returnOrderId;
+
+  OnCreateReturnSuccessState({required this.returnOrderId});
+}
+class OnCreateReturnErrorState extends SalesState {
+  String message;
+
+  OnCreateReturnErrorState({required this.message});
+}
+class OnCreateReturnCatchErrorState extends SalesState {
+  String message;
+
+  OnCreateReturnCatchErrorState({required this.message});
+}
+
+
+
 class OnGetInvoiceDetailsLoadingState extends SalesState {}
 class OnGetInvoiceDetailsErrorState extends SalesState {}
 class OnGetInvoiceDetailsSuccessState extends SalesState {}

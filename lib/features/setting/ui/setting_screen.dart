@@ -30,13 +30,13 @@ class SettingScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // SettingItemWidget(
-                  //     text: "الاحصائيات",
-                  //     image: ImageAsset.setting1Icon,
-                  //     onTap: () {
-                  //       print(122);
-                  //     }),
-                  // verticalSpace(8),
+                  SettingItemWidget(
+                      text: "إدارة البصمة اليومية",
+                      image: ImageAsset.setting1Icon,
+                      onTap: () {
+                        context.pushNamed(Routes.dailyFingerprintManagementScreen);
+                      }),
+                  verticalSpace(8),
                   SettingItemWidget(
                       text: "قائمه الصندوق",
                       image: ImageAsset.setting2Icon,

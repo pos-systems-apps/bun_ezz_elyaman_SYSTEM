@@ -139,17 +139,32 @@ class SalesAndReturnBodyWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  BlocBuilder<SalesCubit, SalesState>(
+                  BlocConsumer<SalesCubit, SalesState>(
                     buildWhen: (previous, current) {
-                      return current is OnChangeSelectedProductState;
+                      return current is OnChangeSelectedProductState||
+
+                       current is OnCreateReturnLoadingState||
+                       current is OnCreateReturnErrorState||
+                       current is OnCreateReturnCatchErrorState||
+                       current is OnCreateReturnSuccessState;
+                    },
+                    listener: (_, state) {
+                      if (state is OnCreateReturnSuccessState) {
+                        context.pushNamed(Routes.electronicInvoiceScreen,
+                            arguments: {"invoiceId": state.returnOrderId});
+                      } else if (state is OnCreateReturnErrorState) {
+                        ErrorAlertDialog.getDialog(context, state.message);
+                      } else if (state is OnCreateReturnCatchErrorState) {
+                        ErrorAlertDialog.getDialog(context, state.message);
+                      }
                     },
                     builder: (context, state) {
                       return ButtonWidget(
-                          isLoading: false,
+                          isLoading:state is OnCreateReturnLoadingState?true: false,
                           buttonHeight: 48.h,
                           buttonWidth: double.infinity,
                           borderRadius: 6.r,
-                          buttonText: "اتمام الطلب",
+                          buttonText: "اتمام عملية المرتجع",
                           textStyle: TextStyles.font16WhiteColorWeight400,
                           icon: Icons.arrow_forward_ios,
                           iconColor: AppColors.whiteColor,
@@ -157,17 +172,17 @@ class SalesAndReturnBodyWidget extends StatelessWidget {
                           borderColor: AppColors.mainColor,
                           onPressed: () {
                             if (SalesCubit.get(context)
-                                .selectedProducts
+                                .selectedReturnProducts
                                 .isEmpty) {
                               ErrorAlertDialog.getDialog(
                                   context, "لم يتم اختيار منتجات ");
                             } else {
-                              context.pushNamed(Routes.reseatScreen,
-                                  arguments: {"context": context});
+                              _createReturnDoneWidget(context);
                             }
                           });
                     },
                   ),
+
                   verticalSpace(40),
                 ],
               ),
@@ -177,4 +192,79 @@ class SalesAndReturnBodyWidget extends StatelessWidget {
       },
     );
   }
+
+  Future<dynamic> _createReturnDoneWidget(BuildContext context) {
+    final salesCubitItem = SalesCubit.get(context); // Get existing cubit
+
+    return showModalBottomSheet(
+        context: context,
+        enableDrag: true,
+        isDismissible: true,
+        barrierColor: AppColors.blackColor.withValues(alpha: .7),
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return BlocProvider<SalesCubit>.value(
+            value: salesCubitItem,
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.whiteColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12.r),
+                    topRight: Radius.circular(12.r)),
+              ),
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 20.h),
+                      Text(
+                        "تاكيد الاوردر",
+                        style: TextStyles.font18greyColor27Weight600,
+                      ),
+                      SizedBox(height: 20.h),
+                      Lottie.asset(
+                        ImageAsset.requestResourceDoneAnimation,
+                        height: 170.h,
+                        repeat: true,
+                        fit: BoxFit.fitHeight,
+                      ),
+                      SizedBox(height: 30.h),
+                      ButtonWidget(
+                          isLoading: false,
+                          buttonHeight: 44.h,
+                          buttonWidth: double.infinity,
+                          borderRadius: 8.r,
+                          buttonText: "تاكيد",
+                          textStyle: TextStyles.font16WhiteColorWeight600,
+                          backGroundColor: AppColors.mainColor,
+                          borderColor: AppColors.mainColor,
+                          onPressed: () {
+                            salesCubitItem.returnOrder(context);
+                            context.pop();
+                          }),
+                      SizedBox(height: 12.h),
+                      ButtonWidget(
+                          isLoading: false,
+                          buttonHeight: 44.h,
+                          buttonWidth: double.infinity,
+                          borderRadius: 8.r,
+                          backGroundColor: AppColors.whiteColor,
+                          borderColor: AppColors.mainColor,
+                          buttonText: "الغاء",
+                          textStyle: TextStyles.font16MainColorWeight600,
+                          onPressed: () {
+                            context.pop();
+                          }),
+                      SizedBox(height: 20.h),
+                    ]),
+              ),
+            ),
+          );
+        });
+  }
+
 }

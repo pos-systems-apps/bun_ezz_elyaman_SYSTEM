@@ -12,5 +12,6 @@ class SalesApiEndPoints {
       '${AppConstant.baseUrl}api/v1/product/search?name=$name&type=$type&offset=$page';
 
   static final createOrderURl = '${AppConstant.baseUrl}api/v1/pos/place/order';
+  static final createReturnURl = '${AppConstant.baseUrl}api/v1/pos/place/return';
 
 }

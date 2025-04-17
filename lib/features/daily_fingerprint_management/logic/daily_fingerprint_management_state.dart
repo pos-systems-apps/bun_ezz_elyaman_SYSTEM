@@ -1,0 +1,14 @@
+abstract class DailyFingerprintManagementState {}
+
+class InitialState extends DailyFingerprintManagementState {}
+class OnGetAllCoursesLoadingState extends DailyFingerprintManagementState {}
+class OnGetAllCoursesSuccessState extends DailyFingerprintManagementState {}
+class OnGetAllCoursesErrorState extends DailyFingerprintManagementState {}
+class OnGetAllCoursesCatchErrorState extends DailyFingerprintManagementState {}
+
+class OnChangeSelectedImagesState extends DailyFingerprintManagementState {}
+
+class OnCompleteCourseLoadingState extends DailyFingerprintManagementState {}
+class OnCompleteCourseSuccessState extends DailyFingerprintManagementState {}
+class OnCompleteCourseErrorState extends DailyFingerprintManagementState {}
+class OnCompleteCourseCatchErrorState extends DailyFingerprintManagementState {}

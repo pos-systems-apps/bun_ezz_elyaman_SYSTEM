@@ -21,6 +21,8 @@ import 'package:pos_system/features/create_visit/logic/create_visit_cubit.dart';
 import 'package:pos_system/features/create_visit/ui/create_visit_screen.dart';
 import 'package:pos_system/features/customers/logic/customers_cubit.dart';
 import 'package:pos_system/features/customers/ui/customers_screen.dart';
+import 'package:pos_system/features/daily_fingerprint_management/logic/daily_fingerprint_management_cubit.dart';
+import 'package:pos_system/features/daily_fingerprint_management/ui/daily_fingerprint_management_screen.dart';
 import 'package:pos_system/features/fund_list/logic/fund_list_cubit.dart';
 import 'package:pos_system/features/fund_list/ui/fund_list_screen.dart';
 import 'package:pos_system/features/leave_requests/logic/leave_requests_cubit.dart';
@@ -100,6 +102,12 @@ class RouteGenerator {
                   create: (_) => PrintInvoiceCubit(getIt())
                     ..getInvoiceDetails(args['invoiceId']),
                   child: ElectronicInvoiceScreen(),
+                ));
+      case Routes.dailyFingerprintManagementScreen:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => DailyFingerprintManagementCubit(getIt()),
+                  child: DailyFingerprintManagementScreen(),
                 ));
       case Routes.electronicCashInvoiceScreen:
         return MaterialPageRoute(

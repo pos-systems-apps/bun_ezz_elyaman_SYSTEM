@@ -30,7 +30,8 @@ class Invoice {
   List<InvoiceDetail> details;
 
   Invoice(
-      {required this.id,
+      {
+        required this.id,
       required this.paymentType,
       required this.orderAmount,
       required this.totalTax,
@@ -57,8 +58,8 @@ class Invoice {
       paymentType: json['cash'] ?? 0,
       orderAmount: json['order_amount'].toDouble(),
       totalTax: json['total_tax'].toDouble(),
-      collectedCash: json['collected_cash'].toDouble(),
-      extraDiscount: json['extra_discount'].toDouble(),
+      collectedCash:(json['collected_cash'] ?? 0).toDouble(),
+      extraDiscount:(json['extra_discount'] ?? 0).toDouble(),
       date: json['date'] ?? "",
       type: json['type'] ?? "",
       sellerImage: json['qrcode'] ?? "",
@@ -73,6 +74,7 @@ class Invoice {
 
 class InvoiceDetail {
   int id;
+  int productID;
   String nameAr;
   String nameEn;
   double quantity;
@@ -85,6 +87,7 @@ class InvoiceDetail {
 
   InvoiceDetail({
     required this.id,
+    required this.productID,
     required this.nameAr,
     required this.nameEn,
     required this.quantity,
@@ -99,6 +102,7 @@ class InvoiceDetail {
   factory InvoiceDetail.fromJson(Map<String, dynamic> json) {
     return InvoiceDetail(
       id: json['id'],
+      productID: json['product']?['id'] ??0,
       nameAr: json['product']['name'] ?? "",
       nameEn: json['product']['name_en'] ?? "",
       quantity: (json['quantity'] ?? 0).toDouble(),
