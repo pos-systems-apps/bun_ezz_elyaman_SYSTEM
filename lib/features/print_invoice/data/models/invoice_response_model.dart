@@ -77,6 +77,7 @@ class InvoiceDetail {
   String nameEn;
   double quantity;
   double discountPerItem;
+  double extraDiscountPerItem;
   double taxPerItem;
   int unit;
   double unitValuePerItem;
@@ -88,6 +89,7 @@ class InvoiceDetail {
     required this.nameEn,
     required this.quantity,
     required this.discountPerItem,
+    required this.extraDiscountPerItem,
     required this.taxPerItem,
     required this.unit,
     required this.unitValuePerItem,
@@ -101,6 +103,7 @@ class InvoiceDetail {
       nameEn: json['product']['name_en'] ?? "",
       quantity: (json['quantity'] ?? 0).toDouble(),
       discountPerItem: (json['discount_on_product'] ?? 0).toDouble(),
+      extraDiscountPerItem: (json['extra_discount_on_product'] ?? 0).toDouble(),
       taxPerItem: (json['tax_amount'] ?? 0).toDouble(),
       unit: json['unit'] ?? 0,
       unitValuePerItem: (json['product']['unit_value'] ?? 0).toDouble(),

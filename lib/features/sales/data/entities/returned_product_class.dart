@@ -3,25 +3,26 @@ import 'package:pos_system/features/print_invoice/data/models/invoice_response_m
 class ReturnedProductClass {
   ReturnedProductClass();
 
-  double getProductExtraDiscountPriceInReseat(
-      InvoiceDetail product, double discount, double totalPrice) {
-    return ((((product.price * product.quantity) - (product.discountPerItem * product.quantity)) / totalPrice) * discount) /
-        product.quantity;
-  }
-
   double getProductTotalPrice(
-      InvoiceDetail product, double discount, double totalPrice) {
-    return product.price -
+      InvoiceDetail product) {
+//20.6797908
+  //11.97888494
+    print("object/////");
+    print("product.price  ${product.price }");
+    print("product.discountPerItem  ${product.discountPerItem }");
+    print("product.extraDiscountPerItem  ${product.extraDiscountPerItem }");
+    print("product.taxPerItem  ${product.taxPerItem }");
+   return product.price -
         product.discountPerItem -
-        getProductExtraDiscountPriceInReseat(product, discount, totalPrice) +
+        product.extraDiscountPerItem +
         product.taxPerItem;
   }
 
   double getTotalPriceReturnedProducts(
-      List<SelectedReturnProductClass> products, double discount, double totalPrice) {
+      List<SelectedReturnProductClass> products) {
     double totalProductPrice = 0;
     for (var item in products) {
-      totalProductPrice += (item.returnQuantity * getProductTotalPrice(item.product, discount, totalPrice));
+      totalProductPrice += (item.returnQuantity * getProductTotalPrice(item.product));
     }
     return totalProductPrice;
   }

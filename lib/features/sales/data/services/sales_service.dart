@@ -71,6 +71,7 @@ class SalesService {
           img: parameter.img,
           totalTax: parameter.totalTax,
           extraDiscount: parameter.extraDiscount,
+          totalProductsDiscount: parameter.totalProductsDiscount,
           collectedCash: parameter.collectedCash,
           orderType: parameter.orderType,
           finalOrderAmount: parameter.finalOrderAmount,

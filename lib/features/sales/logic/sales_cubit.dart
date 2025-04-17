@@ -311,24 +311,29 @@ class SalesCubit extends Cubit<SalesState> {
             totalTax: ReseatSelectedProducts(selectedProducts: selectedProducts)
                 .getReseatData(
                     discountTypeId: selectedPercentType?.id,
-                    discount: percentController.text)['valueTax']!,
+                    discount: percentController.text)['valueTax']!.toString(),
+        totalProductsDiscount: ReseatSelectedProducts(selectedProducts: selectedProducts)
+                .getReseatData(
+                    discountTypeId: selectedPercentType?.id,
+                    discount: percentController.text)['totalDiscount']!.toString(),
+
             extraDiscount:
                 ReseatSelectedProducts(selectedProducts: selectedProducts)
                     .getReseatData(
                         discountTypeId: selectedPercentType?.id,
-                        discount: percentController.text)['extraDiscount']!,
+                        discount: percentController.text)['extraDiscount']!.toString(),
             collectedCash: selectedPay!.id == 2
-                ? 0
+                ? "0"
                 : (ReseatSelectedProducts(selectedProducts: selectedProducts)
                     .getReseatData(
                         discountTypeId: selectedPercentType?.id,
-                        discount: percentController.text)['total']!),
+                        discount: percentController.text)['total']!).toString(),
             orderType: AppConstant.orderTypes[0].id,
             finalOrderAmount:
                 ReseatSelectedProducts(selectedProducts: selectedProducts)
                     .getReseatData(
                         discountTypeId: selectedPercentType?.id,
-                        discount: percentController.text)['total']!,
+                        discount: percentController.text)['total']!.toString(),
             cash: selectedPay!.id,
             carts: selectedProducts.map((element) {
               return Cart(
@@ -340,26 +345,8 @@ class SalesCubit extends Cubit<SalesState> {
                           .toDouble(),
                   price: element.minValueCounter == 0
                       ? element.product.sellingPrice
-                      : double.tryParse((element.product.sellingPrice / element.product.unitValue).toStringAsFixed(3)) ??
+                      : double.tryParse((element.product.sellingPrice / element.product.unitValue).toString()) ??
                           0,
-                  // discount: element.minValueCounter == 0
-                  //     ? AppConstant.getDiscountOnProduct(
-                  //         element.product.discountType,
-                  //         element.product.sellingPrice,
-                  //         element.product.discount)
-                  //     : AppConstant.getDiscountOnProduct(
-                  //             element.product.discountType,
-                  //             element.product.sellingPrice,
-                  //             element.product.discount) /
-                  //         element.product.unitValue,
-                  //
-                  // tax: element.minValueCounter == 0
-                  //     ? (element.product.sellingPrice *
-                  //         (double.tryParse(element.product.taxesAmount) ?? 0) /
-                  //         100)
-                  //     : ((element.product.sellingPrice / element.product.unitValue) *
-                  //         ((double.tryParse(element.product.taxesAmount) ?? 0) /
-                  //             100)),
                   unit: element.minValueCounter == 0 ? 1 : 0);
             }).toList()))
         .then((value) {

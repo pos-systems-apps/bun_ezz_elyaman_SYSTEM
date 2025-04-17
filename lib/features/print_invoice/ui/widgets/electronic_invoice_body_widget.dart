@@ -309,7 +309,7 @@ class _ElectronicInvoiceBodyWidgetState
                                     ],
                                   )),
                                   Text(
-                                      "${AppConstant.currency} ${PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount}",
+                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount)}",
                                       style: TextStyles
                                           .font12greyColor33Weight600),
                                 ],
@@ -329,7 +329,7 @@ class _ElectronicInvoiceBodyWidgetState
                                 MoneyWidget3(
                                     text: "المبلغ المدفوع",
                                     value:
-                                        "${AppConstant.currency} ${PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash}"),
+                                        "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash)}"),
                               if (PrintInvoiceCubit.get(context)
                                       .invoiceResponseModel!
                                       .invoice
@@ -344,7 +344,7 @@ class _ElectronicInvoiceBodyWidgetState
                                 MoneyWidget3(
                                     text: "المبلغ المتبقي",
                                     value:
-                                        "${AppConstant.currency} ${PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount   - PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash}"),
+                                        "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount   - PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash)}"),
                               verticalSpace(30),
                             ],
                           ),

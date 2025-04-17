@@ -1,11 +1,12 @@
 class CreateOrderRequest {
   int userId; // user
   String? img; //
-  double totalTax; //total tax amount
-  double extraDiscount; //extra total discount
-  double collectedCash; // money that payed
+  String totalTax; //total tax amount
+  String extraDiscount; //extra total discount
+  String totalProductsDiscount; //products total discount
+  String collectedCash; // money that payed
   int orderType; // 4,7      7 ==>mortag3
-  double finalOrderAmount; // all money after discount and tax
+  String finalOrderAmount; // all money after discount and tax
   int cash; // shabaka , agel ,cash
   List<Cart> carts;
 
@@ -14,6 +15,7 @@ class CreateOrderRequest {
     required this.img,
     required this.totalTax,
     required this.extraDiscount,
+    required this.totalProductsDiscount,
     required this.collectedCash,
     required this.orderType,
     required this.finalOrderAmount,
@@ -25,6 +27,7 @@ class CreateOrderRequest {
         "user_id": userId,
         if(img!=null)"img": img,
         "total_tax": totalTax,
+        "total_product_discounts": totalProductsDiscount,
         "extra_discount": extraDiscount,
         "collected_cash": collectedCash,
         "order_type": orderType,
@@ -58,3 +61,5 @@ class Cart {
         "unit": unit,
       };
 }
+//345.488
+//345.28
