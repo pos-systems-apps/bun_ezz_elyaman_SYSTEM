@@ -1,0 +1,1 @@
+/Users/ahmedkhattab/programming/projects/HPI_POS_SYSTEM/build/app/intermediates/cxx/RelWithDebInfo/6m70452b/obj/arm64-v8a

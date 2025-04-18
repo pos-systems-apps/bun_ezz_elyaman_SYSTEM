@@ -1,0 +1,2 @@
+/Users/ahmedkhattab/programming/projects/HPI_POS_SYSTEM/android/app/.cxx/RelWithDebInfo/6m70452b/x86/CMakeFiles/edit_cache.dir
+/Users/ahmedkhattab/programming/projects/HPI_POS_SYSTEM/android/app/.cxx/RelWithDebInfo/6m70452b/x86/CMakeFiles/rebuild_cache.dir
