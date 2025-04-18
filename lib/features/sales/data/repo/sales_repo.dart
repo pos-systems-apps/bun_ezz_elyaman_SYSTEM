@@ -34,9 +34,9 @@ class SalesRepo {
   }
 
   Future<Either<Failure, SearchProductsResponse>> getSearchProducts(
-      String name, int? type, int page) async {
+      String name, int? type) async {
     try {
-      return Right(await _salesService.getSearchProducts(name, type, page));
+      return Right(await _salesService.getSearchProducts(name, type));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

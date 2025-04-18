@@ -142,42 +142,21 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
 
   List<Product> searchProducts = [];
 
-  int searchProductsCurrentPage = 1;
-  int searchProductsLastPage = 10000;
-  ScrollController searchProductsScrollController = ScrollController();
-
   getSearchProductsFromHere() {
     searchProducts = [];
-    searchProductsCurrentPage = 1;
-    searchProductsLastPage = 10000;
-    scrollListenerGetSearchProducts();
     getSearchProducts();
-  }
-
-  scrollListenerGetSearchProducts() {
-    searchProductsScrollController.addListener(() {
-      if (searchProductsCurrentPage < searchProductsLastPage) {
-        if (searchProductsScrollController.position.pixels ==
-            searchProductsScrollController.position.maxScrollExtent) {
-          searchProductsCurrentPage++;
-          getSearchProducts();
-        }
-      }
-    });
   }
 
   getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
         .getSearchProducts(
-            searchProductController.text, null, searchProductsCurrentPage)
+            searchProductController.text, null)
         .then((value) {
       value.fold((l) {
         emit(OnGetSearchProductsErrorState());
       }, (r) {
-        searchProductsCurrentPage = r.currentPage;
-        searchProductsLastPage = r.lastPage;
-        searchProducts.addAll(r.categoryProducts);
+        searchProducts=r.categoryProducts;
         emit(OnGetSearchProductsSuccessState());
       });
     }).catchError((error) {

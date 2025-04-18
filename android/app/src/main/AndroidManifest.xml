@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
-        android:label="pos_system"
+        android:label="El_Gamal_System"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -8,8 +8,8 @@ class SalesApiEndPoints {
       '${AppConstant.baseUrl}api/v1/stocks/list?category_id=$categoryID&type=$type&offset=$page';
 
   static getSearchProductsUrl(
-           String name, int? type, int page) =>
-      '${AppConstant.baseUrl}api/v1/product/search?name=$name&type=$type&offset=$page';
+           String name, int? type) =>
+      '${AppConstant.baseUrl}api/v1/product/search?name=$name&type=$type';
 
   static final createOrderURl = '${AppConstant.baseUrl}api/v1/pos/place/order';
   static final createReturnURl = '${AppConstant.baseUrl}api/v1/pos/place/return';

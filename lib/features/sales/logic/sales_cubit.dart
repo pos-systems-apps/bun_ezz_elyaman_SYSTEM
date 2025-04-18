@@ -134,7 +134,6 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   getCategoryProducts(int categoryID) {
-    print("object1212");
     emit(OnGetCategoryProductsLoadingState());
     _salesRepo
         .getCategoryProducts(categoryID, AppConstant.orderTypes[0].id,
@@ -164,42 +163,21 @@ class SalesCubit extends Cubit<SalesState> {
 
   List<Product> searchProducts = [];
 
-  int searchProductsCurrentPage = 1;
-  int searchProductsLastPage = 10000;
-  ScrollController searchProductsScrollController = ScrollController();
-
   getSearchProductsFromHere() {
     searchProducts = [];
-    searchProductsCurrentPage = 1;
-    searchProductsLastPage = 10000;
-    scrollListenerGetSearchProducts();
     getSearchProducts();
-  }
-
-  scrollListenerGetSearchProducts() {
-    searchProductsScrollController.addListener(() {
-      if (searchProductsCurrentPage < searchProductsLastPage) {
-        if (searchProductsScrollController.position.pixels ==
-            searchProductsScrollController.position.maxScrollExtent) {
-          searchProductsCurrentPage++;
-          getSearchProducts();
-        }
-      }
-    });
   }
 
   getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
-        .getSearchProducts(searchProductController.text,
-            AppConstant.orderTypes[0].id, searchProductsCurrentPage)
+        .getSearchProducts(
+            searchProductController.text, AppConstant.orderTypes[0].id)
         .then((value) {
       value.fold((l) {
         emit(OnGetSearchProductsErrorState());
       }, (r) {
-        searchProductsCurrentPage = r.currentPage;
-        searchProductsLastPage = r.lastPage;
-        searchProducts.addAll(r.categoryProducts);
+        searchProducts = r.categoryProducts;
         emit(OnGetSearchProductsSuccessState());
       });
     }).catchError((error) {
@@ -354,16 +332,15 @@ class SalesCubit extends Cubit<SalesState> {
                       : double.tryParse((element.product.sellingPrice / element.product.unitValue).toString()) ??
                           0,
                   tax: ReseatSelectedProducts(selectedProducts: selectedProducts).getProductTaxesPriceInReseat(
-                      element, selectedPercentType?.id, percentController.text,
-                      totalPrice: (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
-                              discountTypeId: selectedPercentType?.id,
-                              discount:
-                                  percentController.text)['totalReseat']! -
-                          ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
-                              discountTypeId: selectedPercentType?.id,
-                              discount: percentController.text)['totalDiscount']!))
-                      /((element.maxValueCounter * element.product.unitValue) +
-                      element.minValueCounter),
+                          element, selectedPercentType?.id, percentController.text,
+                          totalPrice: (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
+                                  discountTypeId: selectedPercentType?.id,
+                                  discount:
+                                      percentController.text)['totalReseat']! -
+                              ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
+                                  discountTypeId: selectedPercentType?.id,
+                                  discount: percentController.text)['totalDiscount']!)) /
+                      ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter),
                   unit: element.minValueCounter == 0 ? 1 : 0);
             }).toList()))
         .then((value) {

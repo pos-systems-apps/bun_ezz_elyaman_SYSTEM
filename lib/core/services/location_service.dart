@@ -16,12 +16,14 @@ class YourLocation {
           return null;
         }
       }
+
       return await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
           accuracy: LocationAccuracy.high,
         ),
       );
-    } else {
+    }
+    else {
       return null;
     }
   }

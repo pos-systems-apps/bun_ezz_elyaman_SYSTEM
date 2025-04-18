@@ -1,4 +1,4 @@
-package com.pos.system
+package com.hpi_pos.system
 
 import io.flutter.embedding.android.FlutterActivity
 

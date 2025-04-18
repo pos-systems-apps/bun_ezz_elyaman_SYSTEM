@@ -1,0 +1,2 @@
+/Users/ahmedkhattab/programming/projects/HPI_POS_SYSTEM/android/app/.cxx/Debug/5b57173l/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/ahmedkhattab/programming/projects/HPI_POS_SYSTEM/android/app/.cxx/Debug/5b57173l/armeabi-v7a/CMakeFiles/rebuild_cache.dir

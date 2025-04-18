@@ -28,6 +28,7 @@ class AllSalesProductsWidget extends StatelessWidget {
             current is OnGetSearchProductsCatchErrorState;
       },
       builder: (context, state) {
+
         if (SalesCubit.get(context).searchProductController.text.isNotEmpty) {
           if (SalesCubit.get(context).searchProducts.isEmpty &&
               state is OnGetSearchProductsLoadingState) {
@@ -41,6 +42,7 @@ class AllSalesProductsWidget extends StatelessWidget {
               fit: BoxFit.fitHeight,
             );
           } else {
+            print("SalesCubit.get(context).searchProducts  ${SalesCubit.get(context).searchProducts.length}");
             return AllProductsAndSearchProductsWidget(isSearch: true);
           }
         } else {

@@ -50,9 +50,9 @@ class SalesService {
   }
 
   Future<SearchProductsResponse> getSearchProducts(
-      String name, int? type, int page) async {
+      String name, int? type) async {
     final response = await apiConsumer
-        .get(SalesApiEndPoints.getSearchProductsUrl(name, type, page), {
+        .get(SalesApiEndPoints.getSearchProductsUrl(name, type), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
