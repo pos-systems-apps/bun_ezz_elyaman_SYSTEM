@@ -103,7 +103,9 @@ class CustomersBodyWidget extends StatelessWidget {
                                     ),
                                     TextSpan(
                                       text:
-                                          "${AppConstant.currency}  ${CustomersCubit.get(context).users[index].balance.toStringAsFixed(2)}",
+                                          "${AppConstant.currency} ${(CustomersCubit.get(context).users[index].balance
+                                              + CustomersCubit.get(context).users[index].discount -
+                                              CustomersCubit.get(context).users[index].credit).abs().toStringAsFixed(2)}",
                                       style: TextStyles
                                           .font14GreyColor66Weight400
                                           .copyWith(
@@ -113,15 +115,9 @@ class CustomersBodyWidget extends StatelessWidget {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  (CustomersCubit.get(context)
-                                                  .users[index]
-                                                  .balance +
-                                              CustomersCubit.get(context)
-                                                  .users[index]
-                                                  .discount -
-                                              CustomersCubit.get(context)
-                                                  .users[index]
-                                                  .credit) <
+                                  (CustomersCubit.get(context).users[index].balance
+                                      + CustomersCubit.get(context).users[index].discount -
+                                      CustomersCubit.get(context).users[index].credit) <
                                           0
                                       ? "مدين"
                                       : "دائن",
