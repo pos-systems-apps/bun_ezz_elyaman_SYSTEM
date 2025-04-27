@@ -17,12 +17,13 @@ class LoginScreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             BackGroundWidget(),
             Positioned(
-              bottom: 200.h,
+              top: 250.h,
               left: 0,
               right: 0,
               child: LoginFormWidget(

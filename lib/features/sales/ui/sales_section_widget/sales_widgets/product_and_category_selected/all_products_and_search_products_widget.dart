@@ -109,6 +109,7 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
           int smallQuantity =
               ((product.quantity - bigQuantity) * product.unitValue).toInt();
           return Container(
+            padding: EdgeInsets.only(bottom: context.viewInsetsBottom),
             decoration: BoxDecoration(
               color: AppColors.whiteColor,
               borderRadius: BorderRadius.only(

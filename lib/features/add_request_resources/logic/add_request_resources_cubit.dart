@@ -59,6 +59,7 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
   List<Category> categories = [];
 
   getCategories() {
+    print("object121212");
     emit(OnGetCategoryLoadingState());
     _salesRepo.getCategories(categoriesCurrentPage).then((value) {
       value.fold((l) {
@@ -67,10 +68,10 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
         categoriesCurrentPage = r.categoryPagination.currentPage;
         categoriesLastPage = r.categoryPagination.lastPage;
         categories.addAll(r.categoryPagination.categories);
+
         if (r.categoryPagination.categories.isNotEmpty &&
             selectedCategory == null) {
           changeSelectedCategory(r.categoryPagination.categories[0]);
-          getCategoryProductsFromHere(r.categoryPagination.categories[0].id);
         }
         emit(OnGetCategorySuccessState());
       });
@@ -129,6 +130,7 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
         categoryProductsCurrentPage = r.currentPage;
         categoryProductsLastPage = r.lastPage;
         products.addAll(r.categoryProducts);
+
         emit(OnGetCategoryProductsSuccessState());
       });
     }).catchError((error) {

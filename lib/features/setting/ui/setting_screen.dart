@@ -258,12 +258,12 @@ class SettingScreen extends StatelessWidget {
                     style: TextStyles.font16BlackColor2Weight600,
                   ),
                   verticalSpace(16),
-                  SettingItemWidget(
-                      text: "اللغه",
-                      image: ImageAsset.setting3_1Icon,
-                      onTap: () {
-                        print(122);
-                      }),
+                  // SettingItemWidget(
+                  //     text: "اللغه",
+                  //     image: ImageAsset.setting3_1Icon,
+                  //     onTap: () {
+                  //       print(122);
+                  //     }),
                   verticalSpace(8),
                   SettingItemWidget(
                       text: "تسجيل الخروج",
