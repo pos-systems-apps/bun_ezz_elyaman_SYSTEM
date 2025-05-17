@@ -9,24 +9,27 @@ class ProductsSelectedWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if (SalesCubit.get(context).selectedProducts.isEmpty) {
+      return SizedBox.shrink();
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: SalesCubit.get(context)
+            .selectedProducts
+            .map((item) => ProductSelectedWidget(
+          selectedProduct: item,
+        ))
+            .toList(),
+      );
+    }
     return BlocBuilder<SalesCubit, SalesState>(
       buildWhen: (previous, current) {
         return current is OnChangeSelectedProductState;
       },
       builder: (context, state) {
-        if (SalesCubit.get(context).selectedProducts.isEmpty) {
-          return SizedBox.shrink();
-        } else {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: SalesCubit.get(context)
-                .selectedProducts
-                .map((item) => ProductSelectedWidget(
-                      selectedProduct: item,
-                    ))
-                .toList(),
-          );
-        }
+
+
       },
     );
   }

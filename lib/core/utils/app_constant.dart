@@ -62,13 +62,23 @@ class AppConstant {
             ? UserPayType.credit
             : UserPayType.full;
     pays = [
-      PayClass(id: 1, nameAr: "كاش", nameEn: "cash", isShown: (getType()==UserPayType.cash  ||getType()==UserPayType.full) ),
-      PayClass(id: 2, nameAr: "اجل", nameEn: "agel", isShown: (getType()==UserPayType.credit  ||getType()==UserPayType.full)),
+      PayClass(
+          id: 1,
+          nameAr: "كاش",
+          nameEn: "cash",
+          isShown:
+              (getType() == UserPayType.cash || getType() == UserPayType.full)),
+      PayClass(
+          id: 2,
+          nameAr: "اجل",
+          nameEn: "agel",
+          isShown: (getType() == UserPayType.credit ||
+              getType() == UserPayType.full)),
       PayClass(
           id: 3,
           nameAr: "شبكة",
           nameEn: "shabaka",
-          isShown: getType()==UserPayType.full),
+          isShown: getType() == UserPayType.full),
     ];
   }
 
@@ -174,12 +184,15 @@ class AppConstant {
     }
   }
 
-  static double getDiscountOnProduct(
-      String discountType, double productPrice, double discount) {
+  static double getDiscountOnProduct(String discountType, double productPrice,
+      double discount, double moreDiscount) {
     if (discountType == "percent") {
-      return  (discount * productPrice) / 100;
+      return ((discount * productPrice) / 100) +
+          (moreDiscount == 0
+              ? 0
+              : (moreDiscount * (((discount * productPrice) / 100) / 100)));
     } else {
-      return discount;
+      return discount + ((moreDiscount * (productPrice - discount)) / 100);
     }
   }
 

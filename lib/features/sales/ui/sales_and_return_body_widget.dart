@@ -142,7 +142,6 @@ class SalesAndReturnBodyWidget extends StatelessWidget {
                   BlocConsumer<SalesCubit, SalesState>(
                     buildWhen: (previous, current) {
                       return current is OnChangeSelectedProductState||
-
                        current is OnCreateReturnLoadingState||
                        current is OnCreateReturnErrorState||
                        current is OnCreateReturnCatchErrorState||

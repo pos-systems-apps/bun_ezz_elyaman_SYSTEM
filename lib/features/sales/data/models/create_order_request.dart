@@ -46,6 +46,7 @@ class Cart {
   double price; // price for one item
   double tax; // tax for one item
   int unit; // 1,0 big or small
+  String discount;
 
 
   Cart({
@@ -54,6 +55,7 @@ class Cart {
     required this.price,
     required this.tax,
     required this.unit,
+    required this.discount,
 
   });
 
@@ -64,5 +66,6 @@ class Cart {
         "discount": 0,
         "tax": tax,
         "unit": unit,
+        "discount_on_product": discount,
       };
 }

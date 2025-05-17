@@ -76,6 +76,7 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
                 if (product.discount == 0)
                   Text(
                     "${AppConstant.currency} ${product.sellingPrice.toStringAsFixed(2)}",

@@ -77,9 +77,11 @@ class ReseatSelectedProducts {
 
   double getProductDiscountPriceInReseat(SelectedProductClass element) {
     double elementDiscount = AppConstant.getDiscountOnProduct(
-        element.product.discountType,
-        element.product.sellingPrice,
-        element.product.discount);
+      element.product.discountType,
+      element.product.sellingPrice,
+      element.product.discount,
+      element.discountMoney,
+    );
 
     if (element.minValueCounter == 0) {
       return (elementDiscount * element.maxValueCounter);
@@ -137,10 +139,12 @@ class SelectedProductClass {
   Product product;
   int maxValueCounter;
   int minValueCounter;
+  double discountMoney;
 
   SelectedProductClass({
     required this.product,
     this.maxValueCounter = 0,
     this.minValueCounter = 0,
+    this.discountMoney = 0,
   });
 }

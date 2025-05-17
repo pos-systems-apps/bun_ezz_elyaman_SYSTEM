@@ -19,6 +19,7 @@ class CategoryProductsResponse {
       );
 }
 
+//
 class Product {
   int id;
   String nameAr;

@@ -186,6 +186,7 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   ///select product
+
   List<SelectedProductClass> selectedProducts = [];
 
   addProductToSelectedProducts(SelectedProductClass value) {
@@ -304,11 +305,12 @@ class SalesCubit extends Cubit<SalesState> {
                         discountTypeId: selectedPercentType?.id,
                         discount: percentController.text)['totalDiscount']!
                     .toString(),
-            extraDiscount: ReseatSelectedProducts(selectedProducts: selectedProducts)
-                .getReseatData(
-                    discountTypeId: selectedPercentType?.id,
-                    discount: percentController.text)['extraDiscount']!
-                .toString(),
+            extraDiscount: "0",
+            // ReseatSelectedProducts(selectedProducts: selectedProducts)
+            //     .getReseatData(
+            //         discountTypeId: selectedPercentType?.id,
+            //         discount: percentController.text)['extraDiscount']!
+            //     .toString(),
             collectedCash: selectedPay!.id == 2
                 ? moneyController.text
                 : (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
@@ -321,8 +323,22 @@ class SalesCubit extends Cubit<SalesState> {
                 .toString(),
             cash: selectedPay!.id,
             carts: selectedProducts.map((element) {
+              print("object--------");
+              print(((ReseatSelectedProducts(selectedProducts: selectedProducts)
+                  .getProductDiscountPriceInReseat(element)) /
+                  (element.minValueCounter == 0
+                      ? element.maxValueCounter.toDouble()
+                      : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
+                      .toDouble())));
               return Cart(
                   id: element.product.id,
+                  discount: ((ReseatSelectedProducts(selectedProducts: selectedProducts)
+                              .getProductDiscountPriceInReseat(element)) /
+                          (element.minValueCounter == 0
+                              ? element.maxValueCounter.toDouble()
+                              : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
+                                  .toDouble()))
+                      .toString(),
                   quantity: element.minValueCounter == 0
                       ? element.maxValueCounter.toDouble()
                       : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
@@ -333,13 +349,7 @@ class SalesCubit extends Cubit<SalesState> {
                           0,
                   tax: ReseatSelectedProducts(selectedProducts: selectedProducts).getProductTaxesPriceInReseat(
                           element, selectedPercentType?.id, percentController.text,
-                          totalPrice: (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
-                                  discountTypeId: selectedPercentType?.id,
-                                  discount:
-                                      percentController.text)['totalReseat']! -
-                              ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
-                                  discountTypeId: selectedPercentType?.id,
-                                  discount: percentController.text)['totalDiscount']!)) /
+                          totalPrice: (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['totalReseat']! - ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['totalDiscount']!)) /
                       ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter),
                   unit: element.minValueCounter == 0 ? 1 : 0);
             }).toList()))
