@@ -1,4 +1,3 @@
-
 class GetInvoicesResponseModel {
   List<Invoices> invoices;
 
@@ -22,6 +21,7 @@ class Invoices {
   double extraDiscount;
   int cash;
   String createdAt;
+  Customer customer;
 
   Invoices({
     required this.id,
@@ -31,6 +31,7 @@ class Invoices {
     required this.extraDiscount,
     required this.cash,
     required this.createdAt,
+    required this.customer,
   });
 
   factory Invoices.fromJson(Map<String, dynamic> json) {
@@ -42,6 +43,24 @@ class Invoices {
       extraDiscount: (json['extra_discount'] ?? 0).toDouble(),
       cash: json['cash'],
       createdAt: json['created_at'],
+      customer: Customer.fromJson(json['customer']),
+    );
+  }
+}
+
+class Customer {
+  int id;
+  String name;
+
+  Customer({
+    required this.id,
+    required this.name,
+  });
+
+  factory Customer.fromJson(Map<String, dynamic> json) {
+    return Customer(
+      id: json['id'],
+      name: json['name'] ?? '',
     );
   }
 }

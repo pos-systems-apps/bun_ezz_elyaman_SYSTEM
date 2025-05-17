@@ -42,6 +42,8 @@ class InvoiceItemWidget extends StatelessWidget {
               " ${intl.DateFormat("d MMMM yyyy h:mm:ss a", context.locale.languageCode).format(DateTime.parse(item.createdAt).toLocal())}"),
           verticalSpace(4),
           _itemTextWidget(
+              " اسم العميل", " ${item.customer.name}"),
+          verticalSpace(4),   _itemTextWidget(
               "نوع الفاتوره", " ${AppConstant.orderTypes[0].nameAr}"),
           verticalSpace(4),
           _itemTextWidget("اجمالي الفاتوره", " ${item.orderAmount}"),

@@ -253,7 +253,7 @@ class SalesCubit extends Cubit<SalesState> {
   PercentTypesClass? selectedPercentType;
   TextEditingController percentController = TextEditingController();
 
-  // TextEditingController moneyController = TextEditingController();
+  TextEditingController moneyController = TextEditingController();
 
   ///customers
   List<UserResponseData> users = [];
@@ -310,7 +310,7 @@ class SalesCubit extends Cubit<SalesState> {
                     discount: percentController.text)['extraDiscount']!
                 .toString(),
             collectedCash: selectedPay!.id == 2
-                ? "0"
+                ? moneyController.text
                 : (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
                         discountTypeId: selectedPercentType?.id,
                         discount: percentController.text)['total']!)

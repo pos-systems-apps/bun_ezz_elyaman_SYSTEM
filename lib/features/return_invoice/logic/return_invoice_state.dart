@@ -5,3 +5,5 @@ class OnGetInvoicesLoadingState extends ReturnInvoiceState {}
 class OnGetInvoicesErrorState extends ReturnInvoiceState {}
 class OnGetInvoicesSuccessState extends ReturnInvoiceState {}
 class OnGetInvoicesCatchErrorState extends ReturnInvoiceState {}
+class OnChangeNameState extends ReturnInvoiceState {}
+class OnChangeDateState extends ReturnInvoiceState {}

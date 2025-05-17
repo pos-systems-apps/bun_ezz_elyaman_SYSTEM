@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/core/widgets/button_widget.dart';
 import 'package:pos_system/features/my_requests/ui/widgets/my_requests_shimmer_widget.dart';
 import 'package:pos_system/features/return_invoice/logic/return_invoice_cubit.dart';
 import 'package:pos_system/features/return_invoice/logic/return_invoice_state.dart';
+import 'package:pos_system/features/return_invoice/ui/widgets/filter_name2.dart';
 import 'package:pos_system/features/return_invoice/ui/widgets/return_invoice_item_widget.dart';
 
 class ReturnInvoiceBodyWidget extends StatelessWidget {
@@ -19,6 +22,8 @@ class ReturnInvoiceBodyWidget extends StatelessWidget {
         return current is OnGetInvoicesLoadingState ||
             current is OnGetInvoicesSuccessState ||
             current is OnGetInvoicesErrorState ||
+            current is OnChangeNameState ||
+            current is OnChangeDateState ||
             current is OnGetInvoicesCatchErrorState;
       },
       builder: (context, state) {
@@ -49,14 +54,59 @@ class ReturnInvoiceBodyWidget extends StatelessWidget {
           return Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                children: ReturnInvoiceCubit.get(context)
+              child: Column(children: [
+                FilterName2(),
+                verticalSpace(10),
+                Row(
+                  children: [
+                    Expanded(
+                        child: ButtonWidget(
+                            isLoading: false,
+                            buttonText: ReturnInvoiceCubit.get(context)
+                                        .selectedDate ==
+                                    null
+                                ? "اختر التاريخ"
+                                : "${ReturnInvoiceCubit.get(context).selectedDate!.year}-${ReturnInvoiceCubit.get(context).selectedDate!.month.toString().padLeft(2, '0')}-${ReturnInvoiceCubit.get(context).selectedDate!.day.toString().padLeft(2, '0')}",
+                            textStyle: TextStyles.font16WhiteColorWeight500,
+                            buttonHeight: 40.h,
+                            borderRadius: 4.r,
+                            backGroundColor: AppColors.mainColor,
+                            borderColor: AppColors.mainColor,
+                            onPressed: () {
+                              ReturnInvoiceCubit.get(context).pickDate(context);
+                            })),
+                  ],
+                ),
+                verticalSpace(10),
+                ...ReturnInvoiceCubit.get(context)
                     .returnInvoices
+                    .where((ele) => ReturnInvoiceCubit.get(context)
+                                .selectedCustomerName ==
+                            null
+                        ? true
+                        : ele.customer.id ==
+                            ReturnInvoiceCubit.get(context)
+                                .selectedCustomerName
+                                ?.id)
+                    .where((ele) =>
+                        ReturnInvoiceCubit.get(context).selectedDate == null
+                            ? true
+                            : (DateTime.parse(ele.createdAt).year ==
+                                    ReturnInvoiceCubit.get(context)
+                                        .selectedDate!
+                                        .year) &&
+                                (DateTime.parse(ele.createdAt).month ==
+                                    ReturnInvoiceCubit.get(context)
+                                        .selectedDate!
+                                        .month) &&
+                                (DateTime.parse(ele.createdAt).day ==
+                                    ReturnInvoiceCubit.get(context)
+                                        .selectedDate!
+                                        .day))
                     .map((item) => ReturnInvoiceItemWidget(
                           item: item,
-                        ))
-                    .toList(),
-              ),
+                        )),
+              ]),
             ),
           );
         }
