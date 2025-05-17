@@ -1,0 +1,2 @@
+/Users/ahmedkhattab/programming/projects/bun_ezz_elyaman_SYSTEM/android/app/.cxx/RelWithDebInfo/36594u38/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/ahmedkhattab/programming/projects/bun_ezz_elyaman_SYSTEM/android/app/.cxx/RelWithDebInfo/36594u38/armeabi-v7a/CMakeFiles/rebuild_cache.dir
