@@ -187,12 +187,13 @@ class AppConstant {
   static double getDiscountOnProduct(String discountType, double productPrice,
       double discount, double moreDiscount) {
     if (discountType == "percent") {
-      return ((discount * productPrice) / 100) +
-          (moreDiscount == 0
-              ? 0
-              : (moreDiscount * (((discount * productPrice) / 100) / 100)));
+      return ((discount * productPrice) / 100) + moreDiscount;
+      // (moreDiscount == 0
+      //     ? 0
+      //     : (moreDiscount * (((discount * productPrice) / 100) / 100)));
     } else {
-      return discount + ((moreDiscount * (productPrice - discount)) / 100);
+      return discount + moreDiscount;
+      // ((moreDiscount * (productPrice - discount)) / 100);
     }
   }
 

@@ -642,7 +642,7 @@ class ProductSelectedWidget extends StatelessWidget {
                       border: Border.all(color: AppColors.blueColorEEE),
                     ),
                     child: Text(
-                      "${selectedProduct.product.maxDiscount}%",
+                      "${selectedProduct.product.maxDiscount} ${AppConstant.currency}",
                       maxLines: 4,
                       style: TextStyles.font14GreyColor66Weight400
                           .copyWith(color: AppColors.greenColor),
