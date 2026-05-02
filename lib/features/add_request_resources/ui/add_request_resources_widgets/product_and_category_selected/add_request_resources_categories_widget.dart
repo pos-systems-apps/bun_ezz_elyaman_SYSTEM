@@ -37,7 +37,7 @@ class AddRequestResourcesCategoriesWidget extends StatelessWidget {
           return SingleChildScrollView(
             padding: EdgeInsets.symmetric(vertical: 24.h),
             scrollDirection: Axis.horizontal,
-            controller: AddRequestResourcesCubit.get(context).categoriesScrollController,
+            // controller: AddRequestResourcesCubit.get(context).categoriesScrollController,
             child: Row(
               children: AddRequestResourcesCubit.get(context)
                   .categories

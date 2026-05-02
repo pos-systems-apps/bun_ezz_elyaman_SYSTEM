@@ -24,7 +24,7 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
 
   changeSelectedBillType(ResourceTypeClass value) {
     selectedResourcesTypes = value;
-    getCategoriesFromHere();
+    getCategories();
     changeSelectedCategory(null);
     selectedProducts = [];
     emit(OnChangeResourcesTypeSelectState());
@@ -32,46 +32,19 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
 
   ///categories
 
-  int categoriesCurrentPage = 1;
-  int categoriesLastPage = 10000;
-  ScrollController categoriesScrollController = ScrollController();
-
-  getCategoriesFromHere() {
-    categories = [];
-    categoriesCurrentPage = 1;
-    categoriesLastPage = 10000;
-    scrollListenerGetCategories();
-    getCategories();
-  }
-
-  scrollListenerGetCategories() {
-    categoriesScrollController.addListener(() {
-      if (categoriesCurrentPage < categoriesLastPage) {
-        if (categoriesScrollController.position.pixels ==
-            categoriesScrollController.position.maxScrollExtent) {
-          categoriesCurrentPage++;
-          getCategories();
-        }
-      }
-    });
-  }
-
-  List<Category> categories = [];
+  List<CategoryModel> categories = [];
 
   getCategories() {
     print("object121212");
     emit(OnGetCategoryLoadingState());
-    _salesRepo.getCategories(categoriesCurrentPage).then((value) {
+    _salesRepo.getCategories().then((value) {
       value.fold((l) {
         emit(OnGetCategoryErrorState());
       }, (r) {
-        categoriesCurrentPage = r.categoryPagination.currentPage;
-        categoriesLastPage = r.categoryPagination.lastPage;
-        categories.addAll(r.categoryPagination.categories);
+        categories = r.data;
 
-        if (r.categoryPagination.categories.isNotEmpty &&
-            selectedCategory == null) {
-          changeSelectedCategory(r.categoryPagination.categories[0]);
+        if (r.data.isNotEmpty && selectedCategory == null) {
+          changeSelectedCategory(r.data[0]);
         }
         emit(OnGetCategorySuccessState());
       });
@@ -80,10 +53,10 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
     });
   }
 
-  Category? selectedCategory;
+  CategoryModel? selectedCategory;
 
   ///call products
-  changeSelectedCategory(Category? value) {
+  changeSelectedCategory(CategoryModel? value) {
     selectedCategory = value;
     if (value != null) {
       getCategoryProductsFromHere(value.id);
@@ -92,44 +65,28 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
   }
 
   ///products
-  List<Product> products = [];
-
-  int categoryProductsCurrentPage = 1;
-  int categoryProductsLastPage = 10000;
-  ScrollController categoryProductsScrollController = ScrollController();
+  List<TripProductModel> products = [];
 
   getCategoryProductsFromHere(int categoryID) {
     products = [];
-    categoryProductsCurrentPage = 1;
-    categoryProductsLastPage = 10000;
-    scrollListenerGetCategoryProducts(categoryID);
+
     getCategoryProducts(categoryID);
   }
 
   //
-  scrollListenerGetCategoryProducts(int categoryID) {
-    categoryProductsScrollController.addListener(() {
-      if (categoryProductsCurrentPage < categoryProductsLastPage) {
-        if (categoryProductsScrollController.position.pixels ==
-            categoryProductsScrollController.position.maxScrollExtent) {
-          categoryProductsCurrentPage++;
-          getCategoryProducts(categoryID);
-        }
-      }
-    });
-  }
 
   getCategoryProducts(int categoryID) {
     emit(OnGetCategoryProductsLoadingState());
     _salesRepo
-        .getCategoryProducts(categoryID, null, categoryProductsCurrentPage)
+        .getCategoryProducts(
+      categoryID,
+      '',
+    )
         .then((value) {
       value.fold((l) {
         emit(OnGetCategoryProductsErrorState());
       }, (r) {
-        categoryProductsCurrentPage = r.currentPage;
-        categoryProductsLastPage = r.lastPage;
-        products.addAll(r.categoryProducts);
+        products = r.data;
 
         emit(OnGetCategoryProductsSuccessState());
       });
@@ -142,7 +99,7 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
   ///
   TextEditingController searchProductController = TextEditingController();
 
-  List<Product> searchProducts = [];
+  List<TripProductModel> searchProducts = [];
 
   getSearchProductsFromHere() {
     searchProducts = [];
@@ -152,13 +109,12 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
   getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
-        .getSearchProducts(
-            searchProductController.text, null)
+        .getCategoryProducts(selectedCategory?.id??0,searchProductController.text)
         .then((value) {
       value.fold((l) {
         emit(OnGetSearchProductsErrorState());
       }, (r) {
-        searchProducts=r.categoryProducts;
+        searchProducts = r.data;
         emit(OnGetSearchProductsSuccessState());
       });
     }).catchError((error) {
@@ -168,34 +124,34 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
 
   ///select product
   List<ResourceSelectedProduct> selectedProducts = [];
+  //
+  // addProductToSelectedProducts(ResourceSelectedProduct value) {
+  //   selectedProducts.add(value);
+  //   emit(OnChangeSelectedProductState());
+  // }
+  //
+  // editInProductFromSelectedProducts(ResourceSelectedProduct value) {
+  //   int index = selectedProducts.indexWhere(
+  //     (element) =>
+  //         element.product.productCode ==
+  //         value.product.productCode, // Compare by product code
+  //   );
+  //   if (index != -1) {
+  //     selectedProducts[index] = value;
+  //   }
+  //   emit(OnChangeSelectedProductState());
+  // }
 
-  addProductToSelectedProducts(ResourceSelectedProduct value) {
-    selectedProducts.add(value);
-    emit(OnChangeSelectedProductState());
-  }
-
-  editInProductFromSelectedProducts(ResourceSelectedProduct value) {
-    int index = selectedProducts.indexWhere(
-      (element) =>
-          element.product.productCode ==
-          value.product.productCode, // Compare by product code
-    );
-    if (index != -1) {
-      selectedProducts[index] = value;
-    }
-    emit(OnChangeSelectedProductState());
-  }
-
-  removeProductFromSelectedProducts(ResourceSelectedProduct value) {
-    selectedProducts.removeWhere(
-        (item) => item.product.productCode == value.product.productCode);
-    emit(OnChangeSelectedProductState());
-  }
-
-  bool selectedProductsIsContainProduct(ResourceSelectedProduct value) {
-    return selectedProducts
-        .any((item) => item.product.productCode == value.product.productCode);
-  }
+  // removeProductFromSelectedProducts(ResourceSelectedProduct value) {
+  //   selectedProducts.removeWhere(
+  //       (item) => item.product.productCode == value.product.productCode);
+  //   emit(OnChangeSelectedProductState());
+  // }
+  //
+  // bool selectedProductsIsContainProduct(ResourceSelectedProduct value) {
+  //   return selectedProducts
+  //       .any((item) => item.product.productCode == value.product.productCode);
+  // }
 
   changeState() {
     emit(OnChangeSelectedProductState());
@@ -203,27 +159,27 @@ class AddRequestResourcesCubit extends Cubit<AddRequestResourcesState> {
 
   /// add Request Resources
   addRequestResources(BuildContext context) {
-    emit(OnAddResourcesLoadingState());
-    _addRequestResourcesRepo
-        .addRequestResources(CreateRequestResourcesRequest(
-            type: selectedResourcesTypes.id,
-            resourceItems: selectedProducts
-                .map((item) => ResourceItem(
-                    itemId: item.product.id,
-                    itemName: item.product.nameAr,
-                    price: item.product.sellingPrice,
-                    requestQuantity: item.requestQuantity,
-                    yourQuantity: item.yourQuantity))
-                .toList()))
-        .then((value) {
-      value.fold((l) {
-        emit(OnAddResourcesErrorState(message: l.message));
-      }, (r) {
-        // emit(OnAddResourcesSuccessState(orderId: r.id ?? 0));
-      });
-    }).catchError((error) {
-      emit(OnAddResourcesCatchErrorState(message: "error".tr()));
-    });
+    // emit(OnAddResourcesLoadingState());
+    // _addRequestResourcesRepo
+    //     .addRequestResources(CreateRequestResourcesRequest(
+    //         type: selectedResourcesTypes.id,
+    //         resourceItems: selectedProducts
+    //             .map((item) => ResourceItem(
+    //                 itemId: item.product.id,
+    //                 itemName: item.product.nameAr,
+    //                 price: item.product.sellingPrice,
+    //                 requestQuantity: item.requestQuantity,
+    //                 yourQuantity: item.yourQuantity))
+    //             .toList()))
+    //     .then((value) {
+    //   value.fold((l) {
+    //     emit(OnAddResourcesErrorState(message: l.message));
+    //   }, (r) {
+    //     // emit(OnAddResourcesSuccessState(orderId: r.id ?? 0));
+    //   });
+    // }).catchError((error) {
+    //   emit(OnAddResourcesCatchErrorState(message: "error".tr()));
+    // });
   }
 
   static AddRequestResourcesCubit get(context) => BlocProvider.of(context);

@@ -20,9 +20,8 @@ class SalesService {
 
   SalesService({required this.apiConsumer});
 
-  Future<CategoryResponse> getCategories(int page) async {
-    final response =
-        await apiConsumer.get(SalesApiEndPoints.getCategoriesUrl(page), {
+  Future<CategoryResponse> getCategories() async {
+    final response = await apiConsumer.get(SalesApiEndPoints.getCategoriesUrl, {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
@@ -35,29 +34,15 @@ class SalesService {
   }
 
   Future<CategoryProductsResponse> getCategoryProducts(
-      int categoryId, int? type, int page) async {
+      int categoryId, String search) async {
     final response = await apiConsumer
-        .get(SalesApiEndPoints.getCategoryProductsUrl(categoryId, type, page), {
+        .get(SalesApiEndPoints.getCategoryProductsUrl(categoryId, search), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
+
     if (response.statusCode == StatusCode.ok) {
       return CategoryProductsResponse.fromJson(jsonDecode(response.body));
-    } else {
-      throw ServerException(
-          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
-    }
-  }
-
-  Future<SearchProductsResponse> getSearchProducts(
-      String name, int? type) async {
-    final response = await apiConsumer
-        .get(SalesApiEndPoints.getSearchProductsUrl(name, type), {
-      ConstantKeys.appAuthorization:
-          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-    });
-    if (response.statusCode == StatusCode.ok) {
-      return SearchProductsResponse.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
@@ -91,20 +76,23 @@ class SalesService {
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
     }
   }
-  Future<SuccessResponseModel> createReturn(CreateReturnOrderRequest parameter) async {
+
+  Future<SuccessResponseModel> createReturn(
+      CreateReturnOrderRequest parameter) async {
     final response = await apiConsumer.post(
         SalesApiEndPoints.createReturnURl,
         CreateReturnOrderRequest(
-           orderId : parameter.orderId,
-           returnQuantitiesHidden: parameter.returnQuantitiesHidden,
-           returnUnitHidden: parameter.returnUnitHidden,
+          orderId: parameter.orderId,
+          returnQuantitiesHidden: parameter.returnQuantitiesHidden,
+          returnUnitHidden: parameter.returnUnitHidden,
           date: parameter.date,
         ).toJson(),
         {
           ConstantKeys.appAuthorization:
               "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-        });print(response.statusCode);
-        print(response.body);
+        });
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {

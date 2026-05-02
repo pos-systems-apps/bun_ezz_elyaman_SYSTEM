@@ -125,9 +125,7 @@ class BillContentWidget extends StatelessWidget {
                               product: item,
                               text: item.nameAr,
                               quantity: item.quantity.toStringAsFixed(2),
-                              measure: item.unit == 0
-                                  ? AppConstant.measureUnits[1].nameAr
-                                  : AppConstant.measureUnits[0].nameAr,
+                              measure:   AppConstant.measureUnits[1].name ,
                               price: ReturnedProductClass()
                                   .getProductTotalPrice(
                                       item).toStringAsFixed(3)),

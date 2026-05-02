@@ -61,7 +61,7 @@ class ReseatScreen extends StatelessWidget {
               ],
             ),
             verticalSpace(24),
-            ReseatBodyWidget(),
+            // ReseatBodyWidget(),
           ],
         ),
       ),

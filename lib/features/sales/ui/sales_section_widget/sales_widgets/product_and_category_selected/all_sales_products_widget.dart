@@ -42,8 +42,7 @@ class AllSalesProductsWidget extends StatelessWidget {
               fit: BoxFit.fitHeight,
             );
           } else {
-            print("SalesCubit.get(context).searchProducts  ${SalesCubit.get(context).searchProducts.length}");
-            return AllProductsAndSearchProductsWidget(isSearch: true);
+             return AllProductsAndSearchProductsWidget(isSearch: true);
           }
         } else {
           if (SalesCubit.get(context).products.isEmpty &&

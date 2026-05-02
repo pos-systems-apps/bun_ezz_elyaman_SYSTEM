@@ -189,15 +189,15 @@ class _ElectronicInvoiceBodyWidgetState
                                       .customer
                                       .name),
                               verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "نوع الفاتورة",
-                                  value: PrintInvoiceCubit.get(context)
-                                              .invoiceResponseModel!
-                                              .invoice
-                                              .type ==
-                                          "7"
-                                      ? AppConstant.orderTypes[1].nameAr
-                                      : AppConstant.orderTypes[0].nameAr),
+                              // MoneyWidget1(
+                              //     text: "نوع الفاتورة",
+                              //     value: PrintInvoiceCubit.get(context)
+                              //                 .invoiceResponseModel!
+                              //                 .invoice
+                              //                 .type ==
+                              //             "7"
+                              //         ? AppConstant.orderTypes[1].nameAr
+                              //         : AppConstant.orderTypes[0].nameAr),
                               verticalSpace(8),
                               MoneyWidget1(
                                   text: "طريقه الدفع",
@@ -221,30 +221,30 @@ class _ElectronicInvoiceBodyWidgetState
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ...PrintInvoiceCubit.get(context)
-                                      .invoiceResponseModel!
-                                      .invoice
-                                      .details
-                                      .map((item) => Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              MoneyWidget2(
-                                                  text: item.nameAr,
-                                                  quantity: item.quantity
-                                                      .toStringAsFixed(2),
-                                                  measure: item.unit == 0
-                                                      ? AppConstant
-                                                          .measureUnits[1]
-                                                          .nameAr
-                                                      : AppConstant
-                                                          .measureUnits[0]
-                                                          .nameAr,
-                                                  price: item.price
-                                                      .toStringAsFixed(2)),
-                                              verticalSpace(8),
-                                            ],
-                                          )),
+                                  // ...PrintInvoiceCubit.get(context)
+                                  //     .invoiceResponseModel!
+                                  //     .invoice
+                                  //     .details
+                                  //     .map((item) => Column(
+                                  //           crossAxisAlignment:
+                                  //               CrossAxisAlignment.start,
+                                  //           children: [
+                                  //             MoneyWidget2(
+                                  //                 text: item.nameAr,
+                                  //                 quantity: item.quantity
+                                  //                     .toStringAsFixed(2),
+                                  //                 measure: item.unit == 0
+                                  //                     ? AppConstant
+                                  //                         .measureUnits[1]
+                                  //                         .nameAr
+                                  //                     : AppConstant
+                                  //                         .measureUnits[0]
+                                  //                         .nameAr,
+                                  //                 price: item.price
+                                  //                     .toStringAsFixed(2)),
+                                  //             verticalSpace(8),
+                                  //           ],
+                                  //         )),
                                 ],
                               ),
                               verticalSpace(24),

@@ -10,7 +10,7 @@ import 'package:pos_system/core/widgets/cached_network_image.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 
 class AddRequestResourcesProductWidget extends StatelessWidget {
-  final Product product;
+  final TripProductModel product;
   final bool isSelected;
 
   const AddRequestResourcesProductWidget(
@@ -65,9 +65,7 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
           //         radius: 0)),
           verticalSpace(10),
           Text(
-              context.locale.languageCode == "ar"
-                  ? product.nameAr
-                  : product.nameEn,
+             product.name,
               maxLines: 2,
               textAlign: TextAlign.center,
               style: TextStyles.font12BlackColorWeight400),
@@ -99,15 +97,15 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
             ),
           ),
           verticalSpace(10),
-          Text("كود المنتج : ${product.productCode}",
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              style: TextStyles.font12greyColor67Weight500),
-          verticalSpace(10),
-          Text("المخزون: ${product.quantity.toStringAsFixed(1)}",
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              style: TextStyles.font12greyColor67Weight500),
+          // Text("كود المنتج : ${product.productCode}",
+          //     maxLines: 1,
+          //     textAlign: TextAlign.center,
+          //     style: TextStyles.font12greyColor67Weight500),
+          // verticalSpace(10),
+          // Text("المخزون: ${product.quantity.toStringAsFixed(1)}",
+          //     maxLines: 1,
+          //     textAlign: TextAlign.center,
+          //     style: TextStyles.font12greyColor67Weight500),
           verticalSpace(10),
         ],
       ),

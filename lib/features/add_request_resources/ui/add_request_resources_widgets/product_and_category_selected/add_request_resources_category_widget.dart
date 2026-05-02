@@ -8,7 +8,7 @@ import 'package:pos_system/core/widgets/cached_network_image.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 
 class AddRequestResourcesCategoryWidget extends StatelessWidget {
-  final Category category;
+  final CategoryModel category;
   final bool isSelected;
 
   const AddRequestResourcesCategoryWidget({

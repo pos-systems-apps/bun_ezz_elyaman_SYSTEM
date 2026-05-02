@@ -37,7 +37,7 @@ class SalesCategoriesWidget extends StatelessWidget {
           return SingleChildScrollView(
             padding: EdgeInsets.symmetric(vertical: 24.h),
             scrollDirection: Axis.horizontal,
-            controller: SalesCubit.get(context).categoriesScrollController,
+            // controller: SalesCubit.get(context).categoriesScrollController,
             child: Row(
               children: SalesCubit.get(context)
                   .categories

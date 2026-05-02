@@ -80,7 +80,7 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => SalesCubit(getIt(), getIt(), getIt())
-                    ..getCategoriesFromHere(),
+                    ..getCategories(),
                   child: BlocProvider(
                     create: (context) => ButtonNavigationCubit(),
                     child: ButtonNavigationScreen(),

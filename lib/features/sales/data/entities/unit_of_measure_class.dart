@@ -2,12 +2,10 @@
 
 class UnitMeasure {
   int id;
-  String nameAr;
-  String nameEn;
+  String name;
 
   UnitMeasure({
     required this.id,
-    required this.nameAr,
-    required this.nameEn,
-  });
+    required this.name,
+   });
 }

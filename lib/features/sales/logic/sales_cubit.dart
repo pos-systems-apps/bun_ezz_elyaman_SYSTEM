@@ -39,53 +39,31 @@ class SalesCubit extends Cubit<SalesState> {
   changeSelectedBillType(OrderTypeClass value) {
     selectedOrderType = value;
     if (value.id == AppConstant.orderTypes[0].id) {
-      getCategoriesFromHere();
+      getCategories();
       changeSelectedCategory(null);
-      selectedProducts = [];
+      // selectedProducts = [];
     } else {}
     emit(OnChangeOrderTypeSelectState());
   }
 
   ///categories
 
-  int categoriesCurrentPage = 1;
-  int categoriesLastPage = 10000;
-  ScrollController categoriesScrollController = ScrollController();
 
-  getCategoriesFromHere() {
-    categories = [];
-    categoriesCurrentPage = 1;
-    categoriesLastPage = 10000;
-    scrollListenerGetCategories();
-    getCategories();
-  }
 
-  scrollListenerGetCategories() {
-    categoriesScrollController.addListener(() {
-      if (categoriesCurrentPage < categoriesLastPage) {
-        if (categoriesScrollController.position.pixels ==
-            categoriesScrollController.position.maxScrollExtent) {
-          categoriesCurrentPage++;
-          getCategories();
-        }
-      }
-    });
-  }
 
-  List<Category> categories = [];
+  List<CategoryModel> categories = [];
 
   getCategories() {
     emit(OnGetCategoryLoadingState());
-    _salesRepo.getCategories(categoriesCurrentPage).then((value) {
+    _salesRepo.getCategories().then((value) {
       value.fold((l) {
         emit(OnGetCategoryErrorState());
       }, (r) {
-        categoriesCurrentPage = r.categoryPagination.currentPage;
-        categoriesLastPage = r.categoryPagination.lastPage;
-        categories.addAll(r.categoryPagination.categories);
-        if (r.categoryPagination.categories.isNotEmpty &&
+
+        categories   =r.data ;
+        if (r.data.isNotEmpty &&
             selectedCategory == null) {
-          changeSelectedCategory(r.categoryPagination.categories[0]);
+          changeSelectedCategory(r.data[0]);
         }
         emit(OnGetCategorySuccessState());
       });
@@ -94,57 +72,34 @@ class SalesCubit extends Cubit<SalesState> {
     });
   }
 
-  Category? selectedCategory;
+  CategoryModel? selectedCategory;
 
   ///call products
-  changeSelectedCategory(Category? value) {
+  changeSelectedCategory(CategoryModel? value) {
     selectedCategory = value;
     if (value != null) {
-      getCategoryProductsFromHere(value.id);
+      getCategoryProducts(value.id);
     }
 
     emit(OnChangeSelectedCategoryState());
   }
 
   ///products
-  List<Product> products = [];
+  List<TripProductModel> products = [];
 
-  int categoryProductsCurrentPage = 1;
-  int categoryProductsLastPage = 10000;
-  ScrollController categoryProductsScrollController = ScrollController();
 
-  getCategoryProductsFromHere(int categoryID) {
-    products = [];
-    categoryProductsCurrentPage = 1;
-    categoryProductsLastPage = 10000;
-    scrollListenerGetCategoryProducts(categoryID);
-    getCategoryProducts(categoryID);
-  }
-
-  scrollListenerGetCategoryProducts(int categoryID) {
-    categoryProductsScrollController.addListener(() {
-      if (categoryProductsCurrentPage < categoryProductsLastPage) {
-        if (categoryProductsScrollController.position.pixels ==
-            categoryProductsScrollController.position.maxScrollExtent) {
-          categoryProductsCurrentPage++;
-          getCategoryProducts(categoryID);
-        }
-      }
-    });
-  }
 
   getCategoryProducts(int categoryID) {
     emit(OnGetCategoryProductsLoadingState());
     _salesRepo
-        .getCategoryProducts(categoryID, AppConstant.orderTypes[0].id,
-            categoryProductsCurrentPage)
+        .getCategoryProducts(categoryID, '',
+             )
         .then((value) {
       value.fold((l) {
         emit(OnGetCategoryProductsErrorState());
       }, (r) {
-        categoryProductsCurrentPage = r.currentPage;
-        categoryProductsLastPage = r.lastPage;
-        products.addAll(r.categoryProducts);
+
+        products=r.data;
         emit(OnGetCategoryProductsSuccessState());
       });
     }).catchError((error) {
@@ -161,7 +116,7 @@ class SalesCubit extends Cubit<SalesState> {
     getSearchProductsFromHere();
   }
 
-  List<Product> searchProducts = [];
+  List<TripProductModel> searchProducts = [];
 
   getSearchProductsFromHere() {
     searchProducts = [];
@@ -171,13 +126,13 @@ class SalesCubit extends Cubit<SalesState> {
   getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
-        .getSearchProducts(
-            searchProductController.text, AppConstant.orderTypes[0].id)
+        .getCategoryProducts(
+      selectedCategory?.id??0,   searchProductController.text  )
         .then((value) {
       value.fold((l) {
         emit(OnGetSearchProductsErrorState());
       }, (r) {
-        searchProducts = r.categoryProducts;
+        searchProducts = r.data;
         emit(OnGetSearchProductsSuccessState());
       });
     }).catchError((error) {
@@ -186,38 +141,189 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   ///select product
+  //
+  // List<SelectedProductClass> selectedProducts = [];
+  //
+  // addProductToSelectedProducts(SelectedProductClass value) {
+  //   selectedProducts.add(value);
+  //   emit(OnChangeSelectedProductState());
+  // }
+  //
+  // editInProductFromSelectedProducts(SelectedProductClass value) {
+  //   int index = selectedProducts.indexWhere(
+  //     (element) =>
+  //         element.product.id ==
+  //         value.product.id, // Compare by product code
+  //   );
+  //   if (index != -1) {
+  //     selectedProducts[index] = value;
+  //   }
+  //
+  //   emit(OnChangeSelectedProductState());
+  // }
+  //
+  // removeProductFromSelectedProducts(SelectedProductClass value) {
+  //   selectedProducts.removeWhere(
+  //       (item) => item.product.id == value.product.id);
+  //   emit(OnChangeSelectedProductState());
+  // }
+  //
+  // bool selectedProductsIsContainProduct(SelectedProductClass value) {
+  //   return selectedProducts
+  //       .any((item) => item.product.id == value.product.id);
+  // }
+  //
+  //
+  //
+  //
+  //
+
 
   List<SelectedProductClass> selectedProducts = [];
 
-  addProductToSelectedProducts(SelectedProductClass value) {
-    selectedProducts.add(value);
-    emit(OnChangeSelectedProductState());
-  }
-
-  editInProductFromSelectedProducts(SelectedProductClass value) {
-    int index = selectedProducts.indexWhere(
-      (element) =>
-          element.product.productCode ==
-          value.product.productCode, // Compare by product code
+  void addProductToSelectedProducts(SelectedProductClass value) {
+    final index = selectedProducts.indexWhere(
+          (element) => element.product.id == value.product.id,
     );
-    if (index != -1) {
+
+    if (index == -1) {
+      selectedProducts.add(value);
+    } else {
       selectedProducts[index] = value;
     }
 
     emit(OnChangeSelectedProductState());
   }
 
-  removeProductFromSelectedProducts(SelectedProductClass value) {
+  void editInProductFromSelectedProducts(SelectedProductClass value) {
+    final index = selectedProducts.indexWhere(
+          (element) => element.product.id == value.product.id,
+    );
+
+    if (index != -1) {
+      selectedProducts[index] = value;
+      emit(OnChangeSelectedProductState());
+    }
+  }
+
+  void removeProductFromSelectedProducts(SelectedProductClass value) {
     selectedProducts.removeWhere(
-        (item) => item.product.productCode == value.product.productCode);
+          (item) => item.product.id == value.product.id,
+    );
+
     emit(OnChangeSelectedProductState());
   }
 
   bool selectedProductsIsContainProduct(SelectedProductClass value) {
-    return selectedProducts
-        .any((item) => item.product.productCode == value.product.productCode);
+    return selectedProducts.any(
+          (item) => item.product.id == value.product.id,
+    );
   }
 
+  SelectedProductClass? getSelectedProduct(TripProductModel product) {
+    try {
+      return selectedProducts.firstWhere(
+            (item) => item.product.id == product.id,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  void increaseProductMaxQuantity(TripProductModel product) {
+    final selectedProduct = getSelectedProduct(product);
+
+    if (selectedProduct == null) {
+      addProductToSelectedProducts(
+        SelectedProductClass(
+          product: product,
+          maxValueCounter: 1,
+          minValueCounter: 0,
+        ),
+      );
+    } else {
+      selectedProduct.maxValueCounter++;
+      emit(OnChangeSelectedProductState());
+    }
+  }
+
+  void decreaseProductMaxQuantity(TripProductModel product) {
+    final selectedProduct = getSelectedProduct(product);
+
+    if (selectedProduct == null) return;
+
+    if (selectedProduct.maxValueCounter > 1) {
+      selectedProduct.maxValueCounter--;
+    } else {
+      removeProductFromSelectedProducts(selectedProduct);
+      return;
+    }
+
+    emit(OnChangeSelectedProductState());
+  }
+
+  void changeProductMinQuantity({
+    required TripProductModel product,
+    required int quantity,
+  }) {
+    final selectedProduct = getSelectedProduct(product);
+
+    if (selectedProduct == null) {
+      addProductToSelectedProducts(
+        SelectedProductClass(
+          product: product,
+          maxValueCounter: 0,
+          minValueCounter: quantity,
+        ),
+      );
+    } else {
+      selectedProduct.minValueCounter = quantity;
+      emit(OnChangeSelectedProductState());
+    }
+  }
+
+  void changeProductMaxUnit({
+    required TripProductModel product,
+    required AvailableUnitModel unit,
+  }) {
+    final selectedProduct = getSelectedProduct(product);
+
+    if (selectedProduct == null) {
+      addProductToSelectedProducts(
+        SelectedProductClass(
+          product: product,
+          selectedMaxUnit: unit,
+        ),
+      );
+    } else {
+      selectedProduct.selectedMaxUnit = unit;
+      emit(OnChangeSelectedProductState());
+    }
+  }
+
+  void changeProductMinUnit({
+    required TripProductModel product,
+    required AvailableUnitModel unit,
+  }) {
+    final selectedProduct = getSelectedProduct(product);
+
+    if (selectedProduct == null) {
+      addProductToSelectedProducts(
+        SelectedProductClass(
+          product: product,
+          selectedMinUnit: unit,
+        ),
+      );
+    } else {
+      selectedProduct.selectedMinUnit = unit;
+      emit(OnChangeSelectedProductState());
+    }
+  }
+
+  void clearSelectedProducts() {
+    selectedProducts.clear();
+    emit(OnChangeSelectedProductState());
+  }
   changeState() {
     emit(OnChangeSelectedProductState());
   }
@@ -284,86 +390,86 @@ class SalesCubit extends Cubit<SalesState> {
 
   /// CREATE ORDER
   createOrder(BuildContext context) {
-    emit(OnCreateOrderLoadingState());
-    _salesRepo
-        .createOrder(CreateOrderRequest(
-            userId: selectedUser!.id,
-            img: selectedImagePath,
-            allOrderAmount: ReseatSelectedProducts(selectedProducts: selectedProducts)
-                .getReseatData(
-                    discountTypeId: selectedPercentType?.id,
-                    discount: percentController.text)['totalReseat']!
-                .toString(),
-            totalTax: ReseatSelectedProducts(selectedProducts: selectedProducts)
-                .getReseatData(
-                    discountTypeId: selectedPercentType?.id,
-                    discount: percentController.text)['valueTax']!
-                .toString(),
-            totalProductsDiscount:
-                ReseatSelectedProducts(selectedProducts: selectedProducts)
-                    .getReseatData(
-                        discountTypeId: selectedPercentType?.id,
-                        discount: percentController.text)['totalDiscount']!
-                    .toString(),
-            extraDiscount: "0",
-            // ReseatSelectedProducts(selectedProducts: selectedProducts)
-            //     .getReseatData(
-            //         discountTypeId: selectedPercentType?.id,
-            //         discount: percentController.text)['extraDiscount']!
-            //     .toString(),
-            collectedCash: selectedPay!.id == 2
-                ? moneyController.text
-                : (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
-                        discountTypeId: selectedPercentType?.id,
-                        discount: percentController.text)['total']!)
-                    .toString(),
-            orderType: AppConstant.orderTypes[0].id,
-            finalOrderAmount: ReseatSelectedProducts(selectedProducts: selectedProducts)
-                .getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['total']!
-                .toString(),
-            cash: selectedPay!.id,
-            carts: selectedProducts.map((element) {
-              print("object--------");
-              print(((ReseatSelectedProducts(selectedProducts: selectedProducts)
-                  .getProductDiscountPriceInReseat(element)) /
-                  (element.minValueCounter == 0
-                      ? element.maxValueCounter.toDouble()
-                      : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
-                      .toDouble())));
-              return Cart(
-                  id: element.product.id,
-                  discount: ((ReseatSelectedProducts(selectedProducts: selectedProducts)
-                              .getProductDiscountPriceInReseat(element)) /
-                          (element.minValueCounter == 0
-                              ? element.maxValueCounter.toDouble()
-                              : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
-                                  .toDouble()))
-                      .toString(),
-                  quantity: element.minValueCounter == 0
-                      ? element.maxValueCounter.toDouble()
-                      : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
-                          .toDouble(),
-                  price: element.minValueCounter == 0
-                      ? element.product.sellingPrice
-                      : double.tryParse((element.product.sellingPrice / element.product.unitValue).toString()) ??
-                          0,
-                  tax: ReseatSelectedProducts(selectedProducts: selectedProducts).getProductTaxesPriceInReseat(
-                          element, selectedPercentType?.id, percentController.text,
-                          totalPrice: (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['totalReseat']! - ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['totalDiscount']!)) /
-                      ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter),
-                  unit: element.minValueCounter == 0 ? 1 : 0);
-            }).toList()))
-        .then((value) {
-      value.fold((l) {
-        emit(OnCreateOrderErrorState(message: l.message));
-      }, (r) {
-        // context.pushNamed(Routes.electronicInvoiceScreen,
-        //     arguments: {"orderId": r.orderId});
-        // emit(OnCreateOrderSuccessState(orderId: r.orderId ?? 0));
-      });
-    }).catchError((error) {
-      emit(OnCreateOrderCatchErrorState(message: "error".tr()));
-    });
+    // emit(OnCreateOrderLoadingState());
+    // _salesRepo
+    //     .createOrder(CreateOrderRequest(
+    //         userId: selectedUser!.id,
+    //         img: selectedImagePath,
+    //         allOrderAmount: ReseatSelectedProducts(selectedProducts: selectedProducts)
+    //             .getReseatData(
+    //                 discountTypeId: selectedPercentType?.id,
+    //                 discount: percentController.text)['totalReseat']!
+    //             .toString(),
+    //         totalTax: ReseatSelectedProducts(selectedProducts: selectedProducts)
+    //             .getReseatData(
+    //                 discountTypeId: selectedPercentType?.id,
+    //                 discount: percentController.text)['valueTax']!
+    //             .toString(),
+    //         totalProductsDiscount:
+    //             ReseatSelectedProducts(selectedProducts: selectedProducts)
+    //                 .getReseatData(
+    //                     discountTypeId: selectedPercentType?.id,
+    //                     discount: percentController.text)['totalDiscount']!
+    //                 .toString(),
+    //         extraDiscount: "0",
+    //         // ReseatSelectedProducts(selectedProducts: selectedProducts)
+    //         //     .getReseatData(
+    //         //         discountTypeId: selectedPercentType?.id,
+    //         //         discount: percentController.text)['extraDiscount']!
+    //         //     .toString(),
+    //         collectedCash: selectedPay!.id == 2
+    //             ? moneyController.text
+    //             : (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
+    //                     discountTypeId: selectedPercentType?.id,
+    //                     discount: percentController.text)['total']!)
+    //                 .toString(),
+    //         orderType: AppConstant.orderTypes[0].id,
+    //         finalOrderAmount: ReseatSelectedProducts(selectedProducts: selectedProducts)
+    //             .getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['total']!
+    //             .toString(),
+    //         cash: selectedPay!.id,
+    //         carts: selectedProducts.map((element) {
+    //           print("object--------");
+    //           print(((ReseatSelectedProducts(selectedProducts: selectedProducts)
+    //               .getProductDiscountPriceInReseat(element)) /
+    //               (element.minValueCounter == 0
+    //                   ? element.maxValueCounter.toDouble()
+    //                   : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
+    //                   .toDouble())));
+    //           return Cart(
+    //               id: element.product.id,
+    //               discount: ((ReseatSelectedProducts(selectedProducts: selectedProducts)
+    //                           .getProductDiscountPriceInReseat(element)) /
+    //                       (element.minValueCounter == 0
+    //                           ? element.maxValueCounter.toDouble()
+    //                           : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
+    //                               .toDouble()))
+    //                   .toString(),
+    //               quantity: element.minValueCounter == 0
+    //                   ? element.maxValueCounter.toDouble()
+    //                   : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
+    //                       .toDouble(),
+    //               price: element.minValueCounter == 0
+    //                   ? element.product.sellingPrice
+    //                   : double.tryParse((element.product.sellingPrice / element.product.unitValue).toString()) ??
+    //                       0,
+    //               tax: ReseatSelectedProducts(selectedProducts: selectedProducts).getProductTaxesPriceInReseat(
+    //                       element, selectedPercentType?.id, percentController.text,
+    //                       totalPrice: (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['totalReseat']! - ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['totalDiscount']!)) /
+    //                   ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter),
+    //               unit: element.minValueCounter == 0 ? 1 : 0);
+    //         }).toList()))
+    //     .then((value) {
+    //   value.fold((l) {
+    //     emit(OnCreateOrderErrorState(message: l.message));
+    //   }, (r) {
+    //     // context.pushNamed(Routes.electronicInvoiceScreen,
+    //     //     arguments: {"orderId": r.orderId});
+    //     // emit(OnCreateOrderSuccessState(orderId: r.orderId ?? 0));
+    //   });
+    // }).catchError((error) {
+    //   emit(OnCreateOrderCatchErrorState(message: "error".tr()));
+    // });
   }
 
   ///return section

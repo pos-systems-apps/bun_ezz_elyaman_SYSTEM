@@ -1,59 +1,63 @@
 class CategoryResponse {
-  int total;
-  int limit;
-  CategoryPagination categoryPagination;
+  final bool status;
+  final String message;
+  final List<CategoryModel> data;
+  final int code;
 
   CategoryResponse({
-    required this.total,
-    required this.limit,
-    required this.categoryPagination,
+    required this.status,
+    required this.message,
+    required this.data,
+    required this.code,
   });
 
-  factory CategoryResponse.fromJson(Map<String, dynamic> json) =>
-      CategoryResponse(
-        total: json['total'],
-        limit: json['limit'],
-        categoryPagination: CategoryPagination.fromJson(json['categories']),
-      );
+  factory CategoryResponse.fromJson(Map<String, dynamic> json) {
+    return CategoryResponse(
+      status: json['status'] ?? false,
+      message: json['message'] ?? '',
+      data: json['data'] != null
+          ? List<CategoryModel>.from(
+              json['data'].map((item) => CategoryModel.fromJson(item)),
+            )
+          : [],
+      code: json['code'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'message': message,
+      'data': data.map((item) => item.toJson()).toList(),
+      'code': code,
+    };
+  }
 }
 
-class CategoryPagination {
-  int currentPage;
-  int lastPage;
-  List<Category> categories;
+class CategoryModel {
+  final int id;
+  final String name;
+  final String? image;
 
-  CategoryPagination({
-    required this.currentPage,
-    required this.lastPage,
-    required this.categories,
-  });
-
-  factory CategoryPagination.fromJson(Map<String, dynamic> json) =>
-      CategoryPagination(
-        currentPage: json['current_page'],
-        lastPage: json['last_page'],
-        categories: List<Category>.from(
-            json['data'].map((item) => Category.fromJson(item))),
-      );
-}
-
-class Category {
-  int id;
-  String name;
-  String image;
-  int type;
-
-  Category({
+  CategoryModel({
     required this.id,
     required this.name,
-    required this.image,
-    required this.type,
+    this.image,
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
-        id: json['id'],
-        name: json['name'],
-        image: json['image'],
-        type: json['type'],
-      );
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      image: json['image'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'image': image,
+    };
+  }
 }

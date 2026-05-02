@@ -96,69 +96,69 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
           //   ],
           // ),
           verticalSpace(16),
-          BlocBuilder<SalesCubit, SalesState>(
-            buildWhen: (previous, current) {
-              return current is OnChangeSelectedProductState;
-            },
-            builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("ملخص الطلب",
-                      style: TextStyles.font14GreyColor33Weight400),
-                  verticalSpace(16),
-                  _moneyWidget("اجمالي الفاتوره",
-                      " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['totalReseat'])!.toStringAsFixed(3)}"),
-                  verticalSpace(16),
-
-                  _moneyWidget("خصم المنتج",
-                      " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['totalDiscount'])!.toStringAsFixed(3)}"),
-                  // verticalSpace(16),
-                  // _moneyWidget("خصم اضافي",
-                  //     "${AppConstant.currency} ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['extraDiscount'])!.toStringAsFixed(3)}"),
-
-                  ///stop value tax
-                  verticalSpace(16),
-                  _moneyWidget(
-                      "الضريبة",
-                      " 'جنيه'  "
-                          "${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['valueTax'])!.toStringAsFixed(3)}"),
-                  verticalSpace(16),
-                  Divider(color: AppColors.blueColorEEE),
-                  verticalSpace(16),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("الإجمالى",
-                              maxLines: 1,
-                              style: TextStyles.font16GreyColor33Weight500),
-                          verticalSpace(4),
-                          Text.rich(TextSpan(children: [
-                            TextSpan(
-                              text: "الاسعار شاملة للضريبة ",
-                              style: TextStyles.font14GreyColorA5Weight400,
-                            ),
-                            TextSpan(
-                              text: "*",
-                              style: TextStyles.font14RedColorWeight400,
-                            ),
-                          ])),
-                        ],
-                      )),
-                      Text(
-                          " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['total'])!.toStringAsFixed(3)}",
-                          style: TextStyles.font16GreyColor33Weight500),
-                    ],
-                  ),
-                  verticalSpace(16),
-                ],
-              );
-            },
-          ),
+          // BlocBuilder<SalesCubit, SalesState>(
+          //   buildWhen: (previous, current) {
+          //     return current is OnChangeSelectedProductState;
+          //   },
+          //   builder: (context, state) {
+          //     return Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Text("ملخص الطلب",
+          //             style: TextStyles.font14GreyColor33Weight400),
+          //         verticalSpace(16),
+          //         _moneyWidget("اجمالي الفاتوره",
+          //             " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['totalReseat'])!.toStringAsFixed(3)}"),
+          //         verticalSpace(16),
+          //
+          //         _moneyWidget("خصم المنتج",
+          //             " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['totalDiscount'])!.toStringAsFixed(3)}"),
+          //         // verticalSpace(16),
+          //         // _moneyWidget("خصم اضافي",
+          //         //     "${AppConstant.currency} ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['extraDiscount'])!.toStringAsFixed(3)}"),
+          //
+          //         ///stop value tax
+          //         verticalSpace(16),
+          //         _moneyWidget(
+          //             "الضريبة",
+          //             " 'جنيه'  "
+          //                 "${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['valueTax'])!.toStringAsFixed(3)}"),
+          //         verticalSpace(16),
+          //         Divider(color: AppColors.blueColorEEE),
+          //         verticalSpace(16),
+          //         Row(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             Expanded(
+          //                 child: Column(
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               children: [
+          //                 Text("الإجمالى",
+          //                     maxLines: 1,
+          //                     style: TextStyles.font16GreyColor33Weight500),
+          //                 verticalSpace(4),
+          //                 Text.rich(TextSpan(children: [
+          //                   TextSpan(
+          //                     text: "الاسعار شاملة للضريبة ",
+          //                     style: TextStyles.font14GreyColorA5Weight400,
+          //                   ),
+          //                   TextSpan(
+          //                     text: "*",
+          //                     style: TextStyles.font14RedColorWeight400,
+          //                   ),
+          //                 ])),
+          //               ],
+          //             )),
+          //             Text(
+          //                 " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['total'])!.toStringAsFixed(3)}",
+          //                 style: TextStyles.font16GreyColor33Weight500),
+          //           ],
+          //         ),
+          //         verticalSpace(16),
+          //       ],
+          //     );
+          //   },
+          // ),
           Text(
             "طريقه الدفع",
             style: TextStyles.font18GreyColor33Weight500,
@@ -284,41 +284,42 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                   textStyle: TextStyles.font16WhiteColorWeight500,
                   onPressed: () {
                     ///create order
-                    if (SalesCubit.get(context).selectedProducts.isEmpty) {
-                      ErrorAlertDialog.getDialog(context, "قم بتحديد منتجات ");
-                    } else {
-                      if (SalesCubit.get(context).selectedUser == null) {
-                        ErrorAlertDialog.getDialog(context, "ادخل اسم عميل ");
-                      } else {
-                        if (SalesCubit.get(context).selectedPay == null) {
-                          ErrorAlertDialog.getDialog(
-                              context, "قم باختيار طريقة الدفع ");
-                        } else {
-                          if (((double.tryParse(SalesCubit.get(context)
-                                          .moneyController
-                                          .text) ??
-                                      0) >
-                                  ReseatSelectedProducts(
-                                          selectedProducts:
-                                              SalesCubit.get(context)
-                                                  .selectedProducts)
-                                      .getReseatData(
-                                          discountTypeId:
-                                              SalesCubit.get(context)
-                                                  .selectedPercentType
-                                                  ?.id,
-                                          discount: SalesCubit.get(context)
-                                              .percentController
-                                              .text)['total']!) &&
-                              SalesCubit.get(context).selectedPay?.id == 2) {
-                            ErrorAlertDialog.getDialog(
-                                context, "المبلغ الدفوع اكبر من القيمة الكلية");
-                          } else {
-                            SalesCubit.get(context).createOrder(context);
-                          }
-                        }
-                      }
-                    }
+                    // if (SalesCubit.get(context).selectedProducts.isEmpty) {
+                    //   ErrorAlertDialog.getDialog(context, "قم بتحديد منتجات ");
+                    // } else {
+                    //   if (SalesCubit.get(context).selectedUser == null) {
+                    //     ErrorAlertDialog.getDialog(context, "ادخل اسم عميل ");
+                    //   } else {
+                    //     if (SalesCubit.get(context).selectedPay == null) {
+                    //       ErrorAlertDialog.getDialog(
+                    //           context, "قم باختيار طريقة الدفع ");
+                    //     }
+                    //     else {
+                    //       if (((double.tryParse(SalesCubit.get(context)
+                    //                       .moneyController
+                    //                       .text) ??
+                    //                   0) >
+                    //               ReseatSelectedProducts(
+                    //                       selectedProducts:
+                    //                           SalesCubit.get(context)
+                    //                               .selectedProducts)
+                    //                   .getReseatData(
+                    //                       discountTypeId:
+                    //                           SalesCubit.get(context)
+                    //                               .selectedPercentType
+                    //                               ?.id,
+                    //                       discount: SalesCubit.get(context)
+                    //                           .percentController
+                    //                           .text)['total']!) &&
+                    //           SalesCubit.get(context).selectedPay?.id == 2) {
+                    //         ErrorAlertDialog.getDialog(
+                    //             context, "المبلغ الدفوع اكبر من القيمة الكلية");
+                    //       } else {
+                    //         SalesCubit.get(context).createOrder(context);
+                    //       }
+                    //     }
+                    //   }
+                    // }
                   });
             },
           ),

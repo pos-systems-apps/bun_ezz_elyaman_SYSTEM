@@ -38,9 +38,7 @@ class SalesOrderTypesWidget extends StatelessWidget {
                                       .changeSelectedBillType(item.value);
                                 },
                                 child: SalesSelectItemWidget(
-                                    name: context.locale.languageCode == "ar"
-                                        ? item.value.nameAr
-                                        : item.value.nameEn,
+                                    name:   item.value.name ,
                                     isSelected: SalesCubit.get(context)
                                             .selectedOrderType
                                             .id ==

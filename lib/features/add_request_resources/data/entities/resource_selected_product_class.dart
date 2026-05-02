@@ -9,7 +9,7 @@ class ResourceSelectedProductClass {
 }
 
 class ResourceSelectedProduct {
-  Product product;
+  TripProductModel product;
   double requestQuantity; //your data that you need
   double yourQuantity; // your items that you have
 

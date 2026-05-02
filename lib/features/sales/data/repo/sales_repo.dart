@@ -15,32 +15,25 @@ class SalesRepo {
 
   SalesRepo(this._salesService);
 
-  Future<Either<Failure, CategoryResponse>> getCategories(int page) async {
+  Future<Either<Failure, CategoryResponse>> getCategories() async {
     try {
-      return Right(await _salesService.getCategories(page));
+      return Right(await _salesService.getCategories( ));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }
   }
 
   Future<Either<Failure, CategoryProductsResponse>> getCategoryProducts(
-      int categoryId, int? type, int page) async {
+      int categoryId,String search) async {
     try {
-      return Right(
-          await _salesService.getCategoryProducts(categoryId, type, page));
+       return Right(
+          await _salesService.getCategoryProducts(categoryId, search));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }
   }
 
-  Future<Either<Failure, SearchProductsResponse>> getSearchProducts(
-      String name, int? type) async {
-    try {
-      return Right(await _salesService.getSearchProducts(name, type));
-    } on ServerException catch (failure) {
-      return Left(ServerFailure(message: failure.serverFailure.message));
-    }
-  }
+
 
   Future<Either<Failure, SuccessResponseModel>> createOrder(
       CreateOrderRequest parameter) async {

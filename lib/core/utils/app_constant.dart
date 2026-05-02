@@ -142,15 +142,15 @@ class AppConstant {
 
   ///dont change this
   static List<UnitMeasure> measureUnits = [
-    UnitMeasure(id: 1, nameAr: "كبري", nameEn: 'Big'),
-    UnitMeasure(id: 0, nameAr: 'صغري', nameEn: 'Small'),
+  //   UnitMeasure(id: 1, nameAr: "كبري", nameEn: 'Big'),
+  //   UnitMeasure(id: 0, nameAr: 'صغري', nameEn: 'Small'),
   ];
 
   static List<OrderTypeClass> orderTypes = [
     OrderTypeClass(
-        id: 4, nameAr: "فاتورة مبيعات ", nameEn: "Sales print_invoice"),
+        id: 4, name: "فاتورة مبيعات ", ),
     OrderTypeClass(
-        id: 7, nameAr: "فاتورة مرتجعات ", nameEn: "Return print_invoice"),
+        id: 7, name: "فاتورة مرتجعات ", ),
   ];
 
   static List<ResourceTypeClass> resourcesTypes = [

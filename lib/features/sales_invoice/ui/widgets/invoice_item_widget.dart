@@ -44,7 +44,7 @@ class InvoiceItemWidget extends StatelessWidget {
           _itemTextWidget(
               " اسم العميل", " ${item.customer.name}"),
           verticalSpace(4),   _itemTextWidget(
-              "نوع الفاتوره", " ${AppConstant.orderTypes[0].nameAr}"),
+              "نوع الفاتوره", " ${AppConstant.orderTypes[0].name}"),
           verticalSpace(4),
           _itemTextWidget("اجمالي الفاتوره", " ${item.orderAmount}"),
           verticalSpace(4),
