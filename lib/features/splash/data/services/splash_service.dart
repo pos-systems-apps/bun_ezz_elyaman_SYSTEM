@@ -20,9 +20,9 @@ class SplashService {
   Future<UsersResponseModel> getUsers(String parameter) async {
 
     final response =
-        await apiConsumer.get(SplashApiEndPoints.getUsersUrl(parameter), {
+    await apiConsumer.get(SplashApiEndPoints.getUsersUrl(parameter), {
       ConstantKeys.appAuthorization:
-          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+      "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
     if (response.statusCode == StatusCode.ok) {
       return UsersResponseModel.fromJson(jsonDecode(response.body));
@@ -34,9 +34,9 @@ class SplashService {
 
   Future<BankAccountsResponseModel> getBankAccounts() async {
     final response =
-        await apiConsumer.get(SplashApiEndPoints.getBankAccountsUrl, {
+    await apiConsumer.get(SplashApiEndPoints.getBankAccountsUrl, {
       ConstantKeys.appAuthorization:
-          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+      "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
 
     if (response.statusCode == StatusCode.ok) {
@@ -49,9 +49,9 @@ class SplashService {
 
   Future<CategoriesAndRegionsResponse> getCategoriesAndRegions() async {
     final response =
-        await apiConsumer.get(SplashApiEndPoints.getCategoriesAndRegionsUrl, {
+    await apiConsumer.get(SplashApiEndPoints.getCategoriesAndRegionsUrl, {
       ConstantKeys.appAuthorization:
-          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+      "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });
     if (response.statusCode == StatusCode.ok) {
       return CategoriesAndRegionsResponse.fromJson(jsonDecode(response.body));

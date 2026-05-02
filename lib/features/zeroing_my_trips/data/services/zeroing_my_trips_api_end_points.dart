@@ -1,6 +1,6 @@
-import 'package:pos_system/core/utils/app_constant.dart';
+import 'package:pos_system/core/api/end_points.dart';
 
 class ZeroingMyTripsApiEndPoints {
 
-  static final zeroingMyTripsUrl = '${AppConstant.baseUrl}api/v1/stocks/confirm';
+  static final zeroingMyTripsUrl = '${EndPoints.baseUrl}api/v1/stocks/confirm';
 }

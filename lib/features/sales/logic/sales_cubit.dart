@@ -257,7 +257,7 @@ class SalesCubit extends Cubit<SalesState> {
   TextEditingController moneyController = TextEditingController();
 
   ///customers
-  List<UserResponseData> users = [];
+  List<CustomerModel> users = [];
 
   getUsers() {
     emit(OnGetUsersLoadingState());
@@ -265,7 +265,7 @@ class SalesCubit extends Cubit<SalesState> {
       value.fold((l) {
         emit(OnGetUsersErrorState());
       }, (r) {
-        users = r.userResponseData;
+        users = r.data;
         emit(OnGetUsersSuccessState());
       });
     }).catchError((error) {
@@ -273,10 +273,10 @@ class SalesCubit extends Cubit<SalesState> {
     });
   }
 
-  UserResponseData? selectedUser;
+  CustomerModel? selectedUser;
 
-  onSelectUser(UserResponseData vale) {
-    searchUserController.text = vale.nameAr;
+  onSelectUser(CustomerModel vale) {
+    searchUserController.text = vale.name;
     selectedUser = vale;
     users.clear();
     emit(OnSelectUserState());
@@ -359,7 +359,7 @@ class SalesCubit extends Cubit<SalesState> {
       }, (r) {
         // context.pushNamed(Routes.electronicInvoiceScreen,
         //     arguments: {"orderId": r.orderId});
-        emit(OnCreateOrderSuccessState(orderId: r.orderId ?? 0));
+        // emit(OnCreateOrderSuccessState(orderId: r.orderId ?? 0));
       });
     }).catchError((error) {
       emit(OnCreateOrderCatchErrorState(message: "error".tr()));
@@ -434,7 +434,7 @@ class SalesCubit extends Cubit<SalesState> {
       value.fold((l) {
         emit(OnCreateReturnErrorState(message: l.message));
       }, (r) {
-        emit(OnCreateReturnSuccessState(returnOrderId: r.returnOrderId ?? 0));
+        // emit(OnCreateReturnSuccessState(returnOrderId: r.returnOrderId ?? 0));
       });
     }).catchError((error) {
       emit(OnCreateReturnCatchErrorState(message: "error".tr()));

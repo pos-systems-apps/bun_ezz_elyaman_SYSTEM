@@ -1,9 +1,6 @@
-import 'package:pos_system/core/utils/app_constant.dart';
 
 class EndPoints {
   static const String _imageBaseUrl = "storage/app/public/";
+  static const String baseUrl = "https://bun.alemtayaz.shop/";
 
-  String getImageFromApi(String imageUrl) {
-    return AppConstant.baseUrl + _imageBaseUrl + imageUrl;
-  }
 }

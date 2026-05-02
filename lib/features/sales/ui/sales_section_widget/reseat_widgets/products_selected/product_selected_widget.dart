@@ -273,19 +273,19 @@ class ProductSelectedWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                height: 80.h,
-                width: 73.w,
-                decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
-                  borderRadius: BorderRadius.circular(4.r),
-                  border: Border.all(color: AppColors.blueColorEEE),
-                ),
-                child: CachedNetworkImageWidget(
-                    imgUrl: EndPoints().getImageFromApi(
-                        "product/${selectedProduct.product.image}"),
-                    radius: 4.r),
-              ),
+              // Container(
+              //   height: 80.h,
+              //   width: 73.w,
+              //   decoration: BoxDecoration(
+              //     color: AppColors.whiteColor,
+              //     borderRadius: BorderRadius.circular(4.r),
+              //     border: Border.all(color: AppColors.blueColorEEE),
+              //   ),
+              //   child: CachedNetworkImageWidget(
+              //       imgUrl: EndPoints().getImageFromApi(
+              //           "product/${selectedProduct.product.image}"),
+              //       radius: 4.r),
+              // ),
               horizontalSpace(16),
               Expanded(
                 child: Column(
@@ -302,7 +302,7 @@ class ProductSelectedWidget extends StatelessWidget {
                       children: [
                         if (selectedProduct.product.discount == 0)
                           Text(
-                            "${AppConstant.currency} ${selectedProduct.product.sellingPrice.toStringAsFixed(2)}",
+                            " 'جنيه'  ${selectedProduct.product.sellingPrice.toStringAsFixed(2)}",
                             style: TextStyles.font14GreyColor66Weight400,
                           ),
                         horizontalSpace(4),
@@ -318,7 +318,7 @@ class ProductSelectedWidget extends StatelessWidget {
                         horizontalSpace(4),
                         if (selectedProduct.product.discount != 0)
                           Text(
-                            "${AppConstant.currency}${AppConstant.getProductPriceAfterDiscount(selectedProduct.product.discountType, selectedProduct.product.sellingPrice, selectedProduct.product.discount).toStringAsFixed(2)}",
+                            " 'جنيه' ${AppConstant.getProductPriceAfterDiscount(selectedProduct.product.discountType, selectedProduct.product.sellingPrice, selectedProduct.product.discount).toStringAsFixed(2)}",
                             style: TextStyles.font14GreyColor66Weight400
                                 .copyWith(color: AppColors.greenColor),
                           ),
@@ -642,7 +642,7 @@ class ProductSelectedWidget extends StatelessWidget {
                       border: Border.all(color: AppColors.blueColorEEE),
                     ),
                     child: Text(
-                      "${selectedProduct.product.maxDiscount} ${AppConstant.currency}",
+                      "${selectedProduct.product.maxDiscount}  'جنيه' ",
                       maxLines: 4,
                       style: TextStyles.font14GreyColor66Weight400
                           .copyWith(color: AppColors.greenColor),

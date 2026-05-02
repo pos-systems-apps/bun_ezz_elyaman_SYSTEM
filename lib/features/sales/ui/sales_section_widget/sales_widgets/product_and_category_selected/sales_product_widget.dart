@@ -58,11 +58,11 @@ class SalesProductWidget extends StatelessWidget {
               ),
             ),
           verticalSpace(10),
-          Expanded(
-              child: CachedNetworkImageWidget(
-                  imgUrl:
-                      EndPoints().getImageFromApi("product/${product.image}"),
-                  radius: 0)),
+          // Expanded(
+          //     child: CachedNetworkImageWidget(
+          //         imgUrl:
+          //             EndPoints().getImageFromApi("product/${product.image}"),
+          //         radius: 0)),
           verticalSpace(10),
           Text(
               context.locale.languageCode == "ar"
@@ -78,7 +78,7 @@ class SalesProductWidget extends StatelessWidget {
               children: [
                 if (product.discount == 0)
                   Text(
-                    "${AppConstant.currency} ${product.sellingPrice.toStringAsFixed(2)}",
+                    " 'جنيه'  ${product.sellingPrice.toStringAsFixed(2)}",
                     style: TextStyles.font12GreenColor00WeightBold,
                   ),
                 horizontalSpace(4),
@@ -92,7 +92,7 @@ class SalesProductWidget extends StatelessWidget {
                 horizontalSpace(4),
                 if (product.discount != 0)
                   Text(
-                      "${AppConstant.currency}${AppConstant.getProductPriceAfterDiscount(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
+                      " 'جنيه' ${AppConstant.getProductPriceAfterDiscount(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
                       style: TextStyles.font12GreenColor00WeightBold),
               ],
             ),

@@ -18,10 +18,10 @@ class LoginCubit extends Cubit<LoginState> {
 
   LoginCubit(this._loginRepo) : super(InitialState());
 
-  login(String code, String password) {
+  login(String email, String password) {
     emit(OnLoginLoadingState());
     _loginRepo
-        .login(LoginRequestModel(code: code, password: password))
+        .login(LoginRequestModel(email: email, password: password))
         .then((value) {
       value.fold((l) {
         emit(OnLoginErrorState(error: l.message));
@@ -41,42 +41,13 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> saveUserToken(LoginResponseModel loginResponse) async {
 
     await CacheHelper.setSecuredString(ConstantKeys.saveMandoubeNameToShared,
-        loginResponse.data.firstName + loginResponse.data.lastName);
+        loginResponse.data.delegate.name);
     await CacheHelper.setSecuredString(
-        ConstantKeys.saveEmailToShared, loginResponse.data.email);
+        ConstantKeys.saveEmailToShared, loginResponse.data.delegate.email);
     await CacheHelper.setSecuredString(
-        ConstantKeys.savePhoneToShared, loginResponse.data.phone);
+        ConstantKeys.savePhoneToShared, loginResponse.data.delegate.phone);
     await CacheHelper.setSecuredString(
-        ConstantKeys.saveTokenToShared, loginResponse.token);
-  await CacheHelper.setSecuredString(
-        ConstantKeys.saveImageToShared, loginResponse.data.image);
-
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveDashBoardToShared, loginResponse.data.dashboard.toString());
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveStockToShared, loginResponse.data.stock.toString());
-
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveStoreToShared, loginResponse.data.store.toString());
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveAdminToShared, loginResponse.data.admin.toString());
-    await CacheHelper.setSecuredString(
-        ConstantKeys.savePosToShared, loginResponse.data.pos.toString());
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveSalesToShared, loginResponse.data.sales.toString());
-
-
-
-
-    ///type == cash or credit or full
-    await CacheHelper.setSecuredString(
-        ConstantKeys.saveTypeToShared, loginResponse.data.type);
-
-    ///store user constant
-    await getIt<AppConstant>().setUserConstantData(
-        typeNew: loginResponse.data.type );
-
-
+        ConstantKeys.saveTokenToShared, loginResponse.data.token);
 
   }
 

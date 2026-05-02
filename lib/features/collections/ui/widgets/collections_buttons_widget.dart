@@ -78,18 +78,10 @@ class CollectionsButtonsWidget extends StatelessWidget {
 
   void validateCollection(BuildContext context) {
     if (CollectionsCubit.get(context).formKey.currentState!.validate()) {
-      if (CollectionsCubit.get(context).selectedBankAccount == null) {
-        ErrorAlertDialog.getDialog(context, "selectBankAccount".tr());
+      if (CollectionsCubit.get(context).selectedUser == null) {
+        ErrorAlertDialog.getDialog(context, "قم باختيار عميل");
       } else {
-        if (CollectionsCubit.get(context).selectedPay == null) {
-          ErrorAlertDialog.getDialog(context, "selectPayWay".tr());
-        } else {
-          // if (CollectionsCubit.get(context).selectedImagePath == null) {
-          //   ErrorAlertDialog.getDialog(context, "selectImage".tr());
-          // } else {
-            _collectionDoneWidget(context);
-          // }
-        }
+        _collectionDoneWidget(context);
       }
     }
   }

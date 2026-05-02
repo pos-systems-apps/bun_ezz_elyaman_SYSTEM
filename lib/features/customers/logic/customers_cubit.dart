@@ -12,7 +12,7 @@ class CustomersCubit extends Cubit<CustomersState> {
   TextEditingController searchUserController = TextEditingController();
 
   ///customers
-  List<UserResponseData> users = [];
+  List<CustomerModel> users = [];
 
   getUsers() {
     emit(OnGetUsersLoadingState());
@@ -20,7 +20,7 @@ class CustomersCubit extends Cubit<CustomersState> {
       value.fold((l) {
         emit(OnGetUsersErrorState());
       }, (r) {
-        users = r.userResponseData;
+        users = r.data;
         emit(OnGetUsersSuccessState());
       });
     }).catchError((error) {

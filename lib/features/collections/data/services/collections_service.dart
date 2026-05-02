@@ -21,13 +21,9 @@ class CollectionsService {
     final response = await apiConsumer.multiPost(
         CollectionsApiEndPoints.confirmCollection,
         ConfirmCollectionRequestModel(
-          billID: parameter.billID,
-          bankAccountID: parameter.bankAccountID,
-          paymentWayID: parameter.paymentWayID,
           customerID: parameter.customerID,
-          price: parameter.price,
-          noteText: parameter.noteText,
-          image: parameter.image,
+           noteText: parameter.noteText,
+          items: parameter.items,
         ).toJson(),
         {
           ConstantKeys.appAuthorization:

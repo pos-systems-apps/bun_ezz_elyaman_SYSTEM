@@ -157,13 +157,13 @@ class _ElectronicInvoiceBodyWidgetState
                                       .seller
                                       .name),
                               verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "السجل التجاري",
-                                  value: AppConstant.commercialRegistry),
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "الرقم الضريبي",
-                                  value: AppConstant.numberTax),
+                              // MoneyWidget1(
+                              //     text: "السجل التجاري",
+                              //     value: AppConstant.commercialRegistry),
+                              // verticalSpace(8),
+                              // MoneyWidget1(
+                              //     text: "الرقم الضريبي",
+                              //     value: AppConstant.numberTax),
                               verticalSpace(8),
                               MoneyWidget1(
                                   text: "كود العربه",
@@ -263,21 +263,21 @@ class _ElectronicInvoiceBodyWidgetState
                               MoneyWidget3(
                                   text: "اجمالي الفاتوره",
                                   value:
-                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount- PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
+                                      " 'جنيه' ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount- PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "خصم المنتج",
                                   value:
-                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount)}"),
+                                      " 'جنيه' ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.productsDiscount)}"),
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "خصم اضافي",
                                   value:
-                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
+                                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "الضريبة",
-                                  value: "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
+                                  value: " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
                               verticalSpace(24),
                               HorizontalDashedWidget(width: 4, space: 4),
                               verticalSpace(16),
@@ -309,7 +309,7 @@ class _ElectronicInvoiceBodyWidgetState
                                     ],
                                   )),
                                   Text(
-                                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount)}",
+                                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount)}",
                                       style: TextStyles
                                           .font12greyColor33Weight600),
                                 ],
@@ -329,7 +329,7 @@ class _ElectronicInvoiceBodyWidgetState
                                 MoneyWidget3(
                                     text: "المبلغ المدفوع",
                                     value:
-                                        "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash)}"),
+                                        " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash)}"),
                               if (PrintInvoiceCubit.get(context)
                                       .invoiceResponseModel!
                                       .invoice
@@ -344,7 +344,7 @@ class _ElectronicInvoiceBodyWidgetState
                                 MoneyWidget3(
                                     text: "المبلغ المتبقي",
                                     value:
-                                        "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount   - PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash)}"),
+                                        " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.orderAmount   - PrintInvoiceCubit.get(context).invoiceResponseModel!.invoice.collectedCash)}"),
                               verticalSpace(30),
                             ],
                           ),

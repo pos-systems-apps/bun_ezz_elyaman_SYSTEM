@@ -9,6 +9,7 @@ import 'package:pos_system/core/utils/extentions.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/error_alert_dialog.dart';
+import 'package:pos_system/features/setting/logic/setting_cubit.dart';
 import 'package:pos_system/features/setting/ui/widgets/setting_app_bar_widget.dart';
 import 'package:pos_system/features/setting/ui/widgets/setting_item_widget.dart';
 
@@ -30,26 +31,26 @@ class SettingScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SettingItemWidget(
-                      text: "قائمه الصندوق",
-                      image: ImageAsset.setting2Icon,
-                      onTap: () {
-                        context.pushNamed(Routes.fundListScreen);
-                      }),
-                  verticalSpace(8),
-                  SettingItemWidget(
-                      text: "انشاء زياره",
-                      image: ImageAsset.setting3Icon,
-                      onTap: () {
-                        context.pushNamed(Routes.createVisitScreen);
-                      }),
-                  verticalSpace(8),
-                  SettingItemWidget(
-                      text: "انشاء مخطط شهري",
-                      image: ImageAsset.setting4Icon,
-                      onTap: () {
-                        context.pushNamed(Routes.createMonthlyPlanScreen);
-                      }),
+                  // SettingItemWidget(
+                  //     text: "قائمه الصندوق",
+                  //     image: ImageAsset.setting2Icon,
+                  //     onTap: () {
+                  //       context.pushNamed(Routes.fundListScreen);
+                  //     }),
+                  // verticalSpace(8),
+                  // SettingItemWidget(
+                  //     text: "انشاء زياره",
+                  //     image: ImageAsset.setting3Icon,
+                  //     onTap: () {
+                  //       context.pushNamed(Routes.createVisitScreen);
+                  //     }),
+                  // verticalSpace(8),
+                  // SettingItemWidget(
+                  //     text: "انشاء مخطط شهري",
+                  //     image: ImageAsset.setting4Icon,
+                  //     onTap: () {
+                  //       context.pushNamed(Routes.createMonthlyPlanScreen);
+                  //     }),
                   verticalSpace(8),
                   SettingItemWidget(
                       text: "العملاء",
@@ -65,31 +66,31 @@ class SettingScreen extends StatelessWidget {
                         context.pushNamed(Routes.addCustomerScreen);
                       }),
                   verticalSpace(8),
-                  SettingItemWidget(
-                      text: "اضافة تحويل",
-                      image: ImageAsset.setting7Icon,
-                      onTap: () async{
-
-                       String?  sales =
-                            await CacheHelper.getSecuredString(ConstantKeys.saveSalesToShared);
-
-
-                       if(sales=="1"){
-                         context.pushNamed(Routes.addTransferSectionScreen);
-                       }else{
-                         ErrorAlertDialog.getDialog(context, "غير مسموح لك باضافة تحويلات . اطلب اذن من المدير");
-                       }
-
-
-                      }),
-                  verticalSpace(8),
-                  SettingItemWidget(
-                      text: "التحويلات",
-                      image: ImageAsset.setting7Icon,
-                      onTap: () {
-                        context.pushNamed(Routes.transferSectionScreen);
-                      }),
-                  verticalSpace(16),
+                  // SettingItemWidget(
+                  //     text: "اضافة تحويل",
+                  //     image: ImageAsset.setting7Icon,
+                  //     onTap: () async{
+                  //
+                  //      String?  sales =
+                  //           await CacheHelper.getSecuredString(ConstantKeys.saveSalesToShared);
+                  //
+                  //
+                  //      if(sales=="1"){
+                  //        context.pushNamed(Routes.addTransferSectionScreen);
+                  //      }else{
+                  //        ErrorAlertDialog.getDialog(context, "غير مسموح لك باضافة تحويلات . اطلب اذن من المدير");
+                  //      }
+                  //
+                  //
+                  //     }),
+                  // verticalSpace(8),
+                  // SettingItemWidget(
+                  //     text: "التحويلات",
+                  //     image: ImageAsset.setting7Icon,
+                  //     onTap: () {
+                  //       context.pushNamed(Routes.transferSectionScreen);
+                  //     }),
+                  // verticalSpace(16),
                   Text(
                     "اخري",
                     style: TextStyles.font16BlackColor2Weight600,
@@ -269,16 +270,10 @@ class SettingScreen extends StatelessWidget {
                       text: "تسجيل الخروج",
                       image: ImageAsset.setting3_2Icon,
                       onTap: () async {
+                        LogOutCubit.get(context).logOut();
                         context.pushNamedAndRemoveUntil(Routes.loginScreen,
                             predicate: (route) => false);
-                        await CacheHelper.removeSecureData(
-                            ConstantKeys.saveTokenToShared);
-                        await CacheHelper.removeSecureData(
-                            ConstantKeys.saveMandoubeNameToShared);
-                        await CacheHelper.removeSecureData(
-                            ConstantKeys.saveEmailToShared);
-                        await CacheHelper.removeSecureData(
-                            ConstantKeys.savePhoneToShared);
+
                       }),
                   verticalSpace(8),
                   SettingItemWidget(
@@ -286,16 +281,9 @@ class SettingScreen extends StatelessWidget {
                       image: ImageAsset.setting3_3Icon,
                       isRed: true,
                       onTap: () async {
+                        LogOutCubit.get(context).logOut();
                         context.pushNamedAndRemoveUntil(Routes.loginScreen,
                             predicate: (route) => false);
-                        await CacheHelper.removeSecureData(
-                            ConstantKeys.saveTokenToShared);
-                        await CacheHelper.removeSecureData(
-                            ConstantKeys.saveMandoubeNameToShared);
-                        await CacheHelper.removeSecureData(
-                            ConstantKeys.saveEmailToShared);
-                        await CacheHelper.removeSecureData(
-                            ConstantKeys.savePhoneToShared);
                       }),
                   verticalSpace(60),
                 ],

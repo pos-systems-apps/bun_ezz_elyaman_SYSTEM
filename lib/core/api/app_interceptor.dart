@@ -9,8 +9,7 @@ class AppInterceptor extends InterceptorContract {
   Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
     request.headers[ConstantKeys.contentType] = ConstantKeys.applicationJson;
     request.headers[ConstantKeys.acceptText] = ConstantKeys.applicationJson;
-    request.headers[ConstantKeys.acceptLanguage] =
-        getIt<AppConstant>().getLanguage();
+    request.headers[ConstantKeys.acceptLanguage] ='ar';
     debugPrint(request.toString());
     return request;
   }

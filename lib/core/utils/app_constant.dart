@@ -13,130 +13,130 @@ import 'package:url_launcher/url_launcher.dart';
 import 'app_colors_white_theme.dart';
 
 class AppConstant {
-  static String language = "";
-  static String baseUrl = "";
-  static String currency = "";
-  static String shopLogo = "";
-  static String shopName = "";
-  static String shopAddress = "";
-  static String shopPhone = "";
-  static String shopEmail = "";
-  static String country = "";
-  static String timeZone = "";
-  static String numberTax = "";
-  static String commercialRegistry = "";
-  static UserPayType? type;
+  // static String language = "";
+  // static String baseUrl = "";
+  // static String currency = "";
+  // static String shopLogo = "";
+  // static String shopName = "";
+  // static String shopAddress = "";
+  // static String shopPhone = "";
+  // static String shopEmail = "";
+  // static String country = "";
+  // static String timeZone = "";
+  // static String numberTax = "";
+  // static String commercialRegistry = "";
+  // static UserPayType? type;
 
-  Future<void> setAppConstantData({
-    required String basUrl,
-    required String currencyNew,
-    required String shopLogoNew,
-    required String shopNameNew,
-    required String shopAddressNew,
-    required String shopPhoneNew,
-    required String shopEmailNew,
-    required String countryNew,
-    required String timeZoneNew,
-    required String numberTaxNew,
-    required String commercialRegistryNew,
-  }) async {
-    baseUrl = basUrl;
-    currency = currencyNew;
-    shopLogo = shopLogoNew;
-    shopName = shopNameNew;
-    shopAddress = shopAddressNew;
-    shopPhone = shopPhoneNew;
-    shopEmail = shopEmailNew;
-    country = countryNew;
-    timeZone = timeZoneNew;
-    numberTax = numberTaxNew;
-    commercialRegistry = commercialRegistryNew;
-  }
+  // Future<void> setAppConstantData({
+  //   required String basUrl,
+  //   required String currencyNew,
+  //   required String shopLogoNew,
+  //   required String shopNameNew,
+  //   required String shopAddressNew,
+  //   required String shopPhoneNew,
+  //   required String shopEmailNew,
+  //   required String countryNew,
+  //   required String timeZoneNew,
+  //   required String numberTaxNew,
+  //   required String commercialRegistryNew,
+  // }) async {
+  //   baseUrl = basUrl;
+  //   currency = currencyNew;
+  //   shopLogo = shopLogoNew;
+  //   shopName = shopNameNew;
+  //   shopAddress = shopAddressNew;
+  //   shopPhone = shopPhoneNew;
+  //   shopEmail = shopEmailNew;
+  //   country = countryNew;
+  //   timeZone = timeZoneNew;
+  //   numberTax = numberTaxNew;
+  //   commercialRegistry = commercialRegistryNew;
+  // }
 
-  Future<void> setUserConstantData({
-    required String typeNew,
-  }) async {
-    type = typeNew == "cash"
-        ? UserPayType.cash
-        : typeNew == "credit"
-            ? UserPayType.credit
-            : UserPayType.full;
-    pays = [
-      PayClass(
-          id: 1,
-          nameAr: "كاش",
-          nameEn: "cash",
-          isShown:
-              (getType() == UserPayType.cash || getType() == UserPayType.full)),
-      PayClass(
-          id: 2,
-          nameAr: "اجل",
-          nameEn: "agel",
-          isShown: (getType() == UserPayType.credit ||
-              getType() == UserPayType.full)),
-      PayClass(
-          id: 3,
-          nameAr: "شبكة",
-          nameEn: "shabaka",
-          isShown: getType() == UserPayType.full),
-    ];
-  }
-
-  void setLanguage(String value) {
-    language = value;
-  }
-
-  String getLanguage() {
-    return language;
-  }
-
-  String getLCurrency() {
-    return currency;
-  }
-
-  String getShopLogo() {
-    return shopLogo;
-  }
-
-  String getShopName() {
-    return shopName;
-  }
-
-  String getShopAddress() {
-    return shopAddress;
-  }
-
-  String getShopPhone() {
-    return shopPhone;
-  }
-
-  String getShopEmail() {
-    return shopEmail;
-  }
-
-  String getCountry() {
-    return country;
-  }
-
-  String getTimeZone() {
-    return timeZone;
-  }
-
-  String getNumberTax() {
-    return numberTax;
-  }
-
-  String getCommercialRegistry() {
-    return commercialRegistry;
-  }
-
-  static UserPayType? getType() {
-    return type;
-  }
-
-  static String getBaseUrl() {
-    return baseUrl;
-  }
+  // Future<void> setUserConstantData({
+  //   required String typeNew,
+  // }) async {
+  //   type = typeNew == "cash"
+  //       ? UserPayType.cash
+  //       : typeNew == "credit"
+  //           ? UserPayType.credit
+  //           : UserPayType.full;
+  //   pays = [
+  //     PayClass(
+  //         id: 1,
+  //         nameAr: "كاش",
+  //         nameEn: "cash",
+  //         isShown:
+  //             (getType() == UserPayType.cash || getType() == UserPayType.full)),
+  //     PayClass(
+  //         id: 2,
+  //         nameAr: "اجل",
+  //         nameEn: "agel",
+  //         isShown: (getType() == UserPayType.credit ||
+  //             getType() == UserPayType.full)),
+  //     PayClass(
+  //         id: 3,
+  //         nameAr: "شبكة",
+  //         nameEn: "shabaka",
+  //         isShown: getType() == UserPayType.full),
+  //   ];
+  // }
+  //
+  // void setLanguage(String value) {
+  //   language = value;
+  // }
+  //
+  // String getLanguage() {
+  //   return language;
+  // }
+  //
+  // String getLCurrency() {
+  //   return currency;
+  // }
+  //
+  // String getShopLogo() {
+  //   return shopLogo;
+  // }
+  //
+  // String getShopName() {
+  //   return shopName;
+  // }
+  //
+  // String getShopAddress() {
+  //   return shopAddress;
+  // }
+  //
+  // String getShopPhone() {
+  //   return shopPhone;
+  // }
+  //
+  // String getShopEmail() {
+  //   return shopEmail;
+  // }
+  //
+  // String getCountry() {
+  //   return country;
+  // }
+  //
+  // String getTimeZone() {
+  //   return timeZone;
+  // }
+  //
+  // String getNumberTax() {
+  //   return numberTax;
+  // }
+  //
+  // String getCommercialRegistry() {
+  //   return commercialRegistry;
+  // }
+  //
+  // static UserPayType? getType() {
+  //   return type;
+  // }
+  //
+  // static String getBaseUrl() {
+  //   return baseUrl;
+  // }
 
   List<PayClass> pays = [];
 

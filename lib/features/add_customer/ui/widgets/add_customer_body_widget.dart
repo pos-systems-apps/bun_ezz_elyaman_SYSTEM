@@ -9,7 +9,7 @@ import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/add_customer/logic/add_customer_cubit.dart';
 import 'package:pos_system/features/add_customer/logic/add_customer_state.dart';
 import 'package:pos_system/features/add_customer/ui/widgets/add_customer_address_widget.dart';
-import 'package:pos_system/features/add_customer/ui/widgets/add_customer_arabic_name_widget.dart';
+import 'package:pos_system/features/add_customer/ui/widgets/add_customer_name_widget.dart';
 import 'package:pos_system/features/add_customer/ui/widgets/add_customer_classification_widget.dart';
 import 'package:pos_system/features/add_customer/ui/widgets/add_customer_commercial_history_widget.dart';
 import 'package:pos_system/features/add_customer/ui/widgets/add_customer_country_code_widget.dart';
@@ -34,34 +34,34 @@ class AddCustomerBodyWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AddCustomerArabicNameWidget(),
+              AddCustomerNameWidget(),
               verticalSpace(16),
-              AddCustomerEnglishNameWidget(),
-              verticalSpace(16),
-              AddCustomerLocationWidget(),
-              verticalSpace(16),
-              AddCustomerClassificationWidget(),
-              verticalSpace(16),
-              AddCustomerTaxNumberWidget(),
-              verticalSpace(16),
-              AddCustomerCommercialHistoryWidget(),
+              // AddCustomerEnglishNameWidget(),
+              // verticalSpace(16),
+              // AddCustomerLocationWidget(),
+              // verticalSpace(16),
+              // AddCustomerClassificationWidget(),
+              // verticalSpace(16),
+              // AddCustomerTaxNumberWidget(),
+              // verticalSpace(16),
+              // AddCustomerCommercialHistoryWidget(),
               verticalSpace(16),
               AddCustomerPhoneWidget(),
               verticalSpace(16),
               AddCustomerEmailWidget(),
-              verticalSpace(16),
-              Row(
-                children: [
-                  Expanded(child: AddCustomerCountryWidget()),
-                  horizontalSpace(20),
-                  Expanded(child: AddCustomerCountryCodeWidget()),
-                ],
-              ),
+              // verticalSpace(16),
+              // Row(
+              //   children: [
+              //     Expanded(child: AddCustomerCountryWidget()),
+              //     horizontalSpace(20),
+              //     Expanded(child: AddCustomerCountryCodeWidget()),
+              //   ],
+              // ),
               verticalSpace(16),
               AddCustomerAddressWidget(),
               verticalSpace(16),
-              AddCustomerUploadImageWidget(),
-              verticalSpace(36),
+              // AddCustomerUploadImageWidget(),
+              // verticalSpace(36),
               Row(
                 children: [
                   Expanded(
@@ -110,21 +110,21 @@ class AddCustomerBodyWidget extends StatelessWidget {
                             borderColor: AppColors.mainColor,
                             textStyle: TextStyles.font16WhiteColorWeight500,
                             onPressed: () {
-                              if (AddCustomerCubit.get(context)
-                                      .selectedRegion ==
-                                  null) {
-                                ErrorAlertDialog.getDialog(
-                                    context, "قم بتحديد المنطقة");
-                              } else {
-                                if (AddCustomerCubit.get(context)
-                                        .selectedCategory ==
-                                    null) {
-                                  ErrorAlertDialog.getDialog(
-                                      context, "قم بتحديد التصنيف");
-                                } else {
+                              // if (AddCustomerCubit.get(context)
+                              //         .selectedRegion ==
+                              //     null) {
+                              //   ErrorAlertDialog.getDialog(
+                              //       context, "قم بتحديد المنطقة");
+                              // } else {
+                              //   if (AddCustomerCubit.get(context)
+                              //           .selectedCategory ==
+                              //       null) {
+                              //     ErrorAlertDialog.getDialog(
+                              //         context, "قم بتحديد التصنيف");
+                              //   } else {
                                   validateAddCustomer(context);
-                                }
-                              }
+                                // }
+                              // }
                             }),
                       );
                     },

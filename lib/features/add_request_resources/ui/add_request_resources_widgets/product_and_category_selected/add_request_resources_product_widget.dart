@@ -58,11 +58,11 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
               ),
             ),
           verticalSpace(10),
-          Expanded(
-              child: CachedNetworkImageWidget(
-                  imgUrl:
-                      EndPoints().getImageFromApi("product/${product.image}"),
-                  radius: 0)),
+          // Expanded(
+          //     child: CachedNetworkImageWidget(
+          //         imgUrl:
+          //             EndPoints().getImageFromApi("product/${product.image}"),
+          //         radius: 0)),
           verticalSpace(10),
           Text(
               context.locale.languageCode == "ar"
@@ -77,11 +77,11 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
-                if (product.discount == 0)
-                  Text(
-                    "${AppConstant.currency} ${product.sellingPrice.toStringAsFixed(2)}",
-                    style: TextStyles.font12GreenColor00WeightBold,
-                  ),
+                // if (product.discount == 0)
+                //   Text(
+                //     "${AppConstant.currency} ${product.sellingPrice.toStringAsFixed(2)}",
+                //     style: TextStyles.font12GreenColor00WeightBold,
+                //   ),
                 horizontalSpace(4),
                 if (product.discount != 0)
                   Text(
@@ -91,10 +91,10 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
                     ),
                   ),
                 horizontalSpace(4),
-                if (product.discount != 0)
-                  Text(
-                      "${AppConstant.currency}${AppConstant.getProductPriceAfterDiscount(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
-                      style: TextStyles.font12GreenColor00WeightBold),
+                // if (product.discount != 0)
+                //   Text(
+                //       "${AppConstant.currency}${AppConstant.getProductPriceAfterDiscount(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
+                //       style: TextStyles.font12GreenColor00WeightBold),
               ],
             ),
           ),

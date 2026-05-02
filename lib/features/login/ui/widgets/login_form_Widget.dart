@@ -52,12 +52,12 @@ class LoginFormWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "login.code".tr(),
+              "البريد الالكتروني",
               style: TextStyles.font14BlackColorWeight400,
             ),
             verticalSpace(6),
             AppTextFormField(
-              hintText: "login.enterCode".tr(),
+              hintText: "ادخل البريد الالكتروني ",
               controller: codeController,
               hintStyle: TextStyles.font16BlackColorWeight400,
               backgroundColor: AppColors.whiteColor,
@@ -91,7 +91,7 @@ class LoginFormWidget extends StatelessWidget {
               ),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
-                  return "field".tr();
+                  return "اكمل هذا الحقل";
                 }
                 return null;
               },
@@ -100,12 +100,12 @@ class LoginFormWidget extends StatelessWidget {
             ),
             verticalSpace(16),
             Text(
-              "login.password".tr(),
+              "كلمه المرور",
               style: TextStyles.font14BlackColorWeight400,
             ),
             verticalSpace(6),
             AppTextFormField(
-              hintText: "login.password".tr(),
+              hintText: "كلمه المرور",
               controller: passwordController,
               hintStyle: TextStyles.font16BlackColorWeight400,
               backgroundColor: AppColors.whiteColor,
@@ -139,7 +139,7 @@ class LoginFormWidget extends StatelessWidget {
               ),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
-                  return "field".tr();
+                  return "اكمل هذا الحقل";
                 }
                 return null;
               },
@@ -170,7 +170,7 @@ class LoginFormWidget extends StatelessWidget {
                     ? LoadingWidget(color: AppColors.mainColor)
                     : ButtonWidget(
                         isLoading: false,
-                        buttonText: "login.login".tr(),
+                        buttonText: "تسجيل الدخول",
                         backGroundColor: AppColors.mainColor,
                         borderRadius: 10,
                         textStyle: TextStyles.font14WhiteColorWeightBold,

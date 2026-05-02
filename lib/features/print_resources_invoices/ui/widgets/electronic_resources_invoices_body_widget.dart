@@ -159,13 +159,13 @@ class _ElectronicResourcesInvoicesBodyWidgetState
                                           .seller
                                           .name),
                               verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "السجل التجاري",
-                                  value: AppConstant.commercialRegistry),
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "الرقم الضريبي",
-                                  value: AppConstant.numberTax),
+                              // MoneyWidget1(
+                              //     text: "السجل التجاري",
+                              //     value: AppConstant.commercialRegistry),
+                              // verticalSpace(8),
+                              // MoneyWidget1(
+                              //     text: "الرقم الضريبي",
+                              //     value: AppConstant.numberTax),
                               verticalSpace(8),
                               MoneyWidget1(
                                   text: "كود العربه",

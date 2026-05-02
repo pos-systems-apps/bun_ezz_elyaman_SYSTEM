@@ -1,9 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pos_system/core/utils/app_colors_white_theme.dart';
-import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/assets_manager.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
@@ -70,63 +68,68 @@ class CustomersBodyWidget extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              context.locale.languageCode == "ar"
-                                  ? CustomersCubit.get(context)
+                            Text(CustomersCubit.get(context)
                                       .users[index]
-                                      .nameAr
-                                  : CustomersCubit.get(context)
-                                      .users[index]
-                                      .nameEn,
+                                      .name
+                                 ,
                               maxLines: 2,
                               style: TextStyles.font16BlackWeight500,
                             ),
                             verticalSpace(4),
-                            Text(
+                            if(CustomersCubit.get(context).users[index].address!=null)
+
+                              Text(
                                 "العنوان : ${CustomersCubit.get(context).users[index].address}",
                                 maxLines: 1,
                                 style: TextStyles.font14GreyColor66Weight400),
                             verticalSpace(4),
-                            Text(
+                            if(CustomersCubit.get(context).users[index].phone!=null)
+                              Text(
                                 "الهاتف : ${CustomersCubit.get(context).users[index].phone}",
                                 maxLines: 1,
                                 style: TextStyles.font14GreyColor66Weight400),
                             verticalSpace(4),
-                            Row(
-                              children: [
-                                Text.rich(
-                                  TextSpan(children: [
-                                    TextSpan(
-                                      text: "الرصيد",
-                                      style:
-                                          TextStyles.font14GreyColor66Weight400,
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          "${AppConstant.currency} ${(CustomersCubit.get(context).users[index].balance
-                                              + CustomersCubit.get(context).users[index].discount -
-                                              CustomersCubit.get(context).users[index].credit).abs().toStringAsFixed(2)}",
-                                      style: TextStyles
-                                          .font14GreyColor66Weight400
-                                          .copyWith(
-                                              color: AppColors.greenColor7C),
-                                    ),
-                                  ]),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  (CustomersCubit.get(context).users[index].balance
-                                      + CustomersCubit.get(context).users[index].discount -
-                                      CustomersCubit.get(context).users[index].credit) <
-                                          0
-                                      ? "مدين"
-                                      : "دائن",
-                                  style: TextStyles.font14GreyColor66Weight400
-                                      .copyWith(color: AppColors.yellowColor19),
-                                ),
-                                const Spacer(),
-                              ],
-                            ),
+                            if(CustomersCubit.get(context).users[index].email!=null)
+                            Text(
+                                "الاميل : ${CustomersCubit.get(context).users[index].email}",
+                                maxLines: 1,
+                                style: TextStyles.font14GreyColor66Weight400),
+                            verticalSpace(4),
+                            // Row(
+                            //   children: [
+                            //     Text.rich(
+                            //       TextSpan(children: [
+                            //         TextSpan(
+                            //           text: "الرصيد",
+                            //           style:
+                            //               TextStyles.font14GreyColor66Weight400,
+                            //         ),
+                            //         // TextSpan(
+                            //         //   text:
+                            //         //       "${AppConstant.currency} ${(CustomersCubit.get(context).users[index].balance
+                            //         //           + CustomersCubit.get(context).users[index].discount -
+                            //         //           CustomersCubit.get(context).users[index].credit).abs().toStringAsFixed(2)}",
+                            //         //   style: TextStyles
+                            //         //       .font14GreyColor66Weight400
+                            //         //       .copyWith(
+                            //         //           color: AppColors.greenColor7C),
+                            //         // ),
+                            //       ]),
+                            //     ),
+                            //     // const Spacer(),
+                            //     // Text(
+                            //     //   (CustomersCubit.get(context).users[index].balance
+                            //     //       + CustomersCubit.get(context).users[index].discount -
+                            //     //       CustomersCubit.get(context).users[index].credit) <
+                            //     //           0
+                            //     //       ? "مدين"
+                            //     //       : "دائن",
+                            //     //   style: TextStyles.font14GreyColor66Weight400
+                            //     //       .copyWith(color: AppColors.yellowColor19),
+                            //     // ),
+                            //     const Spacer(),
+                            //   ],
+                            // ),
                           ],
                         ),
                       );

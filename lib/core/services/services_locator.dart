@@ -110,11 +110,11 @@ class ServicesLocator {
 
     ///setting
 
-    ///create visit
-    getIt
-        .registerLazySingleton<CreateVisitRepo>(() => CreateVisitRepo(getIt()));
-    getIt.registerFactory<CreateVisitService>(
-        () => CreateVisitService(apiConsumer: getIt()));
+    // ///create visit
+    // getIt
+    //     .registerLazySingleton<CreateVisitRepo>(() => CreateVisitRepo(getIt()));
+    // getIt.registerFactory<CreateVisitService>(
+    //     () => CreateVisitService(apiConsumer: getIt()));
 
     ///add user
     getIt
@@ -122,22 +122,22 @@ class ServicesLocator {
     getIt.registerFactory<AddCustomerService>(
         () => AddCustomerService(apiConsumer: getIt()));
 
-    ///add transfers sections
-    getIt.registerLazySingleton<AddTransferSectionRepo>(
-        () => AddTransferSectionRepo(getIt()));
-    getIt.registerFactory<AddTransferSectionService>(
-        () => AddTransferSectionService(apiConsumer: getIt()));
+    // ///add transfers sections
+    // getIt.registerLazySingleton<AddTransferSectionRepo>(
+    //     () => AddTransferSectionRepo(getIt()));
+    // getIt.registerFactory<AddTransferSectionService>(
+    //     () => AddTransferSectionService(apiConsumer: getIt()));
 
-    /// transfers sections
-    getIt.registerLazySingleton<TransferSectionRepo>(
-        () => TransferSectionRepo(getIt()));
-    getIt.registerFactory<TransferSectionService>(
-        () => TransferSectionService(apiConsumer: getIt()));
+    // /// transfers sections
+    // getIt.registerLazySingleton<TransferSectionRepo>(
+    //     () => TransferSectionRepo(getIt()));
+    // getIt.registerFactory<TransferSectionService>(
+    //     () => TransferSectionService(apiConsumer: getIt()));
 
-    ///fund list
-    getIt.registerLazySingleton<FundListRepo>(() => FundListRepo(getIt()));
-    getIt.registerFactory<FundListService>(
-        () => FundListService(apiConsumer: getIt()));
+    // ///fund list
+    // getIt.registerLazySingleton<FundListRepo>(() => FundListRepo(getIt()));
+    // getIt.registerFactory<FundListService>(
+    //     () => FundListService(apiConsumer: getIt()));
 
     ///sales print_invoice
     getIt.registerLazySingleton<SalesInvoiceRepo>(
@@ -172,12 +172,12 @@ class ServicesLocator {
         .registerLazySingleton<CashInvoiceRepo>(() => CashInvoiceRepo(getIt()));
     getIt.registerFactory<CashInvoiceService>(
         () => CashInvoiceService(apiConsumer: getIt()));
-
-    ///monthly plan
-    getIt.registerLazySingleton<CreateMonthlyPlanRepo>(
-        () => CreateMonthlyPlanRepo(getIt()));
-    getIt.registerFactory<CreateMonthlyPlanService>(
-        () => CreateMonthlyPlanService(apiConsumer: getIt()));
+    //
+    // ///monthly plan
+    // getIt.registerLazySingleton<CreateMonthlyPlanRepo>(
+    //     () => CreateMonthlyPlanRepo(getIt()));
+    // getIt.registerFactory<CreateMonthlyPlanService>(
+    //     () => CreateMonthlyPlanService(apiConsumer: getIt()));
 
     ///visits carried out
     getIt.registerLazySingleton<VisitsCarriedOutRepo>(

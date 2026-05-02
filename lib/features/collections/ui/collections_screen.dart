@@ -36,46 +36,19 @@ class _CollectionsScreenState extends State<CollectionsScreen> {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SafeArea(
-        child: admin == null
-            ? Center(
-                child: LoadingWidget(color: AppColors.mainColor),
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  verticalSpace(10),
-                  Center(
-                      child: Text(
-                    "التحصيلات النقديه",
-                    style: TextStyles.font20BlueColorA4Weight600,
-                  )),
-                  verticalSpace(16),
-                  admin == "1"
-                      ? CollectionsBodyWidget()
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w),
-                              child: Lottie.asset(
-                                ImageAsset.notPermissionAnimation,
-                                repeat: true,
-                              ),
-                            ),
-                            verticalSpace(16),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 24.w),
-                              child: Text(
-                                "غير مسموح لك بالتحصيلات . اطلب اذن من المدير",
-                                textAlign: TextAlign.center,
-                                style: TextStyles.font20MainColorWeightBold,
-                              ),
-                            ),
-                          ],
-                        ),
-                ],
-              ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            verticalSpace(10),
+            Center(
+                child: Text(
+              "التحصيلات النقديه",
+              style: TextStyles.font20BlueColorA4Weight600,
+            )),
+            verticalSpace(16),
+            CollectionsBodyWidget()
+          ],
+        ),
       ),
     );
   }

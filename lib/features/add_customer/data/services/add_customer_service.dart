@@ -19,26 +19,16 @@ class AddCustomerService {
     final response = await apiConsumer.multiPost(
         AddCustomerApiEndPoints.addCustomerURl,
         AddCustomerRequest(
-          nameAr: parameter.nameAr,
-          nameEn: parameter.nameEn,
-          regionId: parameter.regionId,
+          name: parameter.name,
           mobile: parameter.mobile,
-          typeId: parameter.typeId,
-          numberTax: parameter.numberTax,
-          commercialNumber: parameter.commercialNumber,
           email: parameter.email,
-          city: parameter.city,
-          countryCode: parameter.countryCode,
-          address: parameter.address,
-          image: parameter.image,
-        ).toJson(),
+           address: parameter.address,
+         ).toJson(),
         {
           ConstantKeys.appAuthorization:
               "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
         });
-    print(response.statusCode);
-    print(response.body);
-    if (response.statusCode == StatusCode.ok) {
+    if (response.statusCode == StatusCode.created) {
       return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(

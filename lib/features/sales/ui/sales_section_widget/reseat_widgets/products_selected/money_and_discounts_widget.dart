@@ -108,11 +108,11 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                       style: TextStyles.font14GreyColor33Weight400),
                   verticalSpace(16),
                   _moneyWidget("اجمالي الفاتوره",
-                      "${AppConstant.currency} ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['totalReseat'])!.toStringAsFixed(3)}"),
+                      " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['totalReseat'])!.toStringAsFixed(3)}"),
                   verticalSpace(16),
 
                   _moneyWidget("خصم المنتج",
-                      "${AppConstant.currency} ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['totalDiscount'])!.toStringAsFixed(3)}"),
+                      " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['totalDiscount'])!.toStringAsFixed(3)}"),
                   // verticalSpace(16),
                   // _moneyWidget("خصم اضافي",
                   //     "${AppConstant.currency} ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['extraDiscount'])!.toStringAsFixed(3)}"),
@@ -121,7 +121,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                   verticalSpace(16),
                   _moneyWidget(
                       "الضريبة",
-                      "${AppConstant.currency} "
+                      " 'جنيه'  "
                           "${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['valueTax'])!.toStringAsFixed(3)}"),
                   verticalSpace(16),
                   Divider(color: AppColors.blueColorEEE),
@@ -150,7 +150,7 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                         ],
                       )),
                       Text(
-                          "${AppConstant.currency} ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['total'])!.toStringAsFixed(3)}",
+                          " 'جنيه'  ${(ReseatSelectedProducts(selectedProducts: SalesCubit.get(context).selectedProducts).getReseatData(discountTypeId: SalesCubit.get(context).selectedPercentType?.id, discount: SalesCubit.get(context).percentController.text)['total'])!.toStringAsFixed(3)}",
                           style: TextStyles.font16GreyColor33Weight500),
                     ],
                   ),

@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, snapshot) {
-          getIt<AppConstant>().setLanguage(context.locale.languageCode);
+          // getIt<AppConstant>().setLanguage(context.locale.languageCode);
           return Container(
             color: AppColors.whiteColor,
             child: MaterialApp(

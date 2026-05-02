@@ -40,10 +40,10 @@ class BillContentWidget extends StatelessWidget {
                       .customer
                       .name),
               verticalSpace(8),
-              MoneyWidget1(
-                  text: "السجل التجاري", value: AppConstant.commercialRegistry),
-              verticalSpace(8),
-              MoneyWidget1(text: "الرقم الضريبي", value: AppConstant.numberTax),
+              // MoneyWidget1(
+              //     text: "السجل التجاري", value: AppConstant.commercialRegistry),
+              // verticalSpace(8),
+              // MoneyWidget1(text: "الرقم الضريبي", value: AppConstant.numberTax),
               verticalSpace(8),
             ],
           ),
@@ -63,22 +63,22 @@ class BillContentWidget extends StatelessWidget {
               MoneyWidget3(
                   text: "اجمالي الفاتوره",
                   value:
-                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount + SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount - SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
+                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount + SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount - SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
               verticalSpace(8),
               MoneyWidget3(
                   text: "خصم المنتج",
                   value:
-                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount)}"),
+                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount)}"),
               verticalSpace(8),
               MoneyWidget3(
                   text: "خصم اضافي",
                   value:
-                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
+                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
               verticalSpace(8),
               MoneyWidget3(
                   text: "الضريبة",
                   value:
-                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
+                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
               verticalSpace(8),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,7 @@ class BillContentWidget extends StatelessWidget {
                       style: TextStyles.font10GreyColor33Weight500),
                   Spacer(),
                   Text(
-                      "${AppConstant.currency} ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount)}",
+                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount)}",
                       style: TextStyles.font12greyColor33Weight600),
                 ],
               ),
@@ -157,7 +157,7 @@ class BillContentWidget extends StatelessWidget {
                   return MoneyWidget3(
                       text: "اجمالي المرتجع",
                       value:
-                          "${AppConstant.currency} ${ReturnedProductClass()
+                          " 'جنيه'  ${ReturnedProductClass()
                               .getTotalPriceReturnedProducts(
                               SalesCubit.get(context).selectedReturnProducts,)
                               .toStringAsFixed(3)}");

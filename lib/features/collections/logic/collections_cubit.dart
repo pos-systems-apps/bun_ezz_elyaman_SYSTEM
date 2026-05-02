@@ -20,14 +20,14 @@ class CollectionsCubit extends Cubit<CollectionsState> {
 
   CollectionsCubit(this._splashRepo, this._collectionsRepo)
       : super(InitialState());
-  TextEditingController billNumberController = TextEditingController();
-  TextEditingController moneyController = TextEditingController();
+  // TextEditingController billNumberController = TextEditingController();
+  // TextEditingController moneyController = TextEditingController();
   TextEditingController notesController = TextEditingController();
   TextEditingController searchUserController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   ///customers
-  List<UserResponseData> users = [];
+  List<CustomerModel> users = [];
 
   getUsers() {
     emit(OnGetUsersLoadingState());
@@ -35,7 +35,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
       value.fold((l) {
         emit(OnGetUsersErrorState());
       }, (r) {
-        users = r.userResponseData;
+        users = r.data;
         emit(OnGetUsersSuccessState());
       });
     }).catchError((error) {
@@ -43,10 +43,10 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     });
   }
 
-  UserResponseData? selectedUser;
+  CustomerModel? selectedUser;
 
-  onSelectUser(UserResponseData vale) {
-    searchUserController.text = vale.nameAr;
+  onSelectUser(CustomerModel vale) {
+    searchUserController.text = vale.name;
     selectedUser = vale;
     users.clear();
     emit(OnSelectUserState());
@@ -58,90 +58,120 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     emit(OnSelectUserState());
   }
 
+
+
+
+
+  final TextEditingController itemController = TextEditingController();
+
+  List<String> items = [];
+
+  void addItem(String item) {
+    final text = item.trim();
+
+    if (text.isEmpty) return;
+
+    items.add(text);
+
+    emit(OnAddItemState());
+  }
+
+  void removeItem(int index) {
+    if (index < 0 || index >= items.length) return;
+
+    items.removeAt(index);
+
+    emit(OnRemoveItemState());
+  }
+
+  void clearItems() {
+    items.clear();
+
+    emit(OnClearItemsState());
+  }
+
+
+
   ///bank account
-  List<AccountsResponseData> bankAccounts = [];
+  // List<AccountsResponseData> bankAccounts = [];
+  //
+  // getBankAccounts() {
+  //   emit(OnGetBankAccountsLoadingState());
+  //   _splashRepo.getBankAccounts().then((value) {
+  //     value.fold((l) {
+  //       emit(OnGetBankAccountsErrorState());
+  //     }, (r) {
+  //       bankAccounts = r.accounts;
+  //       emit(OnGetBankAccountsSuccessState());
+  //     });
+  //   }).catchError((error) {
+  //     emit(OnGetBankAccountsCatchErrorState());
+  //   });
+  // }
 
-  getBankAccounts() {
-    emit(OnGetBankAccountsLoadingState());
-    _splashRepo.getBankAccounts().then((value) {
-      value.fold((l) {
-        emit(OnGetBankAccountsErrorState());
-      }, (r) {
-        bankAccounts = r.accounts;
-        emit(OnGetBankAccountsSuccessState());
-      });
-    }).catchError((error) {
-      emit(OnGetBankAccountsCatchErrorState());
-    });
-  }
+  // AccountsResponseData? selectedBankAccount;
+  //
+  // changeSelectedBankAccount(AccountsResponseData value) {
+  //   selectedBankAccount = value;
+  //   emit(OnChangeBankSelectState());
+  // }
+  //
+  // clearSelectedBankAccount() {
+  //   selectedBankAccount = null;
+  //   emit(OnChangeBankSelectState());
+  // }
 
-  AccountsResponseData? selectedBankAccount;
+  // ///pays
+  // List<PayClass> pays =
+  //     getIt<AppConstant>().pays.where((item) => item.isShown).toList();
+  // PayClass? selectedPay;
+  //
+  // changeSelectedPay(PayClass value) {
+  //   selectedPay = value;
+  //   emit(OnChangePaySelectState());
+  // }
+  //
+  // clearSelectedPay() {
+  //   selectedPay = null;
+  //   emit(OnChangePaySelectState());
+  // }
 
-  changeSelectedBankAccount(AccountsResponseData value) {
-    selectedBankAccount = value;
-    emit(OnChangeBankSelectState());
-  }
-
-  clearSelectedBankAccount() {
-    selectedBankAccount = null;
-    emit(OnChangeBankSelectState());
-  }
-
-  ///pays
-  List<PayClass> pays =
-      getIt<AppConstant>().pays.where((item) => item.isShown).toList();
-  PayClass? selectedPay;
-
-  changeSelectedPay(PayClass value) {
-    selectedPay = value;
-    emit(OnChangePaySelectState());
-  }
-
-  clearSelectedPay() {
-    selectedPay = null;
-    emit(OnChangePaySelectState());
-  }
-
-  ///upload image
-
-  String? selectedImagePath;
-
-  uploadImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      selectedImagePath = image.path;
-      emit(OnChangeSelectedImageState());
-    }
-  }
-
-  clearImage() async {
-    selectedImagePath = null;
-    emit(OnChangeSelectedImageState());
-  }
+  // ///upload image
+  //
+  // String? selectedImagePath;
+  //
+  // uploadImage() async {
+  //   final ImagePicker picker = ImagePicker();
+  //   final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+  //   if (image != null) {
+  //     selectedImagePath = image.path;
+  //     emit(OnChangeSelectedImageState());
+  //   }
+  // }
+  //
+  // clearImage() async {
+  //   selectedImagePath = null;
+  //   emit(OnChangeSelectedImageState());
+  // }
 
   cancelCollection() {
-    billNumberController.clear();
-    moneyController.clear();
+    // billNumberController.clear();
+    // moneyController.clear();
     notesController.clear();
     searchUserController.clear();
-    clearSelectedBankAccount();
+    // clearSelectedBankAccount();
     clearSelectedUSer();
-    clearSelectedPay();
-    clearImage();
+    // clearSelectedPay();
+    // clearImage();
   }
 
   confirmCollection() {
     emit(OnConfirmCollectionLoadingState());
     _collectionsRepo
         .confirmCollection(ConfirmCollectionRequestModel(
-            billID: billNumberController.text,
-            bankAccountID: selectedBankAccount!.id,
-            paymentWayID: selectedPay?.id,
-            customerID: selectedUser?.id,
-            price: moneyController.text,
+            customerID: selectedUser!.id,
             noteText: notesController.text,
-            image: selectedImagePath))
+            items: items))
         .then((value) {
       value.fold((l) {
         emit(OnConfirmCollectionErrorState(error: l.message));
@@ -149,7 +179,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
         emit(OnConfirmCollectionSuccessState(message: r.message ?? ""));
       });
     }).catchError((error) {
-      emit(OnConfirmCollectionCatchErrorState(error: "error".tr()));
+      emit(OnConfirmCollectionCatchErrorState(error: "error"));
     });
   }
 

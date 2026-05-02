@@ -174,13 +174,13 @@ class _ElectronicCashInvoiceBodyWidgetState
                                       .seller
                                       .name),
                               verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "السجل التجاري",
-                                  value: AppConstant.commercialRegistry),
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "الرقم الضريبي",
-                                  value: AppConstant.numberTax),
+                              // MoneyWidget1(
+                              //     text: "السجل التجاري",
+                              //     value: AppConstant.commercialRegistry),
+                              // verticalSpace(8),
+                              // MoneyWidget1(
+                              //     text: "الرقم الضريبي",
+                              //     value: AppConstant.numberTax),
 
                               verticalSpace(8),
                               MoneyWidget1(
@@ -229,12 +229,12 @@ class _ElectronicCashInvoiceBodyWidgetState
                               MoneyWidget3(
                                   text: "المبغ الكلي",
                                   value:
-                                      "${AppConstant.currency} ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.customer.balance}"),
+                                      " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.customer.balance}"),
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "الملاحظة",
                                   value:
-                                      "${AppConstant.currency} ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.customer.balance}"),
+                                      " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.customer.balance}"),
                               verticalSpace(8),
 
                               verticalSpace(24),
@@ -243,7 +243,7 @@ class _ElectronicCashInvoiceBodyWidgetState
                               MoneyWidget3(
                                   text: "المبلغ المدفوع",
                                   value:
-                                      "${AppConstant.currency} ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.price}"),
+                                      " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.price}"),
                               verticalSpace(50),
 
                             ],

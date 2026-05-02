@@ -27,7 +27,7 @@ class StatisticsHalfRowWidget extends StatelessWidget {
           height: 90.h,
           width: width,
           padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 10.h),
-          margin: EdgeInsets.symmetric(horizontal: 8.w),
+          margin: EdgeInsets.symmetric(horizontal: 8.w,vertical: 6.h),
           decoration: BoxDecoration(
       color: color,
       borderRadius: BorderRadius.circular(8.r),

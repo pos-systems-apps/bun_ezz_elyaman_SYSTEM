@@ -7,6 +7,7 @@ import 'package:pos_system/features/collections/ui/widgets/collections_buttons_w
 import 'package:pos_system/features/collections/ui/widgets/select_items/collections_bank_account_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/select_items/collections_pay_account_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/text_fields/bill_text_field_widget.dart';
+import 'package:pos_system/features/collections/ui/widgets/text_fields/collection_items_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/text_fields/money_text_field_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/text_fields/notes_text_field_widget.dart';
 import 'package:pos_system/features/collections/ui/widgets/text_fields/search_user_widget.dart';
@@ -26,34 +27,39 @@ class CollectionsBodyWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // BillWidget(),
-            // verticalSpace(24),
+            verticalSpace(24),
             SearchUserWidget(),
-            verticalSpace(16),
-            Text.rich(
-              TextSpan(children: [
-                TextSpan(
-                    text: "اختر  الحساب",
-                    style: TextStyles.font12GreyColor66Weight400),
-                TextSpan(text: "*", style: TextStyles.font12RedColorWeight400),
-              ]),
-            ),
-            verticalSpace(8),
-            CollectionsBankAccountWidget(),
-            verticalSpace(16),
-            Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: "طريقه الدفع",
-                  style: TextStyles.font12GreyColor66Weight400),
-              TextSpan(text: "*", style: TextStyles.font12RedColorWeight400),
-            ])),
-            verticalSpace(8),
-            CollectionsPayAccountWidget(),
-            verticalSpace(16),
-            MoneyTextFieldWidget(),
-            verticalSpace(16),
-            UploadImageWidget(),
+            // verticalSpace(16),
+            // Text.rich(
+            //   TextSpan(children: [
+            //     TextSpan(
+            //         text: "اختر  الحساب",
+            //         style: TextStyles.font12GreyColor66Weight400),
+            //     TextSpan(text: "*", style: TextStyles.font12RedColorWeight400),
+            //   ]),
+            // ),
+            // verticalSpace(8),
+            // CollectionsBankAccountWidget(),
+            // verticalSpace(16),
+            // Text.rich(TextSpan(children: [
+            //   TextSpan(
+            //       text: "طريقه الدفع",
+            //       style: TextStyles.font12GreyColor66Weight400),
+            //   TextSpan(text: "*", style: TextStyles.font12RedColorWeight400),
+            // ])),
+            // verticalSpace(8),
+            // CollectionsPayAccountWidget(),
+            // verticalSpace(16),
+            // MoneyTextFieldWidget(),
+            // verticalSpace(16),
+            // UploadImageWidget(),
             verticalSpace(16),
             NotesTextFieldWidget(),
+            verticalSpace(16),
+
+
+
+            CollectionItemsWidget(),
             verticalSpace(40),
             CollectionsButtonsWidget(),
             verticalSpace(50),

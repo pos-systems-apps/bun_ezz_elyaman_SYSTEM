@@ -15,26 +15,36 @@ class LoginRepo {
 
   LoginRepo(this._loginService);
 
-  Future<Either<Failure, SystemSettingResponse>> systemSetting() async {
-    try {
-      return Right(await _loginService.systemSetting());
-    } on ServerException catch (failure) {
-      return Left(ServerFailure(message: failure.serverFailure.message));
-    }
-  }
+  // Future<Either<Failure, SystemSettingResponse>> systemSetting() async {
+  //   try {
+  //     return Right(await _loginService.systemSetting());
+  //   } on ServerException catch (failure) {
+  //     return Left(ServerFailure(message: failure.serverFailure.message));
+  //   }
+  // }
 
-  Future<Either<Failure, UserSettingResponse>> userSetting() async {
-    try {
-      return Right(await _loginService.userSetting());
-    } on ServerException catch (failure) {
-      return Left(ServerFailure(message: failure.serverFailure.message));
-    }
-  }
+  // Future<Either<Failure, UserSettingResponse>> userSetting() async {
+  //   try {
+  //     return Right(await _loginService.userSetting());
+  //   } on ServerException catch (failure) {
+  //     return Left(ServerFailure(message: failure.serverFailure.message));
+  //   }
+  // }
 
   Future<Either<Failure, LoginResponseModel>> login(
       LoginRequestModel parameter) async {
     try {
       return Right(await _loginService.login(parameter));
+    } on ServerException catch (failure) {
+      return Left(ServerFailure(message: failure.serverFailure.message));
+    }
+  }
+
+
+  Future<Either<Failure, SuccessResponseModel>> logOut(
+    ) async {
+    try {
+      return Right(await _loginService.logOut());
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

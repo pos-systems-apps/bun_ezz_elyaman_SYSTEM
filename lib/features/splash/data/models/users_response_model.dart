@@ -1,61 +1,99 @@
 class UsersResponseModel {
-  int totalUsers;
-  List<UserResponseData> userResponseData;
+  final bool status;
+  final String message;
+  final List<CustomerModel> data;
+  final int code;
 
   UsersResponseModel({
-    required this.totalUsers,
-    required this.userResponseData,
+    required this.status,
+    required this.message,
+    required this.data,
+    required this.code,
   });
 
-  factory UsersResponseModel.fromJson(Map<String, dynamic> json) =>
-      UsersResponseModel(
-          totalUsers: json['total'],
-          userResponseData: List<UserResponseData>.from(json['customers']
-              .map((item) => UserResponseData.fromJson(item))));
+  factory UsersResponseModel.fromJson(Map<String, dynamic> json) {
+    return UsersResponseModel(
+      status: json['status'] ?? false,
+      message: json['message'] ?? '',
+      data: json['data'] != null
+          ? List<CustomerModel>.from(
+              json['data'].map((item) => CustomerModel.fromJson(item)),
+            )
+          : [],
+      code: json['code'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'message': message,
+      'data': data.map((item) => item.toJson()).toList(),
+      'code': code,
+    };
+  }
 }
 
-class UserResponseData {
-  int id;
-  String nameAr;
-  String nameEn;
-  String phone;
-  String email;
-  String image;
-  double balance;
-  double discount;
-  double credit;
-  String address;
-  String taxNumber;
-  String commercialHistory;
+class CustomerModel {
+  final int id;
+  final String name;
+  final String? phone;
+  final String? email;
+  final String? address;
+  final double? latitude;
+  final double? longitude;
+  final String classification;
+  final String classificationLabel;
+  final String balance;
+  final dynamic area;
 
-  UserResponseData({
+  CustomerModel({
     required this.id,
-    required this.nameAr,
-    required this.nameEn,
-    required this.email,
-    required this.image,
-    required this.address,
+    required this.name,
+    this.phone,
+    this.email,
+    this.address,
+    this.latitude,
+    this.longitude,
+    required this.classification,
+    required this.classificationLabel,
     required this.balance,
-    required this.discount,
-    required this.credit,
-    required this.phone,
-    required this.taxNumber,
-    required this.commercialHistory,
+    this.area,
   });
 
-  factory UserResponseData.fromJson(Map<String, dynamic> json) =>
-      UserResponseData(
-        id: json['id'],
-        nameAr: json['name'] ?? "",
-        nameEn: json['name_en'] ?? "",
-        email: json['email'] ?? "",
-        image: json['image'] ?? "",
-        address: json['address'] ?? "",
-        balance: double.tryParse(json['balance'].toString()) ?? 0,
-        discount: double.tryParse(json['discount'].toString()) ?? 0,
-        credit: double.tryParse(json['credit'].toString()) ?? 0,
-        phone: json['mobile'] ?? "",
-        taxNumber: json['tax_number'] ?? "",
-        commercialHistory: json['c_history'] ?? "",
-      );
+  factory CustomerModel.fromJson(Map<String, dynamic> json) {
+    return CustomerModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      phone: json['phone'],
+      email: json['email'],
+      address: json['address'],
+      latitude: json['latitude'] != null
+          ? double.tryParse(json['latitude'].toString())
+          : null,
+      longitude: json['longitude'] != null
+          ? double.tryParse(json['longitude'].toString())
+          : null,
+      classification: json['classification'] ?? '',
+      classificationLabel: json['classification_label'] ?? '',
+      balance: json['balance'] ?? '0.00',
+      area: json['area'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'phone': phone,
+      'email': email,
+      'address': address,
+      'latitude': latitude,
+      'longitude': longitude,
+      'classification': classification,
+      'classification_label': classificationLabel,
+      'balance': balance,
+      'area': area,
+    };
+  }
 }

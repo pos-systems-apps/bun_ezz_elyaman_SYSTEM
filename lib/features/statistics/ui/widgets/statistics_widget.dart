@@ -49,34 +49,33 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
           if (StatisticsCubit.get(context).statisticsResponseModel == null) {
             return StatisticsShimmerWidget();
           } else {
-            List<StatisticsData> firstThreeItems = StatisticsCubit.get(context)
-                .statisticsResponseModel!
-                .statisticsData
-                .take(3)
-                .where((item) => dashboard == "1" ? true : item.showInAllStatus)
-                .toList();
-            List<StatisticsData> remainingItems = StatisticsCubit.get(context)
-                .statisticsResponseModel!
-                .statisticsData
-                .skip(3)
-                .where((item) => dashboard == "1" ? true : item.showInAllStatus)
-                .toList();
+            // List<StatisticsData> firstThreeItems = StatisticsCubit.get(context)
+            //     .statisticsResponseModel!
+            //     .data,;
+            // List<StatisticsData> remainingItems = StatisticsCubit.get(context)
+            //     .statisticsResponseModel!
+            //     .statisticsData
+            //     .skip(3)
+            //     .where((item) => dashboard == "1" ? true : item.showInAllStatus)
+            //     .toList();
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (dashboard == "1") verticalSpace(16),
-                StatisticsOneRowWidget(statisticsData: firstThreeItems),
-                if (dashboard == "1") verticalSpace(16),
-                ChartWidget(
-                    showAll: dashboard == "1" ? true : false,
-                    statisticsResponseModel:
-                        StatisticsCubit.get(context).statisticsResponseModel!),
-                verticalSpace(16),
-                for (var i = 0; i < (remainingItems.length); i += 3)
-                  StatisticsOneRowWidget(
-                    statisticsData: remainingItems.skip(i).take(3).toList(),
-                  ),
+                // if (dashboard == "1") verticalSpace(16),
+                StatisticsOneRowWidget(statisticsData: StatisticsCubit.get(context)
+              .statisticsResponseModel!
+              .data),
+                // if (dashboard == "1") verticalSpace(16),
+                // ChartWidget(
+                //     showAll: dashboard == "1" ? true : false,
+                //     statisticsResponseModel:
+                //         StatisticsCubit.get(context).statisticsResponseModel!),
+                // verticalSpace(16),
+                // for (var i = 0; i < (remainingItems.length); i += 3)
+                //   StatisticsOneRowWidget(
+                //     statisticsData: remainingItems.skip(i).take(3).toList(),
+                //   ),
                 verticalSpace(30),
               ],
             );

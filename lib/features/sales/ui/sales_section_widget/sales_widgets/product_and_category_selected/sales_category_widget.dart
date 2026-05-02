@@ -38,11 +38,11 @@ class SalesCategoryWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-              child: CachedNetworkImageWidget(
-                  imgUrl:
-                      EndPoints().getImageFromApi("category/${category.image}"),
-                  radius: 0)),
+          // Expanded(
+          //     child: CachedNetworkImageWidget(
+          //         imgUrl:
+          //             EndPoints().getImageFromApi("category/${category.image}"),
+          //         radius: 0)),
           verticalSpace(4),
           Text(
             category.name,

@@ -96,9 +96,7 @@ class SearchUserWidget extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(
-                        context.locale.languageCode == "ar"
-                            ? CollectionsCubit.get(context).users[index].nameAr
-                            : CollectionsCubit.get(context).users[index].nameEn,
+                        CollectionsCubit.get(context).users[index].name,
                         maxLines: 2,
                         style: TextStyles.font16BlackWeight500,
                       ),

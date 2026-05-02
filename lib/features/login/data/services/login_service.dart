@@ -21,39 +21,53 @@ class LoginService {
 
   LoginService({required this.apiConsumer});
 
-  Future<SystemSettingResponse> systemSetting() async {
-    final response = await apiConsumer.get(LoginApiEndPoints.systemSettingUrl, null);
-    if (response.statusCode == StatusCode.ok) {
-      return SystemSettingResponse.fromJson(jsonDecode(response.body));
-    } else {
-      throw ServerException(
-          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
-    }
-  }
-  Future<UserSettingResponse> userSetting() async {
-    final response = await apiConsumer.get(LoginApiEndPoints.userSettingUrl, {
-      ConstantKeys.appAuthorization:
-      "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-    });
-    if (response.statusCode == StatusCode.ok) {
-      return UserSettingResponse.fromJson(jsonDecode(response.body));
-    } else {
-      throw ServerException(
-          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
-    }
-  }
+  // Future<SystemSettingResponse> systemSetting() async {
+  //   final response = await apiConsumer.get(LoginApiEndPoints.systemSettingUrl, null);
+  //   if (response.statusCode == StatusCode.ok) {
+  //     return SystemSettingResponse.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw ServerException(
+  //         serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
+  //   }
+  // }
+  // Future<UserSettingResponse> userSetting() async {
+  //   final response = await apiConsumer.get(LoginApiEndPoints.userSettingUrl, {
+  //     ConstantKeys.appAuthorization:
+  //     "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+  //   });
+  //   if (response.statusCode == StatusCode.ok) {
+  //     return UserSettingResponse.fromJson(jsonDecode(response.body));
+  //   } else {
+  //     throw ServerException(
+  //         serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
+  //   }
+  // }
 
   Future<LoginResponseModel> login(LoginRequestModel parameter) async {
-    print(AppConstant.baseUrl);
-    final response = await apiConsumer.post(
+     final response = await apiConsumer.post(
         LoginApiEndPoints.loginUrl,
-        LoginRequestModel(code: parameter.code, password: parameter.password)
+        LoginRequestModel(email: parameter.email, password: parameter.password)
             .toJson(),
         null);
-    print(response.statusCode);
-    print(response.body);
+
     if (response.statusCode == StatusCode.ok) {
       return LoginResponseModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw ServerException(
+          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
+    }
+  }
+  Future<SuccessResponseModel> logOut() async {
+     final response = await apiConsumer.post(
+        LoginApiEndPoints.logOutUrl,
+        null,
+         {
+           ConstantKeys.appAuthorization:
+           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+         });
+
+    if (response.statusCode == StatusCode.ok) {
+      return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
@@ -69,6 +83,8 @@ class LoginService {
           ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
         });
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {

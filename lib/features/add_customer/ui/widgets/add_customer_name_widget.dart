@@ -8,17 +8,17 @@ import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/app_text_field.dart';
 import 'package:pos_system/features/add_customer/logic/add_customer_cubit.dart';
 
-class AddCustomerArabicNameWidget extends StatelessWidget {
-  const AddCustomerArabicNameWidget({super.key});
+class AddCustomerNameWidget extends StatelessWidget {
+  const AddCustomerNameWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppTextFormField(
-      hintText: "اسم العميل بالعربي",
+      hintText: "اسم العميل ",
       maxLines: 1,
       hintStyle: TextStyles.font14GreyColor87Weight400,
       textStyle: TextStyles.font14BlackColorWeight400,
-      controller: AddCustomerCubit.get(context).nameArabicController,
+      controller: AddCustomerCubit.get(context).nameController,
       backgroundColor: AppColors.whiteColor,
       prefixIcon: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

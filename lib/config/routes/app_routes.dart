@@ -49,6 +49,7 @@ import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/ui/reseat_screen.dart';
 import 'package:pos_system/features/sales_invoice/logic/sales_invoice_cubit.dart';
 import 'package:pos_system/features/sales_invoice/ui/sales_invoice_screen.dart';
+import 'package:pos_system/features/setting/logic/setting_cubit.dart';
 import 'package:pos_system/features/setting/ui/setting_screen.dart';
 import 'package:pos_system/features/splash/ui/splash_screen.dart';
 import 'package:pos_system/features/transfers_section/logic/transfer_section_cubit.dart';
@@ -78,7 +79,8 @@ class RouteGenerator {
       case Routes.buttonNavigationScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create:(context) => SalesCubit(getIt(),getIt(),getIt())..getCategoriesFromHere(),
+                  create: (context) => SalesCubit(getIt(), getIt(), getIt())
+                    ..getCategoriesFromHere(),
                   child: BlocProvider(
                     create: (context) => ButtonNavigationCubit(),
                     child: ButtonNavigationScreen(),
@@ -92,7 +94,11 @@ class RouteGenerator {
                   child: ReseatScreen(),
                 ));
       case Routes.settingScreen:
-        return MaterialPageRoute(builder: (_) => SettingScreen());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (_) => LogOutCubit(getIt()),
+                  child: SettingScreen(),
+                ));
 
       case Routes.electronicInvoiceScreen:
         return MaterialPageRoute(
@@ -115,12 +121,12 @@ class RouteGenerator {
                     ..getInvoiceDetails(args['invoiceId']),
                   child: ElectronicResourcesInvoicesScreen(),
                 ));
-      case Routes.createVisitScreen:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (_) => CreateVisitCubit(getIt(), getIt()),
-                  child: CreateVisitScreen(),
-                ));
+      // case Routes.createVisitScreen:
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //             create: (_) => CreateVisitCubit(getIt(), getIt()),
+      //             child: CreateVisitScreen(),
+      //           ));
       case Routes.customersScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -130,30 +136,29 @@ class RouteGenerator {
       case Routes.addCustomerScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (_) => AddCustomerCubit(getIt(), getIt())
-                    ..getCategoriesAndRegions(),
+                  create: (_) => AddCustomerCubit(getIt()),
                   child: AddCustomerScreen(),
                 ));
-      case Routes.addTransferSectionScreen:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (_) =>
-                      AddTransferSectionCubit(getIt(), getIt())..getAccounts(),
-                  child: AddTransferSectionScreen(),
-                ));
-      case Routes.transferSectionScreen:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (_) =>
-                      TransferSectionCubit(getIt())..getTransactionSection(),
-                  child: TransferSectionScreen(),
-                ));
-      case Routes.fundListScreen:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (_) => FundListCubit(getIt())..getFundList(),
-                  child: FundListScreen(),
-                ));
+      // case Routes.addTransferSectionScreen:
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //             create: (_) =>
+      //                 AddTransferSectionCubit(getIt(), getIt())..getAccounts(),
+      //             child: AddTransferSectionScreen(),
+      //           ));
+      // case Routes.transferSectionScreen:
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //             create: (_) =>
+      //                 TransferSectionCubit(getIt())..getTransactionSection(),
+      //             child: TransferSectionScreen(),
+      //           ));
+      // case Routes.fundListScreen:
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //             create: (_) => FundListCubit(getIt())..getFundList(),
+      //             child: FundListScreen(),
+      //           ));
       case Routes.visitsCarriedOutScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -239,12 +244,12 @@ class RouteGenerator {
                   create: (_) => CashInvoiceCubit(getIt())..getCashInvoice(),
                   child: CashInvoiceScreen(),
                 ));
-      case Routes.createMonthlyPlanScreen:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (_) => CreateMonthlyPlanCubit(getIt(), getIt()),
-                  child: CreateMonthlyPlanScreen(),
-                ));
+      // case Routes.createMonthlyPlanScreen:
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //             create: (_) => CreateMonthlyPlanCubit(getIt(), getIt()),
+      //             child: CreateMonthlyPlanScreen(),
+      //           ));
       case Routes.salaryScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(

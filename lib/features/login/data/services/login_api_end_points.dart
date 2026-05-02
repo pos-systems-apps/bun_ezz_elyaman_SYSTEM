@@ -5,8 +5,9 @@ import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/constant_keys.dart';
 
 class LoginApiEndPoints {
-  static const systemSettingUrl = 'https://gamalsystem.iqbrandx.com/api/v1/config';
-  static final userSettingUrl = '${AppConstant.baseUrl}api/v1/dataadmin';
-  static final loginUrl = '${AppConstant.baseUrl}api/v1/login';
-  static final updateUserLocationUrl = '${AppConstant.baseUrl}api/v1/update/user';
+  // static const systemSettingUrl = 'https://gamalsystem.iqbrandx.com/api/v1/config';
+  // static final userSettingUrl = '${EndPoints.baseUrl}api/v1/dataadmin';
+  static final loginUrl = '${EndPoints.baseUrl}api/delegate/login';
+  static final logOutUrl = '${EndPoints.baseUrl}api/delegate/logout';
+  static final updateUserLocationUrl = '${EndPoints.baseUrl}api/delegate/update-location';
 }

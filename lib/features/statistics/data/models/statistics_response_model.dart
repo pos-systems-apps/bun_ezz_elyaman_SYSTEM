@@ -1,61 +1,61 @@
 class StatisticsResponseModel {
-  List<StatisticsData> statisticsData;
-  ValueData maxValue;
-  ValueData minValue;
+  final bool status;
+  final String message;
+  final List<StatisticItemModel> data;
+  final int code;
 
   StatisticsResponseModel({
-    required this.statisticsData,
-    required this.maxValue,
-    required this.minValue,
+    required this.status,
+    required this.message,
+    required this.data,
+    required this.code,
   });
 
-  factory StatisticsResponseModel.fromJson(Map<String, dynamic> json) =>
-      StatisticsResponseModel(
-        statisticsData: List<StatisticsData>.from(json['revenueSummary']
-            .map((item) => StatisticsData.fromJson(item))),
-        maxValue: ValueData.fromJson(json['maxValue']),
-        minValue: ValueData.fromJson(json['minValue']),
-      );
+  factory StatisticsResponseModel.fromJson(Map<String, dynamic> json) {
+    return StatisticsResponseModel(
+      status: json['status'] ?? false,
+      message: json['message'] ?? '',
+      data: json['data'] != null
+          ? List<StatisticItemModel>.from(
+              json['data'].map(
+                (item) => StatisticItemModel.fromJson(item),
+              ),
+            )
+          : [],
+      code: json['code'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'message': message,
+      'data': data.map((item) => item.toJson()).toList(),
+      'code': code,
+    };
+  }
 }
 
-class StatisticsData {
-  String nameAr;
-  String nameEn;
-  bool currency;
-  double money;
-  bool showInAllStatus;
+class StatisticItemModel {
+  final String label;
+  final num value;
 
-  StatisticsData({
-    required this.nameAr,
-    required this.nameEn,
-    required this.currency,
-    required this.money,
-    required this.showInAllStatus,
-  });
-
-  factory StatisticsData.fromJson(Map<String, dynamic> json) => StatisticsData(
-        nameAr: json['ar'] ?? "",
-        nameEn: json['en'] ?? "",
-        currency: json['currency'] == null ? true : false,
-    showInAllStatus: json['type'] == null ? true : false,
-        money: double.tryParse(json['value'].toString()) ?? 0,
-      );
-}
-
-class ValueData {
-  String nameAr;
-  String nameEn;
-  double value;
-
-  ValueData({
-    required this.nameAr,
-    required this.nameEn,
+  StatisticItemModel({
+    required this.label,
     required this.value,
   });
 
-  factory ValueData.fromJson(Map<String, dynamic> json) => ValueData(
-        nameAr: json['ar'] ?? "",
-        nameEn: json['en'] ?? "",
-        value: double.tryParse(json['value'].toString()) ?? 0,
-      );
+  factory StatisticItemModel.fromJson(Map<String, dynamic> json) {
+    return StatisticItemModel(
+      label: json['label'] ?? '',
+      value: json['value'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'label': label,
+      'value': value,
+    };
+  }
 }
