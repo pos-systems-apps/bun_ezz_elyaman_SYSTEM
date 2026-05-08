@@ -21,26 +21,25 @@ class ReseatSelectedProducts {
     int? discountTypeId,
     String? discount,
   }) {
-    totalReseat = 0;
-    totalDiscount = 0;
-    extraDiscount = 0;
-    valueTax = 0;
-    total = 0;
+    _resetTotals();
 
-    for (var element in selectedProducts) {
+    for (final element in selectedProducts) {
       totalReseat += getProductTotalPriceInReseat(element);
       totalDiscount += getProductDiscountPriceInReseat(element);
     }
 
     final double totalAfterProductDiscount = totalReseat - totalDiscount;
 
-    for (var element in selectedProducts) {
-      extraDiscount += getProductExtraDiscountPriceInReseat(
+    for (final element in selectedProducts) {
+      final productExtraDiscount = getProductExtraDiscountPriceInReseat(
         element,
         discountTypeId,
         discount,
         totalPrice: totalAfterProductDiscount,
       );
+
+      element.discountMoney = productExtraDiscount;
+      extraDiscount += productExtraDiscount;
 
       valueTax += getProductTaxesPriceInReseat(
         element,
@@ -66,38 +65,22 @@ class ReseatSelectedProducts {
     };
   }
 
+  void _resetTotals() {
+    totalReseat = 0;
+    totalDiscount = 0;
+    extraDiscount = 0;
+    valueTax = 0;
+    total = 0;
+  }
+
   double getProductTotalPriceInReseat(SelectedProductClass element) {
-    double result = 0;
-
-    final mainUnit = _getMainUnit(element);
-    final minUnit = _getMinUnit(element, mainUnit);
-
-    if (element.maxValueCounter > 0) {
-      result += element.maxValueCounter * _getUnitPrice(element, mainUnit);
-    }
-
-    if (element.minValueCounter > 0) {
-      result += element.minValueCounter * _getUnitPrice(element, minUnit);
-    }
-
-    return result;
+    final price = _toDouble(element.product.sellingPrice);
+    return element.quantity * price;
   }
 
   double getProductDiscountPriceInReseat(SelectedProductClass element) {
-    double result = 0;
-
-    final mainUnit = _getMainUnit(element);
-    final minUnit = _getMinUnit(element, mainUnit);
-
-    if (element.maxValueCounter > 0) {
-      result += element.maxValueCounter * _getUnitDiscount(element, mainUnit);
-    }
-
-    if (element.minValueCounter > 0) {
-      result += element.minValueCounter * _getUnitDiscount(element, minUnit);
-    }
-
-    return result;
+    final discount = _toDouble(element.product.discountAmount);
+    return element.quantity * discount;
   }
 
   double getProductExtraDiscountPriceInReseat(
@@ -124,34 +107,25 @@ class ReseatSelectedProducts {
       String? discount, {
         double totalPrice = 0,
       }) {
-    double tax = 0;
+    final productTotal = getProductTotalPriceInReseat(element);
+    final productDiscount = getProductDiscountPriceInReseat(element);
 
-    final mainUnit = _getMainUnit(element);
-    final minUnit = _getMinUnit(element, mainUnit);
+    final amountAfterProductDiscount = productTotal - productDiscount;
 
-    if (element.maxValueCounter > 0) {
-      tax += _calculateTaxForUnit(
-        element: element,
-        unit: mainUnit,
-        quantity: element.maxValueCounter,
-        discountTypeId: discountTypeId,
-        discount: discount,
-        totalPrice: totalPrice,
-      );
-    }
+    final productExtraDiscount = _calculateExtraDiscount(
+      amount: amountAfterProductDiscount,
+      discountTypeId: discountTypeId,
+      discount: discount,
+      totalPrice: totalPrice,
+    );
 
-    if (element.minValueCounter > 0) {
-      tax += _calculateTaxForUnit(
-        element: element,
-        unit: minUnit,
-        quantity: element.minValueCounter,
-        discountTypeId: discountTypeId,
-        discount: discount,
-        totalPrice: totalPrice,
-      );
-    }
+    final amountBeforeTax = amountAfterProductDiscount - productExtraDiscount;
 
-    return tax;
+    if (amountBeforeTax <= 0) return 0;
+
+    final taxRate = _toDouble(element.product.tax?.rate);
+
+    return amountBeforeTax * (taxRate / 100);
   }
 
   double getTotalReseat(
@@ -180,168 +154,72 @@ class ReseatSelectedProducts {
     return productTotal - productDiscount - productExtraDiscount + productTax;
   }
 
-  double _calculateTaxForUnit({
-    required SelectedProductClass element,
-    required AvailableUnitModel? unit,
-    required int quantity,
-    required int? discountTypeId,
-    required String? discount,
-    required double totalPrice,
-  }) {
-    final unitPrice = _getUnitPrice(element, unit);
-    final unitDiscount = _getUnitDiscount(element, unit);
-    final taxRate = _getUnitTaxRate(element, unit);
-
-    final totalUnitPrice = unitPrice * quantity;
-    final totalUnitDiscount = unitDiscount * quantity;
-
-    final amountAfterProductDiscount = totalUnitPrice - totalUnitDiscount;
-
-    final unitExtraDiscount = _calculateExtraDiscount(
-      amount: amountAfterProductDiscount,
-      discountTypeId: discountTypeId,
-      discount: discount,
-      totalPrice: totalPrice,
-    );
-
-    final amountBeforeTax = amountAfterProductDiscount - unitExtraDiscount;
-
-    return amountBeforeTax * (taxRate / 100);
-  }
-
   double _calculateExtraDiscount({
     required double amount,
     required int? discountTypeId,
     required String? discount,
     required double totalPrice,
   }) {
-    if (discountTypeId == null || discount == null || discount.isEmpty) {
+    if (amount <= 0) return 0;
+
+    if (discountTypeId == null || discount == null || discount.trim().isEmpty) {
       return 0;
     }
 
     final discountValue = double.tryParse(discount) ?? 0;
 
-    if (discountValue <= 0) {
-      return 0;
-    }
+    if (discountValue <= 0) return 0;
 
-    /// discountTypeId == 1
-    /// معناها خصم مبلغ ثابت على الفاتورة كلها
-    /// فبنوزعه على المنتجات حسب نسبة كل منتج من إجمالي الفاتورة
+    /// discountTypeId == 1 => خصم ثابت على الفاتورة كلها
     if (discountTypeId == 1) {
       if (totalPrice <= 0) return 0;
 
-      return amount * (discountValue / totalPrice);
+      final safeDiscountValue =
+      discountValue > totalPrice ? totalPrice : discountValue;
+
+      return amount * (safeDiscountValue / totalPrice);
     }
 
-    /// غير كده اعتبره نسبة مئوية
-    return amount * (discountValue / 100);
+    /// غير كده => خصم نسبة مئوية
+    final safePercentage = discountValue > 100 ? 100 : discountValue;
+
+    return amount * (safePercentage / 100);
   }
 
-  AvailableUnitModel? _getMainUnit(SelectedProductClass element) {
-    if (element.selectedMaxUnit != null) {
-      return element.selectedMaxUnit;
-    }
-
-    final productUnitId = element.product.unit?.id;
-
-    for (final unit in element.product.availableUnits) {
-      if (unit.id == productUnitId) {
-        return unit;
-      }
-    }
-
-    if (element.product.availableUnits.isNotEmpty) {
-      return element.product.availableUnits.first;
-    }
-
-    return null;
-  }
-
-  AvailableUnitModel? _getMinUnit(
-      SelectedProductClass element,
-      AvailableUnitModel? mainUnit,
-      ) {
-    if (element.selectedMinUnit != null) {
-      return element.selectedMinUnit;
-    }
-
-    final remainderUnitId = mainUnit?.remainderUnit?.id;
-
-    if (remainderUnitId == null) {
-      return null;
-    }
-
-    for (final unit in element.product.availableUnits) {
-      if (unit.id == remainderUnitId) {
-        return unit;
-      }
-    }
-
-    return null;
-  }
-
-  double _getUnitPrice(
-      SelectedProductClass element,
-      AvailableUnitModel? unit,
-      ) {
-    if (unit != null) {
-      return unit.price.toDouble();
-    }
-
-    return element.product.sellingPrice.toDouble();
-  }
-
-  double _getUnitDiscount(
-      SelectedProductClass element,
-      AvailableUnitModel? unit,
-      ) {
-    if (unit != null) {
-      return unit.discountAmount.toDouble();
-    }
-
-    return element.product.discountAmount.toDouble();
-  }
-
-  double _getUnitTaxRate(
-      SelectedProductClass element,
-      AvailableUnitModel? unit,
-      ) {
-    if (unit != null) {
-      return unit.taxRate.toDouble();
-    }
-
-    return element.product.tax?.rate.toDouble() ?? 0;
+  double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
   }
 }
 
 class SelectedProductClass {
   TripProductModel product;
 
-  /// عدد الوحدات الكبيرة
-  /// مثال: 2 كيلو
-  int maxValueCounter;
+  /// الكمية المطلوبة من المنتج
+  double quantity;
 
-  /// عدد الوحدات الصغيرة
-  /// مثال: 500 جرام
-  int minValueCounter;
-
-  /// لو عاوز تختار وحدة كبيرة مختلفة من availableUnits
-  /// مثال: طن أو كيلو
-  AvailableUnitModel? selectedMaxUnit;
-
-  /// لو عاوز تختار وحدة صغيرة مختلفة
-  /// مثال: جرام
-  AvailableUnitModel? selectedMinUnit;
-
+  /// نصيب المنتج من الخصم الإضافي على الفاتورة
   double discountMoney;
 
   SelectedProductClass({
     required this.product,
-    this.maxValueCounter = 0,
-    this.minValueCounter = 0,
-    this.selectedMaxUnit,
-    this.selectedMinUnit,
+    this.quantity = 0,
     this.discountMoney = 0,
   });
+
+  SelectedProductClass copyWith({
+    TripProductModel? product,
+    double? quantity,
+    double? discountMoney,
+  }) {
+    return SelectedProductClass(
+      product: product ?? this.product,
+      quantity: quantity ?? this.quantity,
+      discountMoney: discountMoney ?? this.discountMoney,
+    );
+  }
 }

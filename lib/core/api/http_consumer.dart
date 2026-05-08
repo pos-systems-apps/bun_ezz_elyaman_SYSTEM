@@ -53,10 +53,7 @@ class HttpConsumer implements ApiConsumer {
       } else if (key1 == "img" || key1 == "image") {
         request.files
             .add(await http.MultipartFile.fromPath(key1, value1.toString()));
-      } else if (key1 == "cart" && value1 is List<Cart>) {
-        request.fields['cart'] =
-            jsonEncode(value1.map((cart) => cart.toJson()).toList());
-      } else {
+      }   else {
         if (value1 != null) {
           request.fields[key1] = value1.toString();
         }

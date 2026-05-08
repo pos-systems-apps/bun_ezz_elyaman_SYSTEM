@@ -3,7 +3,9 @@ import 'package:pos_system/core/errors_and_success_response/success/success_resp
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 import 'package:pos_system/features/sales/data/models/create_order_request.dart';
+import 'package:pos_system/features/sales/data/models/create_order_response.dart';
 import 'package:pos_system/features/sales/data/models/create_return_order_request.dart';
+import 'package:pos_system/features/sales/data/models/create_return_response.dart';
 import 'package:pos_system/features/sales/data/models/search_products_response.dart';
 
 import '../../../../core/exceptions/exceptions.dart';
@@ -23,7 +25,7 @@ class SalesRepo {
     }
   }
 
-  Future<Either<Failure, CategoryProductsResponse>> getCategoryProducts(
+  Future<Either<Failure, TripProductsResponse>> getCategoryProducts(
       int categoryId,String search) async {
     try {
        return Right(
@@ -33,9 +35,7 @@ class SalesRepo {
     }
   }
 
-
-
-  Future<Either<Failure, SuccessResponseModel>> createOrder(
+  Future<Either<Failure, CreateOrderResponseModel>> createOrder(
       CreateOrderRequest parameter) async {
     try {
       return Right(await _salesService.createOrder(parameter));
@@ -43,7 +43,7 @@ class SalesRepo {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }
   }
-  Future<Either<Failure, SuccessResponseModel>> createReturn(
+  Future<Either<Failure, CreateReturnResponseModel>> createReturn(
       CreateReturnOrderRequest parameter) async {
     try {
       return Right(await _salesService.createReturn(parameter));

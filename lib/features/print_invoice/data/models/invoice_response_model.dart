@@ -1,181 +1,313 @@
 class InvoiceResponseModel {
-  bool success;
-  Invoice invoice;
+  final bool status;
+  final String message;
+  final InvoiceDetailsDataModel? data;
+  final int code;
 
-  InvoiceResponseModel({required this.success, required this.invoice});
+  InvoiceResponseModel({
+    required this.status,
+    required this.message,
+    required this.data,
+    required this.code,
+  });
 
   factory InvoiceResponseModel.fromJson(Map<String, dynamic> json) {
     return InvoiceResponseModel(
-      success: json['success'],
-      invoice: Invoice.fromJson(json['invoice']),
+      status: json['status'] ?? false,
+      message: json['message'] ?? '',
+      data: json['data'] != null
+          ? InvoiceDetailsDataModel.fromJson(json['data'])
+          : null,
+      code: json['code'] ?? 0,
     );
   }
 }
 
-class Invoice {
-  int id;
-  int paymentType;
-  double orderAmount;
-  double totalTax;
-  double collectedCash;
+class InvoiceDetailsDataModel {
+  final int id;
 
-  double productsDiscount;
-  double extraDiscount;
-  String sellerImage;
-  String qrCodeImage;
-  String date;
-  String type;
-  Seller seller;
-  Customer customer;
-  List<InvoiceDetail> details;
+  /// Order
+  final String? orderNumber;
 
-  Invoice(
-      {
-        required this.id,
-      required this.paymentType,
-      required this.orderAmount,
-      required this.totalTax,
-      required this.collectedCash,
-      required this.extraDiscount,
-      required this.date,
-      required this.type,
-      required this.sellerImage,
-      required this.qrCodeImage,
-      required this.details,
-      required this.seller,
-      required this.customer,
-      this.productsDiscount = 0}) {
-    productsDiscount = ((details.fold(
-        0,
-        (sum, item) =>
-            sum +
-            (item.discountPerItem * item.quantity))));
-  }
+  /// Return
+  final String? returnNumber;
+  final ReturnOrderModel? order;
 
-  factory Invoice.fromJson(Map<String, dynamic> json) {
-    return Invoice(
-      id: json['id'],
-      paymentType: json['cash'] ?? 0,
-      orderAmount: json['order_amount'].toDouble(),
-      totalTax: json['total_tax'].toDouble(),
-      collectedCash:(json['collected_cash'] ?? 0).toDouble(),
-      extraDiscount:(json['extra_discount'] ?? 0).toDouble(),
-      date: json['date'] ?? "",
-      type: json['type'] ?? "",
-      sellerImage: json['qrcode'] ?? "",
-      qrCodeImage: json['img'] ?? "",
-      details: List<InvoiceDetail>.from(
-          json['details'].map((item) => InvoiceDetail.fromJson(item))).toList(),
-      seller: Seller.fromJson(json['seller']),
-      customer: Customer.fromJson(json['customer']),
-    );
-  }
-}
+  final String status;
+  final String statusLabel;
+  final DateTime? date;
 
-class InvoiceDetail {
-  int id;
-  int productID;
-  String nameAr;
-  String nameEn;
-  double quantity;
-  double discountPerItem;
-  double extraDiscountPerItem;
-  double taxPerItem;
-  int unit;
-  double unitValuePerItem;
-  double price;
+  /// Order payment fields
+  final String? paymentMethod;
+  final String? paymentMethodLabel;
+  final DateTime? dueDate;
 
-  InvoiceDetail({
+  final double subtotal;
+
+  /// Order fields
+  final double discountAmount;
+  final String? discountType;
+  final double taxAmount;
+  final double total;
+  final double paidAmount;
+  final double remainingAmount;
+
+  /// Return fields
+  final double refundAmount;
+
+  final InvoiceCustomerModel? customer;
+  final String? notes;
+  final int? tripId;
+
+  /// لو مش موجودة أو مش مناسبة هتبقى null
+  final List<InvoiceItemModel>? items;
+
+  /// موجودة في order فقط
+  final List<InvoicePaymentModel>? payments;
+
+  InvoiceDetailsDataModel({
     required this.id,
-    required this.productID,
-    required this.nameAr,
-    required this.nameEn,
-    required this.quantity,
-    required this.discountPerItem,
-    required this.extraDiscountPerItem,
-    required this.taxPerItem,
+    required this.orderNumber,
+    required this.returnNumber,
+    required this.order,
+    required this.status,
+    required this.statusLabel,
+    required this.date,
+    required this.paymentMethod,
+    required this.paymentMethodLabel,
+    required this.dueDate,
+    required this.subtotal,
+    required this.discountAmount,
+    required this.discountType,
+    required this.taxAmount,
+    required this.total,
+    required this.paidAmount,
+    required this.remainingAmount,
+    required this.refundAmount,
+    required this.customer,
+    required this.notes,
+    required this.tripId,
+    required this.items,
+    required this.payments,
+  });
+
+  factory InvoiceDetailsDataModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceDetailsDataModel(
+      id: json['id'] ?? 0,
+      orderNumber: json['order_number'],
+      returnNumber: json['return_number'],
+      order: json['order'] != null
+          ? ReturnOrderModel.fromJson(json['order'])
+          : null,
+      status: json['status'] ?? '',
+      statusLabel: json['status_label'] ?? '',
+      date: json['date'] != null ? DateTime.tryParse(json['date']) : null,
+      paymentMethod: json['payment_method'],
+      paymentMethodLabel: json['payment_method_label'],
+      dueDate:
+          json['due_date'] != null ? DateTime.tryParse(json['due_date']) : null,
+      subtotal: _toDouble(json['subtotal']),
+      discountAmount: _toDouble(json['discount_amount']),
+      discountType: json['discount_type'],
+      taxAmount: _toDouble(json['tax_amount']),
+      total: _toDouble(json['total']),
+      paidAmount: _toDouble(json['paid_amount']),
+      remainingAmount: _toDouble(json['remaining_amount']),
+      refundAmount: _toDouble(json['refund_amount']),
+      customer: json['customer'] != null
+          ? InvoiceCustomerModel.fromJson(json['customer'])
+          : null,
+      notes: json['notes'],
+      tripId: json['trip_id'],
+      items: json['items'] == null
+          ? null
+          : List<InvoiceItemModel>.from(
+              json['items'].map((x) => InvoiceItemModel.fromJson(x)),
+            ),
+      payments: json['payments'] == null
+          ? null
+          : List<InvoicePaymentModel>.from(
+              json['payments'].map((x) => InvoicePaymentModel.fromJson(x)),
+            ),
+    );
+  }
+
+  bool get isOrder => orderNumber != null;
+
+  bool get isReturn => returnNumber != null;
+
+  String get invoiceNumber {
+    return orderNumber ?? returnNumber ?? id.toString();
+  }
+
+  double get finalAmount {
+    return isReturn ? refundAmount : total;
+  }
+
+  static double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
+  }
+}
+
+class InvoiceCustomerModel {
+  final int id;
+  final String name;
+  final String? phone;
+
+  InvoiceCustomerModel({
+    required this.id,
+    required this.name,
+    this.phone,
+  });
+
+  factory InvoiceCustomerModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceCustomerModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      phone: json['phone'],
+    );
+  }
+}
+
+class ReturnOrderModel {
+  final int id;
+  final String orderNumber;
+
+  ReturnOrderModel({
+    required this.id,
+    required this.orderNumber,
+  });
+
+  factory ReturnOrderModel.fromJson(Map<String, dynamic> json) {
+    return ReturnOrderModel(
+      id: json['id'] ?? 0,
+      orderNumber: json['order_number'] ?? '',
+    );
+  }
+}
+
+class InvoiceItemModel {
+  final int id;
+  final InvoiceProductModel? product;
+  final InvoiceUnitModel? unit;
+  final double quantity;
+  final double unitPrice;
+  final double discount;
+  final String? discountType;
+  final double taxAmount;
+  final double total;
+
+  InvoiceItemModel({
+    required this.id,
+    required this.product,
     required this.unit,
-    required this.unitValuePerItem,
-    required this.price,
+    required this.quantity,
+    required this.unitPrice,
+    required this.discount,
+    required this.discountType,
+    required this.taxAmount,
+    required this.total,
   });
 
-  factory InvoiceDetail.fromJson(Map<String, dynamic> json) {
-    return InvoiceDetail(
-      id: json['id'],
-      productID: json['product']?['id'] ??0,
-      nameAr: json['product']['name'] ?? "",
-      nameEn: json['product']['name_en'] ?? "",
-      quantity: (json['quantity'] ?? 0).toDouble(),
-      discountPerItem: (json['discount_on_product'] ?? 0).toDouble(),
-      extraDiscountPerItem: (json['extra_discount_on_product'] ?? 0).toDouble(),
-      taxPerItem: (json['tax_amount'] ?? 0).toDouble(),
-      unit: json['unit'] ?? 0,
-      unitValuePerItem: (json['product']['unit_value'] ?? 0).toDouble(),
-      price: (json['price'] ?? 0).toDouble(),
+  factory InvoiceItemModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceItemModel(
+      id: json['id'] ?? 0,
+      product: json['product'] != null
+          ? InvoiceProductModel.fromJson(json['product'])
+          : null,
+      unit:
+          json['unit'] != null ? InvoiceUnitModel.fromJson(json['unit']) : null,
+      quantity: _toDouble(json['quantity']),
+      unitPrice: _toDouble(json['unit_price']),
+      discount: _toDouble(json['discount']),
+      discountType: json['discount_type'],
+      taxAmount: _toDouble(json['tax_amount']),
+      total: _toDouble(json['total']),
+    );
+  }
+
+  static double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
+  }
+}
+
+class InvoiceProductModel {
+  final int id;
+  final String name;
+
+  InvoiceProductModel({
+    required this.id,
+    required this.name,
+  });
+
+  factory InvoiceProductModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceProductModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
     );
   }
 }
 
-class Seller {
-  int id;
-  String name;
-  String email;
-  String phone;
-  String mandoubeCode;
-  String vehicleCode;
-  String type;
-  String role;
+class InvoiceUnitModel {
+  final int id;
+  final String name;
 
-  Seller({
+  InvoiceUnitModel({
     required this.id,
     required this.name,
-    required this.email,
-    required this.phone,
-    required this.mandoubeCode,
-    required this.vehicleCode,
-    required this.type,
-    required this.role,
   });
 
-  factory Seller.fromJson(Map<String, dynamic> json) {
-    return Seller(
-      id: json['id'],
-      name: (json['f_name'] ?? "") + (json['l_name'] ?? ""),
-      email: json['email'] ?? "",
-      phone: json['phone'] ?? "",
-      mandoubeCode: json['mandob_code'] ?? "",
-      vehicleCode: json['vehicle_code'] ?? "",
-      type: json['type'] ?? "",
-      role: json['role'] ?? "",
+  factory InvoiceUnitModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceUnitModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
     );
   }
 }
 
-class Customer {
-  int id;
-  String name;
-  String phone;
-  String email;
-  String image;
-  String comercialHistory;
+class InvoicePaymentModel {
+  final int id;
+  final double amount;
+  final String paymentMethod;
+  final DateTime? paymentDate;
+  final String? notes;
 
-  Customer({
+  InvoicePaymentModel({
     required this.id,
-    required this.name,
-    required this.phone,
-    required this.email,
-    required this.image,
-    required this.comercialHistory,
+    required this.amount,
+    required this.paymentMethod,
+    required this.paymentDate,
+    required this.notes,
   });
 
-  factory Customer.fromJson(Map<String, dynamic> json) {
-    return Customer(
-      id: json['id'],
-      name: json['name'] ?? "",
-      phone: json['mobile'] ?? "",
-      email: json['email'] ?? "",
-      image: json['image'] ?? "",
-      comercialHistory: json['c_history'] ?? "",
+  factory InvoicePaymentModel.fromJson(Map<String, dynamic> json) {
+    return InvoicePaymentModel(
+      id: json['id'] ?? 0,
+      amount: _toDouble(json['amount']),
+      paymentMethod: json['payment_method'] ?? '',
+      paymentDate: json['payment_date'] != null
+          ? DateTime.tryParse(json['payment_date'])
+          : null,
+      notes: json['notes'],
     );
+  }
+
+  static double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
   }
 }

@@ -104,7 +104,7 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (_) => PrintInvoiceCubit(getIt())
-                    ..getInvoiceDetails(args['invoiceId']),
+                    ..getInvoiceDetails(args['type'],args['invoiceId']),
                   child: ElectronicInvoiceScreen(),
                 ));
       case Routes.electronicCashInvoiceScreen:

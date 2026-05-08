@@ -142,41 +142,10 @@ class SalesCubit extends Cubit<SalesState> {
 
   ///select product
   //
-  // List<SelectedProductClass> selectedProducts = [];
-  //
-  // addProductToSelectedProducts(SelectedProductClass value) {
-  //   selectedProducts.add(value);
-  //   emit(OnChangeSelectedProductState());
-  // }
-  //
-  // editInProductFromSelectedProducts(SelectedProductClass value) {
-  //   int index = selectedProducts.indexWhere(
-  //     (element) =>
-  //         element.product.id ==
-  //         value.product.id, // Compare by product code
-  //   );
-  //   if (index != -1) {
-  //     selectedProducts[index] = value;
-  //   }
-  //
-  //   emit(OnChangeSelectedProductState());
-  // }
-  //
-  // removeProductFromSelectedProducts(SelectedProductClass value) {
-  //   selectedProducts.removeWhere(
-  //       (item) => item.product.id == value.product.id);
-  //   emit(OnChangeSelectedProductState());
-  // }
-  //
-  // bool selectedProductsIsContainProduct(SelectedProductClass value) {
-  //   return selectedProducts
-  //       .any((item) => item.product.id == value.product.id);
-  // }
-  //
-  //
-  //
-  //
-  //
+
+
+
+
 
 
   List<SelectedProductClass> selectedProducts = [];
@@ -230,95 +199,171 @@ class SalesCubit extends Cubit<SalesState> {
     }
   }
 
-  void increaseProductMaxQuantity(TripProductModel product) {
+
+  void increaseProductQuantity(TripProductModel product) {
     final selectedProduct = getSelectedProduct(product);
 
     if (selectedProduct == null) {
       addProductToSelectedProducts(
         SelectedProductClass(
           product: product,
-          maxValueCounter: 1,
-          minValueCounter: 0,
+          quantity: 1,
         ),
       );
     } else {
-      selectedProduct.maxValueCounter++;
+      selectedProduct.quantity++;
       emit(OnChangeSelectedProductState());
     }
   }
 
-  void decreaseProductMaxQuantity(TripProductModel product) {
+  void decreaseProductQuantity(TripProductModel product) {
     final selectedProduct = getSelectedProduct(product);
 
     if (selectedProduct == null) return;
 
-    if (selectedProduct.maxValueCounter > 1) {
-      selectedProduct.maxValueCounter--;
+    if (selectedProduct.quantity > 1) {
+      selectedProduct.quantity--;
+      emit(OnChangeSelectedProductState());
     } else {
       removeProductFromSelectedProducts(selectedProduct);
+    }
+  }
+
+  void changeProductQuantity({
+    required TripProductModel product,
+    required double quantity,
+  }) {
+    final selectedProduct = getSelectedProduct(product);
+
+    if (quantity <= 0) {
+      if (selectedProduct != null) {
+        removeProductFromSelectedProducts(selectedProduct);
+      }
       return;
     }
 
-    emit(OnChangeSelectedProductState());
+    if (selectedProduct == null) {
+      addProductToSelectedProducts(
+        SelectedProductClass(
+          product: product,
+          quantity: quantity,
+        ),
+      );
+    } else {
+      selectedProduct.quantity = quantity;
+      emit(OnChangeSelectedProductState());
+    }
+  }
+
+
+  void increaseProductMaxQuantity(TripProductModel product) {
+    increaseProductQuantity(product);
+  }
+
+  void decreaseProductMaxQuantity(TripProductModel product) {
+    decreaseProductQuantity(product);
   }
 
   void changeProductMinQuantity({
     required TripProductModel product,
     required int quantity,
   }) {
-    final selectedProduct = getSelectedProduct(product);
-
-    if (selectedProduct == null) {
-      addProductToSelectedProducts(
-        SelectedProductClass(
-          product: product,
-          maxValueCounter: 0,
-          minValueCounter: quantity,
-        ),
-      );
-    } else {
-      selectedProduct.minValueCounter = quantity;
-      emit(OnChangeSelectedProductState());
-    }
+    changeProductQuantity(
+      product: product,
+      quantity: quantity.toDouble(),
+    );
   }
 
-  void changeProductMaxUnit({
-    required TripProductModel product,
-    required AvailableUnitModel unit,
-  }) {
-    final selectedProduct = getSelectedProduct(product);
 
-    if (selectedProduct == null) {
-      addProductToSelectedProducts(
-        SelectedProductClass(
-          product: product,
-          selectedMaxUnit: unit,
-        ),
-      );
-    } else {
-      selectedProduct.selectedMaxUnit = unit;
-      emit(OnChangeSelectedProductState());
-    }
-  }
-
-  void changeProductMinUnit({
-    required TripProductModel product,
-    required AvailableUnitModel unit,
-  }) {
-    final selectedProduct = getSelectedProduct(product);
-
-    if (selectedProduct == null) {
-      addProductToSelectedProducts(
-        SelectedProductClass(
-          product: product,
-          selectedMinUnit: unit,
-        ),
-      );
-    } else {
-      selectedProduct.selectedMinUnit = unit;
-      emit(OnChangeSelectedProductState());
-    }
-  }
+  // void increaseProductMaxQuantity(TripProductModel product) {
+  //   final selectedProduct = getSelectedProduct(product);
+  //
+  //   if (selectedProduct == null) {
+  //     addProductToSelectedProducts(
+  //       SelectedProductClass(
+  //         product: product,
+  //         maxValueCounter: 1,
+  //         minValueCounter: 0,
+  //       ),
+  //     );
+  //   } else {
+  //     selectedProduct.maxValueCounter++;
+  //     emit(OnChangeSelectedProductState());
+  //   }
+  // }
+  //
+  // void decreaseProductMaxQuantity(TripProductModel product) {
+  //   final selectedProduct = getSelectedProduct(product);
+  //
+  //   if (selectedProduct == null) return;
+  //
+  //   if (selectedProduct.maxValueCounter > 1) {
+  //     selectedProduct.maxValueCounter--;
+  //   } else {
+  //     removeProductFromSelectedProducts(selectedProduct);
+  //     return;
+  //   }
+  //
+  //   emit(OnChangeSelectedProductState());
+  // }
+  //
+  // void changeProductMinQuantity({
+  //   required TripProductModel product,
+  //   required int quantity,
+  // }) {
+  //   final selectedProduct = getSelectedProduct(product);
+  //
+  //   if (selectedProduct == null) {
+  //     addProductToSelectedProducts(
+  //       SelectedProductClass(
+  //         product: product,
+  //         maxValueCounter: 0,
+  //         minValueCounter: quantity,
+  //       ),
+  //     );
+  //   } else {
+  //     selectedProduct.minValueCounter = quantity;
+  //     emit(OnChangeSelectedProductState());
+  //   }
+  // }
+  //
+  // void changeProductMaxUnit({
+  //   required TripProductModel product,
+  //   required AvailableUnitModel unit,
+  // }) {
+  //   final selectedProduct = getSelectedProduct(product);
+  //
+  //   if (selectedProduct == null) {
+  //     addProductToSelectedProducts(
+  //       SelectedProductClass(
+  //         product: product,
+  //         selectedMaxUnit: unit,
+  //       ),
+  //     );
+  //   } else {
+  //     selectedProduct.selectedMaxUnit = unit;
+  //     emit(OnChangeSelectedProductState());
+  //   }
+  // }
+  //
+  // void changeProductMinUnit({
+  //   required TripProductModel product,
+  //   required AvailableUnitModel unit,
+  // }) {
+  //   final selectedProduct = getSelectedProduct(product);
+  //
+  //   if (selectedProduct == null) {
+  //     addProductToSelectedProducts(
+  //       SelectedProductClass(
+  //         product: product,
+  //         selectedMinUnit: unit,
+  //       ),
+  //     );
+  //   } else {
+  //     selectedProduct.selectedMinUnit = unit;
+  //     emit(OnChangeSelectedProductState());
+  //   }
+  // }
 
   void clearSelectedProducts() {
     selectedProducts.clear();
@@ -348,7 +393,7 @@ class SalesCubit extends Cubit<SalesState> {
 
   ///pays
   List<PayClass> pays =
-      getIt<AppConstant>().pays.where((item) => item.isShown).toList();
+      getIt<AppConstant>().pays.toList();
 
   PayClass? selectedPay;
 
@@ -389,87 +434,115 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   /// CREATE ORDER
-  createOrder(BuildContext context) {
-    // emit(OnCreateOrderLoadingState());
-    // _salesRepo
-    //     .createOrder(CreateOrderRequest(
-    //         userId: selectedUser!.id,
-    //         img: selectedImagePath,
-    //         allOrderAmount: ReseatSelectedProducts(selectedProducts: selectedProducts)
-    //             .getReseatData(
-    //                 discountTypeId: selectedPercentType?.id,
-    //                 discount: percentController.text)['totalReseat']!
-    //             .toString(),
-    //         totalTax: ReseatSelectedProducts(selectedProducts: selectedProducts)
-    //             .getReseatData(
-    //                 discountTypeId: selectedPercentType?.id,
-    //                 discount: percentController.text)['valueTax']!
-    //             .toString(),
-    //         totalProductsDiscount:
-    //             ReseatSelectedProducts(selectedProducts: selectedProducts)
-    //                 .getReseatData(
-    //                     discountTypeId: selectedPercentType?.id,
-    //                     discount: percentController.text)['totalDiscount']!
-    //                 .toString(),
-    //         extraDiscount: "0",
-    //         // ReseatSelectedProducts(selectedProducts: selectedProducts)
-    //         //     .getReseatData(
-    //         //         discountTypeId: selectedPercentType?.id,
-    //         //         discount: percentController.text)['extraDiscount']!
-    //         //     .toString(),
-    //         collectedCash: selectedPay!.id == 2
-    //             ? moneyController.text
-    //             : (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(
-    //                     discountTypeId: selectedPercentType?.id,
-    //                     discount: percentController.text)['total']!)
-    //                 .toString(),
-    //         orderType: AppConstant.orderTypes[0].id,
-    //         finalOrderAmount: ReseatSelectedProducts(selectedProducts: selectedProducts)
-    //             .getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['total']!
-    //             .toString(),
-    //         cash: selectedPay!.id,
-    //         carts: selectedProducts.map((element) {
-    //           print("object--------");
-    //           print(((ReseatSelectedProducts(selectedProducts: selectedProducts)
-    //               .getProductDiscountPriceInReseat(element)) /
-    //               (element.minValueCounter == 0
-    //                   ? element.maxValueCounter.toDouble()
-    //                   : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
-    //                   .toDouble())));
-    //           return Cart(
-    //               id: element.product.id,
-    //               discount: ((ReseatSelectedProducts(selectedProducts: selectedProducts)
-    //                           .getProductDiscountPriceInReseat(element)) /
-    //                       (element.minValueCounter == 0
-    //                           ? element.maxValueCounter.toDouble()
-    //                           : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
-    //                               .toDouble()))
-    //                   .toString(),
-    //               quantity: element.minValueCounter == 0
-    //                   ? element.maxValueCounter.toDouble()
-    //                   : ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter)
-    //                       .toDouble(),
-    //               price: element.minValueCounter == 0
-    //                   ? element.product.sellingPrice
-    //                   : double.tryParse((element.product.sellingPrice / element.product.unitValue).toString()) ??
-    //                       0,
-    //               tax: ReseatSelectedProducts(selectedProducts: selectedProducts).getProductTaxesPriceInReseat(
-    //                       element, selectedPercentType?.id, percentController.text,
-    //                       totalPrice: (ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['totalReseat']! - ReseatSelectedProducts(selectedProducts: selectedProducts).getReseatData(discountTypeId: selectedPercentType?.id, discount: percentController.text)['totalDiscount']!)) /
-    //                   ((element.maxValueCounter * element.product.unitValue) + element.minValueCounter),
-    //               unit: element.minValueCounter == 0 ? 1 : 0);
-    //         }).toList()))
-    //     .then((value) {
-    //   value.fold((l) {
-    //     emit(OnCreateOrderErrorState(message: l.message));
-    //   }, (r) {
-    //     // context.pushNamed(Routes.electronicInvoiceScreen,
-    //     //     arguments: {"orderId": r.orderId});
-    //     // emit(OnCreateOrderSuccessState(orderId: r.orderId ?? 0));
-    //   });
-    // }).catchError((error) {
-    //   emit(OnCreateOrderCatchErrorState(message: "error".tr()));
-    // });
+
+  String _getPaymentMethod() {
+    /// عدل الأرقام حسب selectedPay عندك
+    /// cash, credit, partial
+
+    if (selectedPay?.id == 2) {
+      return "partial";
+    }
+
+    if (selectedPay?.id == 3) {
+      return "credit";
+    }
+
+    return "cash";
+  }
+
+  double? _getOrderDiscountAmount() {
+    final value = double.tryParse(percentController.text);
+
+    if (value == null || value <= 0) {
+      return null;
+    }
+
+    return value;
+  }
+
+  String? _getOrderDiscountType() {
+    final discountValue = double.tryParse(percentController.text);
+
+    if (discountValue == null || discountValue <= 0) {
+      return null;
+    }
+
+    /// selectedPercentType?.id == 1 معناها fixed
+    /// غير كده percentage
+    if (selectedPercentType?.id == 1) {
+      return "fixed";
+    }
+
+    return "percentage";
+  }
+
+  void createOrder(BuildContext context) async{
+    emit(OnCreateOrderLoadingState());
+
+    final receiptCalculator = ReseatSelectedProducts(
+      selectedProducts: selectedProducts,
+    );
+
+    final receiptData = receiptCalculator.getReseatData(
+      discountTypeId: selectedPercentType?.id,
+      discount: percentController.text,
+    );
+
+    final String paymentMethod = _getPaymentMethod();
+
+    final double totalAmount = receiptData['total'] ?? 0;
+
+    final double paidAmount = paymentMethod == "partial"
+        ? double.tryParse(moneyController.text) ?? 0
+        : paymentMethod == "credit"
+        ? 0
+        : totalAmount;
+
+    final request = CreateOrderRequest(
+      customerId: selectedUser!.id,
+      paymentMethod: paymentMethod,
+      discountAmount: _getOrderDiscountAmount(),
+      discountType: _getOrderDiscountType(),
+      dueDate: null,
+      notes: null,
+      paidAmount: paidAmount,
+      items: selectedProducts.map((element) {
+        return CreateOrderItemRequest(
+          productId: element.product.id,
+          unitId: element.product.unit?.id,
+          quantity: element.quantity,
+          unitPrice: element.product.sellingPrice,
+          discount: element.discountMoney,
+          discountType: "fixed",
+          taxAmount: receiptCalculator.getProductTaxesPriceInReseat(
+            element,
+            selectedPercentType?.id,
+            percentController.text,
+            totalPrice: (receiptData['totalReseat'] ?? 0) -
+                (receiptData['totalDiscount'] ?? 0),
+          ),
+        );
+      }).toList(),
+    );
+
+    await _salesRepo.createOrder(request).then((value) {
+      value.fold(
+            (l) {
+          emit(OnCreateOrderErrorState(message: l.message));
+        },
+            (r) {
+          emit(OnCreateOrderSuccessState(orderId: r.orderId ?? 0));
+
+          // لو عايز تروح لشاشة الفاتورة بعد النجاح
+          // context.pushNamed(
+          //   Routes.electronicInvoiceScreen,
+          //   arguments: {"orderId": r.orderId},
+          // );
+        },
+      );
+    }).catchError((error) {
+      emit(OnCreateOrderCatchErrorState(message: "error".tr()));
+    });
   }
 
   ///return section
@@ -489,7 +562,7 @@ class SalesCubit extends Cubit<SalesState> {
     removeReturnInvoiceData();
     emit(OnGetInvoiceDetailsLoadingState());
     _printInvoiceRepo
-        .getInvoiceDetails(int.tryParse(billIdController.text) ?? 0)
+        .getInvoiceDetails(4,int.tryParse(billIdController.text) ?? 0)
         .then((value) {
       value.fold((l) {
         emit(OnGetInvoiceDetailsErrorState());
@@ -522,30 +595,38 @@ class SalesCubit extends Cubit<SalesState> {
   }
 
   /// RETURN ORDER
-  returnOrder(BuildContext context) {
+  void returnOrder(BuildContext context) async{
     emit(OnCreateReturnLoadingState());
-    _salesRepo
-        .createReturn(CreateReturnOrderRequest(
-            orderId: billIdController.text,
-            returnQuantitiesHidden: {
-              for (var item in selectedReturnProducts)
-                item.product.productID.toString(): item.returnQuantity
-            },
-            returnUnitHidden: {
-              for (var item in selectedReturnProducts)
-                item.product.productID.toString(): item.product.unit
-            },
-            date: DateTime.now().toString()))
-        .then((value) {
-      value.fold((l) {
-        emit(OnCreateReturnErrorState(message: l.message));
-      }, (r) {
-        // emit(OnCreateReturnSuccessState(returnOrderId: r.returnOrderId ?? 0));
-      });
+
+    final int saleOrderId = int.tryParse(billIdController.text) ?? 0;
+
+    final request =  CreateReturnOrderRequest(
+      saleOrderId: saleOrderId,
+      notes: null,
+      items: selectedReturnProducts.map((item) {
+        return CreateSaleReturnItemRequest(
+          productId: item.product.product?.id ?? 0,
+          unitId: item.product.unit?.id,
+          quantity: item.returnQuantity,
+          unitPrice: item.product.unitPrice,
+          reason: null,
+          saleOrderItemId: item.product.id,
+        );
+      }).toList(),
+    );
+
+   await _salesRepo.createReturn(request).then((value) {
+      value.fold(
+            (l) {
+          emit(OnCreateReturnErrorState(message: l.message));
+        },
+            (r) {
+          emit(OnCreateReturnSuccessState(returnOrderId: r.data?.id ?? 0));
+        },
+      );
     }).catchError((error) {
       emit(OnCreateReturnCatchErrorState(message: "error".tr()));
     });
   }
-
   static SalesCubit get(context) => BlocProvider.of(context);
 }

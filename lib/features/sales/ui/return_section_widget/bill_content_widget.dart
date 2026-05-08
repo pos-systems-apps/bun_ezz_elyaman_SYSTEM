@@ -5,6 +5,7 @@ import 'package:pos_system/core/utils/app_colors_white_theme.dart';
 import 'package:pos_system/core/utils/app_constant.dart';
 import 'package:pos_system/core/utils/spacing.dart';
 import 'package:pos_system/core/utils/styles.dart';
+import 'package:pos_system/features/print_invoice/data/models/invoice_response_model.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_title_widget_2.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_1.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_3.dart';
@@ -18,6 +19,19 @@ class BillContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = SalesCubit.get(context);
+
+    final InvoiceDetailsDataModel? invoice = cubit.invoiceResponseModel?.data;
+
+    if (invoice == null) {
+      return const SizedBox();
+    }
+
+    final bool isReturnInvoice = invoice.isReturn;
+    final String invoiceNumber = invoice.invoiceNumber;
+    final double totalAmount = invoice.finalAmount;
+    final List<InvoiceItemModel> items = invoice.items ?? [];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,23 +46,49 @@ class BillContentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace(8),
+
               MoneyWidget1(
-                  text: "اسم العميل",
-                  value: SalesCubit.get(context)
-                      .invoiceResponseModel!
-                      .invoice
-                      .customer
-                      .name),
+                text: "اسم العميل",
+                value: invoice.customer?.name ?? "-",
+              ),
+
               verticalSpace(8),
-              // MoneyWidget1(
-              //     text: "السجل التجاري", value: AppConstant.commercialRegistry),
-              // verticalSpace(8),
-              // MoneyWidget1(text: "الرقم الضريبي", value: AppConstant.numberTax),
+
+              MoneyWidget1(
+                text: isReturnInvoice ? "رقم المرتجع" : "رقم الفاتورة",
+                value: invoiceNumber,
+              ),
+
+              verticalSpace(8),
+
+              MoneyWidget1(
+                text: isReturnInvoice ? "حالة المرتجع" : "حالة الفاتورة",
+                value: invoice.statusLabel,
+              ),
+
+              if (!isReturnInvoice) ...[
+                verticalSpace(8),
+                MoneyWidget1(
+                  text: "طريقة الدفع",
+                  value: invoice.paymentMethodLabel ?? "-",
+                ),
+              ],
+
+              if (isReturnInvoice && invoice.order != null) ...[
+                verticalSpace(8),
+                MoneyWidget1(
+                  text: "فاتورة البيع الأصلية",
+                  value: invoice.order?.orderNumber ?? "-",
+                ),
+              ],
+
               verticalSpace(8),
             ],
           ),
         ),
+
         verticalSpace(16),
+
         Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           decoration: BoxDecoration(
@@ -60,43 +100,74 @@ class BillContentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace(8),
+
               MoneyWidget3(
-                  text: "اجمالي الفاتوره",
+                text: isReturnInvoice ? "إجمالي المرتجع" : "اجمالي الفاتوره",
+                value:
+                "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.subtotal)}",
+              ),
+
+              if (!isReturnInvoice) ...[
+                verticalSpace(8),
+
+                MoneyWidget3(
+                  text: "خصم",
                   value:
-                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount + SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount + SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount - SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
-              verticalSpace(8),
-              MoneyWidget3(
-                  text: "خصم المنتج",
-                  value:
-                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.productsDiscount)}"),
-              verticalSpace(8),
-              MoneyWidget3(
-                  text: "خصم اضافي",
-                  value:
-                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.extraDiscount)}"),
-              verticalSpace(8),
-              MoneyWidget3(
+                  "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.discountAmount)}",
+                ),
+
+                verticalSpace(8),
+
+                MoneyWidget3(
                   text: "الضريبة",
                   value:
-                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.totalTax)}"),
+                  "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.taxAmount)}",
+                ),
+              ],
+
               verticalSpace(8),
+
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("الإجمالى",
-                      maxLines: 1,
-                      style: TextStyles.font10GreyColor33Weight500),
-                  Spacer(),
                   Text(
-                      " 'جنيه'  ${AppConstant.confirmRoundTo3Numbers(SalesCubit.get(context).invoiceResponseModel!.invoice.orderAmount)}",
-                      style: TextStyles.font12greyColor33Weight600),
+                    isReturnInvoice ? "قيمة الاسترداد" : "الإجمالى",
+                    maxLines: 1,
+                    style: TextStyles.font10GreyColor33Weight500,
+                  ),
+                  const Spacer(),
+                  Text(
+                    "جنيه ${AppConstant.confirmRoundTo3Numbers(totalAmount)}",
+                    style: TextStyles.font12greyColor33Weight600,
+                  ),
                 ],
               ),
+
+              if (!isReturnInvoice) ...[
+                verticalSpace(8),
+
+                MoneyWidget3(
+                  text: "المبلغ المدفوع",
+                  value:
+                  "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.paidAmount)}",
+                ),
+
+                verticalSpace(8),
+
+                MoneyWidget3(
+                  text: "المبلغ المتبقي",
+                  value:
+                  "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.remainingAmount)}",
+                ),
+              ],
+
               verticalSpace(8),
             ],
           ),
         ),
+
         verticalSpace(16),
+
         Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           decoration: BoxDecoration(
@@ -113,29 +184,38 @@ class BillContentWidget extends StatelessWidget {
                   horizontalSpace(16),
                 ],
               ),
+
               verticalSpace(8),
-              ...SalesCubit.get(context)
-                  .invoiceResponseModel!
-                  .invoice
-                  .details
-                  .map((item) => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ProductsWidget(
-                              product: item,
-                              text: item.nameAr,
-                              quantity: item.quantity.toStringAsFixed(2),
-                              measure:   AppConstant.measureUnits[1].name ,
-                              price: ReturnedProductClass()
-                                  .getProductTotalPrice(
-                                      item).toStringAsFixed(3)),
-                          verticalSpace(8),
-                        ],
-                      )),
+
+              if (items.isEmpty)
+                Text(
+                  "لا توجد منتجات",
+                  style: TextStyles.font10GreyColor33Weight500,
+                ),
+
+              ...items.map(
+                    (item) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ProductsWidget(
+                      product: item,
+                      text: item.product?.name ?? "-",
+                      quantity: item.quantity.toStringAsFixed(2),
+                      measure: item.unit?.name ?? "-",
+                      price: ReturnedProductClass()
+                          .getProductTotalPrice(item)
+                          .toStringAsFixed(3),
+                    ),
+                    verticalSpace(8),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
+
         verticalSpace(16),
+
         Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           decoration: BoxDecoration(
@@ -147,28 +227,27 @@ class BillContentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpace(8),
+
               BlocBuilder<SalesCubit, SalesState>(
                 buildWhen: (previous, current) {
                   return current is OnChangeSelectedReturnProductState;
                 },
                 builder: (context, state) {
                   return MoneyWidget3(
-                      text: "اجمالي المرتجع",
-                      value:
-                          " 'جنيه'  ${ReturnedProductClass()
-                              .getTotalPriceReturnedProducts(
-                              SalesCubit.get(context).selectedReturnProducts,)
-                              .toStringAsFixed(3)}");
-
+                    text: "اجمالي المرتجع",
+                    value:
+                    "جنيه ${ReturnedProductClass().getTotalPriceReturnedProducts(
+                      SalesCubit.get(context).selectedReturnProducts,
+                    ).toStringAsFixed(3)}",
+                  );
                 },
               ),
-              verticalSpace(8),
 
+              verticalSpace(8),
             ],
           ),
         ),
 
-        //all data about the discount
         verticalSpace(16),
       ],
     );

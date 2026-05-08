@@ -15,11 +15,14 @@ class SalesInvoiceService {
   SalesInvoiceService({required this.apiConsumer});
 
   Future<GetInvoicesResponseModel> getInvoices(int type) async {
-    final response =
-        await apiConsumer.get(SalesInvoiceApiEndPoints.getInvoicesUrl(type), {
-      ConstantKeys.appAuthorization:
-          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-    });
+    final response = await apiConsumer.get(
+        type == 4
+            ? SalesInvoiceApiEndPoints.getInvoicesUrl()
+            : SalesInvoiceApiEndPoints.getInvoicesReturnsUrl(),
+        {
+          ConstantKeys.appAuthorization:
+              "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+        });
     if (response.statusCode == StatusCode.ok) {
       return GetInvoicesResponseModel.fromJson(jsonDecode(response.body));
     } else {

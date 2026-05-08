@@ -15,13 +15,16 @@ class PrintInvoiceService {
 
   PrintInvoiceService({required this.apiConsumer});
 
-  Future<InvoiceResponseModel> getInvoiceDetails(int invoiceId) async {
-
-    final response = await apiConsumer
-        .get(PrintInvoiceApiEndPoints.getInvoiceDetails( invoiceId), {
-      ConstantKeys.appAuthorization:
-          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-    });
+  Future<InvoiceResponseModel> getInvoiceDetails(
+      int type, int invoiceId) async {
+    final response = await apiConsumer.get(
+        type == 4
+            ? PrintInvoiceApiEndPoints.getInvoiceDetails(invoiceId)
+            : PrintInvoiceApiEndPoints.getInvoiceReturnsDetails(invoiceId),
+        {
+          ConstantKeys.appAuthorization:
+              "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+        });
     print(response.statusCode);
     print(response.body);
     if (response.statusCode == StatusCode.ok) {

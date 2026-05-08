@@ -12,8 +12,8 @@ class ReturnInvoiceCubit extends Cubit<ReturnInvoiceState> {
 
   ReturnInvoiceCubit(this._salesInvoiceRepo) : super(InitialState());
 
-  List<Invoices> returnInvoices = [];
-  List<Customer> customers = [];
+  List<InvoiceModel> returnInvoices = [];
+  List<InvoiceCustomerModel> customers = [];
 
   getReturnInvoices() {
     emit(OnGetInvoicesLoadingState());
@@ -21,11 +21,11 @@ class ReturnInvoiceCubit extends Cubit<ReturnInvoiceState> {
       value.fold((l) {
         emit(OnGetInvoicesErrorState());
       }, (r) {
-        returnInvoices = r.invoices;
-        for (var i in r.invoices) {
-          bool exists = customers.any((element) => element.id == i.customer.id);
+        returnInvoices = r.data;
+        for (var i in r.data) {
+          bool exists = customers.any((element) => element.id == i.customer!.id);
           if (!exists) {
-            customers.add(i.customer);
+            customers.add(i.customer!);
           }
         }
         emit(OnGetInvoicesSuccessState());
@@ -35,9 +35,9 @@ class ReturnInvoiceCubit extends Cubit<ReturnInvoiceState> {
     });
   }
 
-  Customer? selectedCustomerName;
+  InvoiceCustomerModel? selectedCustomerName;
 
-  changeName(Customer value) {
+  changeName(InvoiceCustomerModel value) {
     selectedCustomerName = value;
     emit(OnChangeNameState());
   }

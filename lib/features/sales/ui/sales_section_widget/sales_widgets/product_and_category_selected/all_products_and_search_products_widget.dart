@@ -7,7 +7,6 @@ import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/core/widgets/app_text_field.dart';
 import 'package:pos_system/core/widgets/button_widget.dart';
 import 'package:pos_system/core/widgets/error_alert_dialog.dart';
-import 'package:pos_system/features/sales/data/entities/order_type_class.dart';
 import 'package:pos_system/features/sales/data/entities/selected_product_class.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
@@ -26,7 +25,7 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
     final cubit = SalesCubit.get(context);
 
     final List<TripProductModel> products =
-        isSearch ? cubit.searchProducts : cubit.products;
+    isSearch ? cubit.searchProducts : cubit.products;
 
     return GridView.builder(
       padding: EdgeInsets.zero,
@@ -58,9 +57,7 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                 context,
                 GlobalKey<FormState>(),
                 TextEditingController(),
-                TextEditingController(),
                 product,
-                cubit.selectedOrderType,
               );
 
               if (value != null) {
@@ -80,29 +77,11 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
   }
 
   Future<SelectedProductClass?> _productSelectedDetailsWidget(
-    BuildContext context,
-    GlobalKey<FormState> formKey,
-    TextEditingController bigItemController,
-    TextEditingController smallItemController,
-    TripProductModel product,
-    OrderTypeClass selectedOrderType,
-  ) async {
-    final AvailableUnitModel? mainUnit = _getMainUnit(product);
-    final AvailableUnitModel? minUnit = _getMinUnit(product, mainUnit);
-
-    final int bigQuantity = mainUnit?.availableQuantity.toInt() ??
-        product.availableQuantity.toInt();
-
-    final int unitRatio = _getUnitRatio(mainUnit, minUnit);
-
-    final int totalAvailableBySmallUnit = minUnit != null
-        ? minUnit.availableQuantity.toInt()
-        : bigQuantity * unitRatio;
-
-    final int smallQuantity = minUnit == null
-        ? 0
-        : totalAvailableBySmallUnit - (bigQuantity * unitRatio);
-
+      BuildContext context,
+      GlobalKey<FormState> formKey,
+      TextEditingController quantityController,
+      TripProductModel product,
+      ) async {
     return await showModalBottomSheet<SelectedProductClass>(
       context: context,
       enableDrag: true,
@@ -128,6 +107,7 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(height: 20.h),
+
                 Row(
                   children: [
                     Expanded(
@@ -156,109 +136,55 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 SizedBox(height: 10.h),
+
                 Text(
                   "ادخل الكمية المطلوبة",
                   style: TextStyles.font14greyColor62Weight400,
                 ),
+
                 SizedBox(height: 30.h),
-                Center(
-                  child: Form(
-                    key: formKey,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Spacer(flex: 2),
-                        if (minUnit != null) ...[
-                          Expanded(
-                            flex: 1,
-                            child: AppTextFormField(
-                              hintText: smallQuantity.toString(),
-                              controller: smallItemController,
-                              hintStyle: TextStyles.font16BlackColorWeight400,
-                              backgroundColor: AppColors.whiteColor,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16.w,
-                                vertical: 14.h,
-                              ),
-                              focusedBorder: _border(AppColors.blueColorEEE),
-                              enabledBorder: _border(AppColors.blueColorEEE),
-                              errorBorder: _border(AppColors.redColor00),
-                              focusedErrorBorder: _border(AppColors.redColor00),
-                              validator: (String? value) {
-                                final int bigValue =
-                                    int.tryParse(bigItemController.text) ?? 0;
-                                final int smallValue =
-                                    int.tryParse(value ?? '') ?? 0;
 
-                                final int requested =
-                                    (bigValue * unitRatio) + smallValue;
+                Form(
+                  key: formKey,
+                  child: AppTextFormField(
+                    hintText: "الكمية",
+                    controller: quantityController,
+                    hintStyle: TextStyles.font16BlackColorWeight400,
+                    backgroundColor: AppColors.whiteColor,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 14.h,
+                    ),
+                    focusedBorder: _border(AppColors.blueColorEEE),
+                    enabledBorder: _border(AppColors.blueColorEEE),
+                    errorBorder: _border(AppColors.redColor00),
+                    focusedErrorBorder: _border(AppColors.redColor00),
+                    validator: (String? value) {
+                      final double quantity =
+                          double.tryParse(value ?? '') ?? 0;
 
-                                if (requested <= 0) {
-                                  return "";
-                                }
+                      if (quantity <= 0) {
+                        return "";
+                      }
 
-                                if (requested > totalAvailableBySmallUnit) {
-                                  return "";
-                                }
+                      if (quantity > product.availableQuantity) {
+                        return "";
+                      }
 
-                                return null;
-                              },
-                              onchange: (String? value) {},
-                              onTapOutside: () {},
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          Text(
-                            "\t.\t",
-                            style: TextStyles.font48greyColor27Weight700,
-                          ),
-                        ],
-                        Expanded(
-                          flex: 1,
-                          child: AppTextFormField(
-                            hintText: bigQuantity.toString(),
-                            controller: bigItemController,
-                            hintStyle: TextStyles.font16BlackColorWeight400,
-                            backgroundColor: AppColors.whiteColor,
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 14.h,
-                            ),
-                            focusedBorder: _border(AppColors.blueColorEEE),
-                            enabledBorder: _border(AppColors.blueColorEEE),
-                            errorBorder: _border(AppColors.redColor00),
-                            focusedErrorBorder: _border(AppColors.redColor00),
-                            validator: (String? value) {
-                              final int bigValue =
-                                  int.tryParse(value ?? '') ?? 0;
-                              final int smallValue =
-                                  int.tryParse(smallItemController.text) ?? 0;
-
-                              final int requested =
-                                  (bigValue * unitRatio) + smallValue;
-
-                              if (requested <= 0) {
-                                return "";
-                              }
-
-                              if (requested > totalAvailableBySmallUnit) {
-                                return "";
-                              }
-
-                              return null;
-                            },
-                            onchange: (String? value) {},
-                            onTapOutside: () {},
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        const Spacer(flex: 2),
-                      ],
+                      return null;
+                    },
+                    onchange: (String? value) {},
+                    onTapOutside: () {},
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
                   ),
                 ),
+
                 SizedBox(height: 30.h),
+
                 ButtonWidget(
                   isLoading: false,
                   buttonHeight: 44.h,
@@ -270,26 +196,22 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                   borderColor: AppColors.mainColor,
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      final int maxCounter =
-                          int.tryParse(bigItemController.text) ?? 0;
-
-                      final int minCounter =
-                          int.tryParse(smallItemController.text) ?? 0;
+                      final double quantity =
+                          double.tryParse(quantityController.text) ?? 0;
 
                       Navigator.pop(
                         context,
                         SelectedProductClass(
                           product: product,
-                          maxValueCounter: maxCounter,
-                          minValueCounter: minCounter,
-                          selectedMaxUnit: mainUnit,
-                          selectedMinUnit: minUnit,
+                          quantity: quantity,
                         ),
                       );
                     }
                   },
                 ),
+
                 SizedBox(height: 12.h),
+
                 ButtonWidget(
                   isLoading: false,
                   buttonHeight: 44.h,
@@ -303,6 +225,7 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
                     context.pop();
                   },
                 ),
+
                 SizedBox(height: 20.h),
               ],
             ),
@@ -320,55 +243,5 @@ class AllProductsAndSearchProductsWidget extends StatelessWidget {
       ),
       borderRadius: BorderRadius.circular(4.r),
     );
-  }
-
-  AvailableUnitModel? _getMainUnit(TripProductModel product) {
-    final int? productUnitId = product.unit?.id;
-
-    for (final unit in product.availableUnits) {
-      if (unit.id == productUnitId) {
-        return unit;
-      }
-    }
-
-    if (product.availableUnits.isNotEmpty) {
-      return product.availableUnits.first;
-    }
-
-    return null;
-  }
-
-  AvailableUnitModel? _getMinUnit(
-    TripProductModel product,
-    AvailableUnitModel? mainUnit,
-  ) {
-    final int? remainderUnitId = mainUnit?.remainderUnit?.id;
-
-    if (remainderUnitId == null) {
-      return null;
-    }
-
-    for (final unit in product.availableUnits) {
-      if (unit.id == remainderUnitId) {
-        return unit;
-      }
-    }
-
-    return null;
-  }
-
-  int _getUnitRatio(
-    AvailableUnitModel? mainUnit,
-    AvailableUnitModel? minUnit,
-  ) {
-    if (mainUnit == null || minUnit == null) {
-      return 1;
-    }
-
-    if (minUnit.price <= 0) {
-      return 1;
-    }
-
-    return (mainUnit.price / minUnit.price).round();
   }
 }

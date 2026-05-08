@@ -158,7 +158,7 @@ class SalesProductWidget extends StatelessWidget {
           verticalSpace(4),
 
           Text(
-            "المخزون : ${product.availableQuantity.toStringAsFixed(2)} ${product.unit?.symbol ?? ''}",
+            "المخزون : ${product.availableQuantity} ${product.unit?.symbol ?? ''}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

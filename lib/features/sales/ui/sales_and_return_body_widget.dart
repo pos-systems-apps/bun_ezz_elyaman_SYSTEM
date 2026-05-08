@@ -150,7 +150,7 @@ class SalesAndReturnBodyWidget extends StatelessWidget {
                     listener: (_, state) {
                       if (state is OnCreateReturnSuccessState) {
                         context.pushNamed(Routes.electronicInvoiceScreen,
-                            arguments: {"invoiceId": state.returnOrderId});
+                            arguments: {"invoiceId": state.returnOrderId,'type':7});
                       } else if (state is OnCreateReturnErrorState) {
                         ErrorAlertDialog.getDialog(context, state.message);
                       } else if (state is OnCreateReturnCatchErrorState) {

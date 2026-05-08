@@ -10,9 +10,9 @@ class PrintInvoiceCubit extends Cubit<PrintInvoiceState> {
 
   InvoiceResponseModel? invoiceResponseModel;
 
-  getInvoiceDetails(int invoiceId) {
+  getInvoiceDetails(int type,int invoiceId) {
     emit(OnGetInvoiceDetailsLoadingState());
-    _printInvoiceRepo.getInvoiceDetails(invoiceId).then((value) {
+    _printInvoiceRepo.getInvoiceDetails(type,invoiceId).then((value) {
       value.fold((l) {
         emit(OnGetInvoiceDetailsErrorState());
       }, (r) {

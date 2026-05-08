@@ -13,32 +13,47 @@ class SalesInvoiceCubit extends Cubit<SalesInvoiceState> {
 
   SalesInvoiceCubit(this._salesInvoiceRepo) : super(InitialState());
 
-  List<Invoices> invoices = [];
-  List<Customer> customers = [];
+  List<InvoiceModel> invoices = [];
+  List<InvoiceCustomerModel> customers = [];
 
-  getInvoices() {
+  InvoiceCustomerModel? selectedCustomerName;
+
+  void getInvoices() {
     emit(OnGetInvoicesLoadingState());
+
     _salesInvoiceRepo.getInvoices(AppConstant.orderTypes[0].id).then((value) {
-      value.fold((l) {
-        emit(OnGetInvoicesErrorState());
-      }, (r) {
-        invoices = r.invoices;
-        for (var i in r.invoices) {
-          bool exists = customers.any((element) => element.id == i.customer.id);
-          if (!exists) {
-            customers.add(i.customer);
+      value.fold(
+            (l) {
+          emit(OnGetInvoicesErrorState());
+        },
+            (r) {
+          invoices = r.data;
+
+          customers.clear();
+
+          for (final invoice in invoices) {
+            final customer = invoice.customer;
+
+            if (customer == null) continue;
+
+            final bool exists = customers.any(
+                  (element) => element.id == customer.id,
+            );
+
+            if (!exists) {
+              customers.add(customer);
+            }
           }
-        }
-        emit(OnGetInvoicesSuccessState());
-      });
+
+          emit(OnGetInvoicesSuccessState());
+        },
+      );
     }).catchError((error) {
       emit(OnGetInvoicesCatchErrorState());
     });
   }
 
-  Customer? selectedCustomerName;
-
-  changeName(Customer value) {
+  void changeName(InvoiceCustomerModel value) {
     selectedCustomerName = value;
     emit(OnChangeNameState());
   }

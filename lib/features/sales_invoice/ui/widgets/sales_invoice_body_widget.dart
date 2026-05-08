@@ -81,31 +81,37 @@ class SalesInvoiceBodyWidget extends StatelessWidget {
                   ],
                 ),
                 verticalSpace(10),
+
                 ...SalesInvoiceCubit.get(context)
                     .invoices
-                    .where((ele) => SalesInvoiceCubit.get(context)
-                                .selectedCustomerName ==
-                            null
-                        ? true
-                        : ele.customer.id ==
-                            SalesInvoiceCubit.get(context)
-                                .selectedCustomerName
-                                ?.id)
-                    .where((ele) =>
-                        SalesInvoiceCubit.get(context).selectedDate == null
-                            ? true
-                            : (DateTime.parse(ele.createdAt).year ==
-                                    SalesInvoiceCubit.get(context)
-                                        .selectedDate!
-                                        .year) &&
-                                (DateTime.parse(ele.createdAt).month ==
-                                    SalesInvoiceCubit.get(context)
-                                        .selectedDate!
-                                        .month) &&
-                                (DateTime.parse(ele.createdAt).day ==
-                                    SalesInvoiceCubit.get(context)
-                                        .selectedDate!
-                                        .day))
+                    .where((ele) {
+                  final selectedCustomer =
+                      SalesInvoiceCubit.get(context).selectedCustomerName;
+
+                  if (selectedCustomer == null) {
+                    return true;
+                  }
+
+                  return ele.customer?.id == selectedCustomer.id;
+                })
+                    .where((ele) {
+                  final selectedDate =
+                      SalesInvoiceCubit.get(context).selectedDate;
+
+                  if (selectedDate == null) {
+                    return true;
+                  }
+
+                  if (ele.date == null) {
+                    return false;
+                  }
+
+                  final invoiceDate = ele.date!.toLocal();
+
+                  return invoiceDate.year == selectedDate.year &&
+                      invoiceDate.month == selectedDate.month &&
+                      invoiceDate.day == selectedDate.day;
+                })
                     .map((item) {
                   return InvoiceItemWidget(
                     item: item,

@@ -10,9 +10,10 @@ class PrintInvoiceRepo {
   PrintInvoiceRepo(this._printInvoiceService);
 
   Future<Either<Failure, InvoiceResponseModel>> getInvoiceDetails(
-      int invoiceId) async {
+     int type, int invoiceId) async {
     try {
-      return Right(await _printInvoiceService.getInvoiceDetails(invoiceId));
+        print( _printInvoiceService.getInvoiceDetails(type,invoiceId));
+      return Right(await _printInvoiceService.getInvoiceDetails(type,invoiceId));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }

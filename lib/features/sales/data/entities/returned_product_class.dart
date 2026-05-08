@@ -3,28 +3,29 @@ import 'package:pos_system/features/print_invoice/data/models/invoice_response_m
 class ReturnedProductClass {
   ReturnedProductClass();
 
-  double getProductTotalPrice(
-      InvoiceDetail product) {
-
-
-   return product.price -
-        product.discountPerItem -
-        product.extraDiscountPerItem +
-        product.taxPerItem;
+  double getProductTotalPrice(InvoiceItemModel product) {
+    return product.unitPrice -
+        product.discount -
+        0 +
+        product.taxAmount;
   }
 
   double getTotalPriceReturnedProducts(
-      List<SelectedReturnProductClass> products) {
+      List<SelectedReturnProductClass> products,
+      ) {
     double totalProductPrice = 0;
+
     for (var item in products) {
-      totalProductPrice += (item.returnQuantity * getProductTotalPrice(item.product));
+      totalProductPrice +=
+          item.returnQuantity * getProductTotalPrice(item.product);
     }
+
     return totalProductPrice;
   }
 }
 
 class SelectedReturnProductClass {
-  InvoiceDetail product;
+  InvoiceItemModel product;
   double returnQuantity;
 
   SelectedReturnProductClass({

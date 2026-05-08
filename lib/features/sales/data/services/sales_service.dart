@@ -6,7 +6,9 @@ import 'package:pos_system/core/utils/constant_keys.dart';
 import 'package:pos_system/features/sales/data/models/category_products_response.dart';
 import 'package:pos_system/features/sales/data/models/category_response.dart';
 import 'package:pos_system/features/sales/data/models/create_order_request.dart';
+import 'package:pos_system/features/sales/data/models/create_order_response.dart';
 import 'package:pos_system/features/sales/data/models/create_return_order_request.dart';
+import 'package:pos_system/features/sales/data/models/create_return_response.dart';
 import 'package:pos_system/features/sales/data/models/search_products_response.dart';
 
 import '../../../../core/api/api_consumer.dart';
@@ -33,7 +35,7 @@ class SalesService {
     }
   }
 
-  Future<CategoryProductsResponse> getCategoryProducts(
+  Future<TripProductsResponse> getCategoryProducts(
       int categoryId, String search) async {
     final response = await apiConsumer
         .get(SalesApiEndPoints.getCategoryProductsUrl(categoryId, search), {
@@ -42,62 +44,61 @@ class SalesService {
     });
 
     if (response.statusCode == StatusCode.ok) {
-      return CategoryProductsResponse.fromJson(jsonDecode(response.body));
+      return TripProductsResponse.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(
           serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
     }
   }
 
-  Future<SuccessResponseModel> createOrder(CreateOrderRequest parameter) async {
-    final response = await apiConsumer.multiPost(
-        SalesApiEndPoints.createOrderURl,
-        CreateOrderRequest(
-          userId: parameter.userId,
-          img: parameter.img,
-          allOrderAmount: parameter.allOrderAmount,
-          totalTax: parameter.totalTax,
-          extraDiscount: parameter.extraDiscount,
-          totalProductsDiscount: parameter.totalProductsDiscount,
-          collectedCash: parameter.collectedCash,
-          orderType: parameter.orderType,
-          finalOrderAmount: parameter.finalOrderAmount,
-          cash: parameter.cash,
-          carts: parameter.carts,
-        ).toJson(),
-        {
-          ConstantKeys.appAuthorization:
-              "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-        });
-    if (response.statusCode == StatusCode.ok) {
-      return SuccessResponseModel.fromJson(jsonDecode(response.body));
-    } else {
-      throw ServerException(
-          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
-    }
-  }
-
-  Future<SuccessResponseModel> createReturn(
-      CreateReturnOrderRequest parameter) async {
+  Future<CreateOrderResponseModel> createOrder(CreateOrderRequest parameter) async {
     final response = await apiConsumer.post(
-        SalesApiEndPoints.createReturnURl,
-        CreateReturnOrderRequest(
-          orderId: parameter.orderId,
-          returnQuantitiesHidden: parameter.returnQuantitiesHidden,
-          returnUnitHidden: parameter.returnUnitHidden,
-          date: parameter.date,
-        ).toJson(),
-        {
-          ConstantKeys.appAuthorization:
-              "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-        });
+      SalesApiEndPoints.createOrderURl,
+      parameter.toJson(),
+      {
+        ConstantKeys.appAuthorization:
+            "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+      },
+    );
+
     print(response.statusCode);
     print(response.body);
-    if (response.statusCode == StatusCode.ok) {
-      return SuccessResponseModel.fromJson(jsonDecode(response.body));
+    if (response.statusCode == StatusCode.ok ||
+        response.statusCode == StatusCode.created) {
+      return CreateOrderResponseModel.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(
-          serverFailure: ServerFailure.fromJson(jsonDecode(response.body)));
+        serverFailure: ServerFailure.fromJson(jsonDecode(response.body)),
+      );
+    }
+  }
+
+  Future<CreateReturnResponseModel> createReturn(
+    CreateReturnOrderRequest parameter,
+  ) async {
+    final response = await apiConsumer.post(
+      SalesApiEndPoints.createReturnURl,
+      CreateReturnOrderRequest(
+        saleOrderId: parameter.saleOrderId,
+        notes: parameter.notes,
+        items: parameter.items,
+      ).toJson(),
+      {
+        ConstantKeys.appAuthorization:
+            "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+      },
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == StatusCode.ok ||
+        response.statusCode == StatusCode.created) {
+      return CreateReturnResponseModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw ServerException(
+        serverFailure: ServerFailure.fromJson(jsonDecode(response.body)),
+      );
     }
   }
 }

@@ -138,7 +138,20 @@ class AppConstant {
   //   return baseUrl;
   // }
 
-  List<PayClass> pays = [];
+  List<PayClass> pays = [
+        PayClass(
+            id: 1,
+            nameAr: "كاش",),
+    PayClass(
+      id: 2,
+      nameAr: "جزءي",
+    ),
+        PayClass(
+            id: 3,
+            nameAr: "اجل",
+        ),
+
+  ];
 
   ///dont change this
   static List<UnitMeasure> measureUnits = [

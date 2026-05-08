@@ -13,7 +13,7 @@ class SalesApiEndPoints {
 
 
 
-  static final createOrderURl = '${EndPoints.baseUrl}api/v1/pos/place/order';
-  static final createReturnURl = '${EndPoints.baseUrl}api/v1/pos/place/return';
+  static final createOrderURl = '${EndPoints.baseUrl}api/delegate/orders';
+  static final createReturnURl = '${EndPoints.baseUrl}api/delegate/returns';
 
 }
