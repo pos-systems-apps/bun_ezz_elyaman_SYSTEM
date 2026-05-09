@@ -1,11 +1,9 @@
 class ResourceTypeClass {
   int id;
-  String nameAr;
-  String nameEn;
+  String name;
 
   ResourceTypeClass({
     required this.id,
-    required this.nameAr,
-    required this.nameEn,
-  });
+    required this.name,
+   });
 }

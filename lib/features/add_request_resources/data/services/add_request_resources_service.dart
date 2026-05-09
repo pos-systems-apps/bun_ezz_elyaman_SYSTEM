@@ -21,16 +21,15 @@ class AddRequestResourcesService {
     final response = await apiConsumer.post(
         AddRequestResourcesApiEndPoints.addRequestResourcesURl,
         CreateRequestResourcesRequest(
-          type: parameter.type,
-          resourceItems: parameter.resourceItems,
+          notes: parameter.notes,
+          items: parameter.items,
         ).toJson(),
         {
           ConstantKeys.appAuthorization:
               "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
         });
-    print(response.statusCode);
-    print(response.body);
-    if (response.statusCode == StatusCode.ok) {
+
+    if (response.statusCode == StatusCode.created) {
       return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(

@@ -19,64 +19,29 @@ class AddRequestResourcesScreen extends StatefulWidget {
 }
 
 class _AddRequestResourcesScreenState extends State<AddRequestResourcesScreen> {
-  String? stock ;
-
   @override
   void initState() {
     super.initState();
-    getStockStatus();
-  }
-
-  getStockStatus() async {
-    stock = await CacheHelper.getSecuredString(ConstantKeys.saveStockToShared);
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-      body: SafeArea(
-          child: stock == null
-              ? Center(
-                  child: LoadingWidget(color: AppColors.mainColor),
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    verticalSpace(10),
-                    Center(
-                        child: Text(
-                      "التوريدات",
-                      style: TextStyles.font20BlueColorA4Weight600,
-                    )),
-                    verticalSpace(16),
-                    stock == "1"
-                        ? AddRequestResourcesBodyWidget()
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:  EdgeInsets.symmetric(horizontal: 20.w),
-                                child: Lottie.asset(
-                                  ImageAsset.notPermissionAnimation,
-                                  repeat: true,
-                                ),
-                              ),
-                              verticalSpace(16),
-                              Padding(
-                                padding:  EdgeInsets.symmetric(horizontal: 24.w),
-                                child: Text(
-                                  "غير مسموح لك بالتوريدات اطلب اذن من المدير",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyles.font20MainColorWeightBold,
-                                ),
-                              ),
-                            ],
-                          ),
-                  ],
-                )),
-    );
+        backgroundColor: AppColors.whiteColor,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              verticalSpace(10),
+              Center(
+                  child: Text(
+                "التوريدات",
+                style: TextStyles.font20BlueColorA4Weight600,
+              )),
+              verticalSpace(16),
+              AddRequestResourcesBodyWidget()
+            ],
+          ),
+        ));
   }
 }

@@ -58,11 +58,11 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
               ),
             ),
           verticalSpace(10),
-          // Expanded(
-          //     child: CachedNetworkImageWidget(
-          //         imgUrl:
-          //             EndPoints().getImageFromApi("product/${product.image}"),
-          //         radius: 0)),
+          Expanded(
+              child: CachedNetworkImageWidget(
+                  imgUrl:
+                      EndPoints.getImageFromApi("product/${product.image}"),
+                  radius: 0)),
           verticalSpace(10),
           Text(
              product.name,
@@ -75,11 +75,11 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
-                // if (product.discount == 0)
-                //   Text(
-                //     "${AppConstant.currency} ${product.sellingPrice.toStringAsFixed(2)}",
-                //     style: TextStyles.font12GreenColor00WeightBold,
-                //   ),
+                if (product.discount == 0)
+                  Text(
+                    " جنيه ${product.sellingPrice.toStringAsFixed(2)}",
+                    style: TextStyles.font12GreenColor00WeightBold,
+                  ),
                 horizontalSpace(4),
                 if (product.discount != 0)
                   Text(
@@ -89,23 +89,23 @@ class AddRequestResourcesProductWidget extends StatelessWidget {
                     ),
                   ),
                 horizontalSpace(4),
-                // if (product.discount != 0)
-                //   Text(
-                //       "${AppConstant.currency}${AppConstant.getProductPriceAfterDiscount(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
-                //       style: TextStyles.font12GreenColor00WeightBold),
+                if (product.discount != 0)
+                  Text(
+                      " جنيه${AppConstant.getProductPriceAfterDiscount(product.discountType, product.sellingPrice, product.discount).toStringAsFixed(2)}",
+                      style: TextStyles.font12GreenColor00WeightBold),
               ],
             ),
           ),
           verticalSpace(10),
-          // Text("كود المنتج : ${product.productCode}",
-          //     maxLines: 1,
-          //     textAlign: TextAlign.center,
-          //     style: TextStyles.font12greyColor67Weight500),
-          // verticalSpace(10),
-          // Text("المخزون: ${product.quantity.toStringAsFixed(1)}",
-          //     maxLines: 1,
-          //     textAlign: TextAlign.center,
-          //     style: TextStyles.font12greyColor67Weight500),
+          Text("كود المنتج : ${product.id}",
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              style: TextStyles.font12greyColor67Weight500),
+          verticalSpace(10),
+          Text("المخزون: ${product.availableQuantity.toStringAsFixed(1)}",
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              style: TextStyles.font12greyColor67Weight500),
           verticalSpace(10),
         ],
       ),

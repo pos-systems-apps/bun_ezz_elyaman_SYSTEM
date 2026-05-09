@@ -22,11 +22,15 @@ class SalesService {
 
   SalesService({required this.apiConsumer});
 
-  Future<CategoryResponse> getCategories() async {
-    final response = await apiConsumer.get(SalesApiEndPoints.getCategoriesUrl, {
-      ConstantKeys.appAuthorization:
-          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-    });
+  Future<CategoryResponse> getCategories(String type) async {
+    final response = await apiConsumer.get(
+        type == 's'
+            ? SalesApiEndPoints.getCategoriesUrl
+            : SalesApiEndPoints.getResourcesCategoriesUrl,
+        {
+          ConstantKeys.appAuthorization:
+              "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+        });
     if (response.statusCode == StatusCode.ok) {
       return CategoryResponse.fromJson(jsonDecode(response.body));
     } else {
@@ -36,12 +40,15 @@ class SalesService {
   }
 
   Future<TripProductsResponse> getCategoryProducts(
-      int categoryId, String search) async {
-    final response = await apiConsumer
-        .get(SalesApiEndPoints.getCategoryProductsUrl(categoryId, search), {
-      ConstantKeys.appAuthorization:
-          "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
-    });
+      String type, int categoryId, String search) async {
+    final response = await apiConsumer.get(
+        type == 's'
+            ? SalesApiEndPoints.getCategoryProductsUrl(categoryId, search)
+            : SalesApiEndPoints.getCategoryProductsResourcesUrl(categoryId, search),
+        {
+          ConstantKeys.appAuthorization:
+              "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
+        });
 
     if (response.statusCode == StatusCode.ok) {
       return TripProductsResponse.fromJson(jsonDecode(response.body));
@@ -51,7 +58,8 @@ class SalesService {
     }
   }
 
-  Future<CreateOrderResponseModel> createOrder(CreateOrderRequest parameter) async {
+  Future<CreateOrderResponseModel> createOrder(
+      CreateOrderRequest parameter) async {
     final response = await apiConsumer.post(
       SalesApiEndPoints.createOrderURl,
       parameter.toJson(),

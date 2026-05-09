@@ -55,7 +55,7 @@ class SalesCubit extends Cubit<SalesState> {
 
   getCategories() {
     emit(OnGetCategoryLoadingState());
-    _salesRepo.getCategories().then((value) {
+    _salesRepo.getCategories('s').then((value) {
       value.fold((l) {
         emit(OnGetCategoryErrorState());
       }, (r) {
@@ -92,7 +92,7 @@ class SalesCubit extends Cubit<SalesState> {
   getCategoryProducts(int categoryID) {
     emit(OnGetCategoryProductsLoadingState());
     _salesRepo
-        .getCategoryProducts(categoryID, '',
+        .getCategoryProducts('s',categoryID, '',
              )
         .then((value) {
       value.fold((l) {
@@ -126,7 +126,7 @@ class SalesCubit extends Cubit<SalesState> {
   getSearchProducts() {
     emit(OnGetSearchProductsLoadingState());
     _salesRepo
-        .getCategoryProducts(
+        .getCategoryProducts('s',
       selectedCategory?.id??0,   searchProductController.text  )
         .then((value) {
       value.fold((l) {

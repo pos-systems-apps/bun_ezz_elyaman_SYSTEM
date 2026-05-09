@@ -1,40 +1,39 @@
 class CreateRequestResourcesRequest {
-  int type; // request or return
-  List<ResourceItem> resourceItems;
+  final String? notes;
+  final List<CreateRequestResourcesItemRequest> items;
 
   CreateRequestResourcesRequest({
-    required this.type,
-    required this.resourceItems,
+    this.notes,
+    required this.items,
   });
 
-  Map<String, dynamic> toJson() => {
-        "type": type,
-        "data": resourceItems.map((item) =>  item.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      if (notes != null && notes!.trim().isNotEmpty) "notes": notes,
+      "items": items.map((item) => item.toJson()).toList(),
+    };
+  }
 }
 
-class ResourceItem {
-  int itemId; //id
-  String itemName; // item name
-  double requestQuantity; //the quantity you want it
-  double yourQuantity; // the quantity you have
-  double price; // price
-  // int unit; // 1,0 big or small
+class CreateRequestResourcesItemRequest {
+  final int productId;
+  final double quantity;
+  final int? unitId;
+  final String? notes;
 
-  ResourceItem({
-    required this.itemId,
-    required this.itemName,
-    required this.requestQuantity,
-    required this.yourQuantity,
-    required this.price,
-    // required this.unit,
+  CreateRequestResourcesItemRequest({
+    required this.productId,
+    required this.quantity,
+    this.unitId,
+    this.notes,
   });
 
-  Map<String, dynamic> toJson() => {
-        "product_id": itemId,
-        "product_name": itemName,
-        "stock": requestQuantity,
-        "balance": yourQuantity,
-        "price": price,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      "product_id": productId,
+      "quantity": quantity,
+      if (unitId != null) "unit_id": unitId,
+      if (notes != null && notes!.trim().isNotEmpty) "notes": notes,
+    };
+  }
 }

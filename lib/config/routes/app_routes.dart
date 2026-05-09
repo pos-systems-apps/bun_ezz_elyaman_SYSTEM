@@ -179,13 +179,13 @@ class RouteGenerator {
                     ..getRequestResourcesInvoices(),
                   child: RequestResourcesInvoicesScreen(),
                 ));
-      case Routes.returnResourcesInvoicesScreen:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (_) => ReturnResourcesInvoicesCubit(getIt())
-                    ..getRequestResourcesInvoices(),
-                  child: ReturnResourcesInvoicesScreen(),
-                ));
+      // case Routes.returnResourcesInvoicesScreen:
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //             create: (_) => ReturnResourcesInvoicesCubit(getIt())
+      //               ..getRequestResourcesInvoices(),
+      //             child: ReturnResourcesInvoicesScreen(),
+      //           ));
       case Routes.returnInvoiceScreen:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(

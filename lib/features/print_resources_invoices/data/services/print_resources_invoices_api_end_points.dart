@@ -4,5 +4,5 @@ import 'package:pos_system/core/utils/app_constant.dart';
 
 class PrintResourcesInvoicesApiEndPoints {
   static getResourcesInvoiceDetails(int installmentID) =>
-      '${EndPoints.baseUrl}api/v1/product/reservation/invoice/$installmentID';
+      '${EndPoints.baseUrl}api/delegate/booking-requests/$installmentID';
 }

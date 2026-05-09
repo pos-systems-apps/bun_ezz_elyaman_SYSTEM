@@ -16,7 +16,7 @@ class RequestResourcesInvoicesService {
 
   Future<GetResourcesInvoicesResponseModel> getRequestResourcesInvoices(int type) async {
     final response =
-        await apiConsumer.get(RequestResourcesInvoicesApiEndPoints.getRequestResourcesInvoicesUrl(type), {
+        await apiConsumer.get(RequestResourcesInvoicesApiEndPoints.getRequestResourcesInvoicesUrl(), {
       ConstantKeys.appAuthorization:
           "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
     });

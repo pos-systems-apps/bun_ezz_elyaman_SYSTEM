@@ -40,9 +40,8 @@ class OnChangePaySelectState extends AddRequestResourcesState {}
 class OnAddResourcesLoadingState extends AddRequestResourcesState {}
 
 class OnAddResourcesSuccessState extends AddRequestResourcesState {
-  int orderId;
 
-  OnAddResourcesSuccessState({required this.orderId});
+  OnAddResourcesSuccessState();
 }
 
 class OnAddResourcesErrorState extends AddRequestResourcesState {

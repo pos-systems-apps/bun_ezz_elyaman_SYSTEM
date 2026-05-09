@@ -220,16 +220,16 @@ class SettingScreen extends StatelessWidget {
                                 context.pushNamed(
                                     Routes.requestResourcesInvoicesScreen);
                               })),
-                      horizontalSpace(13),
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "طلبات رد الحجز",
-                              image: ImageAsset.setting2_13Icon,
-                              isBig: false,
-                              onTap: () {
-                                context.pushNamed(
-                                    Routes.returnResourcesInvoicesScreen);
-                              })),
+                      // horizontalSpace(13),
+                      // Expanded(
+                      //     child: SettingItemWidget(
+                      //         text: "طلبات رد الحجز",
+                      //         image: ImageAsset.setting2_13Icon,
+                      //         isBig: false,
+                      //         onTap: () {
+                      //           context.pushNamed(
+                      //               Routes.returnResourcesInvoicesScreen);
+                      //         })),
                     ],
                   ),
                   verticalSpace(8),

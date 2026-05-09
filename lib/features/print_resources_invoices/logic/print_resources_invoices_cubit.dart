@@ -9,7 +9,7 @@ class PrintResourcesInvoicesCubit extends Cubit<PrintResourcesInvoicesState> {
   PrintResourcesInvoicesCubit(this._printResourcesInvoicesRepo)
       : super(InitialState());
 
-  List<ResourceInvoice> resourceInvoice = [];
+  InvoiceResourceModel? resourceInvoice;
 
   getInvoiceDetails(int invoiceId) {
     emit(OnGetResourcesInvoiceDetailsLoadingState());
@@ -19,7 +19,7 @@ class PrintResourcesInvoicesCubit extends Cubit<PrintResourcesInvoicesState> {
       value.fold((l) {
         emit(OnGetResourcesInvoiceDetailsErrorState());
       }, (r) {
-        resourceInvoice = r.resourceInvoice;
+        resourceInvoice = r.data;
         emit(OnGetResourcesInvoiceDetailsSuccessState());
       });
     }).catchError((error) {

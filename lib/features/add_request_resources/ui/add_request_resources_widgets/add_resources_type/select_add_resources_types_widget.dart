@@ -8,7 +8,6 @@ import 'package:pos_system/features/add_request_resources/logic/add_request_reso
 import 'package:pos_system/features/add_request_resources/ui/add_request_resources_widgets/add_resources_type/select_add_resources_select_item_widget.dart';
 import 'package:pos_system/features/add_request_resources/ui/add_request_resources_widgets/add_resources_type/select_add_resources_vertical_divider_widget.dart';
 
-
 class SelectAddResourcesTypesWidget extends StatelessWidget {
   const SelectAddResourcesTypesWidget({super.key});
 
@@ -39,15 +38,16 @@ class SelectAddResourcesTypesWidget extends StatelessWidget {
                                       .changeSelectedBillType(item.value);
                                 },
                                 child: SelectAddResourcesSelectItemWidget(
-                                    name: context.locale.languageCode == "ar"
-                                        ? item.value.nameAr
-                                        : item.value.nameEn,
-                                    isSelected: AddRequestResourcesCubit.get(context)
-                                            .selectedResourcesTypes
-                                            .id ==
-                                        item.value.id)),
+                                    name: item.value.name,
+                                    isSelected:
+                                        AddRequestResourcesCubit.get(context)
+                                                .selectedResourcesTypes
+                                                .id ==
+                                            item.value.id)),
                           ),
-                          if (item.key < AddRequestResourcesCubit.resourcesTypes.length - 1)
+                          if (item.key <
+                              AddRequestResourcesCubit.resourcesTypes.length -
+                                  1)
                             SelectAddResourcesVerticalDividerWidget(),
                         ],
                       ),

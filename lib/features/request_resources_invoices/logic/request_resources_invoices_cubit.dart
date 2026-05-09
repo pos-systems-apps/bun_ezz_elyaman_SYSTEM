@@ -11,7 +11,7 @@ class RequestResourcesInvoicesCubit extends Cubit<RequestResourcesInvoicesState>
 
   RequestResourcesInvoicesCubit(this._requestResourcesInvoicesRepo) : super(InitialState());
 
-  List<ResourcesInvoices> reservations = [];
+  List<ResourceInvoiceModel> reservations = [];
 
   getRequestResourcesInvoices() {
     emit(OnGetInvoicesLoadingState());
@@ -19,7 +19,7 @@ class RequestResourcesInvoicesCubit extends Cubit<RequestResourcesInvoicesState>
       value.fold((l) {
         emit(OnGetInvoicesErrorState());
       }, (r) {
-        reservations = r.reservations;
+        reservations = r.data;
         emit(OnGetInvoicesSuccessState());
       });
     }).catchError((error) {

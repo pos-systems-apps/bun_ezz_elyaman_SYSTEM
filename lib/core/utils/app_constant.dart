@@ -167,8 +167,8 @@ class AppConstant {
   ];
 
   static List<ResourceTypeClass> resourcesTypes = [
-    ResourceTypeClass(id: 4, nameAr: "طلب توريد", nameEn: "Supply request"),
-    ResourceTypeClass(id: 7, nameAr: "رد توريد", nameEn: "Supply reply"),
+    ResourceTypeClass(id: 4, name: "طلب توريد",),
+    // ResourceTypeClass(id: 7, name: "رد توريد",),
   ];
 
   static List<PercentTypesClass> percentTypes = [

@@ -1,87 +1,179 @@
 class GetResourcesInvoicesResponseModel {
-  List<ResourcesInvoices> reservations;
+  final bool status;
+  final String message;
+  final List<ResourceInvoiceModel> data;
+  final int code;
 
   GetResourcesInvoicesResponseModel({
-    required this.reservations,
+    required this.status,
+    required this.message,
+    required this.data,
+    required this.code,
   });
 
   factory GetResourcesInvoicesResponseModel.fromJson(
-      Map<String, dynamic> json) {
+      Map<String, dynamic> json,
+      ) {
     return GetResourcesInvoicesResponseModel(
-      reservations: List<ResourcesInvoices>.from((json['reservations'])
-          .map((item) => ResourcesInvoices.fromJson(item))).toList(),
+      status: json['status'] ?? false,
+      message: json['message'] ?? '',
+      data: json['data'] == null
+          ? []
+          : List<ResourceInvoiceModel>.from(
+        json['data'].map((x) => ResourceInvoiceModel.fromJson(x)),
+      ),
+      code: json['code'] ?? 0,
     );
   }
 }
 
-class ResourcesInvoices {
-  int id;
-  List<ResourcesInvoicesData> items;
-  String date;
-  SellerDate seller;
+class ResourceInvoiceModel {
+  final int id;
+  final int tripId;
+  final ResourceTripModel? trip;
+  final String? customerName;
+  final String? customerPhone;
+  final String? customerAddress;
+  final String? notes;
+  final String status;
+  final String statusLabel;
+  final DateTime? createdAt;
+  final List<ResourceInvoiceItemModel> items;
 
-  ResourcesInvoices({
+  ResourceInvoiceModel({
     required this.id,
+    required this.tripId,
+    required this.trip,
+    required this.customerName,
+    required this.customerPhone,
+    required this.customerAddress,
+    required this.notes,
+    required this.status,
+    required this.statusLabel,
+    required this.createdAt,
     required this.items,
-    required this.date,
-    required this.seller,
   });
 
-  factory ResourcesInvoices.fromJson(Map<String, dynamic> json) {
-    return ResourcesInvoices(
-      id: json['id'],
-      items: List<ResourcesInvoicesData>.from(
-              json['data'].map((item) => ResourcesInvoicesData.fromJson(item)))
-          .toList(),
-      date: json['date'] ?? "",
-      seller: SellerDate.fromJson(json['seller']),
+  factory ResourceInvoiceModel.fromJson(Map<String, dynamic> json) {
+    return ResourceInvoiceModel(
+      id: json['id'] ?? 0,
+      tripId: json['trip_id'] ?? 0,
+      trip: json['trip'] != null
+          ? ResourceTripModel.fromJson(json['trip'])
+          : null,
+      customerName: json['customer_name'],
+      customerPhone: json['customer_phone'],
+      customerAddress: json['customer_address'],
+      notes: json['notes'],
+      status: json['status'] ?? '',
+      statusLabel: json['status_label'] ?? '',
+      createdAt: json['created_at'] != null
+          ? DateTime.tryParse(json['created_at'])
+          : null,
+      items: json['items'] == null
+          ? []
+          : List<ResourceInvoiceItemModel>.from(
+        json['items'].map((x) => ResourceInvoiceItemModel.fromJson(x)),
+      ),
     );
   }
 }
 
-class ResourcesInvoicesData {
-  int productId;
-  String productName;
+class ResourceTripModel {
+  final int id;
+  final String tripNumber;
+  final String status;
 
-  double requestQuantity;
-  double yourQuantity;
-  double price;
-  String productCode;
-
-  ResourcesInvoicesData({
-    required this.productId,
-    required this.productName,
-    required this.requestQuantity,
-    required this.yourQuantity,
-    required this.price,
-    required this.productCode,
-  });
-
-  factory ResourcesInvoicesData.fromJson(Map<String, dynamic> json) {
-    return ResourcesInvoicesData(
-      productId: json['product_id'],
-      productName: json['product_name'] ?? "",
-      requestQuantity: (json['stock'] ?? 0).toDouble(),
-      yourQuantity: (json['balance'] ?? 0).toDouble(),
-      price: (json['price'] ?? 0).toDouble(),
-      productCode: json['product_code'] ?? "",
-    );
-  }
-}
-
-class SellerDate {
-  int id;
-  String nameAr;
-
-  SellerDate({
+  ResourceTripModel({
     required this.id,
-    required this.nameAr,
+    required this.tripNumber,
+    required this.status,
   });
 
-  factory SellerDate.fromJson(Map<String, dynamic> json) {
-    return SellerDate(
-      id: json['id'],
-      nameAr: (json['f_name'] ?? "") + (json['l_name'] ?? ""),
+  factory ResourceTripModel.fromJson(Map<String, dynamic> json) {
+    return ResourceTripModel(
+      id: json['id'] ?? 0,
+      tripNumber: json['trip_number'] ?? '',
+      status: json['status'] ?? '',
+    );
+  }
+}
+
+class ResourceInvoiceItemModel {
+  final int id;
+  final ResourceProductModel? product;
+  final ResourceUnitModel? unit;
+  final double quantity;
+  final double unitPrice;
+  final double subtotal;
+  final String? notes;
+
+  ResourceInvoiceItemModel({
+    required this.id,
+    required this.product,
+    required this.unit,
+    required this.quantity,
+    required this.unitPrice,
+    required this.subtotal,
+    required this.notes,
+  });
+
+  factory ResourceInvoiceItemModel.fromJson(Map<String, dynamic> json) {
+    return ResourceInvoiceItemModel(
+      id: json['id'] ?? 0,
+      product: json['product'] != null
+          ? ResourceProductModel.fromJson(json['product'])
+          : null,
+      unit: json['unit'] != null
+          ? ResourceUnitModel.fromJson(json['unit'])
+          : null,
+      quantity: _toDouble(json['quantity']),
+      unitPrice: _toDouble(json['unit_price']),
+      subtotal: _toDouble(json['subtotal']),
+      notes: json['notes'],
+    );
+  }
+
+  static double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
+  }
+}
+
+class ResourceProductModel {
+  final int id;
+  final String name;
+
+  ResourceProductModel({
+    required this.id,
+    required this.name,
+  });
+
+  factory ResourceProductModel.fromJson(Map<String, dynamic> json) {
+    return ResourceProductModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+    );
+  }
+}
+
+class ResourceUnitModel {
+  final int id;
+  final String name;
+
+  ResourceUnitModel({
+    required this.id,
+    required this.name,
+  });
+
+  factory ResourceUnitModel.fromJson(Map<String, dynamic> json) {
+    return ResourceUnitModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
     );
   }
 }

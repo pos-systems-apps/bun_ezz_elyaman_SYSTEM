@@ -43,28 +43,28 @@ class _ButtonNavigationScreenState extends State<ButtonNavigationScreen>
           return ButtonNavigationCubit.get(context).buttonBarBody();
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: AppColors.mainColor,
-        child: SvgPicture.asset(ImageAsset.scanICon),
-        onPressed: () async {
-          if (ButtonNavigationCubit
-              .get(context)
-              .selectedIndex == 2) {
-            String? scanResult = await SimpleBarcodeScanner.scanBarcode(
-              context,
-              isShowFlashIcon: true,
-              delayMillis: 2000,
-              cameraFace: CameraFace.back,
-            );
-            SalesCubit.get(context).changeSearchController(scanResult??"");
-          } else {
-            ErrorAlertDialog.getDialog(
-                context, "قم بالانتقال الي صفحة المبيعات");
-          }
-        },
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   shape: const CircleBorder(),
+      //   backgroundColor: AppColors.mainColor,
+      //   child: SvgPicture.asset(ImageAsset.scanICon),
+      //   onPressed: () async {
+      //     if (ButtonNavigationCubit
+      //         .get(context)
+      //         .selectedIndex == 2) {
+      //       String? scanResult = await SimpleBarcodeScanner.scanBarcode(
+      //         context,
+      //         isShowFlashIcon: true,
+      //         delayMillis: 2000,
+      //         cameraFace: CameraFace.back,
+      //       );
+      //       SalesCubit.get(context).changeSearchController(scanResult??"");
+      //     } else {
+      //       ErrorAlertDialog.getDialog(
+      //           context, "قم بالانتقال الي صفحة المبيعات");
+      //     }
+      //   },
+      // ),
       bottomNavigationBar:
       BlocBuilder<ButtonNavigationCubit, ButtonNavigationState>(
         buildWhen: (previous, current) {

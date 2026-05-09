@@ -17,19 +17,20 @@ class SalesRepo {
 
   SalesRepo(this._salesService);
 
-  Future<Either<Failure, CategoryResponse>> getCategories() async {
+  Future<Either<Failure, CategoryResponse>> getCategories(String type) async {
     try {
-      return Right(await _salesService.getCategories( ));
+      return Right(await _salesService.getCategories(type ));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }
   }
 
   Future<Either<Failure, TripProductsResponse>> getCategoryProducts(
+      String type,
       int categoryId,String search) async {
     try {
        return Right(
-          await _salesService.getCategoryProducts(categoryId, search));
+          await _salesService.getCategoryProducts(type,categoryId, search));
     } on ServerException catch (failure) {
       return Left(ServerFailure(message: failure.serverFailure.message));
     }
