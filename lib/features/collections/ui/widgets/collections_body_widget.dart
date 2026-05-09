@@ -26,10 +26,10 @@ class CollectionsBodyWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // BillWidget(),
+            BillWidget(),
             verticalSpace(24),
             SearchUserWidget(),
-            // verticalSpace(16),
+            verticalSpace(16),
             // Text.rich(
             //   TextSpan(children: [
             //     TextSpan(
@@ -50,16 +50,16 @@ class CollectionsBodyWidget extends StatelessWidget {
             // verticalSpace(8),
             // CollectionsPayAccountWidget(),
             // verticalSpace(16),
-            // MoneyTextFieldWidget(),
+            MoneyTextFieldWidget(),
             // verticalSpace(16),
             // UploadImageWidget(),
             verticalSpace(16),
             NotesTextFieldWidget(),
-            verticalSpace(16),
+            // verticalSpace(16),
 
 
 
-            CollectionItemsWidget(),
+            // CollectionItemsWidget(),
             verticalSpace(40),
             CollectionsButtonsWidget(),
             verticalSpace(50),

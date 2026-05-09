@@ -20,8 +20,8 @@ class CollectionsCubit extends Cubit<CollectionsState> {
 
   CollectionsCubit(this._splashRepo, this._collectionsRepo)
       : super(InitialState());
-  // TextEditingController billNumberController = TextEditingController();
-  // TextEditingController moneyController = TextEditingController();
+  TextEditingController billNumberController = TextEditingController();
+  TextEditingController moneyController = TextEditingController();
   TextEditingController notesController = TextEditingController();
   TextEditingController searchUserController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -58,39 +58,33 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     emit(OnSelectUserState());
   }
 
-
-
-
-
   final TextEditingController itemController = TextEditingController();
 
-  List<String> items = [];
-
-  void addItem(String item) {
-    final text = item.trim();
-
-    if (text.isEmpty) return;
-
-    items.add(text);
-
-    emit(OnAddItemState());
-  }
-
-  void removeItem(int index) {
-    if (index < 0 || index >= items.length) return;
-
-    items.removeAt(index);
-
-    emit(OnRemoveItemState());
-  }
-
-  void clearItems() {
-    items.clear();
-
-    emit(OnClearItemsState());
-  }
-
-
+  // List<String> items = [];
+  //
+  // void addItem(String item) {
+  //   final text = item.trim();
+  //
+  //   if (text.isEmpty) return;
+  //
+  //   items.add(text);
+  //
+  //   emit(OnAddItemState());
+  // }
+  //
+  // void removeItem(int index) {
+  //   if (index < 0 || index >= items.length) return;
+  //
+  //   items.removeAt(index);
+  //
+  //   emit(OnRemoveItemState());
+  // }
+  //
+  // void clearItems() {
+  //   items.clear();
+  //
+  //   emit(OnClearItemsState());
+  // }
 
   ///bank account
   // List<AccountsResponseData> bankAccounts = [];
@@ -155,8 +149,8 @@ class CollectionsCubit extends Cubit<CollectionsState> {
   // }
 
   cancelCollection() {
-    // billNumberController.clear();
-    // moneyController.clear();
+    billNumberController.clear();
+    moneyController.clear();
     notesController.clear();
     searchUserController.clear();
     // clearSelectedBankAccount();
@@ -169,9 +163,18 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     emit(OnConfirmCollectionLoadingState());
     _collectionsRepo
         .confirmCollection(ConfirmCollectionRequestModel(
-            customerID: selectedUser!.id,
-            noteText: notesController.text,
-            items: items))
+            customerId: selectedUser!.id,
+            notes: notesController.text,
+            items: [
+          ConfirmCollectionItemModel(
+            saleOrderId: int.tryParse(billNumberController.text.isEmpty
+                    ? '0'
+                    : billNumberController.text) ??
+                0,
+            amount: moneyController.text,
+            notes: notesController.text,
+          )
+        ]))
         .then((value) {
       value.fold((l) {
         emit(OnConfirmCollectionErrorState(error: l.message));

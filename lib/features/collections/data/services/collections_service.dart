@@ -18,17 +18,19 @@ class CollectionsService {
   Future<SuccessResponseModel> confirmCollection(
       ConfirmCollectionRequestModel parameter) async {
 
-    final response = await apiConsumer.multiPost(
+    final response = await apiConsumer.post(
         CollectionsApiEndPoints.confirmCollection,
         ConfirmCollectionRequestModel(
-          customerID: parameter.customerID,
-           noteText: parameter.noteText,
+          customerId: parameter.customerId,
+           notes: parameter.notes,
           items: parameter.items,
         ).toJson(),
         {
           ConstantKeys.appAuthorization:
               "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
         });
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == StatusCode.ok) {
       return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {

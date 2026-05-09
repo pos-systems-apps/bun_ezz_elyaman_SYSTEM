@@ -3,5 +3,5 @@ import 'package:pos_system/core/utils/app_constant.dart';
 
 class CollectionsApiEndPoints {
   static final confirmCollection =
-      '${EndPoints.baseUrl}api/v1/pos/place/installment';
+      '${EndPoints.baseUrl}api/delegate/collections';
 }

@@ -1,17 +1,39 @@
 class ConfirmCollectionRequestModel {
-  int customerID;
-  String noteText;
-  List<String> items;
+  final int? customerId;
+  final String? notes;
+  final List<ConfirmCollectionItemModel> items;
 
   ConfirmCollectionRequestModel({
-    required this.customerID,
-    required this.noteText,
+    this.customerId,
+    this.notes,
     required this.items,
   });
 
-  Map<String, dynamic> toJson() => {
-        "user_id": customerID,
-        if (noteText.isNotEmpty) "note": noteText,
-        'items': items,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      if (customerId != null) "customer_id": customerId,
+      if (notes != null && notes!.trim().isNotEmpty) "notes": notes,
+      "items": items.map((item) => item.toJson()).toList(),
+    };
+  }
+}
+
+class ConfirmCollectionItemModel {
+  final int? saleOrderId;
+  final String  amount;
+  final String? notes;
+
+  ConfirmCollectionItemModel({
+    this.saleOrderId,
+    required this.amount,
+    this.notes,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (saleOrderId != null) "sale_order_id": saleOrderId,
+      "amount": amount,
+      if (notes != null && notes!.trim().isNotEmpty) "notes": notes,
+    };
+  }
 }
