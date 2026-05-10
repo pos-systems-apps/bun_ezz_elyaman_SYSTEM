@@ -11,7 +11,7 @@ import 'package:pos_system/features/cash_invoice/data/models/cash_invoices_respo
 import 'package:intl/intl.dart' as intl;
 
 class CashInvoiceItemWidget extends StatelessWidget {
-  final CashInvoice item;
+  final CashInvoiceModel item;
 
   const CashInvoiceItemWidget({required this.item, super.key});
 
@@ -37,13 +37,13 @@ class CashInvoiceItemWidget extends StatelessWidget {
           _itemTextWidget("رقم الفاتوره", " ${item.id}"),
           verticalSpace(4),
           _itemTextWidget("التاريخ",
-              " ${intl.DateFormat("d MMMM yyyy h:mm:ss a", context.locale.languageCode).format(DateTime.parse(item.createdAt).toLocal())}"),
+              " ${item.collectionDate == null ? '' : intl.DateFormat("d MMMM yyyy h:mm:ss a", context.locale.languageCode).format(item.collectionDate!)}"),
           verticalSpace(4),
-          _itemTextWidget("اجمالي الفاتوره", " ${item.price}"),
+          _itemTextWidget("اجمالي الفاتوره", " ${item.totalAmount}"),
           verticalSpace(4),
-          _itemTextWidget("اسم المندوب", " ${item.sellerName}"),
+          // _itemTextWidget("اسم المندوب", " ${item.}"),
           verticalSpace(4),
-          _itemTextWidget("اسم العميل", " ${item.customerName}"),
+          _itemTextWidget("اسم العميل", " ${item.customer?.name ?? ''}"),
           verticalSpace(16),
           ButtonWidget(
               isLoading: false,

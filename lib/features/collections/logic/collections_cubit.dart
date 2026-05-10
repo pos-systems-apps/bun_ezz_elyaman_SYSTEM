@@ -167,10 +167,9 @@ class CollectionsCubit extends Cubit<CollectionsState> {
             notes: notesController.text,
             items: [
           ConfirmCollectionItemModel(
-            saleOrderId: int.tryParse(billNumberController.text.isEmpty
-                    ? '0'
-                    : billNumberController.text) ??
-                0,
+            saleOrderId: billNumberController.text.isEmpty
+                ? null
+                : int.tryParse(billNumberController.text) ?? 0,
             amount: moneyController.text,
             notes: notesController.text,
           )

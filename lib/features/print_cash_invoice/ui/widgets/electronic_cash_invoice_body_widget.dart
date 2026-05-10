@@ -31,40 +31,40 @@ class ElectronicCashInvoiceBodyWidget extends StatefulWidget {
 
 class _ElectronicCashInvoiceBodyWidgetState
     extends State<ElectronicCashInvoiceBodyWidget> {
-  final _plugin = XPrinter();
-  bool _isConnected = false;
+  // final _plugin = XPrinter();
+  // bool _isConnected = false;
   WidgetsToImageController imageController = WidgetsToImageController();
-  Uint8List? imageBytes;
-
-  @override
-  void initState() {
-    super.initState();
-    try {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) {
-          _getCurrentState();
-        },
-      );
-
-      _plugin.statusStream.listen((event) {
-        print(">>> status: ${event.status.name}");
-        _getCurrentState();
-      });
-    } catch (error) {
-      // BluetoothPermissionHandler.init();
-    }
-  }
-
-  void _getCurrentState() {
-    try {
-      _plugin.isConnected.then((value) {
-        print(">>> isConnected: $value");
-        setState(() {
-          _isConnected = value;
-        });
-      });
-    } catch (error) {}
-  }
+  // Uint8List? imageBytes;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   try {
+  //     WidgetsBinding.instance.addPostFrameCallback(
+  //       (_) {
+  //         _getCurrentState();
+  //       },
+  //     );
+  //
+  //     _plugin.statusStream.listen((event) {
+  //       print(">>> status: ${event.status.name}");
+  //       _getCurrentState();
+  //     });
+  //   } catch (error) {
+  //     // BluetoothPermissionHandler.init();
+  //   }
+  // }
+  //
+  // void _getCurrentState() {
+  //   try {
+  //     _plugin.isConnected.then((value) {
+  //       print(">>> isConnected: $value");
+  //       setState(() {
+  //         _isConnected = value;
+  //       });
+  //     });
+  //   } catch (error) {}
+  // }
 
   // ButtonWidget _buildDisconnectButton() {
   //   return ButtonWidget(
@@ -79,27 +79,27 @@ class _ElectronicCashInvoiceBodyWidgetState
   //       });
   // }
 
-  void _selectImage() async {
-    try {
-      final bytes = await imageController.capture();
-      imageBytes = bytes;
-      if (imageBytes != null) {
-        _printImage(imageBytes!);
-      }
-    } catch (error) {
-      AppConstant.toast("لم يتم الاتصال بالطابعة ", AppColors.redColor);
-    }
-  }
-
-  void _printImage(Uint8List bytes) async {
-    try {
-      final String base64Image = base64Encode(bytes);
-      _plugin.printImage(base64Image, width: 460);
-      _plugin.cutPaper();
-    } catch (error) {
-      AppConstant.toast("لم يتم الاتصال بالطابعة ", AppColors.redColor);
-    }
-  }
+  // void _selectImage() async {
+  //   try {
+  //     final bytes = await imageController.capture();
+  //     imageBytes = bytes;
+  //     if (imageBytes != null) {
+  //       _printImage(imageBytes!);
+  //     }
+  //   } catch (error) {
+  //     AppConstant.toast("لم يتم الاتصال بالطابعة ", AppColors.redColor);
+  //   }
+  // }
+  //
+  // void _printImage(Uint8List bytes) async {
+  //   try {
+  //     final String base64Image = base64Encode(bytes);
+  //     _plugin.printImage(base64Image, width: 460);
+  //     _plugin.cutPaper();
+  //   } catch (error) {
+  //     AppConstant.toast("لم يتم الاتصال بالطابعة ", AppColors.redColor);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -141,10 +141,8 @@ class _ElectronicCashInvoiceBodyWidgetState
                               Text(
                                 PrintCashInvoiceCubit.get(context)
                                     .invoiceCashResponseModel!
-                                    .cashInvoice
-                                    .date
-                                    .split("T")[0]
-                                    .toString(),
+                                    .data?.collectionDate.toString()
+                                    .split("T")[0]??'',
                                 style: TextStyles.font10BlackColorWeight400,
                               ),
                               verticalSpace(10),
@@ -160,19 +158,17 @@ class _ElectronicCashInvoiceBodyWidgetState
                               verticalSpace(8),
                               MoneyWidget1(
                                   text: "رقم الايصال",
-                                  value: PrintCashInvoiceCubit.get(context)
+                                  value: '${PrintCashInvoiceCubit.get(context)
                                       .invoiceCashResponseModel!
-                                      .cashInvoice
-                                      .id
-                                      .toString()),
+                                      .data?.id??''}'),
                               verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "اسم المندوب",
-                                  value: PrintCashInvoiceCubit.get(context)
-                                      .invoiceCashResponseModel!
-                                      .cashInvoice
-                                      .seller
-                                      .name),
+                              // MoneyWidget1(
+                              //     text: "اسم المندوب",
+                              //     value: PrintCashInvoiceCubit.get(context)
+                              //         .invoiceCashResponseModel!
+                              //         .data?
+                              //         .seller
+                              //         .name),
                               verticalSpace(8),
                               // MoneyWidget1(
                               //     text: "السجل التجاري",
@@ -182,59 +178,58 @@ class _ElectronicCashInvoiceBodyWidgetState
                               //     text: "الرقم الضريبي",
                               //     value: AppConstant.numberTax),
 
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "كود العربه",
-                                  value: PrintCashInvoiceCubit.get(context)
-                                      .invoiceCashResponseModel!
-                                      .cashInvoice
-                                      .seller
-                                      .vehicleCode),
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "كود المندوب",
-                                  value: PrintCashInvoiceCubit.get(context)
-                                      .invoiceCashResponseModel!
-                                      .cashInvoice
-                                      .seller
-                                      .mandoubeCode),
+                              // verticalSpace(8),
+                              // MoneyWidget1(
+                              //     text: "كود العربه",
+                              //     value: PrintCashInvoiceCubit.get(context)
+                              //         .invoiceCashResponseModel!
+                              //         .data?
+                              //         .seller
+                              //         .vehicleCode),
+                              // verticalSpace(8),
+                              // MoneyWidget1(
+                              //     text: "كود المندوب",
+                              //     value: PrintCashInvoiceCubit.get(context)
+                              //         .invoiceCashResponseModel!
+                              //         .cashInvoice
+                              //         .seller
+                              //         .mandoubeCode),
                               verticalSpace(8),
                               MoneyWidget1(
                                   text: "اسم العميل",
                                   value: PrintCashInvoiceCubit.get(context)
                                       .invoiceCashResponseModel!
-                                      .cashInvoice
-                                      .customer
-                                      .nameAr),
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "رقم العميل الضريبي",
-                                  value: PrintCashInvoiceCubit.get(context)
-                                      .invoiceCashResponseModel!
-                                      .cashInvoice
-                                      .customer
-                                      .taxNumber),
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "السجل التجاري للعميل",
-                                  value: PrintCashInvoiceCubit.get(context)
-                                      .invoiceCashResponseModel!
-                                      .cashInvoice
-                                      .customer
-                                      .comercialHistory),
+                                      .data?.customer?.name??''
+                                      ),
+                              // verticalSpace(8),
+                              // MoneyWidget1(
+                              //     text: "رقم العميل الضريبي",
+                              //     value: PrintCashInvoiceCubit.get(context)
+                              //         .invoiceCashResponseModel!
+                              //         .cashInvoice
+                              //         .customer
+                              //         .taxNumber),
+                              // verticalSpace(8),
+                              // MoneyWidget1(
+                              //     text: "السجل التجاري للعميل",
+                              //     value: PrintCashInvoiceCubit.get(context)
+                              //         .invoiceCashResponseModel!
+                              //         .cashInvoice
+                              //         .customer
+                              //         .comercialHistory),
 
                               verticalSpace(16),
                               HorizontalDashedWidget(width: 4, space: 4),
                               verticalSpace(16),
-                              MoneyWidget3(
-                                  text: "المبغ الكلي",
-                                  value:
-                                      " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.customer.balance}"),
+                              // MoneyWidget3(
+                              //     text: "المبغ الكلي",
+                              //     value:
+                              //         " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.totalAmount??''}"),
                               verticalSpace(8),
                               MoneyWidget3(
                                   text: "الملاحظة",
                                   value:
-                                      " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.customer.balance}"),
+                                      " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.notes??''}"),
                               verticalSpace(8),
 
                               verticalSpace(24),
@@ -243,7 +238,7 @@ class _ElectronicCashInvoiceBodyWidgetState
                               MoneyWidget3(
                                   text: "المبلغ المدفوع",
                                   value:
-                                      " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel!.cashInvoice.price}"),
+                                  " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.totalAmount??''}"),
                               verticalSpace(50),
 
                             ],
@@ -251,57 +246,57 @@ class _ElectronicCashInvoiceBodyWidgetState
                         ),
 
                         ///print
-                        StreamBuilder<PrinterStatus>(
-                          stream: _plugin.statusStream,
-                          builder: (context, snapshot) {
-                            if (snapshot.data == null) {
-                              return _isConnected
-                                  ? ButtonWidget(
-                                      isLoading: false,
-                                      buttonHeight: 48.h,
-                                      borderRadius: 10.r,
-                                      buttonText: "طباعه",
-                                      backGroundColor: AppColors.mainColor,
-                                      textStyle:
-                                          TextStyles.font14WhiteColorWeight500,
-                                      onPressed: () async {
-                                        if (snapshot.data != null) {
-                                          _selectImage();
-                                        } else {
-                                          AppConstant.toast(
-                                              "لم يتم الاتصال بالطابعة ",
-                                              AppColors.redColor);
-                                        }
-                                      })
-                                  : SizedBox();
-                            }
-                            return Column(
-                              children: [
-                                if (snapshot.data?.status ==
-                                    PeripheralStatus.connected)
-                                  ButtonWidget(
-                                      isLoading: false,
-                                      buttonHeight: 48.h,
-                                      borderRadius: 10.r,
-                                      buttonText: "طباعه",
-                                      backGroundColor: AppColors.mainColor,
-                                      textStyle:
-                                          TextStyles.font14WhiteColorWeight500,
-                                      onPressed: () async {
-                                        if (snapshot.data != null) {
-                                          _selectImage();
-                                        } else {
-                                          AppConstant.toast(
-                                              "لم يتم الاتصال بالطابعة ",
-                                              AppColors.redColor);
-                                        }
-                                      })
-                              ],
-                            );
-                          },
-                        ),
-                        verticalSpace(16),
-                        _selectDeviceWidget(),
+                        // StreamBuilder<PrinterStatus>(
+                        //   stream: _plugin.statusStream,
+                        //   builder: (context, snapshot) {
+                        //     if (snapshot.data == null) {
+                        //       return _isConnected
+                        //           ? ButtonWidget(
+                        //               isLoading: false,
+                        //               buttonHeight: 48.h,
+                        //               borderRadius: 10.r,
+                        //               buttonText: "طباعه",
+                        //               backGroundColor: AppColors.mainColor,
+                        //               textStyle:
+                        //                   TextStyles.font14WhiteColorWeight500,
+                        //               onPressed: () async {
+                        //                 if (snapshot.data != null) {
+                        //                   _selectImage();
+                        //                 } else {
+                        //                   AppConstant.toast(
+                        //                       "لم يتم الاتصال بالطابعة ",
+                        //                       AppColors.redColor);
+                        //                 }
+                        //               })
+                        //           : SizedBox();
+                        //     }
+                        //     return Column(
+                        //       children: [
+                        //         if (snapshot.data?.status ==
+                        //             PeripheralStatus.connected)
+                        //           ButtonWidget(
+                        //               isLoading: false,
+                        //               buttonHeight: 48.h,
+                        //               borderRadius: 10.r,
+                        //               buttonText: "طباعه",
+                        //               backGroundColor: AppColors.mainColor,
+                        //               textStyle:
+                        //                   TextStyles.font14WhiteColorWeight500,
+                        //               onPressed: () async {
+                        //                 if (snapshot.data != null) {
+                        //                   _selectImage();
+                        //                 } else {
+                        //                   AppConstant.toast(
+                        //                       "لم يتم الاتصال بالطابعة ",
+                        //                       AppColors.redColor);
+                        //                 }
+                        //               })
+                        //       ],
+                        //     );
+                        //   },
+                        // ),
+                        // verticalSpace(16),
+                        // _selectDeviceWidget(),
                         verticalSpace(50),
                       ],
                     ),
@@ -312,29 +307,29 @@ class _ElectronicCashInvoiceBodyWidgetState
     );
   }
 
-  _selectDeviceWidget() {
-    return _isConnected
-        ? ButtonWidget(
-            isLoading: false,
-            buttonHeight: 48.h,
-            borderRadius: 10.r,
-            buttonText: "حدد جهاز",
-            backGroundColor: AppColors.secondColor,
-            textStyle: TextStyles.font14WhiteColorWeight500,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return SelectPrinter(plugin: _plugin);
-              }));
-            })
-        : ButtonWidget(
-            isLoading: false,
-            buttonHeight: 48.h,
-            borderRadius: 10.r,
-            buttonText: "اتصال بالبلوتوث",
-            backGroundColor: AppColors.secondColor,
-            textStyle: TextStyles.font14WhiteColorWeight500,
-            onPressed: () async {
-              await BluetoothPermissionHandler.init(true);
-            });
-  }
+  // _selectDeviceWidget() {
+  //   return _isConnected
+  //       ? ButtonWidget(
+  //           isLoading: false,
+  //           buttonHeight: 48.h,
+  //           borderRadius: 10.r,
+  //           buttonText: "حدد جهاز",
+  //           backGroundColor: AppColors.secondColor,
+  //           textStyle: TextStyles.font14WhiteColorWeight500,
+  //           onPressed: () {
+  //             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+  //               return SelectPrinter(plugin: _plugin);
+  //             }));
+  //           })
+  //       : ButtonWidget(
+  //           isLoading: false,
+  //           buttonHeight: 48.h,
+  //           borderRadius: 10.r,
+  //           buttonText: "اتصال بالبلوتوث",
+  //           backGroundColor: AppColors.secondColor,
+  //           textStyle: TextStyles.font14WhiteColorWeight500,
+  //           onPressed: () async {
+  //             await BluetoothPermissionHandler.init(true);
+  //           });
+  // }
 }

@@ -8,7 +8,7 @@ class CashInvoiceCubit extends Cubit<CashInvoiceState> {
 
   CashInvoiceCubit(this._cashInvoiceRepo) : super(InitialState());
 
-  List<CashInvoice> invoices = [];
+  List<CashInvoiceModel> invoices = [];
 
   getCashInvoice() {
     emit(OnGetInvoicesLoadingState());
@@ -16,7 +16,7 @@ class CashInvoiceCubit extends Cubit<CashInvoiceState> {
       value.fold((l) {
         emit(OnGetInvoicesErrorState());
       }, (r) {
-        invoices = r.invoices;
+        invoices = r.data;
         emit(OnGetInvoicesSuccessState());
       });
     }).catchError((error) {

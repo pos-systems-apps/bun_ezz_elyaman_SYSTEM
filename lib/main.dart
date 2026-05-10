@@ -17,7 +17,7 @@ Future<void> main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await EasyLocalization.ensureInitialized();
   await ServicesLocator.init();
-  await BluetoothPermissionHandler.init(false);
+  // await BluetoothPermissionHandler.init(false);
   await CacheHelper.init();
   await MyConnectivity.initialise();
   Bloc.observer = Observer();
@@ -26,8 +26,7 @@ Future<void> main() async {
   runApp(EasyLocalization(
     supportedLocales: const [
       Locale('ar', 'EG'), // Arabic first
-      Locale('en', 'US'), // English second1
-    ],
+     ],
     saveLocale: true,
     startLocale: const Locale('ar', 'EG'),
     path: 'assets/languages',

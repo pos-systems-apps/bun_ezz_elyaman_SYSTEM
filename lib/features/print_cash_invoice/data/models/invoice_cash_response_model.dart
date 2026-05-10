@@ -1,118 +1,151 @@
 class InvoiceCashResponseModel {
-  bool success;
-  CashInvoice cashInvoice;
+  final bool status;
+  final String message;
+  final InvoiceCashModel? data;
+  final int code;
 
-  InvoiceCashResponseModel({required this.success, required this.cashInvoice});
+  InvoiceCashResponseModel({
+    required this.status,
+    required this.message,
+    required this.data,
+    required this.code,
+  });
 
   factory InvoiceCashResponseModel.fromJson(Map<String, dynamic> json) {
     return InvoiceCashResponseModel(
-      success: json['success'],
-      cashInvoice: CashInvoice.fromJson(json['invoice']),
+      status: json['status'] ?? false,
+      message: json['message'] ?? '',
+      data: json['data'] != null ? InvoiceCashModel.fromJson(json['data']) : null,
+      code: json['code'] ?? 0,
     );
   }
 }
 
-class CashInvoice {
-  int id;
-  double price;
-  String description;
-  String date;
-  String image;
-  Seller seller;
-  Customer customer;
+class InvoiceCashModel {
+  final int id;
+  final String collectionNumber;
+  final String status;
+  final String statusLabel;
+  final DateTime? collectionDate;
+  final double totalAmount;
+  final String? notes;
+  final int? tripId;
+  final InvoiceCashCustomerModel? customer;
+  final List<InvoiceCashItemModel> items;
 
-  CashInvoice({
+  InvoiceCashModel({
     required this.id,
-    required this.price,
-    required this.description,
-    required this.date,
-    required this.image,
-    required this.seller,
+    required this.collectionNumber,
+    required this.status,
+    required this.statusLabel,
+    required this.collectionDate,
+    required this.totalAmount,
+    required this.notes,
+    required this.tripId,
     required this.customer,
+    required this.items,
   });
 
-  factory CashInvoice.fromJson(Map<String, dynamic> json) {
-    return CashInvoice(
-      id: json['id'],
-      price: (json['total_price'].toDouble()) ?? 0,
-      description: json['note'] ?? "",
-      date: json['created_at'],
-      image: json['img'] ?? "",
-      seller: Seller.fromJson(json['seller']),
-      customer: Customer.fromJson(json['customer']),
+  factory InvoiceCashModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceCashModel(
+      id: json['id'] ?? 0,
+      collectionNumber: json['collection_number'] ?? '',
+      status: json['status'] ?? '',
+      statusLabel: json['status_label'] ?? '',
+      collectionDate: json['collection_date'] != null
+          ? DateTime.tryParse(json['collection_date'])
+          : null,
+      totalAmount: _toDouble(json['total_amount']),
+      notes: json['notes'],
+      tripId: json['trip_id'],
+      customer: json['customer'] != null
+          ? InvoiceCashCustomerModel.fromJson(json['customer'])
+          : null,
+      items: json['items'] == null
+          ? []
+          : List<InvoiceCashItemModel>.from(
+        json['items'].map((x) => InvoiceCashItemModel.fromJson(x)),
+      ),
     );
+  }
+
+  static double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
   }
 }
 
-class Seller {
-  int id;
-  String name;
-  String email;
-  String phone;
-  String mandoubeCode;
-  String vehicleCode;
-  String type;
-  String role;
+class InvoiceCashCustomerModel {
+  final int id;
+  final String name;
+  final String? phone;
 
-  Seller({
+  InvoiceCashCustomerModel({
     required this.id,
     required this.name,
-    required this.email,
-    required this.phone,
-    required this.mandoubeCode,
-    required this.vehicleCode,
-    required this.type,
-    required this.role,
+    this.phone,
   });
 
-  factory Seller.fromJson(Map<String, dynamic> json) {
-    return Seller(
-      id: json['id'],
-      name: (json['f_name'] ?? "") + (json['l_name'] ?? ""),
-      email: json['email'] ?? "",
-      phone: json['phone'] ?? "",
-      mandoubeCode: json['mandob_code'] ?? "",
-      vehicleCode: json['vehicle_code'] ?? "",
-      type: json['type'] ?? "",
-      role: json['role'] ?? "",
+  factory InvoiceCashCustomerModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceCashCustomerModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      phone: json['phone'],
     );
   }
 }
 
-class Customer {
-  int id;
-  String nameAr;
-  String nameEn;
-  String phone;
-  String email;
-  double balance;
-  String image;
-  String taxNumber;
-  String comercialHistory;
+class InvoiceCashItemModel {
+  final int id;
+  final double amount;
+  final String? notes;
+  final InvoiceCashSaleOrderModel? saleOrder;
 
-  Customer({
+  InvoiceCashItemModel({
     required this.id,
-    required this.nameAr,
-    required this.nameEn,
-    required this.phone,
-    required this.balance,
-    required this.email,
-    required this.image,
-    required this.taxNumber,
-    required this.comercialHistory,
+    required this.amount,
+    required this.notes,
+    required this.saleOrder,
   });
 
-  factory Customer.fromJson(Map<String, dynamic> json) {
-    return Customer(
-      id: json['id'],
-      nameAr: json['name'] ?? "",
-      nameEn: json['name_en'] ?? "",
-      phone: json['mobile'] ?? "",
-      balance: (json['balance'].toDouble()) ?? 0,
-      email: json['email'] ?? "",
-      image: json['image'] ?? "",
-      taxNumber: json['tax_number'] ?? "",
-      comercialHistory: json['c_history'] ?? "",
+  factory InvoiceCashItemModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceCashItemModel(
+      id: json['id'] ?? 0,
+      amount: _toDouble(json['amount']),
+      notes: json['notes'],
+      saleOrder: json['sale_order'] != null
+          ? InvoiceCashSaleOrderModel.fromJson(json['sale_order'])
+          : null,
+    );
+  }
+
+  static double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
+  }
+}
+
+class InvoiceCashSaleOrderModel {
+  final int id;
+  final String orderNumber;
+
+  InvoiceCashSaleOrderModel({
+    required this.id,
+    required this.orderNumber,
+  });
+
+  factory InvoiceCashSaleOrderModel.fromJson(Map<String, dynamic> json) {
+    return InvoiceCashSaleOrderModel(
+      id: json['id'] ?? 0,
+      orderNumber: json['order_number'] ?? '',
     );
   }
 }
