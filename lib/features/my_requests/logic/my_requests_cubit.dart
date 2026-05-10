@@ -9,7 +9,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
   final MyRequestsRepo _myRequestsRepo;
 
   MyRequestsCubit(this._myRequestsRepo) : super(InitialState());
-  List<RequestDataModel> requestData = [];
+  List<RequestModel> requestData = [];
 
   getAllRequestsUrl() {
     requestData = [];
@@ -22,7 +22,7 @@ class MyRequestsCubit extends Cubit<MyRequestsState> {
       value.fold((l) {
         emit(OnGetMyRequestsErrorState());
       }, (r) {
-        requestData = r.data;
+        requestData = r.data?.data??[];
         emit(OnGetMyRequestsSuccessState());
       });
     }).catchError((error) {

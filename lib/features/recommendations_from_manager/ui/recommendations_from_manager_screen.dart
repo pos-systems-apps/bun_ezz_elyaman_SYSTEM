@@ -20,48 +20,48 @@ class RecommendationsFromManagerScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             verticalSpace(10),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child: Container(
-                    height: 40.h,
-                    width: 40.w,
-                    padding: EdgeInsets.all(8.r),
-                    margin: EdgeInsets.symmetric(horizontal: 20.w),
-                    decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(12.r),
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 0),
-                              blurRadius: 10,
-                              spreadRadius: 0,
-                              color:
-                                  AppColors.blackColor.withValues(alpha: .1)),
-                        ]),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: AppColors.blueColor72,
-                    ),
-                  ),
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-                Text(
-                  "توصيات من المدير",
-                  style: TextStyles.font20BlueColorA4Weight600,
-                ),
-                Spacer(
-                  flex: 2,
-                ),
-              ],
-            ),
-            verticalSpace(16),
-            RecommendationsFromManagerBodyWidget(),
+            // Row(
+            //   children: [
+            //     GestureDetector(
+            //       onTap: () {
+            //         context.pop();
+            //       },
+            //       child: Container(
+            //         height: 40.h,
+            //         width: 40.w,
+            //         padding: EdgeInsets.all(8.r),
+            //         margin: EdgeInsets.symmetric(horizontal: 20.w),
+            //         decoration: BoxDecoration(
+            //             color: AppColors.whiteColor,
+            //             borderRadius: BorderRadius.circular(12.r),
+            //             boxShadow: [
+            //               BoxShadow(
+            //                   offset: Offset(0, 0),
+            //                   blurRadius: 10,
+            //                   spreadRadius: 0,
+            //                   color:
+            //                       AppColors.blackColor.withValues(alpha: .1)),
+            //             ]),
+            //         child: Icon(
+            //           Icons.arrow_back,
+            //           color: AppColors.blueColor72,
+            //         ),
+            //       ),
+            //     ),
+            //     Spacer(
+            //       flex: 1,
+            //     ),
+            //     Text(
+            //       "توصيات من المدير",
+            //       style: TextStyles.font20BlueColorA4Weight600,
+            //     ),
+            //     Spacer(
+            //       flex: 2,
+            //     ),
+            //   ],
+            // ),
+            // verticalSpace(16),
+            // RecommendationsFromManagerBodyWidget(),
           ],
         ),
       ),

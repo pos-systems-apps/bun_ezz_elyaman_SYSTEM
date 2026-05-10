@@ -9,6 +9,7 @@ import 'package:pos_system/core/widgets/error_alert_dialog.dart';
 import 'package:pos_system/features/add_leave_request/logic/add_leave_request_cubit.dart';
 import 'package:pos_system/features/add_leave_request/logic/add_leave_request_state.dart';
 import 'package:pos_system/features/add_leave_request/ui/widgets/add_leave_request_notes_text_field_widget.dart';
+import 'package:pos_system/features/add_leave_request/ui/widgets/add_leave_request_select_date_2_widget.dart';
 import 'package:pos_system/features/add_leave_request/ui/widgets/add_leave_request_select_date_widget.dart';
 
 
@@ -26,6 +27,8 @@ class AddLeaveRequestBodyWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AddLeaveRequestSelectDateWidget(),
+              verticalSpace(16),
+              AddLeaveRequestSelectDate2Widget(),
               verticalSpace(16),
               AddLeaveRequestNotesTextFieldWidget(),
               verticalSpace(36),

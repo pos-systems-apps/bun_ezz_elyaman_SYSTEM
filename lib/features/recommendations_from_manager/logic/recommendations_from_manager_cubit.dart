@@ -10,25 +10,25 @@ class RecommendationsFromManagerCubit
 
   RecommendationsFromManagerCubit(this._myRequestsRepo) : super(InitialState());
 
-  List<RequestDataModel> managerOrders = [];
+  List<AllRequestsData> managerOrders = [];
 
   getManagerRequests() {
-    managerOrders = [];
-    emit(OnGetManagerRequestsLoadingState());
-    _myRequestsRepo
-        .getAllRequestsUrl(
-      AppConstant.requestsType['orders_from_manager']!,
-    )
-        .then((value) {
-      value.fold((l) {
-        emit(OnGetManagerRequestsErrorState());
-      }, (r) {
-        managerOrders = r.data;
-        emit(OnGetManagerRequestsSuccessState());
-      });
-    }).catchError((error) {
-      emit(OnGetManagerRequestsCatchErrorState());
-    });
+    // managerOrders = [];
+    // emit(OnGetManagerRequestsLoadingState());
+    // _myRequestsRepo
+    //     .getAllRequestsUrl(
+    //   AppConstant.requestsType['orders_from_manager']!,
+    // )
+    //     .then((value) {
+    //   value.fold((l) {
+    //     emit(OnGetManagerRequestsErrorState());
+    //   }, (r) {
+    //     managerOrders = r.data;
+    //     emit(OnGetManagerRequestsSuccessState());
+    //   });
+    // }).catchError((error) {
+    //   emit(OnGetManagerRequestsCatchErrorState());
+    // });
   }
 
   static RecommendationsFromManagerCubit get(context) =>

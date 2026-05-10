@@ -15,21 +15,21 @@ class AddMyRequestCubit extends Cubit<AddMyRequestState> {
   GlobalKey<FormState> addRequestKey = GlobalKey();
 
   addMyRequest() {
-    emit(OnAddMyRequestLoadingState());
-    _addMyRequestRepo
-        .addMyRequest(AddMyRequestRequest(
-            type: AppConstant.requestsType['my_orders']!,
-            note: notesController.text,
-            date: null))
-        .then((value) {
-      value.fold((l) {
-        emit(OnAddMyRequestErrorState());
-      }, (r) async {
-        emit(OnAddMyRequestSuccessState());
-      });
-    }).catchError((error) {
-      emit(OnAddMyRequestCatchErrorState(error: "error".tr()));
-    });
+    // emit(OnAddMyRequestLoadingState());
+    // _addMyRequestRepo
+    //     .addMyRequest(AddMyRequestRequest(
+    //         type: AppConstant.requestsType['my_orders']!,
+    //         note: notesController.text,
+    //         date: null))
+    //     .then((value) {
+    //   value.fold((l) {
+    //     emit(OnAddMyRequestErrorState());
+    //   }, (r) async {
+    //     emit(OnAddMyRequestSuccessState());
+    //   });
+    // }).catchError((error) {
+    //   emit(OnAddMyRequestCatchErrorState(error: "error".tr()));
+    // });
   }
 
   clearSelectedData() {

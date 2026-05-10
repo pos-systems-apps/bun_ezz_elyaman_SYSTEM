@@ -22,14 +22,18 @@ class AddMyRequestService {
         AddMyRequestApiEndPoints.addMyRequestUrl,
         AddMyRequestRequest(
                 type: parameter.type,
-                note: parameter.note,
-                date: parameter.date)
+                reason: parameter.reason,
+                startDate: parameter.startDate,
+                endDate: parameter.endDate,
+        )
             .toJson(),
         {
           ConstantKeys.appAuthorization:
               "${ConstantKeys.appBearer} ${await CacheHelper.getSecuredString(ConstantKeys.saveTokenToShared)}",
         });
-    if (response.statusCode == StatusCode.ok) {
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == StatusCode.created) {
       return SuccessResponseModel.fromJson(jsonDecode(response.body));
     } else {
       throw ServerException(

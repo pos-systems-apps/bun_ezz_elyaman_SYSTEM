@@ -6,10 +6,11 @@ import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/my_requests/data/models/all_requests_response.dart';
 
 class MyRequestsItemWidget extends StatelessWidget {
-  final RequestDataModel item;
+  final RequestModel item;
 
   const MyRequestsItemWidget({required this.item, super.key});
 
+  @override
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,49 +26,110 @@ class MyRequestsItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: Text("ملخص طلب", style: TextStyles.font16MainColorWeight500),
+            child: Text(
+              "ملخص طلب",
+              style: TextStyles.font16MainColorWeight500,
+            ),
           ),
+
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "رقم اطلب ",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": ${item.id}", style: TextStyles.font14GreyColor66Weight400),
-            ]),
+
+          _itemTextWidget(
+            "رقم الطلب",
+            item.id.toString(),
           ),
+
           verticalSpace(4),
-          Text.rich(
-            textAlign: TextAlign.start,
-            TextSpan(children: [
-              TextSpan(
-                  text: "الطلب",
-                  style: TextStyles.font14GreyColor66Weight400.copyWith(
-                      color: AppColors.greyColor66.withValues(alpha: .5))),
-              TextSpan(
-                  text: ": ${item.note}",
-                  style: TextStyles.font14GreyColor66Weight400),
-            ]),
+
+          _itemTextWidget(
+            "نوع الطلب",
+            item.typeLabel,
           ),
+
           verticalSpace(4),
-          if (item.active == 0)
-            Text("قيد الانتظار",
-                style: TextStyles.font14GreyColor66Weight600.copyWith(
-                    color: AppColors.greyColor66.withValues(alpha: .5))),
-          if (item.active == 0) verticalSpace(4),
-          if (item.active == 1)
-            Text("تم الموافقه علي طلب الاجازه",
-                style: TextStyles.font14greenColor3EWeight600),
-          if (item.active == 1) verticalSpace(4),
-          if (item.active == 2)
-            Text("تم رفض طلب الاجازه",
-                style: TextStyles.font14redColor000Weight600),
-          if (item.active == 2) verticalSpace(4),
+
+          _itemTextWidget(
+            "من تاريخ",
+            item.startDate == null
+                ? "-"
+                : "${item.startDate!.year}-${item.startDate!.month.toString().padLeft(2, '0')}-${item.startDate!.day.toString().padLeft(2, '0')}",
+          ),
+
+          verticalSpace(4),
+
+          _itemTextWidget(
+            "إلى تاريخ",
+            item.endDate == null
+                ? "-"
+                : "${item.endDate!.year}-${item.endDate!.month.toString().padLeft(2, '0')}-${item.endDate!.day.toString().padLeft(2, '0')}",
+          ),
+
+          verticalSpace(4),
+
+          _itemTextWidget(
+            "عدد الأيام",
+            item.days.toString(),
+          ),
+
+          verticalSpace(4),
+
+          _itemTextWidget(
+            "سبب الطلب",
+            item.reason ?? "-",
+          ),
+
+          verticalSpace(4),
+
+          Text(
+            item.statusLabel,
+            style: _getStatusStyle(item.status),
+          ),
+
+          if (item.rejectionReason != null &&
+              item.rejectionReason!.trim().isNotEmpty) ...[
+            verticalSpace(4),
+            _itemTextWidget(
+              "سبب الرفض",
+              item.rejectionReason ?? "-",
+            ),
+          ],
+
+          verticalSpace(4),
         ],
       ),
     );
   }
-}
+
+  Text _itemTextWidget(String title, String value) {
+    return Text.rich(
+      textAlign: TextAlign.start,
+      TextSpan(
+        children: [
+          TextSpan(
+            text: title,
+            style: TextStyles.font14GreyColor66Weight400.copyWith(
+              color: AppColors.greyColor66.withValues(alpha: .5),
+            ),
+          ),
+          TextSpan(
+            text: " : $value",
+            style: TextStyles.font14GreyColor66Weight400,
+          ),
+        ],
+      ),
+    );
+  }
+
+  TextStyle _getStatusStyle(String status) {
+    if (status == "approved") {
+      return TextStyles.font14greenColor3EWeight600;
+    }
+
+    if (status == "rejected") {
+      return TextStyles.font14redColor000Weight600;
+    }
+
+    return TextStyles.font14GreyColor66Weight600.copyWith(
+      color: AppColors.greyColor66.withValues(alpha: .5),
+    );
+  }}

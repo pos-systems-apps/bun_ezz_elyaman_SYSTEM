@@ -58,14 +58,55 @@ class AddLeaveRequestCubit extends Cubit<AddLeaveRequestState> {
   String _formatDate(DateTime date) {
     return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
+  DateTime selectedDate1 = DateTime.now();
+
+  Future<void> selectDate1(BuildContext context) async {
+    if (Platform.isAndroid) {
+      DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: selectedDate1,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2200),
+      );
+      if (pickedDate != null) {
+        selectedDate1 = pickedDate;
+      }
+    } else if (Platform.isIOS) {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext builder) {
+          return SizedBox(
+            height: 250.h,
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.date,
+              initialDateTime: selectedDate1,
+              minimumDate: DateTime(2000),
+              maximumDate: DateTime(2100),
+              onDateTimeChanged: (DateTime newDate) {
+                selectedDate1 = newDate;
+
+                emit(OnChangeDateState());
+              },
+            ),
+          );
+        },
+      );
+    }
+    emit(OnChangeDateState());
+  }
+
+
+
 
   addLeaveRequest() {
     emit(OnAddLeaveRequestLoadingState());
     _addMyRequestRepo
         .addMyRequest(AddMyRequestRequest(
-            type: AppConstant.requestsType['leave_orders']!,
-            note: notesController.text,
-            date: _formatDate(selectedDate)))
+            type: 'annual',
+            reason: notesController.text,
+            startDate: _formatDate(selectedDate),
+            endDate: _formatDate(selectedDate1),
+    ))
         .then((value) {
       value.fold((l) {
         emit(OnAddLeaveRequestErrorState());

@@ -95,41 +95,41 @@ class SettingScreen extends StatelessWidget {
                     "اخري",
                     style: TextStyles.font16BlackColor2Weight600,
                   ),
-                  verticalSpace(16),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "توصيات من المدير",
-                              image: ImageAsset.setting2_1Icon,
-                              isBig: false,
-                              onTap: () {
-                                context.pushNamed(
-                                    Routes.recommendationsFromManagerScreen);
-                              })),
-                      horizontalSpace(13),
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "الكورسات",
-                              image: ImageAsset.setting2_2Icon,
-                              isBig: false,
-                              onTap: () {
-                                context.pushNamed(Routes.allCoursesScreen);
-                              })),
-                    ],
-                  ),
+                  // verticalSpace(16),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //         child: SettingItemWidget(
+                  //             text: "توصيات من المدير",
+                  //             image: ImageAsset.setting2_1Icon,
+                  //             isBig: false,
+                  //             onTap: () {
+                  //               context.pushNamed(
+                  //                   Routes.recommendationsFromManagerScreen);
+                  //             })),
+                  //     horizontalSpace(13),
+                  //     Expanded(
+                  //         child: SettingItemWidget(
+                  //             text: "الكورسات",
+                  //             image: ImageAsset.setting2_2Icon,
+                  //             isBig: false,
+                  //             onTap: () {
+                  //               context.pushNamed(Routes.allCoursesScreen);
+                  //             })),
+                  //   ],
+                  // ),
                   verticalSpace(8),
                   Row(
                     children: [
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "طلباتك",
-                              image: ImageAsset.setting2_3Icon,
-                              isBig: false,
-                              onTap: () {
-                                context.pushNamed(Routes.myRequestsScreen);
-                              })),
-                      horizontalSpace(13),
+                      // Expanded(
+                          // child: SettingItemWidget(
+                          //     text: "طلباتك",
+                          //     image: ImageAsset.setting2_3Icon,
+                          //     isBig: false,
+                          //     onTap: () {
+                          //       context.pushNamed(Routes.myRequestsScreen);
+                          //     })),
+                      // horizontalSpace(13),
                       Expanded(
                           child: SettingItemWidget(
                               text: "المرتبات",

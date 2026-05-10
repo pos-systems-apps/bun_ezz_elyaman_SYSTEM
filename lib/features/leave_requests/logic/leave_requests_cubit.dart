@@ -9,7 +9,7 @@ class LeaveRequestsCubit extends Cubit<LeaveRequestsState> {
 
   LeaveRequestsCubit(this._myRequestsRepo) : super(InitialState());
 
-  List<RequestDataModel> leaveRequestData = [];
+  List<RequestModel> leaveRequestData = [];
 
   getAllRequestsUrl() {
     leaveRequestData = [];
@@ -22,7 +22,7 @@ class LeaveRequestsCubit extends Cubit<LeaveRequestsState> {
       value.fold((l) {
         emit(OnGetMyRequestsErrorState());
       }, (r) {
-        leaveRequestData = r.data;
+        leaveRequestData = r.data?.data??[];
         emit(OnGetMyRequestsSuccessState());
       });
     }).catchError((error) {

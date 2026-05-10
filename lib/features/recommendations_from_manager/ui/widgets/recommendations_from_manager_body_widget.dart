@@ -54,11 +54,11 @@ class RecommendationsFromManagerBodyWidget extends StatelessWidget {
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
-                children: RecommendationsFromManagerCubit.get(context)
-                    .managerOrders
-                    .map((item) =>
-                        RecommendationFromManagerItemWidget(item: item))
-                    .toList(),
+                // children: RecommendationsFromManagerCubit.get(context)
+                //     .managerOrders
+                //     .map((item) =>
+                //         RecommendationFromManagerItemWidget(item: item))
+                //     .toList(),
               ),
             ),
           );

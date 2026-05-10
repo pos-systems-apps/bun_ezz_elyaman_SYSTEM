@@ -12,7 +12,7 @@ class AddLeaveRequestNotesTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTextFormField(
-      hintText: "ادخل ملاحظه",
+      hintText: "ادخل السبب",
       maxLines: 5,
       hintStyle: TextStyles.font14GreyColor87Weight400,
       textStyle: TextStyles.font14BlackColorWeight400,
