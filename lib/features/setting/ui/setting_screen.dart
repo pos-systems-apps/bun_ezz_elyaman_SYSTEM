@@ -118,29 +118,29 @@ class SettingScreen extends StatelessWidget {
                   //             })),
                   //   ],
                   // ),
-                  verticalSpace(8),
-                  Row(
-                    children: [
-                      // Expanded(
-                          // child: SettingItemWidget(
-                          //     text: "طلباتك",
-                          //     image: ImageAsset.setting2_3Icon,
-                          //     isBig: false,
-                          //     onTap: () {
-                          //       context.pushNamed(Routes.myRequestsScreen);
-                          //     })),
-                      // horizontalSpace(13),
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "المرتبات",
-                              image: ImageAsset.setting2_4Icon,
-                              isBig: false,
-                              onTap: () {
-                                context.pushNamed(Routes.salaryScreen,
-                                    arguments: {"context": context});
-                              })),
-                    ],
-                  ),
+                  // verticalSpace(8),
+                  // Row(
+                  //   children: [
+                  //     // Expanded(
+                  //         // child: SettingItemWidget(
+                  //         //     text: "طلباتك",
+                  //         //     image: ImageAsset.setting2_3Icon,
+                  //         //     isBig: false,
+                  //         //     onTap: () {
+                  //         //       context.pushNamed(Routes.myRequestsScreen);
+                  //         //     })),
+                  //     // horizontalSpace(13),
+                  //     Expanded(
+                  //         child: SettingItemWidget(
+                  //             text: "المرتبات",
+                  //             image: ImageAsset.setting2_4Icon,
+                  //             isBig: false,
+                  //             onTap: () {
+                  //               context.pushNamed(Routes.salaryScreen,
+                  //                   arguments: {"context": context});
+                  //             })),
+                  //   ],
+                  // ),
                   verticalSpace(8),
                   Row(
                     children: [
@@ -152,30 +152,30 @@ class SettingScreen extends StatelessWidget {
                               onTap: () {
                                 context.pushNamed(Routes.leaveRequestsScreen);
                               })),
-                      horizontalSpace(13),
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "قائمه الزيارات المطلوبة",
-                              image: ImageAsset.setting2_6Icon,
-                              isBig: false,
-                              onTap: () {
-                                context.pushNamed(Routes.visitsListScreen);
-                              })),
+                      // horizontalSpace(13),
+                      // Expanded(
+                      //     child: SettingItemWidget(
+                      //         text: "قائمه الزيارات المطلوبة",
+                      //         image: ImageAsset.setting2_6Icon,
+                      //         isBig: false,
+                      //         onTap: () {
+                      //           context.pushNamed(Routes.visitsListScreen);
+                      //         })),
                     ],
                   ),
                   verticalSpace(8),
                   Row(
                     children: [
-                      Expanded(
-                          child: SettingItemWidget(
-                              text: "قائمه الزيارات المنفذه",
-                              image: ImageAsset.setting2_7Icon,
-                              isBig: false,
-                              onTap: () {
-                                context
-                                    .pushNamed(Routes.visitsCarriedOutScreen);
-                              })),
-                      horizontalSpace(13),
+                      // Expanded(
+                      //     child: SettingItemWidget(
+                      //         text: "قائمه الزيارات المنفذه",
+                      //         image: ImageAsset.setting2_7Icon,
+                      //         isBig: false,
+                      //         onTap: () {
+                      //           context
+                      //               .pushNamed(Routes.visitsCarriedOutScreen);
+                      //         })),
+                      // horizontalSpace(13),
                       Expanded(
                           child: SettingItemWidget(
                               text: "فواتير البيع",
@@ -197,7 +197,13 @@ class SettingScreen extends StatelessWidget {
                               onTap: () {
                                 context.pushNamed(Routes.returnInvoiceScreen);
                               })),
-                      horizontalSpace(13),
+
+                    ],
+                  ),
+                  verticalSpace(8),
+                  Row(
+                    children: [
+
                       Expanded(
                           child: SettingItemWidget(
                               text: "ايصلات نقديه",

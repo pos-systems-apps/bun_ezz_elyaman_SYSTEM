@@ -96,7 +96,7 @@ class SearchUserWidget extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(
-                        CollectionsCubit.get(context).users[index].name,
+                        CollectionsCubit.get(context).users[index].name??'',
                         maxLines: 2,
                         style: TextStyles.font16BlackWeight500,
                       ),

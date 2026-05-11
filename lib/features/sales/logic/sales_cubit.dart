@@ -408,7 +408,7 @@ class SalesCubit extends Cubit<SalesState> {
   TextEditingController moneyController = TextEditingController();
 
   ///customers
-  List<CustomerModel> users = [];
+  List<UserModel> users = [];
 
   getUsers() {
     emit(OnGetUsersLoadingState());
@@ -416,7 +416,7 @@ class SalesCubit extends Cubit<SalesState> {
       value.fold((l) {
         emit(OnGetUsersErrorState());
       }, (r) {
-        users = r.data;
+        users = r.data??[];
         emit(OnGetUsersSuccessState());
       });
     }).catchError((error) {
@@ -424,10 +424,10 @@ class SalesCubit extends Cubit<SalesState> {
     });
   }
 
-  CustomerModel? selectedUser;
+  UserModel? selectedUser;
 
-  onSelectUser(CustomerModel vale) {
-    searchUserController.text = vale.name;
+  onSelectUser(UserModel vale) {
+    searchUserController.text = vale.name??'';
     selectedUser = vale;
     users.clear();
     emit(OnSelectUserState());
@@ -499,7 +499,7 @@ class SalesCubit extends Cubit<SalesState> {
         : totalAmount;
 
     final request = CreateOrderRequest(
-      customerId: selectedUser!.id,
+      customerId: selectedUser!.id??0,
       paymentMethod: paymentMethod,
       discountAmount: _getOrderDiscountAmount(),
       discountType: _getOrderDiscountType(),

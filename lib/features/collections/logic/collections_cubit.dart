@@ -27,7 +27,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   ///customers
-  List<CustomerModel> users = [];
+  List<UserModel> users = [];
 
   getUsers() {
     emit(OnGetUsersLoadingState());
@@ -35,7 +35,7 @@ class CollectionsCubit extends Cubit<CollectionsState> {
       value.fold((l) {
         emit(OnGetUsersErrorState());
       }, (r) {
-        users = r.data;
+        users = r.data??[];
         emit(OnGetUsersSuccessState());
       });
     }).catchError((error) {
@@ -43,10 +43,10 @@ class CollectionsCubit extends Cubit<CollectionsState> {
     });
   }
 
-  CustomerModel? selectedUser;
+  UserModel? selectedUser;
 
-  onSelectUser(CustomerModel vale) {
-    searchUserController.text = vale.name;
+  onSelectUser(UserModel vale) {
+    searchUserController.text = vale.name??'';
     selectedUser = vale;
     users.clear();
     emit(OnSelectUserState());

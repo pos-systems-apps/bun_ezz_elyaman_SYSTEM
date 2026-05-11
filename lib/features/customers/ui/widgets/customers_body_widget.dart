@@ -70,7 +70,7 @@ class CustomersBodyWidget extends StatelessWidget {
                           children: [
                             Text(CustomersCubit.get(context)
                                       .users[index]
-                                      .name
+                                      .name??''
                                  ,
                               maxLines: 2,
                               style: TextStyles.font16BlackWeight500,

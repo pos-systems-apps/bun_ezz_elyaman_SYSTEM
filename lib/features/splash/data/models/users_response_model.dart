@@ -1,26 +1,26 @@
 class UsersResponseModel {
-  final bool status;
-  final String message;
-  final List<CustomerModel> data;
-  final int code;
+  final bool? status;
+  final String? message;
+  final List<UserModel>? data;
+  final int? code;
 
   UsersResponseModel({
-    required this.status,
-    required this.message,
-    required this.data,
-    required this.code,
+    this.status,
+    this.message,
+    this.data,
+    this.code,
   });
 
   factory UsersResponseModel.fromJson(Map<String, dynamic> json) {
     return UsersResponseModel(
-      status: json['status'] ?? false,
-      message: json['message'] ?? '',
+      status: json['status'] as bool?,
+      message: json['message'] as String?,
       data: json['data'] != null
-          ? List<CustomerModel>.from(
-              json['data'].map((item) => CustomerModel.fromJson(item)),
-            )
-          : [],
-      code: json['code'] ?? 0,
+          ? List<UserModel>.from(
+        json['data'].map((item) => UserModel.fromJson(item)),
+      )
+          : null,
+      code: json['code'] as int?,
     );
   }
 
@@ -28,56 +28,61 @@ class UsersResponseModel {
     return {
       'status': status,
       'message': message,
-      'data': data.map((item) => item.toJson()).toList(),
+      'data': data?.map((item) => item.toJson()).toList(),
       'code': code,
     };
   }
 }
 
-class CustomerModel {
-  final int id;
-  final String name;
+class UserModel {
+  final int? id;
+  final String? name;
   final String? phone;
   final String? email;
   final String? address;
-  final double? latitude;
-  final double? longitude;
-  final String classification;
-  final String classificationLabel;
-  final String balance;
-  final dynamic area;
+  final String? latitude;
+  final String? longitude;
+  final String? classification;
+  final String? classificationLabel;
+  final num? creditLimit;
+  final num? openingBalance;
+  final num? balance;
+  final num? debt;
+  final AreaModel? area;
 
-  CustomerModel({
-    required this.id,
-    required this.name,
+  UserModel({
+    this.id,
+    this.name,
     this.phone,
     this.email,
     this.address,
     this.latitude,
     this.longitude,
-    required this.classification,
-    required this.classificationLabel,
-    required this.balance,
+    this.classification,
+    this.classificationLabel,
+    this.creditLimit,
+    this.openingBalance,
+    this.balance,
+    this.debt,
     this.area,
   });
 
-  factory CustomerModel.fromJson(Map<String, dynamic> json) {
-    return CustomerModel(
-      id: json['id'] ?? 0,
-      name: json['name'] ?? '',
-      phone: json['phone'],
-      email: json['email'],
-      address: json['address'],
-      latitude: json['latitude'] != null
-          ? double.tryParse(json['latitude'].toString())
-          : null,
-      longitude: json['longitude'] != null
-          ? double.tryParse(json['longitude'].toString())
-          : null,
-      classification: json['classification'] ?? '',
-      classificationLabel: json['classification_label'] ?? '',
-      balance: json['balance'] ?? '0.00',
-      area: json['area'],
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      phone: json['phone'] as String?,
+      email: json['email'] as String?,
+      address: json['address'] as String?,
+      latitude: json['latitude'] as String?,
+      longitude: json['longitude'] as String?,
+      classification: json['classification'] as String?,
+      classificationLabel: json['classification_label'] as String?,
+      creditLimit: json['credit_limit'] as num?,
+      openingBalance: json['opening_balance'] as num?,
+      balance: json['balance'] as num?,
+      debt: json['debt'] as num?,
+      area: json['area'] != null ? AreaModel.fromJson(json['area']) : null,
     );
   }
 
@@ -92,8 +97,35 @@ class CustomerModel {
       'longitude': longitude,
       'classification': classification,
       'classification_label': classificationLabel,
+      'credit_limit': creditLimit,
+      'opening_balance': openingBalance,
       'balance': balance,
-      'area': area,
+      'debt': debt,
+      'area': area?.toJson(),
+    };
+  }
+}
+
+class AreaModel {
+  final int? id;
+  final String? name;
+
+  AreaModel({
+    this.id,
+    this.name,
+  });
+
+  factory AreaModel.fromJson(Map<String, dynamic> json) {
+    return AreaModel(
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
     };
   }
 }
