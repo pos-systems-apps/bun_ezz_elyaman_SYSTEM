@@ -22,8 +22,7 @@ import 'package:pos_system/features/print_resources_invoices/logic/print_resourc
 import 'package:pos_system/features/print_resources_invoices/logic/print_resources_invoices_cubit.dart';
 import 'package:pos_system/features/print_resources_invoices/ui/widgets/money_title_widget_2.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
-import 'package:x_printer/x_printer.dart';
-import 'package:intl/intl.dart'as intl;
+ import 'package:intl/intl.dart'as intl;
 
 class ElectronicResourcesInvoicesBodyWidget extends StatefulWidget {
   const ElectronicResourcesInvoicesBodyWidget({super.key});

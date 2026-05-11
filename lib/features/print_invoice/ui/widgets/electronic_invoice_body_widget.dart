@@ -23,8 +23,7 @@ import 'package:pos_system/features/print_invoice/ui/widgets/money_title_widget_
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_1.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_2.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_3.dart';
-import 'package:x_printer/x_printer.dart';
-import 'package:widgets_to_image/widgets_to_image.dart';
+ import 'package:widgets_to_image/widgets_to_image.dart';
 
 class ElectronicInvoiceBodyWidget extends StatefulWidget {
   const ElectronicInvoiceBodyWidget({super.key});

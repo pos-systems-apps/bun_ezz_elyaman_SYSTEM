@@ -18,8 +18,7 @@ import 'package:pos_system/features/print_invoice/ui/widgets/invoice_shimmer_wid
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_1.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_3.dart';
 import 'package:pos_system/features/print_invoice/ui/select_printer.dart';
-import 'package:x_printer/x_printer.dart';
-import 'package:widgets_to_image/widgets_to_image.dart';
+ import 'package:widgets_to_image/widgets_to_image.dart';
 
 class ElectronicCashInvoiceBodyWidget extends StatefulWidget {
   const ElectronicCashInvoiceBodyWidget({super.key});
