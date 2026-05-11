@@ -95,6 +95,11 @@ class CustomersBodyWidget extends StatelessWidget {
                                 maxLines: 1,
                                 style: TextStyles.font14GreyColor66Weight400),
                             verticalSpace(4),
+                            Text(
+                                "المديونيه  : ${CustomersCubit.get(context).users[index].net_balance}",
+                                maxLines: 1,
+                                style: TextStyles.font14GreyColor66Weight400),
+                            verticalSpace(4),
                             // Row(
                             //   children: [
                             //     Text.rich(

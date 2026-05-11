@@ -48,7 +48,9 @@ class UserModel {
   final num? openingBalance;
   final num? balance;
   final num? debt;
+  final num? net_balance;
   final AreaModel? area;
+
 
   UserModel({
     this.id,
@@ -65,6 +67,7 @@ class UserModel {
     this.balance,
     this.debt,
     this.area,
+    this.net_balance,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -82,6 +85,7 @@ class UserModel {
       openingBalance: json['opening_balance'] as num?,
       balance: json['balance'] as num?,
       debt: json['debt'] as num?,
+      net_balance: json['net_balance'] as num?,
       area: json['area'] != null ? AreaModel.fromJson(json['area']) : null,
     );
   }
