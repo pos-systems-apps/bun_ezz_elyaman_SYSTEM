@@ -18,7 +18,6 @@ import 'package:pos_system/features/print_invoice/ui/widgets/invoice_shimmer_wid
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_1.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_3.dart';
 import 'package:pos_system/features/print_invoice/ui/select_printer.dart';
- import 'package:widgets_to_image/widgets_to_image.dart';
 
 class ElectronicCashInvoiceBodyWidget extends StatefulWidget {
   const ElectronicCashInvoiceBodyWidget({super.key});
@@ -32,7 +31,7 @@ class _ElectronicCashInvoiceBodyWidgetState
     extends State<ElectronicCashInvoiceBodyWidget> {
   // final _plugin = XPrinter();
   // bool _isConnected = false;
-  WidgetsToImageController imageController = WidgetsToImageController();
+  // WidgetsToImageController imageController = WidgetsToImageController();
   // Uint8List? imageBytes;
   //
   // @override
@@ -125,123 +124,124 @@ class _ElectronicCashInvoiceBodyWidgetState
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        WidgetsToImage(
-                          controller: imageController,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                ImageAsset.logoImage,
-                                height: 66.h,
-                                width: 80.w,
-                                fit: BoxFit.cover,
-                              ),
-                              verticalSpace(10),
-                              Text(
-                                PrintCashInvoiceCubit.get(context)
+                        // WidgetsToImage(
+                        //   controller: imageController,
+                        //   child:
+                        // ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              ImageAsset.logoImage,
+                              height: 66.h,
+                              width: 80.w,
+                              fit: BoxFit.cover,
+                            ),
+                            verticalSpace(10),
+                            Text(
+                              PrintCashInvoiceCubit.get(context)
+                                  .invoiceCashResponseModel!
+                                  .data?.collectionDate.toString()
+                                  .split("T")[0]??'',
+                              style: TextStyles.font10BlackColorWeight400,
+                            ),
+                            verticalSpace(10),
+                            HorizontalDashedWidget(width: 4, space: 4),
+                            verticalSpace(16),
+                            Center(
+                              child: Text("ايصال تحصيل نقدية",
+                                  textAlign: TextAlign.start,
+                                  maxLines: 2,
+                                  style:
+                                  TextStyles.font16BlackColorWeight600),
+                            ),
+                            verticalSpace(8),
+                            MoneyWidget1(
+                                text: "رقم الايصال",
+                                value: '${PrintCashInvoiceCubit.get(context)
                                     .invoiceCashResponseModel!
-                                    .data?.collectionDate.toString()
-                                    .split("T")[0]??'',
-                                style: TextStyles.font10BlackColorWeight400,
-                              ),
-                              verticalSpace(10),
-                              HorizontalDashedWidget(width: 4, space: 4),
-                              verticalSpace(16),
-                              Center(
-                                child: Text("ايصال تحصيل نقدية",
-                                    textAlign: TextAlign.start,
-                                    maxLines: 2,
-                                    style:
-                                        TextStyles.font16BlackColorWeight600),
-                              ),
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "رقم الايصال",
-                                  value: '${PrintCashInvoiceCubit.get(context)
-                                      .invoiceCashResponseModel!
-                                      .data?.id??''}'),
-                              verticalSpace(8),
-                              // MoneyWidget1(
-                              //     text: "اسم المندوب",
-                              //     value: PrintCashInvoiceCubit.get(context)
-                              //         .invoiceCashResponseModel!
-                              //         .data?
-                              //         .seller
-                              //         .name),
-                              verticalSpace(8),
-                              // MoneyWidget1(
-                              //     text: "السجل التجاري",
-                              //     value: AppConstant.commercialRegistry),
-                              // verticalSpace(8),
-                              // MoneyWidget1(
-                              //     text: "الرقم الضريبي",
-                              //     value: AppConstant.numberTax),
+                                    .data?.id??''}'),
+                            verticalSpace(8),
+                            // MoneyWidget1(
+                            //     text: "اسم المندوب",
+                            //     value: PrintCashInvoiceCubit.get(context)
+                            //         .invoiceCashResponseModel!
+                            //         .data?
+                            //         .seller
+                            //         .name),
+                            verticalSpace(8),
+                            // MoneyWidget1(
+                            //     text: "السجل التجاري",
+                            //     value: AppConstant.commercialRegistry),
+                            // verticalSpace(8),
+                            // MoneyWidget1(
+                            //     text: "الرقم الضريبي",
+                            //     value: AppConstant.numberTax),
 
-                              // verticalSpace(8),
-                              // MoneyWidget1(
-                              //     text: "كود العربه",
-                              //     value: PrintCashInvoiceCubit.get(context)
-                              //         .invoiceCashResponseModel!
-                              //         .data?
-                              //         .seller
-                              //         .vehicleCode),
-                              // verticalSpace(8),
-                              // MoneyWidget1(
-                              //     text: "كود المندوب",
-                              //     value: PrintCashInvoiceCubit.get(context)
-                              //         .invoiceCashResponseModel!
-                              //         .cashInvoice
-                              //         .seller
-                              //         .mandoubeCode),
-                              verticalSpace(8),
-                              MoneyWidget1(
-                                  text: "اسم العميل",
-                                  value: PrintCashInvoiceCubit.get(context)
-                                      .invoiceCashResponseModel!
-                                      .data?.customer?.name??''
-                                      ),
-                              // verticalSpace(8),
-                              // MoneyWidget1(
-                              //     text: "رقم العميل الضريبي",
-                              //     value: PrintCashInvoiceCubit.get(context)
-                              //         .invoiceCashResponseModel!
-                              //         .cashInvoice
-                              //         .customer
-                              //         .taxNumber),
-                              // verticalSpace(8),
-                              // MoneyWidget1(
-                              //     text: "السجل التجاري للعميل",
-                              //     value: PrintCashInvoiceCubit.get(context)
-                              //         .invoiceCashResponseModel!
-                              //         .cashInvoice
-                              //         .customer
-                              //         .comercialHistory),
+                            // verticalSpace(8),
+                            // MoneyWidget1(
+                            //     text: "كود العربه",
+                            //     value: PrintCashInvoiceCubit.get(context)
+                            //         .invoiceCashResponseModel!
+                            //         .data?
+                            //         .seller
+                            //         .vehicleCode),
+                            // verticalSpace(8),
+                            // MoneyWidget1(
+                            //     text: "كود المندوب",
+                            //     value: PrintCashInvoiceCubit.get(context)
+                            //         .invoiceCashResponseModel!
+                            //         .cashInvoice
+                            //         .seller
+                            //         .mandoubeCode),
+                            verticalSpace(8),
+                            MoneyWidget1(
+                                text: "اسم العميل",
+                                value: PrintCashInvoiceCubit.get(context)
+                                    .invoiceCashResponseModel!
+                                    .data?.customer?.name??''
+                            ),
+                            // verticalSpace(8),
+                            // MoneyWidget1(
+                            //     text: "رقم العميل الضريبي",
+                            //     value: PrintCashInvoiceCubit.get(context)
+                            //         .invoiceCashResponseModel!
+                            //         .cashInvoice
+                            //         .customer
+                            //         .taxNumber),
+                            // verticalSpace(8),
+                            // MoneyWidget1(
+                            //     text: "السجل التجاري للعميل",
+                            //     value: PrintCashInvoiceCubit.get(context)
+                            //         .invoiceCashResponseModel!
+                            //         .cashInvoice
+                            //         .customer
+                            //         .comercialHistory),
 
-                              verticalSpace(16),
-                              HorizontalDashedWidget(width: 4, space: 4),
-                              verticalSpace(16),
-                              // MoneyWidget3(
-                              //     text: "المبغ الكلي",
-                              //     value:
-                              //         " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.totalAmount??''}"),
-                              verticalSpace(8),
-                              MoneyWidget3(
-                                  text: "الملاحظة",
-                                  value:
-                                      " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.notes??''}"),
-                              verticalSpace(8),
+                            verticalSpace(16),
+                            HorizontalDashedWidget(width: 4, space: 4),
+                            verticalSpace(16),
+                            // MoneyWidget3(
+                            //     text: "المبغ الكلي",
+                            //     value:
+                            //         " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.totalAmount??''}"),
+                            verticalSpace(8),
+                            MoneyWidget3(
+                                text: "الملاحظة",
+                                value:
+                                " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.notes??''}"),
+                            verticalSpace(8),
 
-                              verticalSpace(24),
-                              HorizontalDashedWidget(width: 4, space: 4),
-                              verticalSpace(16),
-                              MoneyWidget3(
-                                  text: "المبلغ المدفوع",
-                                  value:
-                                  " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.totalAmount??''}"),
-                              verticalSpace(50),
+                            verticalSpace(24),
+                            HorizontalDashedWidget(width: 4, space: 4),
+                            verticalSpace(16),
+                            MoneyWidget3(
+                                text: "المبلغ المدفوع",
+                                value:
+                                " 'جنيه'  ${PrintCashInvoiceCubit.get(context).invoiceCashResponseModel?.data?.totalAmount??''}"),
+                            verticalSpace(50),
 
-                            ],
-                          ),
+                          ],
                         ),
 
                         ///print

@@ -175,11 +175,11 @@ class LoginFormWidget extends StatelessWidget {
                         borderRadius: 10,
                         textStyle: TextStyles.font14WhiteColorWeightBold,
                         onPressed: () {
-                          if (MyConnectivity.isOnline()) {
+                          // if (MyConnectivity.isOnline()) {
                             validateLogin(context);
-                          } else {
-                            OfflineAlertDialog.getDialog();
-                          }
+                          // } else {
+                          //   OfflineAlertDialog.getDialog();
+                          // }
                         },
                       );
               },

@@ -21,8 +21,7 @@ import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_2.dart
 import 'package:pos_system/features/print_resources_invoices/logic/print_resources_invoices_state.dart';
 import 'package:pos_system/features/print_resources_invoices/logic/print_resources_invoices_cubit.dart';
 import 'package:pos_system/features/print_resources_invoices/ui/widgets/money_title_widget_2.dart';
-import 'package:widgets_to_image/widgets_to_image.dart';
- import 'package:intl/intl.dart'as intl;
+  import 'package:intl/intl.dart'as intl;
 
 class ElectronicResourcesInvoicesBodyWidget extends StatefulWidget {
   const ElectronicResourcesInvoicesBodyWidget({super.key});
@@ -36,7 +35,7 @@ class _ElectronicResourcesInvoicesBodyWidgetState
     extends State<ElectronicResourcesInvoicesBodyWidget> {
   // final _plugin = XPrinter();
   // bool _isConnected = false;
-  WidgetsToImageController imageController = WidgetsToImageController();
+  // WidgetsToImageController imageController = WidgetsToImageController();
   // Uint8List? imageBytes;
 
   @override
@@ -131,146 +130,143 @@ class _ElectronicResourcesInvoicesBodyWidgetState
                   : Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  WidgetsToImage(
-                    controller: imageController,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          ImageAsset.logoImage,
-                          height: 66.h,
-                          width: 80.w,
-                          fit: BoxFit.cover,
-                        ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        ImageAsset.logoImage,
+                        height: 66.h,
+                        width: 80.w,
+                        fit: BoxFit.cover,
+                      ),
 
-                        verticalSpace(10),
+                      verticalSpace(10),
 
-                        Text(
-                          invoice.createdAt == null
-                              ? "-"
-                              : intl.DateFormat(
-                            "d MMMM yyyy h:mm:ss a",
-                            context.locale.languageCode,
-                          ).format(invoice.createdAt!.toLocal()),
-                          style: TextStyles.font10BlackColorWeight400,
-                        ),
+                      Text(
+                        invoice.createdAt == null
+                            ? "-"
+                            : intl.DateFormat(
+                          "d MMMM yyyy h:mm:ss a",
+                          context.locale.languageCode,
+                        ).format(invoice.createdAt!.toLocal()),
+                        style: TextStyles.font10BlackColorWeight400,
+                      ),
 
-                        verticalSpace(10),
+                      verticalSpace(10),
 
-                        HorizontalDashedWidget(width: 4, space: 4),
+                      HorizontalDashedWidget(width: 4, space: 4),
 
-                        verticalSpace(16),
+                      verticalSpace(16),
 
-                        MoneyWidget1(
-                          text: "رقم طلب الحجز",
-                          value: invoice.id.toString(),
-                        ),
+                      MoneyWidget1(
+                        text: "رقم طلب الحجز",
+                        value: invoice.id.toString(),
+                      ),
 
+                      verticalSpace(8),
+
+                      MoneyWidget1(
+                        text: "رقم الرحلة",
+                        value: invoice.trip?.tripNumber ?? "-",
+                      ),
+
+                      verticalSpace(8),
+
+                      MoneyWidget1(
+                        text: "حالة الطلب",
+                        value: invoice.statusLabel,
+                      ),
+
+                      if (invoice.customerName != null) ...[
                         verticalSpace(8),
-
                         MoneyWidget1(
-                          text: "رقم الرحلة",
-                          value: invoice.trip?.tripNumber ?? "-",
+                          text: "اسم العميل",
+                          value: invoice.customerName ?? "-",
                         ),
-
-                        verticalSpace(8),
-
-                        MoneyWidget1(
-                          text: "حالة الطلب",
-                          value: invoice.statusLabel,
-                        ),
-
-                        if (invoice.customerName != null) ...[
-                          verticalSpace(8),
-                          MoneyWidget1(
-                            text: "اسم العميل",
-                            value: invoice.customerName ?? "-",
-                          ),
-                        ],
-
-                        if (invoice.customerPhone != null) ...[
-                          verticalSpace(8),
-                          MoneyWidget1(
-                            text: "رقم العميل",
-                            value: invoice.customerPhone ?? "-",
-                          ),
-                        ],
-
-                        if (invoice.customerAddress != null) ...[
-                          verticalSpace(8),
-                          MoneyWidget1(
-                            text: "عنوان العميل",
-                            value: invoice.customerAddress ?? "-",
-                          ),
-                        ],
-
-                        if (invoice.notes != null &&
-                            invoice.notes!.trim().isNotEmpty) ...[
-                          verticalSpace(8),
-                          MoneyWidget1(
-                            text: "ملاحظات",
-                            value: invoice.notes ?? "-",
-                          ),
-                        ],
-
-                        verticalSpace(16),
-
-                        HorizontalDashedWidget(width: 4, space: 4),
-
-                        verticalSpace(16),
-
-                        ReturnMoneyTitleWidget2(),
-
-                        verticalSpace(8),
-
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (invoice.items.isEmpty)
-                              Text(
-                                "لا توجد منتجات",
-                                style:
-                                TextStyles.font10GreyColor33Weight500,
-                              ),
-
-                            ...invoice.items.map(
-                                  (item) => Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  MoneyWidget2(
-                                    text: item.product?.name ?? "-",
-                                    quantity:
-                                    item.quantity.toStringAsFixed(2),
-                                    measure: item.unit?.name ?? "-",
-                                    price:
-                                    item.unitPrice.toStringAsFixed(2),
-                                  ),
-                                  verticalSpace(8),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        verticalSpace(16),
-
-                        HorizontalDashedWidget(width: 4, space: 4),
-
-                        verticalSpace(16),
-
-                        MoneyWidget1(
-                          text: "الإجمالي",
-                          value:
-                          "${invoice.items.fold<double>(
-                            0,
-                                (sum, item) => sum + item.subtotal,
-                          ).toStringAsFixed(2)} جنيه",
-                        ),
-
-                        verticalSpace(50),
                       ],
-                    ),
+
+                      if (invoice.customerPhone != null) ...[
+                        verticalSpace(8),
+                        MoneyWidget1(
+                          text: "رقم العميل",
+                          value: invoice.customerPhone ?? "-",
+                        ),
+                      ],
+
+                      if (invoice.customerAddress != null) ...[
+                        verticalSpace(8),
+                        MoneyWidget1(
+                          text: "عنوان العميل",
+                          value: invoice.customerAddress ?? "-",
+                        ),
+                      ],
+
+                      if (invoice.notes != null &&
+                          invoice.notes!.trim().isNotEmpty) ...[
+                        verticalSpace(8),
+                        MoneyWidget1(
+                          text: "ملاحظات",
+                          value: invoice.notes ?? "-",
+                        ),
+                      ],
+
+                      verticalSpace(16),
+
+                      HorizontalDashedWidget(width: 4, space: 4),
+
+                      verticalSpace(16),
+
+                      ReturnMoneyTitleWidget2(),
+
+                      verticalSpace(8),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (invoice.items.isEmpty)
+                            Text(
+                              "لا توجد منتجات",
+                              style:
+                              TextStyles.font10GreyColor33Weight500,
+                            ),
+
+                          ...invoice.items.map(
+                                (item) => Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                MoneyWidget2(
+                                  text: item.product?.name ?? "-",
+                                  quantity:
+                                  item.quantity.toStringAsFixed(2),
+                                  measure: item.unit?.name ?? "-",
+                                  price:
+                                  item.unitPrice.toStringAsFixed(2),
+                                ),
+                                verticalSpace(8),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      verticalSpace(16),
+
+                      HorizontalDashedWidget(width: 4, space: 4),
+
+                      verticalSpace(16),
+
+                      MoneyWidget1(
+                        text: "الإجمالي",
+                        value:
+                        "${invoice.items.fold<double>(
+                          0,
+                              (sum, item) => sum + item.subtotal,
+                        ).toStringAsFixed(2)} جنيه",
+                      ),
+
+                      verticalSpace(50),
+                    ],
                   ),
 
                   // StreamBuilder<PrinterStatus>(

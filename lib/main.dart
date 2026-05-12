@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pos_system/core/services/bluetooth_service.dart';
-import 'package:pos_system/core/services/location_service.dart';
 import 'package:pos_system/my_app.dart';
 
 import 'core/services/cache_helper.dart';
@@ -13,13 +11,20 @@ import 'observer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   await EasyLocalization.ensureInitialized();
+
+  // await MyConnectivity.initialise();
   await ServicesLocator.init();
-  // await BluetoothPermissionHandler.init(false);
   await CacheHelper.init();
-  await MyConnectivity.initialise();
+
+
+
   Bloc.observer = Observer();
 
   // End locations

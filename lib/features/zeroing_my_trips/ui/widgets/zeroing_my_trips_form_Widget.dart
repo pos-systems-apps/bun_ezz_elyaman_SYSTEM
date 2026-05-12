@@ -176,11 +176,11 @@ class ZeroingMyTripsFormWidget extends StatelessWidget {
                         borderRadius: 10,
                         textStyle: TextStyles.font14WhiteColorWeightBold,
                         onPressed: () {
-                          if (MyConnectivity.isOnline()) {
+                          // if (MyConnectivity.isOnline()) {
                             validateZeroMyTrips(context);
-                          } else {
-                            OfflineAlertDialog.getDialog();
-                          }
+                          // } else {
+                          //   OfflineAlertDialog.getDialog();
+                          // }
                         },
                       );
               },

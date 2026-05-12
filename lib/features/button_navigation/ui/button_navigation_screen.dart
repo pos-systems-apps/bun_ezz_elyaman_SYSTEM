@@ -15,7 +15,7 @@ import 'package:pos_system/features/button_navigation/logic/button_navigation_cu
 import 'package:pos_system/features/button_navigation/logic/button_navigation_state.dart';
 import 'package:pos_system/features/sales/logic/sales_cubit.dart';
 import 'package:pos_system/features/sales/ui/sales_screen.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
+// import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class ButtonNavigationScreen extends StatefulWidget {
   const ButtonNavigationScreen({super.key});

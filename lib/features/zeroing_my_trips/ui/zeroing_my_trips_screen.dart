@@ -7,7 +7,6 @@ import 'package:pos_system/core/utils/styles.dart';
 import 'package:pos_system/features/login/ui/widgets/back_ground_widget.dart';
 import 'package:pos_system/features/login/ui/widgets/login_form_Widget.dart';
 import 'package:pos_system/features/zeroing_my_trips/ui/widgets/zeroing_my_trips_form_Widget.dart';
-import 'package:screenshot/screenshot.dart';
 
 class ZeroingMyTripsScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();

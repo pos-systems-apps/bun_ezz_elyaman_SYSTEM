@@ -25,15 +25,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _listenToNetwork();
+    // _listenToNetwork();
   }
 
   void _listenToNetwork() {
-    MyConnectivity.myStream.listen((event) {
-      if (!MyConnectivity.isOnline()) {
-        _showOfflineDialog();
-      }
-    });
+    // MyConnectivity.myStream.listen((event) {
+    //   if (!MyConnectivity.isOnline()) {
+    //     _showOfflineDialog();
+    //   }
+    // });
   }
 
   void _showOfflineDialog() {

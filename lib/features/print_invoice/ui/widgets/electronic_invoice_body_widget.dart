@@ -23,7 +23,6 @@ import 'package:pos_system/features/print_invoice/ui/widgets/money_title_widget_
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_1.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_2.dart';
 import 'package:pos_system/features/print_invoice/ui/widgets/money_widget_3.dart';
- import 'package:widgets_to_image/widgets_to_image.dart';
 
 class ElectronicInvoiceBodyWidget extends StatefulWidget {
   const ElectronicInvoiceBodyWidget({super.key});
@@ -37,7 +36,7 @@ class _ElectronicInvoiceBodyWidgetState
     extends State<ElectronicInvoiceBodyWidget> {
   // final _plugin = XPrinter();
   // bool _isConnected = false;
-  WidgetsToImageController imageController = WidgetsToImageController();
+  // WidgetsToImageController imageController = WidgetsToImageController();
   // Uint8List? imageBytes;
 
   @override
@@ -150,128 +149,243 @@ class _ElectronicInvoiceBodyWidgetState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  WidgetsToImage(
-                    controller: imageController,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          ImageAsset.logoImage,
-                          height: 66.h,
-                          width: 80.w,
-                          fit: BoxFit.cover,
-                        ),
+                  // WidgetsToImage(
+                  //   controller: imageController,
+                  //   child:
+                  // ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        ImageAsset.logoImage,
+                        height: 66.h,
+                        width: 80.w,
+                        fit: BoxFit.cover,
+                      ),
 
-                        verticalSpace(10),
+                      verticalSpace(10),
 
-                        Text(
-                          invoice.date == null
-                              ? "-"
-                              : intl.DateFormat(
-                            "d MMMM yyyy h:mm:ss a",
-                            context.locale.languageCode,
-                          ).format(invoice.date!.toLocal()),
-                          style: TextStyles.font10BlackColorWeight400,
-                        ),
+                      Text(
+                        invoice.date == null
+                            ? "-"
+                            : intl.DateFormat(
+                          "d MMMM yyyy h:mm:ss a",
+                          context.locale.languageCode,
+                        ).format(invoice.date!.toLocal()),
+                        style: TextStyles.font10BlackColorWeight400,
+                      ),
 
-                        verticalSpace(10),
+                      verticalSpace(10),
 
-                        HorizontalDashedWidget(width: 4, space: 4),
+                      HorizontalDashedWidget(width: 4, space: 4),
 
-                        verticalSpace(16),
+                      verticalSpace(16),
 
-                        MoneyWidget1(
-                          text: isReturnInvoice ? "رقم المرتجع" : "رقم الفاتورة",
-                          value: invoiceNumber,
-                        ),
+                      MoneyWidget1(
+                        text: isReturnInvoice ? "رقم المرتجع" : "رقم الفاتورة",
+                        value: invoiceNumber,
+                      ),
 
+                      verticalSpace(8),
+
+                      MoneyWidget1(
+                        text: isReturnInvoice
+                            ? "حالة المرتجع"
+                            : "حالة الفاتورة",
+                        value: invoice.statusLabel,
+                      ),
+
+                      verticalSpace(8),
+
+                      MoneyWidget1(
+                        text: "اسم العميل",
+                        value: invoice.customer?.name ?? "-",
+                      ),
+
+                      if (!isReturnInvoice) ...[
                         verticalSpace(8),
-
                         MoneyWidget1(
-                          text: isReturnInvoice
-                              ? "حالة المرتجع"
-                              : "حالة الفاتورة",
-                          value: invoice.statusLabel,
+                          text: "رقم العميل",
+                          value: invoice.customer?.phone ?? "-",
                         ),
+                      ],
 
+                      if (!isReturnInvoice) ...[
                         verticalSpace(8),
-
                         MoneyWidget1(
-                          text: "اسم العميل",
-                          value: invoice.customer?.name ?? "-",
+                          text: "طريقة الدفع",
+                          value: invoice.paymentMethodLabel ?? "-",
                         ),
+                      ],
 
-                        if (!isReturnInvoice) ...[
-                          verticalSpace(8),
-                          MoneyWidget1(
-                            text: "رقم العميل",
-                            value: invoice.customer?.phone ?? "-",
-                          ),
-                        ],
-
-                        if (!isReturnInvoice) ...[
-                          verticalSpace(8),
-                          MoneyWidget1(
-                            text: "طريقة الدفع",
-                            value: invoice.paymentMethodLabel ?? "-",
-                          ),
-                        ],
-
-                        if (isReturnInvoice && invoice.order != null) ...[
-                          verticalSpace(8),
-                          MoneyWidget1(
-                            text: "فاتورة البيع الأصلية",
-                            value: invoice.order?.orderNumber ?? "-",
-                          ),
-                        ],
-
-                        if (invoice.notes != null &&
-                            invoice.notes!.trim().isNotEmpty) ...[
-                          verticalSpace(8),
-                          MoneyWidget1(
-                            text: "ملاحظات",
-                            value: invoice.notes ?? "-",
-                          ),
-                        ],
-
-                        verticalSpace(16),
-
-                        HorizontalDashedWidget(width: 4, space: 4),
-
-                        verticalSpace(16),
-
-                        MoneyTitleWidget2(),
-
+                      if (isReturnInvoice && invoice.order != null) ...[
                         verticalSpace(8),
+                        MoneyWidget1(
+                          text: "فاتورة البيع الأصلية",
+                          value: invoice.order?.orderNumber ?? "-",
+                        ),
+                      ],
 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (items.isEmpty)
-                              Text(
-                                "لا توجد منتجات",
-                                style: TextStyles.font10GreyColor33Weight500,
-                              ),
+                      if (invoice.notes != null &&
+                          invoice.notes!.trim().isNotEmpty) ...[
+                        verticalSpace(8),
+                        MoneyWidget1(
+                          text: "ملاحظات",
+                          value: invoice.notes ?? "-",
+                        ),
+                      ],
 
-                            ...items.map(
-                                  (item) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    MoneyWidget2(
-                                      text: item.product?.name ?? "-",
-                                      quantity: item.quantity.toStringAsFixed(2),
-                                      measure: item.unit?.name ?? "-",
-                                      price: item.unitPrice.toStringAsFixed(2),
-                                    ),
-                                    verticalSpace(8),
-                                  ],
-                                );
-                              },
+                      verticalSpace(16),
+
+                      HorizontalDashedWidget(width: 4, space: 4),
+
+                      verticalSpace(16),
+
+                      MoneyTitleWidget2(),
+
+                      verticalSpace(8),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (items.isEmpty)
+                            Text(
+                              "لا توجد منتجات",
+                              style: TextStyles.font10GreyColor33Weight500,
                             ),
-                          ],
+
+                          ...items.map(
+                                (item) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  MoneyWidget2(
+                                    text: item.product?.name ?? "-",
+                                    quantity: item.quantity.toStringAsFixed(2),
+                                    measure: item.unit?.name ?? "-",
+                                    price: item.unitPrice.toStringAsFixed(2),
+                                  ),
+                                  verticalSpace(8),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+
+                      verticalSpace(24),
+
+                      HorizontalDashedWidget(width: 4, space: 4),
+
+                      verticalSpace(16),
+
+                      Row(
+                        children: [
+                          Text(
+                            isReturnInvoice ? "ملخص المرتجع" : "ملخص الطلب",
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            style: TextStyles.font10GreyColor78Weight400,
+                          ),
+                        ],
+                      ),
+
+                      verticalSpace(8),
+
+                      MoneyWidget3(
+                        text: isReturnInvoice
+                            ? "إجمالي المرتجع"
+                            : "الإجمالي قبل الخصم",
+                        value:
+                        "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.subtotal)}",
+                      ),
+
+                      if (!isReturnInvoice) ...[
+                        verticalSpace(8),
+                        MoneyWidget3(
+                          text: "الخصم",
+                          value:
+                          "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.discountAmount)}",
                         ),
 
+                        verticalSpace(8),
+
+                        MoneyWidget3(
+                          text: "الضريبة",
+                          value:
+                          "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.taxAmount)}",
+                        ),
+                      ],
+
+                      verticalSpace(24),
+
+                      HorizontalDashedWidget(width: 4, space: 4),
+
+                      verticalSpace(16),
+
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  isReturnInvoice
+                                      ? "قيمة الاسترداد"
+                                      : "الإجمالى",
+                                  maxLines: 1,
+                                  style: TextStyles.font10GreyColor33Weight500,
+                                ),
+
+                                if (!isReturnInvoice) ...[
+                                  verticalSpace(4),
+                                  Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "الاسعار شاملة الضريبة ",
+                                          style: TextStyles
+                                              .font10GreyColorA5Weight400,
+                                        ),
+                                        TextSpan(
+                                          text: "*",
+                                          style: TextStyles
+                                              .font14RedColorWeight400,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                          Text(
+                            "جنيه ${AppConstant.confirmRoundTo3Numbers(invoiceTotal)}",
+                            style: TextStyles.font12greyColor33Weight600,
+                          ),
+                        ],
+                      ),
+
+                      if (!isReturnInvoice) ...[
+                        verticalSpace(24),
+
+                        MoneyWidget3(
+                          text: "المبلغ المدفوع",
+                          value:
+                          "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.paidAmount)}",
+                        ),
+
+                        verticalSpace(8),
+
+                        MoneyWidget3(
+                          text: "المبلغ المتبقي",
+                          value:
+                          "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.remainingAmount)}",
+                        ),
+                      ],
+
+                      if (!isReturnInvoice && payments.isNotEmpty) ...[
                         verticalSpace(24),
 
                         HorizontalDashedWidget(width: 4, space: 4),
@@ -281,7 +395,7 @@ class _ElectronicInvoiceBodyWidgetState
                         Row(
                           children: [
                             Text(
-                              isReturnInvoice ? "ملخص المرتجع" : "ملخص الطلب",
+                              "المدفوعات",
                               textAlign: TextAlign.start,
                               maxLines: 2,
                               style: TextStyles.font10GreyColor78Weight400,
@@ -291,136 +405,22 @@ class _ElectronicInvoiceBodyWidgetState
 
                         verticalSpace(8),
 
-                        MoneyWidget3(
-                          text: isReturnInvoice
-                              ? "إجمالي المرتجع"
-                              : "الإجمالي قبل الخصم",
-                          value:
-                          "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.subtotal)}",
-                        ),
-
-                        if (!isReturnInvoice) ...[
-                          verticalSpace(8),
-                          MoneyWidget3(
-                            text: "الخصم",
-                            value:
-                            "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.discountAmount)}",
-                          ),
-
-                          verticalSpace(8),
-
-                          MoneyWidget3(
-                            text: "الضريبة",
-                            value:
-                            "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.taxAmount)}",
-                          ),
-                        ],
-
-                        verticalSpace(24),
-
-                        HorizontalDashedWidget(width: 4, space: 4),
-
-                        verticalSpace(16),
-
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    isReturnInvoice
-                                        ? "قيمة الاسترداد"
-                                        : "الإجمالى",
-                                    maxLines: 1,
-                                    style: TextStyles.font10GreyColor33Weight500,
-                                  ),
-
-                                  if (!isReturnInvoice) ...[
-                                    verticalSpace(4),
-                                    Text.rich(
-                                      TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: "الاسعار شاملة الضريبة ",
-                                            style: TextStyles
-                                                .font10GreyColorA5Weight400,
-                                          ),
-                                          TextSpan(
-                                            text: "*",
-                                            style: TextStyles
-                                                .font14RedColorWeight400,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ],
-                              ),
-                            ),
-                            Text(
-                              "جنيه ${AppConstant.confirmRoundTo3Numbers(invoiceTotal)}",
-                              style: TextStyles.font12greyColor33Weight600,
-                            ),
-                          ],
-                        ),
-
-                        if (!isReturnInvoice) ...[
-                          verticalSpace(24),
-
-                          MoneyWidget3(
-                            text: "المبلغ المدفوع",
-                            value:
-                            "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.paidAmount)}",
-                          ),
-
-                          verticalSpace(8),
-
-                          MoneyWidget3(
-                            text: "المبلغ المتبقي",
-                            value:
-                            "جنيه ${AppConstant.confirmRoundTo3Numbers(invoice.remainingAmount)}",
-                          ),
-                        ],
-
-                        if (!isReturnInvoice && payments.isNotEmpty) ...[
-                          verticalSpace(24),
-
-                          HorizontalDashedWidget(width: 4, space: 4),
-
-                          verticalSpace(16),
-
-                          Row(
+                        ...payments.map(
+                              (payment) => Column(
                             children: [
-                              Text(
-                                "المدفوعات",
-                                textAlign: TextAlign.start,
-                                maxLines: 2,
-                                style: TextStyles.font10GreyColor78Weight400,
+                              MoneyWidget3(
+                                text: payment.paymentMethod,
+                                value:
+                                "جنيه ${AppConstant.confirmRoundTo3Numbers(payment.amount)}",
                               ),
+                              verticalSpace(8),
                             ],
                           ),
-
-                          verticalSpace(8),
-
-                          ...payments.map(
-                                (payment) => Column(
-                              children: [
-                                MoneyWidget3(
-                                  text: payment.paymentMethod,
-                                  value:
-                                  "جنيه ${AppConstant.confirmRoundTo3Numbers(payment.amount)}",
-                                ),
-                                verticalSpace(8),
-                              ],
-                            ),
-                          ),
-                        ],
-
-                        verticalSpace(30),
+                        ),
                       ],
-                    ),
+
+                      verticalSpace(30),
+                    ],
                   ),
 
                   verticalSpace(50),
