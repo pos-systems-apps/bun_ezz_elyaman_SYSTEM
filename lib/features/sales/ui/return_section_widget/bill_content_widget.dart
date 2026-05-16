@@ -32,6 +32,11 @@ class BillContentWidget extends StatelessWidget {
     final double totalAmount = invoice.finalAmount;
     final List<InvoiceItemModel> items = invoice.items ?? [];
 
+    // نسبة الخصم على مستوى الفاتورة = الإجمالي بعد الخصم ÷ الإجمالي قبل الخصم
+    final double discountRatio = invoice.subtotal > 0
+        ? invoice.total / invoice.subtotal
+        : 1.0;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -203,7 +208,7 @@ class BillContentWidget extends StatelessWidget {
                       quantity: item.quantity.toStringAsFixed(2),
                       measure: item.unit?.name ?? "-",
                       price: ReturnedProductClass()
-                          .getProductTotalPrice(item)
+                          .getProductTotalPrice(item, discountRatio: discountRatio)
                           .toStringAsFixed(3),
                     ),
                     verticalSpace(8),
@@ -238,6 +243,7 @@ class BillContentWidget extends StatelessWidget {
                     value:
                     "جنيه ${ReturnedProductClass().getTotalPriceReturnedProducts(
                       SalesCubit.get(context).selectedReturnProducts,
+                      discountRatio: discountRatio,
                     ).toStringAsFixed(3)}",
                   );
                 },

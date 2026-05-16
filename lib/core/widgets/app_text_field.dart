@@ -22,6 +22,9 @@ class AppTextFormField extends StatelessWidget {
   final bool? isRegister;
   final bool? isLogin;
   final bool? autofocus;
+  final List<String>? autofillHints;
+  final bool enableSuggestions;
+  final bool autocorrect;
   final Widget? prefixIcon;
   final TextEditingController? controller;
   final Function(String?) validator;
@@ -55,6 +58,9 @@ class AppTextFormField extends StatelessWidget {
     this.isRegister = false,
     this.isLogin = false,
     this.autofocus = false,
+    this.autofillHints,
+    this.enableSuggestions = false,
+    this.autocorrect = false,
   });
 
   @override
@@ -71,9 +77,9 @@ class AppTextFormField extends StatelessWidget {
         }
       },
       cursorColor: AppColors.blackColor.withOpacity(.8),
-      enableSuggestions: true,
-      autocorrect: true,
-      autofillHints: const [AutofillHints.email],
+      enableSuggestions: enableSuggestions,
+      autocorrect: autocorrect,
+      autofillHints: autofillHints,
       keyboardType: keyboardType,
       onChanged: (String value) {
         if (onchange != null) {

@@ -96,7 +96,8 @@ class LoginFormWidget extends StatelessWidget {
                 return null;
               },
               onchange: (String? value) {},
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.emailAddress,
+              autofillHints: const [AutofillHints.email],
             ),
             verticalSpace(16),
             Text(
@@ -144,7 +145,8 @@ class LoginFormWidget extends StatelessWidget {
                 return null;
               },
               onchange: (String? value) {},
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.visiblePassword,
+              autofillHints: const [AutofillHints.password],
             ),
             verticalSpace(24),
             BlocConsumer<LoginCubit, LoginState>(

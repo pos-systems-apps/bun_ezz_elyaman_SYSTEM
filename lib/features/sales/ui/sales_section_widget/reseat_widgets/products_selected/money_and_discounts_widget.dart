@@ -77,7 +77,8 @@ class MoneyAndDiscountsWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     validator: (String? value) {},
-                    keyboardType: TextInputType.number),
+                    onTapOutside: () {},
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true)),
               ),
               horizontalSpace(7),
               Expanded(

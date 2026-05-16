@@ -60,6 +60,9 @@ class SearchWidget extends StatelessWidget {
       controller: controller,
       cursorColor: AppColors.blackColor,
       keyboardType: keyboardType,
+      onTapOutside: (PointerDownEvent event) {
+        FocusScope.of(context).unfocus();
+      },
       onChanged: (String value) {
         onchange(value);
       },
